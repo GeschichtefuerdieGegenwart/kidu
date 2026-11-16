@@ -795,6 +795,8 @@ def main():
             pg.reload()
             pruefe("Beobachtungsbogen: noch offen" in pg.inner_text(".bereichskopf") or "Beobachtungsbogen: liegt vor" in pg.inner_text(".bereichskopf"), "Detail: Beobachtungsbogen bei erprobtem Beispiel")
         pg.goto(url("ueber.html"))
+        pruefe(pg.evaluate("(()=>{const v=document.querySelector('#kurzfilm video'); return !!v && v.controls && v.preload==='none' && !v.autoplay && v.paused && !!v.querySelector('source[src=\"assets/film/kidu-pitch.mp4\"]') && !!document.querySelector('#kurzfilm-text li')})()"), "Über Kidu: Kurzfilm als Video mit Bedienung, lädt und startet nicht von selbst, Text daneben (4.43)")
+        pruefe("@" not in pg.inner_text("#kurzfilm"), "Über Kidu: Kurzfilm ohne Kontaktadresse (4.43)")
         pruefe(pg.locator("#t-arten ~ .inhalte-liste > div").count() == 4, "Über: vier Arten, KI und Tablet zu nutzen")
         for seite in ("lernende-ki.html", "beratung.html"):
             pg.set_viewport_size({"width": 390, "height": 800})
