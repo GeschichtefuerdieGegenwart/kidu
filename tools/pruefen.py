@@ -359,27 +359,19 @@ def pruefe_film(fehler):
     sichtbar = re.sub(r"<[^>]+>", " ", d["buehne"].replace("<br>", " "))
     sichtbar = " ".join([sichtbar] + [k["name"] + " " + k.get("text", "") for k in kap])
     for alt, muster in [("Galerie", r"Galerie"), ("Unterricht planen", r"Unterricht planen"),
-                        ("Unterricht digitalisieren", r"(?<!Bisherigen )Unterricht digitalisieren"),
+                        ("Unterricht digitalisieren", r"(?<![Bb]isherigen )Unterricht digitalisieren"),
                         ("Mein Ist-Stand", r"Ist-Stand"), ("Werkzeugkiste", r"Werkzeugkiste"), ("Hebel", r"Hebel")]:
         if re.search(muster, sichtbar):
             fehler.append(f"Film: alter Name »{alt}« (src/film/)")
-    # ab 4.40: Zahlen im Film zählt das Prüfskript in den Daten nach (Wahrheit der Daten)
-    node = shutil.which("node")
-    if node:
-        skript = ("const b=require('./assets/daten/beispiele.js'),q=require('./assets/daten/qualitaet.js'),a=require('./assets/daten/aufgaben.js');"
-                  "process.stdout.write(JSON.stringify({erprobt:b.filter(x=>x.status==='im Unterricht erprobt').length,"
-                  "bereiche:q.bereiche.length,formen:a.aufgaben.length}))")
-        z = json.loads(subprocess.run([node, "-e", skript], cwd=WURZEL, capture_output=True, text=True, check=True).stdout)
-        texte = " ".join(k.get("text", "") for k in kap)
-        proben = [(rf">{z['erprobt']}</div><div[^>]*>Beispiele, im eigenen Unterricht erprobt", d["buehne"], f"{z['erprobt']} erprobte Beispiele"),
-                  (rf"\b{z['erprobt']} Beispiele sind im eigenen Unterricht erprobt", texte, f"{z['erprobt']} erprobte Beispiele im Text"),
-                  (rf"\b{z['bereiche']} Bereiche\. Stärken zuerst", d["buehne"], f"{z['bereiche']} Bereiche des Digital-Checks"),
-                  (rf"\b{z['bereiche']} Bereiche, Stärken zuerst", texte, f"{z['bereiche']} Bereiche im Text"),
-                  (rf"\b{z['formen']} Aufgabenformen", d["buehne"], f"{z['formen']} Aufgabenformen"),
-                  (rf"\b{z['formen']} Aufgabenformen", texte, f"{z['formen']} Aufgabenformen im Text")]
-        for muster, wo, was in proben:
-            if not re.search(muster, wo):
-                fehler.append(f"Film: Zahl passt nicht zu den Daten – erwartet {was} (src/film/)")
+    # ab 4.44 (Rundgang): Der Film nennt die Phasen des Fahrplans; Zahl und Namen zählt das Prüfskript in src/fahrplan.json nach
+    phasen = [p["name"] for p in json.loads((WURZEL / "src" / "fahrplan.json").read_text(encoding="utf-8"))["phasen"]]
+    texte = " ".join(k.get("text", "") for k in kap)
+    zahlwort = {3: "drei", 4: "vier", 5: "fünf"}.get(len(phasen), str(len(phasen)))
+    if f"Der Fahrplan hat {zahlwort} Phasen" not in d["buehne"] or f"Der Fahrplan hat {zahlwort} Phasen" not in texte:
+        fehler.append(f"Film: Zahl passt nicht zu den Daten – erwartet »Der Fahrplan hat {zahlwort} Phasen« (src/film/)")
+    for name in phasen:
+        if name not in texte:
+            fehler.append(f"Film: Phase »{name}« aus src/fahrplan.json fehlt im Film als Text (src/film/)")
 
 
 # ab 4.42: Seiten, deren »Auf einen Blick« Wörter aus einem Skript zeigt (Schritte, Felder des Ergebnisses)
