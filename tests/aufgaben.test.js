@@ -55,3 +55,33 @@ test("Prinzipien heißen in Taxonomie und Aufgabenkoffer gleich; Verbindungen de
   }
   for (const p of c.T.prinzipien) assert.ok(c.B.some((b) => b.geraet && b.prinzipien.includes(p.id)), "Beispiel mit Satz für " + p.id);
 });
+
+// Aufgabenkoffer nach Phasen (ab 4.44): Die Ergänzung passt zu den Daten und zur Taxonomie.
+test("Koffer nach Phasen: jede Aufgabenform ist eine Idee oder steht bei »ohne Gerät«; Phasen aus der Taxonomie", () => {
+  const K = require("../assets/daten/koffer-ideen.js");
+  const T = require("../assets/daten/taxonomien.js");
+  const ids = A.aufgaben.map((a) => a.id), ideen = Object.keys(K.ideen);
+  assert.deepStrictEqual([...ideen, ...K.ohneGeraet].sort(), [...ids].sort());
+  assert.strictEqual(ideen.length, 16);
+  for (const p of K.phasen) assert.ok(T.phasen.some((x) => x.id === p), "Phase " + p);
+  for (const id of ideen) {
+    const k = K.ideen[id];
+    assert.ok(k.phasen.length >= 1 && k.phasen.every((p) => K.phasen.includes(p)) && new Set(k.phasen).size === k.phasen.length, id + ": Phasen");
+    assert.strictEqual(k.schritte.length, 4, id + ": vier Schritte");
+    assert.strictEqual(k.faecher.length, 3, id + ": drei Fächer");
+    assert.ok(k.kurz.length > 20 && k.kurz.length < 110 && k.demoFach, id + ": Kurztext und Fach der Probe");
+    for (const s of [k.kurz, ...k.schritte, ...k.faecher.map((f) => f[1])]) assert.ok(!/Punkte sammeln|Rangliste als|Belohnung für/.test(s), id);
+  }
+  for (const p of K.phasen) assert.ok(ideen.filter((id) => K.ideen[id].phasen[0] === p).length >= 2, "Phase " + p + " hat mindestens zwei eigene Ideen");
+  for (const id of K.ohneGeraet) assert.strictEqual(A.aufgaben.find((a) => a.id === id).hebel.length, 0, id + ": ohne Prinzip");
+});
+
+test("Koffer nach Phasen: zu jeder Idee gibt es ein Bildzeichen und eine Probe im Skript", () => {
+  const K = require("../assets/daten/koffer-ideen.js");
+  const js = fs.readFileSync(__dirname + "/../assets/aufgabenkoffer.js", "utf8");
+  for (const id of Object.keys(K.ideen)) {
+    assert.ok(new RegExp("bau\\(\"" + id + "\"").test(js), id + ": Probe");
+    assert.ok(new RegExp("\\n    " + id + ": ").test(js), id + ": Bildzeichen");
+  }
+  assert.ok(!/localStorage|sessionStorage|fetch\(|XMLHttpRequest/.test(js), "speichert und sendet nichts");
+});
