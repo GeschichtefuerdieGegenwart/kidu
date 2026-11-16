@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Kapitel des Films auf der Startseite (ab 4.44: Rundgang). start = Beginn in Sekunden, bild = Zeit des Standbilds (Ende des Kapitels), text = der Film als Text. Die Zeiten rechnet die Leseregel: Ein Satz steht mindestens 1 s + 0,3 s je Wort.",
+  "_hinweis": "Kapitel des Films auf der Startseite (ab 4.45: Rundgang). start = Beginn in Sekunden, bild = Zeit des Standbilds (Ende des Kapitels), text = der Film als Text. Die Zeiten rechnet die Leseregel: Ein Satz steht mindestens 1 s + 0,3 s je Wort.",
   "dauer": 124,
   "kapitel": [
     {

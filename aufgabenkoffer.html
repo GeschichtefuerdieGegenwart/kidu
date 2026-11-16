@@ -7,7 +7,7 @@
 <meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
 <title>Aufgabenkoffer – Kidu</title>
 <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/hilde.css?v=c082a27c">
+<link rel="stylesheet" href="assets/hilde.css?v=eda662d7">
 <script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
 </head>
 <body>
@@ -18,33 +18,43 @@
   <a class="hefter-link" href="galerie.html#hefter" aria-label="Mein Schnellhefter"><svg viewBox="0 0 30 24" aria-hidden="true"><rect x="1" y="2" width="28" height="21" rx="2" fill="#b68235" stroke="#7d5a1c" stroke-width="2"/><rect x="1" y="2" width="6" height="21" fill="#7d5a1c"/><circle cx="4" cy="8" r="1.3" fill="#efeadf"/><circle cx="4" cy="17" r="1.3" fill="#efeadf"/></svg><span class="hefter-zahl" aria-hidden="true">0</span></a>
 </div></header>
 <main id="inhalt" tabindex="-1">
-<div class="bereich-lernen">
+<div class="bereich-lernen ak">
 <nav class="ort-zeile" aria-label="Wo du bist"><div class="huelle huelle-weit"><ol><li class="ort-weg"><a href="unterricht.html#fahrplan">Fahrplan Digitaler Unterricht</a></li><li><a href="unterricht.html#phase-erstellen">2 · Digitalen Unterricht erstellen</a> <span class="ort-wann">(vor der Stunde)</span></li></ol></div></nav>
+<!-- Ab 4.44: der Koffer nach Unterrichtsphasen. Erste Handlung ist die Stundenlinie (assets/aufgabenkoffer.js). -->
 <section class="bereichskopf kompakt"><div class="huelle huelle-weit werkzeugkopf">
   <div class="werkzeugkopf-text">
     <h1 class="h1-frage">Aufgabenkoffer</h1>
-    <p class="marker">Welche Aufgabe kann ich wie stellen – und was fördert sie?</p>
-    <p class="detail-kurz">Im Koffer liegen 18 Aufgabenformen. Wähl zuerst, was deine Lernenden können sollen. Dann siehst du, welche Aufgabe dazu passt, wann sie sinnvoll ist und wann wenig. Bei jeder steht, wie sie auf Papier geht und was das Gerät beiträgt.</p>
+    <p class="marker">Gute Ideen für jede Phase deiner Stunde – und wie sie am Gerät gelingen.</p>
   </div>
   <div class="werkzeugkopf-seite">
-    <h2 id="t-koffer">Was sollen deine Lernenden können?</h2>
-    <p class="koffer-bedienung">Tipp ein Ziel an. Dann siehst du nur die Aufgaben dazu.</p>
+    <p class="detail-kurz">Wähl eine Phase, dann eine Idee. Zu jeder Idee siehst du in vier Schritten, wie du sie digital umsetzt – mit einem Beispiel zum Ausprobieren.</p>
   </div>
 </div></section>
 
-<section class="abschnitt" style="padding-top:var(--a2)" aria-labelledby="t-koffer"><div class="huelle huelle-weit stapel-gross">
-  <div class="stapel">
-    <!-- Ab 4.42: Landkarte des Koffers – alle Aufgaben nach Ziel und Ort (assets/aufgabenkoffer.js); unter 1024 px die Chips. -->
-    <div class="landkarte" id="koffer-landkarte"></div>
-    <div class="muster-filter-zeile">
-      <div class="muster-filter filter-schmal" id="koffer-filter" role="group" aria-label="Nach Ziel filtern"></div>
-      <p class="leise" id="koffer-anzahl" aria-live="polite"></p>
+<section class="abschnitt" style="padding-top:var(--a2)" aria-labelledby="t-linie"><div class="huelle huelle-weit">
+  <div class="linie-kopf">
+    <h2 id="t-linie" class="klein-titel">Wo in der Stunde brauchst du eine Idee?</h2>
+    <p class="leise">Tipp eine Phase an.</p>
+    <button type="button" class="knopf still ak-klein" id="alle" data-phase="alle" aria-pressed="false">Alle Ideen zeigen</button>
+  </div>
+  <ol class="stunde" id="stunde"></ol>
+  <div class="uhr" aria-hidden="true"><span>Beginn der Stunde</span><span>Ende der Stunde</span></div>
+
+  <div id="uebersicht">
+    <div class="ideen-kopf"><h2 id="ideen-titel"></h2><p id="ideen-satz" class="leise"></p></div>
+    <ul class="ideen" id="ideen"></ul>
+    <div class="ak-ohne">
+      <h3>Zwei Aufgaben gehen ohne Gerät besser</h3>
+      <ul id="ohne-liste"></ul>
+      <p class="leise">Bei jeder Idee steht unter »Und ohne Gerät?«, wie sie auf Papier geht. <a class="textlink" href="unterricht.html#t-probe">Zur Papierfrage <span aria-hidden="true">→</span></a></p>
     </div>
-    <p class="koffer-legende leise klein">Rechts steht, wo die Aufgabe meist am besten läuft: <span class="koffer-ort ort-papier">meist Papier</span> <span class="koffer-ort ort-hybrid">Papier und Gerät</span> <span class="koffer-ort ort-geraet">Gerät lohnt sich oft</span> Das ist kein Rang. Papier ist ein vollwertiges Ergebnis.</p>
-    <ol class="koffer-liste" id="koffer-liste"></ol>
-    <noscript><p class="box">Der Aufgabenkoffer braucht JavaScript. Ohne JavaScript findest du Beispiele bei den <a href="galerie.html">Unterrichtsbeispielen</a> und die Regeln auf der Seite <a href="sechs-hebel.html">Wann funktioniert digitaler Unterricht?</a>.</p></noscript>
   </div>
 
+  <div id="fenster" class="fenster" hidden></div>
+  <noscript><p class="box">Der Aufgabenkoffer braucht JavaScript. Ohne JavaScript findest du Beispiele bei den <a href="galerie.html">Unterrichtsbeispielen</a> und die Regeln auf der Seite <a href="sechs-hebel.html">Wann funktioniert digitaler Unterricht?</a>.</p></noscript>
+</div></section>
+
+<section class="abschnitt" aria-labelledby="t-faust"><div class="huelle huelle-weit stapel-gross">
   <div class="nebeneinander">
   <div class="stapel box">
     <h2 id="t-faust" class="klein-titel">Fünf Faustregeln für jede Aufgabe</h2>
@@ -60,8 +70,8 @@
   <div class="stapel">
     <h2 id="t-woher" class="klein-titel">Woher der Koffer kommt</h2>
     <p class="mass">Die Aufgabenformen stammen aus den Lernseiten der <a href="galerie.html">Unterrichtsbeispiele</a> und aus Rückmeldungen von Lernenden. »Aus dem Unterricht« ist immer eine persönliche Beobachtung, kein Nachweis der Wirkung. Was nicht bekannt ist, heißt »noch offen«.</p>
-    <p class="mass">Bei jeder Aufgabe steht ein Prinzip aus <a class="textlink" href="sechs-hebel.html">Wann funktioniert digitaler Unterricht?</a> – oder »keines der sechs«. Dann trägt das Gerät dort wenig bei.</p>
-    <p class="mass">Fertige Abläufe für eine ganze Phase findest du in <a class="textlink" href="muster.html">Ideen und Kniffe</a>.</p>
+    <p class="mass">In welche Phase eine Idee passt, ist ein Vorschlag. Die Beispiele zum Ausprobieren und »In anderen Fächern« sind ausgedacht und nicht erprobt. Sie zeigen nur, wie sich die Aufgabe anfühlt.</p>
+    <p class="mass">Bei jeder Idee steht ein Prinzip aus <a class="textlink" href="sechs-hebel.html">Wann funktioniert digitaler Unterricht?</a> – oder »keines der sechs«. Fertige Abläufe für eine ganze Phase findest du in <a class="textlink" href="muster.html">Ideen und Kniffe</a>.</p>
   </div>
   </div>
 
@@ -100,8 +110,10 @@
 </div></nav>
 </div>
 <script src="assets/hilde.js?v=e22353fb"></script>
+<script src="assets/daten/taxonomien.js?v=eb73b10b"></script>
 <script src="assets/daten/aufgaben.js?v=87aa0280"></script>
-<script src="assets/aufgabenkoffer.js?v=d5ccc04b"></script>
+<script src="assets/daten/koffer-ideen.js?v=10a27563"></script>
+<script src="assets/aufgabenkoffer.js?v=df72e798"></script>
 
 </main>
 <footer class="fuss"><div class="huelle">

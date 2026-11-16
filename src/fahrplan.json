@@ -14,7 +14,7 @@
 
     {"phase": "erstellen", "href": "tablets.html", "name": "Unterricht neu planen", "tuer": "Ich fange neu an", "text": "Vier kurze Fragen, dann deine Entscheidungskarte: Lohnt sich das Tablet – oder bleibst du beim Papier?"},
     {"phase": "erstellen", "href": "digitalisieren.html", "name": "Bisherigen Unterricht digitalisieren", "tuer": "Ich habe schon Material", "text": "Ein Arbeitsblatt, eine Präsentation, ein Verlaufsplan? Wähle, was entstehen soll, und hol dir einen Prompt mit Ideen, die mehr können als Papier."},
-    {"phase": "erstellen", "href": "aufgabenkoffer.html", "name": "Aufgabenkoffer", "text": "Welche Aufgabe kann ich wie stellen – und was fördert sie? 18 Aufgabenformen, je mit »sinnvoll« und »wenig sinnvoll«."},
+    {"phase": "erstellen", "href": "aufgabenkoffer.html", "name": "Aufgabenkoffer", "text": "Gute Ideen für jede Phase der Stunde – und wie sie am Gerät gelingen. 18 Aufgabenformen, 16 mit Beispiel zum Ausprobieren."},
     {"phase": "erstellen", "href": "muster.html", "name": "Ideen und Kniffe", "text": "Muster aus der Praxis, je auf Papier, mit KI vorbereitet und am Tablet."},
     {"phase": "erstellen", "href": "werkzeugkiste.html", "name": "Methodenkoffer", "text": "Die Anleitungen hinter den Werkzeugen, zum Ansehen und Herunterladen."},
     {"phase": "erstellen", "href": "unterricht.html#t-probe", "name": "Papierfrage", "text": "Geht es auf Papier genauso gut? Höchstens drei Fragen, hier auf der Seite.", "text_anderswo": "Geht es auf Papier genauso gut? Höchstens drei Fragen, auf der Seite »Digitaler Unterricht«."},

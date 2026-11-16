@@ -19,7 +19,7 @@ import sys
 WURZEL = pathlib.Path(__file__).resolve().parent.parent
 QUELLE = WURZEL / "src" / "film"
 ZIEL = WURZEL / "assets" / "film-buehne.js"
-KOPF = """/* Kidu – Bühne des Films auf der Startseite (ab Version 4.34, Kamera ab 4.35, Rundgang ab 4.44). NICHT VON HAND ÄNDERN.
+KOPF = """/* Kidu – Bühne des Films auf der Startseite (ab Version 4.34, Kamera ab 4.35, Rundgang ab 4.45). NICHT VON HAND ÄNDERN.
    Erzeugt von tools/film.py aus src/film/buehne.html und src/film/kapitel.json (ab Version 4.40; Ursprung: Drehbuch des Pitch-Films,
    Claude Design, Fassung 5 vom 12.11.2026). Jede Bewegung ist eine CSS-Animation mit fester Verzögerung (assets/hilde.css, Abschnitt »Film«);
    assets/film.js steuert Start, Halt, Kapitel und Ende. Die Ansichten in Kapitel 8 sind Bildschirmfotos der Lernseiten und von Kidu selbst

@@ -363,7 +363,7 @@ def pruefe_film(fehler):
                         ("Mein Ist-Stand", r"Ist-Stand"), ("Werkzeugkiste", r"Werkzeugkiste"), ("Hebel", r"Hebel")]:
         if re.search(muster, sichtbar):
             fehler.append(f"Film: alter Name »{alt}« (src/film/)")
-    # ab 4.44 (Rundgang): Der Film nennt die Phasen des Fahrplans; Zahl und Namen zählt das Prüfskript in src/fahrplan.json nach
+    # ab 4.45 (Rundgang): Der Film nennt die Phasen des Fahrplans; Zahl und Namen zählt das Prüfskript in src/fahrplan.json nach
     phasen = [p["name"] for p in json.loads((WURZEL / "src" / "fahrplan.json").read_text(encoding="utf-8"))["phasen"]]
     texte = " ".join(k.get("text", "") for k in kap)
     zahlwort = {3: "drei", 4: "vier", 5: "fünf"}.get(len(phasen), str(len(phasen)))
