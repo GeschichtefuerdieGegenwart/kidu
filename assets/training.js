@@ -8,6 +8,7 @@
   if (typeof TRAINING === "undefined" || typeof HILDE === "undefined") return;
   var T = TRAINING, esc = HILDE.esc;
   var FN = {}; T.funktionen.forEach(function (f) { FN[f.id] = f; });
+  var ZT = {}; (T.zeiten || []).forEach(function (z) { ZT[z.id] = z; });  // ab 4.47: grober Zeitbedarf, geschätzt
 
   function wert(id) { var f = document.getElementById(id); return f ? f.value : ""; }
   function eingabe() { return { fach: wert("tr-fach"), thema: wert("tr-thema"), gruppe: wert("tr-gruppe") }; }
@@ -33,7 +34,8 @@
     var f = FN[a.funktion];
     return '<li class="tr-karte" id="tr-' + a.id + '">' +
       '<p class="tr-zeile"><span class="tr-nr" aria-hidden="true">' + nr + "</span>" +
-      '<span class="tr-funktion">' + (f ? esc(f.name) : "ohne KI") + "</span></p>" +
+      '<span class="tr-funktion">' + (f ? esc(f.name) : "geht ohne KI") + "</span>" +
+      (ZT[a.zeit] ? '<span class="tr-zeit"><span class="sr-only">Zeitbedarf, geschätzt: </span>' + esc(ZT[a.zeit].name) + "</span>" : "") + "</p>" +
       "<h3>" + esc(a.name) + "</h3>" +
       '<p class="tr-ziel">' + esc(a.ziel) + "</p>" +
       '<ol class="tr-schritte">' + a.schritte.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ol>" +

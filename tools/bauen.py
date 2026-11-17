@@ -46,6 +46,11 @@ SEITEN = [
     ("lernende-ki.html", "Wenn deine Lernenden mit KI arbeiten – Kidu", "ki"),
     ("ki-aufgaben.html", "Trainingsaufgaben – Kidu", "ki"),  # ab 4.46
     ("papierkoffer.html", "Aufgabenkoffer auf Papier – Kidu", "ki"),  # ab 4.46
+    ("erste-minuten.html", "Deine ersten zehn Minuten – Kidu", "ki"),  # ab 4.47 eigene Seite, vorher oben auf ki.html
+    ("schnell-anfrage.html", "Schnell-Anfrage – Kidu", "ki"),          # ab 4.47 eigene Seite
+    ("prompten.html", "Prompten lernen – Kidu", "ki"),                 # ab 4.47 eigene Seite, mit dem Prompt-Generator
+    ("pruef-labor.html", "Prüf-Labor – Kidu", "ki"),                   # ab 4.47, drei Übungen ohne KI-System
+    ("kollegium.html", "Mit dem Kollegium – Kidu", "ki"),              # ab 4.47, sechs Formate
     ("galerie.html", "Unterrichtsbeispiele – Kidu", "galerie"),
     ("beispiel.html", "Beispiel – Kidu", "galerie"),
     ("showroom.html", "Unterrichtsbeispiele – Kidu", "galerie"),
@@ -174,10 +179,11 @@ def main():
     for alt in ("lernen.html", "beispiele.html"):  # umbenannt in tablets.html und showroom.html
         (WURZEL / alt).unlink(missing_ok=True)
     # ab Version 4.42: der Fahrplan »Digitaler Unterricht« aus src/fahrplan.json (tools/fahrplan.py) –
-    # Werkzeuglisten der Bereichsseite, Zeile oben und Fahrplan unten auf jeder Werkzeugseite
+    # Werkzeuglisten der Bereichsseite, Zeile oben und Fahrplan unten auf jeder Werkzeugseite.
+    # Ab 4.47 dazu der Fahrplan »KI-Training« aus src/fahrplan-ki.json (Zeichen <!-- kiplan:… -->).
     spec = importlib.util.spec_from_file_location("fahrplan", WURZEL / "tools" / "fahrplan.py")
     fp = importlib.util.module_from_spec(spec); spec.loader.exec_module(fp)
-    fahrplan = fp.laden()
+    fahrplan = fp.alle_laden()
     for datei, titel, aktiv in SEITEN:
         inhalt = mit_schloss(fp.einsetzen((WURZEL / "src" / datei).read_text(encoding="utf-8"), datei, fahrplan), datei)
         (WURZEL / datei).write_text(mit_stand(rahmen(titel, aktiv, inhalt, datei)), encoding="utf-8")

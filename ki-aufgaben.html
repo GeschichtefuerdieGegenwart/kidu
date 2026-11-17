@@ -7,7 +7,7 @@
 <meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
 <title>Trainingsaufgaben – Kidu</title>
 <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/hilde.css?v=90679a57">
+<link rel="stylesheet" href="assets/hilde.css?v=844b013d">
 <script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
 </head>
 <body>
@@ -19,11 +19,13 @@
 </div></header>
 <main id="inhalt" tabindex="-1">
 <div class="bereich-ki">
+<nav class="ort-zeile" aria-label="Wo du bist"><div class="huelle huelle-weit"><ol><li class="ort-weg"><a href="ki.html#fahrplan">Fahrplan KI-Training</a></li><li><a href="ki.html#phase-grundlagen">1 · Grundlagen</a> <span class="ort-wann">(zuerst)</span></li></ol></div></nav>
 <section class="bereichskopf kompakt"><div class="huelle huelle-weit tr-kopf">
   <div class="stapel">
     <h1 class="h1-frage">Trainingsaufgaben</h1>
-    <p class="marker">Bereich: KI-Training · Üben mit dem KI-System deiner Schule</p>
+    <p class="marker">Üben mit dem KI-System deiner Schule</p>
     <p class="detail-kurz">Zwölf Übungen, mit denen du lernst, gut mit KI zu arbeiten. Du übst an deinem eigenen Material. Fang an, wo du willst. Jede Aufgabe ist ein Vorschlag und noch nicht erprobt.</p>
+    <p class="kopfnotiz">Bei jeder Aufgabe steht, was sie im KI-System nutzt und wie viel Zeit sie etwa braucht: »kurz« für zwischendurch oder »eine Freistunde«. Das ist geschätzt. Ohne KI-System übst du im <a class="textlink" href="pruef-labor.html">Prüf-Labor</a>.</p>
     <p><a class="knopf" href="#tr-woche">Mit Aufgabe 1 anfangen <span aria-hidden="true">↓</span></a></p>
   </div>
   <!-- »Auf einen Blick«: Funktionen aus assets/daten/training.js (Stand dort). AIS.chat und F13 dürfen auf Erklärseiten genannt werden (CLAUDE.md). -->
@@ -55,14 +57,36 @@
     <p class="mass">Die Gliederung folgt dem Skill »ki-kompetenz-kollegium« aus dem <a class="textlink" href="skillkoffer.html">Skillkoffer</a>. Er stützt sich auf den AI-Fluency-Rahmen von Rick Dakan und Joseph Feller (Delegation, Description, Discernment, Diligence) und auf den KI-Kompetenzrahmen der UNESCO für Lehrkräfte. Die Funktionen von AIS.chat stehen in der Pressemitteilung des Landes Baden-Württemberg zum Start im Oktober 2025, in Mitteilungen der Berliner Bildungsverwaltung und im Hinweis des Schulministeriums NRW zur Umbenennung im Mai 2026.</p>
   </details>
 </div></section>
+<nav class="fahrplan-fuss" aria-label="Fahrplan KI-Training"><div class="huelle huelle-weit fahrplan-fuss-innen">
+  <div class="fahrplan-fuss-auch">
+    <h2 class="fahrplan-fuss-titel">Auch bei den Grundlagen</h2>
+    <ul class="fahrplan-werkzeuge">
+      <li><a href="erste-minuten.html"><b>Deine ersten zehn Minuten</b> <span class="fahrplan-fuer">für den Anfang</span><span class="fahrplan-text">Vier Schritte: KI-System öffnen, Prompt holen, Ergebnis prüfen, einmal nachfragen.</span></a></li>
+      <li><a href="pruef-labor.html"><b>Prüf-Labor</b><span class="fahrplan-text">Drei Übungen: Fehler finden, abgeben oder selbst machen, was darf hinein.</span><span class="fahrplan-marken">geht ohne KI · auch auf Papier</span></a></li>
+      <li><a href="sicher.html"><b>Sicher arbeiten in fünf Regeln</b><span class="fahrplan-text">Daten, Prüfen, Bildrechte, Lernseiten, Persönliches. Gilt auch für den Digitalen Unterricht.</span><span class="fahrplan-marken">geht ohne KI</span></a></li>
+      <li><a href="ki-fach.html"><b>KI für dein Fach einrichten</b><span class="fahrplan-text">Einmal aufschreiben, was in deinem Fach gilt. Danach reicht ein kurzer Auftrag.</span></a></li>
+    </ul>
+  </div>
+  <div class="fahrplan-fuss-plan">
+    <h2 class="fahrplan-fuss-titel">Der Fahrplan</h2>
+    <ol class="fahrplan-klein">
+      <li class="ist-vorspann ist-hier"><a href="ki.html#phase-grundlagen" aria-current="location"><span class="fahrplan-klein-nr" aria-hidden="true">1</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">1 · </span>Grundlagen</span><b class="fahrplan-klein-hier">Du bist hier</b></span></a></li>
+      <li class="ist-zart ist-ring-start"><a href="ki.html#phase-vorbereiten"><span class="fahrplan-klein-nr" aria-hidden="true">2</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">2 · </span>Unterricht mit KI vorbereiten</span><span class="fahrplan-klein-wann">vor der Stunde</span></span></a></li>
+      <li class="ist-ring-mitte"><a href="ki.html#phase-unterrichten"><span class="fahrplan-klein-nr" aria-hidden="true">3</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">3 · </span>Unterrichten</span><span class="fahrplan-klein-wann">in der Stunde</span></span></a></li>
+      <li class="ist-zart ist-ring-ende"><a href="ki.html#phase-nach"><span class="fahrplan-klein-nr" aria-hidden="true">4</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">4 · </span>Nach der Stunde</span><span class="fahrplan-klein-wann">nach der Stunde</span></span></a></li>
+    </ol>
+    <p class="fahrplan-ring"><span class="fahrplan-ring-pfeil" aria-hidden="true">↑</span> Nach der Stunde geht es mit der nächsten Stunde wieder bei 2 weiter.</p>
+    <p class="fahrplan-fuss-alle"><a class="textlink" href="ki.html#fahrplan">Alle Werkzeuge im Fahrplan <span aria-hidden="true">→</span></a></p>
+  </div>
+</div></nav>
 </div>
 <script src="assets/daten/taxonomien.js?v=eb73b10b"></script>
 <script src="assets/hilde.js?v=e22353fb"></script>
 <script src="assets/daten/schnell.js?v=3b6b187b"></script>
 <script src="assets/schnell-anfrage.js?v=c93dfd0d"></script>
 <script src="assets/werkstatt-anfrage.js?v=0e98b217"></script>
-<script src="assets/daten/training.js?v=dbfa493c"></script>
-<script src="assets/training.js?v=a3e00781"></script>
+<script src="assets/daten/training.js?v=54ee3b47"></script>
+<script src="assets/training.js?v=457ff0ec"></script>
 
 </main>
 <footer class="fuss"><div class="huelle">

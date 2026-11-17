@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fahrplan »Digitaler Unterricht« aus einer Quelle (ab Version 4.42).
+"""Fahrpläne aus je einer Quelle: »Digitaler Unterricht« (ab Version 4.42) und »KI-Training« (ab 4.47).
 
 Entscheidung Mario, 14.11.2026: Weg B der Recherche »Werkzeugseiten: Wo bin ich?« – oben eine Zeile, unten der ganze Fahrplan.
 Quelle: src/fahrplan.json (vier Phasen, alle Werkzeuge). tools/bauen.py ersetzt damit diese Zeichen im Seiteninhalt:
@@ -11,6 +11,12 @@ Quelle: src/fahrplan.json (vier Phasen, alle Werkzeuge). tools/bauen.py ersetzt 
 
 »weit« hinter zeile oder fuss (<!-- fahrplan:zeile weit -->) stellt beide in die weite Hülle (Screen-Width Rule).
 Alles steht fertig im HTML – ohne Skript im Browser. tools/pruefen.py prüft, dass jede Werkzeugseite beide Zeichen trägt.
+
+Ab 4.47 (Entscheidung Mario, 17.11.2026: das KI-Training so übersichtlich wie den Digitalen Unterricht) gibt es einen zweiten
+Fahrplan: src/fahrplan-ki.json mit der Bereichsseite ki.html. Seine Zeichen heißen gleich, nur mit »kiplan« statt »fahrplan«
+(<!-- kiplan:zeile -->, <!-- kiplan:fuss -->, <!-- kiplan:liste:ID -->, <!-- kiplan:zahl:ID -->).
+Ein Werkzeug mit »zuhause« gehört zum anderen Fahrplan: Es steht in der Liste, seine Seite trägt aber die Zeichen des anderen.
+»marken« sind kurze Hinweise unter dem Text (»geht ohne KI«, »auch auf Papier«).
 """
 import html
 import json
@@ -18,12 +24,26 @@ import re
 from pathlib import Path
 
 WURZEL = Path(__file__).resolve().parent.parent
+# Art des Zeichens → Quelle, Bereichsseite, Titel. Die Art steht vorn im Zeichen: <!-- fahrplan:… --> oder <!-- kiplan:… -->.
+PLAENE = {
+    "fahrplan": ("fahrplan.json", "unterricht.html", "Fahrplan Digitaler Unterricht"),
+    "kiplan": ("fahrplan-ki.json", "ki.html", "Fahrplan KI-Training"),  # ab 4.47
+}
 QUELLE = WURZEL / "src" / "fahrplan.json"
 BEREICH = "unterricht.html"
 
 
-def laden():
-    return json.loads(QUELLE.read_text(encoding="utf-8"))
+def laden(art="fahrplan"):
+    datei, bereich, titel = PLAENE[art]
+    daten = json.loads((WURZEL / "src" / datei).read_text(encoding="utf-8"))
+    daten.update(_art=art, _bereich=bereich, _titel=titel, _quelle=f"src/{datei}")
+    for w in daten["werkzeuge"]:
+        w["_bereich"] = bereich
+    return daten
+
+
+def alle_laden():
+    return {art: laden(art) for art in PLAENE}
 
 
 def e(text):
@@ -38,6 +58,8 @@ def seite(href):
 def heimat(daten, datei):
     """Phase und Werkzeug einer Seite – auch für Unterseiten (selbstcheck.html gehört zum Digital-Check)."""
     for w in daten["werkzeuge"]:
+        if w.get("zuhause"):  # gehört zum anderen Fahrplan
+            continue
         if seite(w["href"]) == datei and "#" not in w["href"]:
             return w, None
         if datei in w.get("unterseiten", []):
@@ -56,12 +78,16 @@ def anker(p):
 def werkzeug_eintrag(w, auf_bereichsseite):
     href = w["href"]
     text = w["text"]
-    if auf_bereichsseite and href.startswith(BEREICH + "#"):
-        href = href[len(BEREICH):]
+    bereich = w.get("_bereich", BEREICH)
+    if auf_bereichsseite and href.startswith(bereich + "#"):
+        href = href[len(bereich):]
     elif not auf_bereichsseite and w.get("text_anderswo"):
         text = w["text_anderswo"]
     fuer = f' <span class="fahrplan-fuer">{e(w["fuer"])}</span>' if w.get("fuer") else ""
-    return f'<li><a href="{href}"><b>{e(w["name"])}</b>{fuer}<span class="fahrplan-text">{e(text)}</span></a></li>'
+    marken = ""
+    if w.get("marken"):  # ab 4.47: kurze Hinweise wie »geht ohne KI«
+        marken = '<span class="fahrplan-marken">' + " · ".join(e(m) for m in w["marken"]) + "</span>"
+    return f'<li><a href="{href}"><b>{e(w["name"])}</b>{fuer}<span class="fahrplan-text">{e(text)}</span>{marken}</a></li>'
 
 
 def liste(eintraege, auf_bereichsseite, einzug):
@@ -158,11 +184,12 @@ def bereich_zahl(daten, pid):
 def zeile(daten, datei, weit=False):
     w, eltern = heimat(daten, datei)
     if not w:
-        raise SystemExit(f"fahrplan: {datei} trägt <!-- fahrplan:zeile -->, steht aber nicht in src/fahrplan.json")
+        raise SystemExit(f"fahrplan: {datei} trägt <!-- {daten['_art']}:zeile -->, steht aber nicht in {daten['_quelle']}")
     p = phase(daten, w["phase"])
     weg = ' class="ort-weg"' if eltern else ""  # am Telefon steht nur der letzte Schritt, mit »‹« davor
-    teile = [f'<li class="ort-weg"><a href="{BEREICH}#fahrplan">Fahrplan Digitaler Unterricht</a></li>',
-             f'<li{weg}><a href="{BEREICH}#{anker(p)}">{p["nr"]} · {e(p["name"])}</a> <span class="ort-wann">({e(p["wann"])})</span></li>']
+    bereich = daten["_bereich"]
+    teile = [f'<li class="ort-weg"><a href="{bereich}#fahrplan">{e(daten["_titel"])}</a></li>',
+             f'<li{weg}><a href="{bereich}#{anker(p)}">{p["nr"]} · {e(p["name"])}</a> <span class="ort-wann">({e(p["wann"])})</span></li>']
     if eltern:
         teile.append(f'<li><a href="{eltern["href"]}">{e(eltern["name"])}</a></li>')
     huelle = "huelle huelle-weit" if weit else "huelle"
@@ -173,7 +200,8 @@ def zeile(daten, datei, weit=False):
 def fuss(daten, datei, weit=False):
     w, eltern = heimat(daten, datei)
     if not w:
-        raise SystemExit(f"fahrplan: {datei} trägt <!-- fahrplan:fuss -->, steht aber nicht in src/fahrplan.json")
+        raise SystemExit(f"fahrplan: {datei} trägt <!-- {daten['_art']}:fuss -->, steht aber nicht in {daten['_quelle']}")
+    bereich = daten["_bereich"]
     p = phase(daten, w["phase"])
     eigen = seite(w["href"])
     nachbarn = [x for x in daten["werkzeuge"] if x["phase"] == p["id"] and seite(x["href"]) != eigen]
@@ -207,40 +235,48 @@ def fuss(daten, datei, weit=False):
         zusatz = ('<b class="fahrplan-klein-hier">Du bist hier</b>' if hier
                   else f'<span class="fahrplan-klein-wann">{e(q["wann"])}</span>')
         aktuell = ' aria-current="location"' if hier else ""
-        zeilen.append(f'      <li class="{" ".join(klassen)}"><a href="{BEREICH}#{anker(q)}"{aktuell}>'
+        zeilen.append(f'      <li class="{" ".join(klassen)}"><a href="{bereich}#{anker(q)}"{aktuell}>'
                       f'<span class="fahrplan-klein-nr" aria-hidden="true">{q["nr"]}</span>'
                       f'<span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">{q["nr"]} · </span>{e(q["name"])}</span>{zusatz}</span></a></li>')
     huelle = "huelle huelle-weit" if weit else "huelle"
-    return (f'<nav class="fahrplan-fuss" aria-label="Fahrplan Digitaler Unterricht"><div class="{huelle} fahrplan-fuss-innen">{auch}\n'
+    return (f'<nav class="fahrplan-fuss" aria-label="{e(daten["_titel"])}"><div class="{huelle} fahrplan-fuss-innen">{auch}\n'
             f'  <div class="fahrplan-fuss-plan">\n    <h2 class="fahrplan-fuss-titel">Der Fahrplan</h2>\n'
             f'    <ol class="fahrplan-klein">\n' + "\n".join(zeilen) + '\n    </ol>\n'
             f'    <p class="fahrplan-ring"><span class="fahrplan-ring-pfeil" aria-hidden="true">↑</span> '
             f'Nach der Stunde geht es mit der nächsten Stunde wieder bei 2 weiter.</p>\n'
-            f'    <p class="fahrplan-fuss-alle"><a class="textlink" href="{BEREICH}#fahrplan">Alle Werkzeuge im Fahrplan <span aria-hidden="true">→</span></a></p>\n'
+            f'    <p class="fahrplan-fuss-alle"><a class="textlink" href="{bereich}#fahrplan">Alle Werkzeuge im Fahrplan <span aria-hidden="true">→</span></a></p>\n'
             f'  </div>\n</div></nav>')
 
 
-ZEICHEN = re.compile(r"<!-- fahrplan:(zeile|fuss|liste|zahl)(?::([a-z]+))?( weit)? -->")
+ZEICHEN = re.compile(r"<!-- (fahrplan|kiplan):(zeile|fuss|liste|zahl)(?::([a-z]+))?( weit)? -->")
 
 
 def einsetzen(inhalt, datei, daten=None):
-    """Ersetzt alle Fahrplan-Zeichen im Seiteninhalt. Seiten ohne Zeichen bleiben, wie sie sind."""
-    if "<!-- fahrplan:" not in inhalt:
+    """Ersetzt alle Fahrplan-Zeichen im Seiteninhalt. Seiten ohne Zeichen bleiben, wie sie sind.
+    daten: die Daten eines Fahrplans (laden()) oder aller (alle_laden()); fehlt, was gebraucht wird, wird es geladen."""
+    if "<!-- fahrplan:" not in inhalt and "<!-- kiplan:" not in inhalt:
         return inhalt
-    daten = daten or laden()
+    plaene = {}
+    if daten and "phasen" in daten:
+        plaene[daten.get("_art", "fahrplan")] = daten
+    elif daten:
+        plaene.update(daten)
 
     def ersetze(m):
-        art, pid, weit = m.group(1), m.group(2), bool(m.group(3))
+        plan, art, pid, weit = m.group(1), m.group(2), m.group(3), bool(m.group(4))
+        if plan not in plaene:
+            plaene[plan] = laden(plan)
+        d = plaene[plan]
         if art == "zeile":
-            return zeile(daten, datei, weit)
+            return zeile(d, datei, weit)
         if art == "fuss":
-            return fuss(daten, datei, weit)
+            return fuss(d, datei, weit)
         if art == "liste":
-            return bereich_liste(daten, pid)
-        return bereich_zahl(daten, pid)
+            return bereich_liste(d, pid)
+        return bereich_zahl(d, pid)
 
     neu = ZEICHEN.sub(ersetze, inhalt)
-    rest = re.findall(r"<!-- fahrplan:[^>]*-->", neu)
+    rest = re.findall(r"<!-- (?:fahrplan|kiplan):[^>]*-->", neu)
     if rest:
         raise SystemExit(f"fahrplan: unbekanntes Zeichen in {datei}: {rest}")
     return neu

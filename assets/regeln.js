@@ -513,13 +513,14 @@
       text: "Du hast dazu wenig angekreuzt. Dann reicht für den Anfang die Stunde, die du mitbringst." }
   };
   var SP_SICHER = [["s_bedienen", "Bedienen"], ["s_pruefen", "Prüfen"], ["s_duerfen", "Dürfen"], ["s_bauen", "Bauen"], ["s_fuehren", "Tablet-Phase"]];
+  // ab 4.47: Schnell-Anfrage und Prompten lernen haben eigene Seiten (vorher Sprungmarken auf ki.html)
   var SP_ANLASS = {
-    vereinfachen: { text: "Vereinfach ein eigenes Arbeitsblatt mit der Schnell-Anfrage – das ist der Anlass mit dem sichersten ersten Ergebnis.", link: "ki.html#t-schnell", linktext: "Schnell-Anfrage" },
-    einstieg: { text: "Lass dir für deine Stunde einen Einstieg mit Vermutung entwerfen und prüf ihn mit den drei Fragen vor dem Kopieren.", link: "ki.html#t-schnell", linktext: "Schnell-Anfrage" },
+    vereinfachen: { text: "Vereinfach ein eigenes Arbeitsblatt mit der Schnell-Anfrage – das ist der Anlass mit dem sichersten ersten Ergebnis.", link: "schnell-anfrage.html", linktext: "Schnell-Anfrage" },
+    einstieg: { text: "Lass dir für deine Stunde einen Einstieg mit Vermutung entwerfen und prüf ihn mit den drei Fragen vor dem Kopieren.", link: "schnell-anfrage.html", linktext: "Schnell-Anfrage" },
     uebung: { text: "Mach aus einem Arbeitsblatt eine Übung, deren Rückmeldung erklärt statt nur richtig oder falsch zu zeigen.", link: "digitalisieren.html", linktext: "Bisherigen Unterricht digitalisieren" },
-    erwartung: { text: "Lass dir einen Erwartungshorizont zu einer eigenen Aufgabe entwerfen und streiche, was zu viel ist.", link: "ki.html#t-schnell", linktext: "Schnell-Anfrage" },
+    erwartung: { text: "Lass dir einen Erwartungshorizont zu einer eigenen Aufgabe entwerfen und streiche, was zu viel ist.", link: "schnell-anfrage.html", linktext: "Schnell-Anfrage" },
     praesentation: { text: "Bau eine Präsentation um: eine Frage je Folie, Vermutung vor der Auflösung.", link: "digitalisieren.html", linktext: "Bisherigen Unterricht digitalisieren" },
-    eltern: { text: "Lass dir eine Elterninformation entwerfen – ohne Namen – und formuliere sie in deinen Ton um.", link: "ki.html#t-schnell", linktext: "Schnell-Anfrage" },
+    eltern: { text: "Lass dir eine Elterninformation entwerfen – ohne Namen – und formuliere sie in deinen Ton um.", link: "schnell-anfrage.html", linktext: "Schnell-Anfrage" },
     lernseite: { text: "Sieh dir bei den Unterrichtsbeispielen eines aus deinem Fach an, bevor du selbst etwas baust.", link: "galerie.html", linktext: "Zu den Unterrichtsbeispielen" },
     lernende: { text: "Leg für eine eigene Aufgabe fest, was Lernende mit KI dürfen und was sie selbst tun.", link: "lernende-ki.html", linktext: "Wenn deine Lernenden mit KI arbeiten" },
     zuschauen: { text: "Zuschauen ist ein guter Anfang. Sieh dir an, was im Unterricht schon ausprobiert wurde.", link: "galerie.html", linktext: "Zu den Unterrichtsbeispielen" }
@@ -596,7 +597,7 @@
     }
     (a.anlass || []).slice(1).forEach(function (k) { push(SP_ANLASS[k]); });
     if (id === "anfang" || a.s_duerfen === "unsicher" || hat("hindernis", "datenschutz")) push({ text: "Lies die fünf Regeln zum sicheren Arbeiten – dann weißt du, was in die KI darf und was nicht.", link: "sicher.html", linktext: "Sicher arbeiten" });
-    if (id === "enttaeuscht") push({ text: "Bau deine alte Anfrage nach den fünf Teilen um: Ziel, Kontext, Vorgaben, Format, Prüfkriterien.", link: "ki.html#t-lernen", linktext: "Prompten lernen" });
+    if (id === "enttaeuscht") push({ text: "Bau deine alte Anfrage nach den fünf Teilen um: Ziel, Kontext, Vorgaben, Format, Prüfkriterien.", link: "prompten.html", linktext: "Prompten lernen" });
     if (id === "fuersich" && !papier) push({ text: "Prüf eine Stelle deiner Stunde mit der Papierfrage: Was kann das Tablet hier besser?", link: "papierfrage.html", linktext: "Zur Papierfrage" });
     if (id === "weit") push({ text: "Prüf dein bestes Material mit dem Digital-Check. Der Bericht beginnt mit den Stärken.", link: "selbstcheck.html", linktext: "Digital-Check" });
     if (id === "offen") push({ text: "Bring deine Stunde mit und nenn die Stelle, an der die Lernenden hängen bleiben. Mehr braucht die erste Stunde nicht.", link: "beratung.html", linktext: "Beratungsstunde" });

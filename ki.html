@@ -7,7 +7,7 @@
 <meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
 <title>KI-Training – Kidu</title>
 <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/hilde.css?v=90679a57">
+<link rel="stylesheet" href="assets/hilde.css?v=844b013d">
 <script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
 </head>
 <body>
@@ -19,184 +19,153 @@
 </div></header>
 <main id="inhalt" tabindex="-1">
 <div class="bereich-ki">
-<section class="bereichskopf kompakt mit-motiv"><div class="huelle huelle-weit kopf-mit-motiv">
-  <div class="kopf-text">
-  <h1 class="passer" data-passer="KI-Training">KI-Training</h1>
-  <p class="marker">Bereich: KI-Training</p>
-  <p class="detail-kurz">Eine gute Anfrage an die KI heißt Prompt. Hier holst du dir schnell einen fertigen – oder lernst Schritt für Schritt, wie du selbst einen baust.</p>
-  <div class="ki-eingaenge">
-    <a class="ki-eingang" href="#schnell"><b>Schnell-Anfrage</b><span>Anlass wählen, drei Angaben, kopieren. In 30 Sekunden.</span><span class="weiter">Prompt holen <span aria-hidden="true">↓</span></span></a>
-    <a class="ki-eingang still" href="#lernen-weg"><b>Prompten lernen</b><span>In fünf Schritten zu deiner eigenen Anfrage – mit Erklärung.</span><span class="weiter">Schritt für Schritt <span aria-hidden="true">↓</span></span></a>
+<!-- Ab 4.47: das KI-Training als Fahrplan (Entscheidung Mario, 17.11.2026: dieselbe Übersicht wie im Digitalen Unterricht,
+     die Phasen bleiben, die Seite beginnt nicht mehr mit der Schnell-Anfrage). Gleiche Form wie unterricht.html, in Ocker.
+     Jede Phase beginnt mit einem Anliegen in der Ich-Form – so steigt jede Person dort ein, wo sie steht, ohne Stufen.
+     Werkzeuge der Phasen: src/fahrplan-ki.json. Was vorher auf dieser Seite stand, hat eigene Seiten: erste-minuten.html,
+     schnell-anfrage.html, prompten.html. Alte Sprungmarken leiten dorthin (data-alte-marken, assets/fahrplan.js). -->
+<section class="leitband leitband-weg leitband-ki" aria-labelledby="t-leitfrage"><div class="huelle huelle-weit leitband-innen">
+  <div class="leitband-text">
+    <h1 class="leitband-bereich">KI-Training · Fortbildung zum Selbermachen</h1>
+    <h2 id="t-leitfrage" class="leitband-frage">In vier Phasen sicher mit KI arbeiten</h2>
+    <p>Steig dort ein, wo du gerade stehst. Jede Phase beginnt mit einem Anliegen.</p>
   </div>
-  </div>
-  <svg class="motiv" viewBox="0 0 360 200" aria-hidden="true" focusable="false">
-    <!-- Eine Anfrage aus fünf Teilen: Ziel, Kontext, Anforderungen, Format, Prüfkriterien – gestapelte Honigplatten -->
-    <g class="m-platte"><rect x="58" y="22" width="240" height="26" rx="3"/><rect x="40" y="56" width="280" height="26" rx="3"/><rect x="70" y="90" width="210" height="26" rx="3"/><rect x="48" y="124" width="250" height="26" rx="3"/><rect x="84" y="158" width="190" height="26" rx="3"/></g>
-    <g class="m-honig"><rect x="52" y="16" width="240" height="26" rx="3"/><rect x="34" y="50" width="280" height="26" rx="3"/><rect x="64" y="84" width="210" height="26" rx="3"/><rect x="42" y="118" width="250" height="26" rx="3"/><rect x="78" y="152" width="190" height="26" rx="3"/></g>
-    <g class="m-schwarz"><circle cx="66" cy="29" r="7"/><circle cx="48" cy="63" r="7"/><circle cx="78" cy="97" r="7"/><circle cx="56" cy="131" r="7"/><circle cx="92" cy="165" r="7"/></g>
-    <g class="m-linie"><path d="M86 29h120M68 63h170M98 97h110M76 131h150M112 165h90"/></g>
-  </svg>
+  <p class="leitband-beispiele"><a href="galerie.html"><b>Unterrichtsbeispiele: analog und digital</b><span>beides mit KI erstellt <span aria-hidden="true">→</span></span></a></p>
 </div></section>
 
-<section class="abschnitt erste-minuten" aria-labelledby="t-erste"><div class="huelle huelle-weit stapel">
-  <h2 id="t-erste">Deine ersten zehn Minuten</h2>
-  <p class="mass">Noch nie mit KI gearbeitet? Dann geh diese vier Schritte einmal durch. Mehr brauchst du für den Anfang nicht.</p>
-  <ol class="erste-schritte">
-    <li><b>KI-System öffnen</b><span>Nimm ein an deiner Schule freigegebenes KI-System. In Baden-Württemberg sind das zum Beispiel F13 für Lehrkräfte und AIS.chat, wenn die Schulleitung es freigeschaltet hat. Stand: November 2026.</span></li>
-    <li><b>Prompt holen und einfügen</b><span>Wähl gleich hier unten einen Anlass. Kopier den Prompt. Füg ihn im KI-System ein und schick ihn ab.</span></li>
-    <li><b>Ergebnis prüfen</b><span>Drei Fragen: Stimmt das fachlich? Passt es zu meiner Lerngruppe? Steht etwas da, das ich nicht belegen kann? KI kann Fakten und Quellen erfinden.</span></li>
-    <li><b>Einmal nachfragen</b><span>Schreib eine zweite Nachricht, zum Beispiel: »Kürzer.« · »Einfacher, für das erste Ausbildungsjahr.« · »Was davon sollte ich nachprüfen?« · »Zeig mir zwei andere Fassungen.«</span></li>
+<section class="abschnitt phasen-abschnitt" aria-labelledby="t-phasen"><div class="huelle huelle-weit">
+  <div class="fahrplan-leiste">
+    <h2 id="t-phasen" class="fahrplan-titel">Die vier Phasen</h2>
+    <p class="fahrplan-bedienung">Tipp eine Phase an. Du kannst bei jeder Nummer einsteigen.</p>
+    <button type="button" class="knopf still fahrplan-alle" id="fahrplan-alle" aria-expanded="false" aria-controls="fahrplan" hidden>Alle Werkzeuge zeigen</button>
+  </div>
+  <ol class="fahrplan" id="fahrplan" data-alte-marken='{"#t-erste":"erste-minuten.html","#schnell":"schnell-anfrage.html","#t-schnell":"schnell-anfrage.html","#lernen-weg":"prompten.html","#t-lernen":"prompten.html","#t-generator":"prompten.html#t-generator","#t-werkstatt":"#fahrplan","#t-bezug":"#fahrplan"}'>
+    <li class="fahrplan-phase ist-vorspann" id="phase-grundlagen">
+      <span class="fahrplan-nr" aria-hidden="true">1</span>
+      <details class="fahrplan-platte">
+        <summary class="fahrplan-kopf">
+          <span class="fahrplan-wann">zuerst</span>
+          <h3 class="fahrplan-name">Grundlagen</h3>
+          <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich will erst verstehen.«</b> Was KI kann, wo sie irrt und was nicht hineingehört.</span>
+          <span class="fahrplan-zahl">5 Werkzeuge</span>
+        </summary>
+        <div class="fahrplan-inhalt">
+          <ul class="fahrplan-werkzeuge">
+            <li><a href="erste-minuten.html"><b>Deine ersten zehn Minuten</b> <span class="fahrplan-fuer">für den Anfang</span><span class="fahrplan-text">Vier Schritte: KI-System öffnen, Prompt holen, Ergebnis prüfen, einmal nachfragen.</span></a></li>
+            <li><a href="pruef-labor.html"><b>Prüf-Labor</b><span class="fahrplan-text">Drei Übungen: Fehler finden, abgeben oder selbst machen, was darf hinein.</span><span class="fahrplan-marken">geht ohne KI · auch auf Papier</span></a></li>
+            <li><a href="sicher.html"><b>Sicher arbeiten in fünf Regeln</b><span class="fahrplan-text">Daten, Prüfen, Bildrechte, Lernseiten, Persönliches. Gilt auch für den Digitalen Unterricht.</span><span class="fahrplan-marken">geht ohne KI</span></a></li>
+            <li><a href="ki-fach.html"><b>KI für dein Fach einrichten</b><span class="fahrplan-text">Einmal aufschreiben, was in deinem Fach gilt. Danach reicht ein kurzer Auftrag.</span></a></li>
+            <li><a href="ki-aufgaben.html"><b>Trainingsaufgaben</b><span class="fahrplan-text">Zwölf Übungen mit dem KI-System deiner Schule, an deinem eigenen Material.</span></a></li>
+          </ul>
+        </div>
+      </details>
+    </li>
+    <li class="fahrplan-zwischen" aria-hidden="true">dann rund um jede Stunde</li>
+    <li class="fahrplan-phase ist-zart ist-ring-start" id="phase-vorbereiten">
+      <span class="fahrplan-nr" aria-hidden="true">2</span>
+      <details class="fahrplan-platte">
+        <summary class="fahrplan-kopf">
+          <span class="fahrplan-wann">vor der Stunde</span>
+          <h3 class="fahrplan-name">Unterricht mit KI vorbereiten</h3>
+          <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich brauche etwas für morgen.«</b> Prompt holen, Ergebnis prüfen, anpassen.</span>
+          <span class="fahrplan-zahl">5 Werkzeuge</span>
+        </summary>
+        <div class="fahrplan-inhalt">
+          <ul class="werkzeuge tueren">
+            <li class="werkzeug tuer">
+              <a href="schnell-anfrage.html">
+                <span class="werkzeug-text"><span class="tuer-ueber">Ich brauche schnell etwas</span><b>Schnell-Anfrage</b>Anlass wählen, drei Angaben, Prompt kopieren.</span>
+                <span class="werkzeug-los" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li class="tueren-oder" aria-hidden="true">oder</li>
+            <li class="werkzeug tuer">
+              <a href="prompten.html">
+                <span class="werkzeug-text"><span class="tuer-ueber">Ich will es selbst können</span><b>Prompten lernen</b>In fünf Schritten zu deiner eigenen Anfrage, mit Erklärung.</span>
+                <span class="werkzeug-los" aria-hidden="true">→</span>
+              </a>
+            </li>
+          </ul>
+          <p class="fahrplan-dazu">Dazu, wenn du willst:</p>
+          <ul class="fahrplan-werkzeuge">
+            <li><a href="auftraege.html"><b>Aufträge zum Kopieren</b><span class="fahrplan-text">Lernmethode einführen, KI-Regeln für eine Aufgabe, KI-Antworten prüfen und mehr.</span></a></li>
+            <li><a href="papierkoffer.html"><b>Aufgabenkoffer auf Papier</b><span class="fahrplan-text">Die Ideen des Aufgabenkoffers für Papier, Tafel und Raum – je mit einem Auftrag für das Material.</span></a></li>
+            <li><a href="skillkoffer.html"><b>Skillkoffer</b> <span class="fahrplan-fuer">für Fortgeschrittene · im Digitalen Unterricht</span><span class="fahrplan-text">Die Anleitungen hinter den Werkzeugen als Skills zum Herunterladen – und was damit entsteht.</span></a></li>
+          </ul>
+        </div>
+      </details>
+    </li>
+    <li class="fahrplan-phase ist-ring-mitte" id="phase-unterrichten">
+      <span class="fahrplan-nr" aria-hidden="true">3</span>
+      <details class="fahrplan-platte">
+        <summary class="fahrplan-kopf">
+          <span class="fahrplan-wann">in der Stunde</span>
+          <h3 class="fahrplan-name">Unterrichten</h3>
+          <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Meine Lernenden arbeiten mit KI.«</b> Regeln und Aufgaben, bei denen sie selbst denken.</span>
+          <span class="fahrplan-zahl">2 Werkzeuge</span>
+        </summary>
+        <div class="fahrplan-inhalt">
+          <ul class="fahrplan-werkzeuge">
+            <li><a href="lernende-ki.html"><b>Wenn deine Lernenden mit KI arbeiten</b><span class="fahrplan-text">Drei Regeln, damit die KI das Denken nicht übernimmt.</span><span class="fahrplan-marken">geht ohne KI</span></a></li>
+            <li><a href="ki-aufgaben.html#tr-begleiten"><b>Lernszenario und Dialogpartner vorher testen</b><span class="fahrplan-text">Spiel selbst durch, was deine Lernenden erleben.</span></a></li>
+          </ul>
+        </div>
+      </details>
+    </li>
+    <li class="fahrplan-phase ist-zart ist-ring-ende" id="phase-nach">
+      <span class="fahrplan-nr" aria-hidden="true">4</span>
+      <details class="fahrplan-platte">
+        <summary class="fahrplan-kopf">
+          <span class="fahrplan-wann">nach der Stunde</span>
+          <h3 class="fahrplan-name">Nach der Stunde</h3>
+          <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich will auswerten und teilen.«</b> Was hat geholfen? Mit dem Kollegium weiterlernen.</span>
+          <span class="fahrplan-zahl">3 Werkzeuge</span>
+        </summary>
+        <div class="fahrplan-inhalt fahrplan-gruppen">
+          <div class="fahrplan-gruppe">
+            <h4>Für dich</h4>
+            <ul class="fahrplan-werkzeuge">
+              <li><a href="fortbildungsbogen.html"><b>Mein Fortbildungsbogen</b> <span class="fahrplan-fuer">im Digitalen Unterricht</span><span class="fahrplan-text">Wo du mit KI und Tablets stehst. Am Ende eine PDF für deine Fortbildung und bis zu drei nächste Schritte.</span></a></li>
+              <li><a href="auftraege.html#erkunden"><b>Eine Idee im Unterricht erproben</b><span class="fahrplan-text">Eine Frage, Belege aus dem Alltag, eine ehrliche Auswertung.</span></a></li>
+            </ul>
+          </div>
+          <div class="fahrplan-gruppe">
+            <h4 id="t-ki-kollegium">Im Kollegium</h4>
+            <ul class="fahrplan-werkzeuge">
+              <li><a href="kollegium.html"><b>Mit dem Kollegium</b><span class="fahrplan-text">Sechs Formate, um gemeinsam weiterzulernen: vom Tandem bis zur Fachgruppe.</span><span class="fahrplan-marken">geht ohne KI</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </li>
   </ol>
-  <p class="leise klein">Gib keine Namen, Noten oder anderen personenbezogenen Daten ein. Das Ergebnis darf ganz analog bleiben, zum Beispiel als Arbeitsblatt auf Papier.</p>
+  <p class="fahrplan-ring"><span class="fahrplan-ring-pfeil" aria-hidden="true">↑</span> Nächste Stunde: wieder bei 2</p>
+  <p class="bezug-lernen">KI kann Unterricht vorbereiten, der ganz analog bleibt. Wenn du Lernen mit Tablets gestalten willst: <a class="textlink" href="unterricht.html">Zum Digitalen Unterricht <span aria-hidden="true">→</span></a></p>
 </div></section>
 
-<section class="band band-flaeche schnell" id="schnell" aria-labelledby="t-schnell" tabindex="-1"><div class="huelle schnell-raster">
-  <div class="schnell-kopf">
-    <h2 id="t-schnell">Schnell-Anfrage</h2>
-    <p>Wähle einen Anlass und gib Fach, Thema und Lerngruppe an. Der Prompt entsteht sofort rechts. Kopiere ihn in ein an deiner Schule freigegebenes KI-System.</p>
-    <p class="datenhinweis">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben. Deine Angaben werden nicht gespeichert.</p>
+<!-- Ab 4.47: die fünf Fähigkeiten der Trainingsaufgaben (assets/daten/training.js, gruppen) – ohne Stufen, ohne Rangfolge.
+     Namen und Fragen prüft tools/pruefen.py gegen die Daten. Ohne Links: Die Werkzeuge stehen nur im Fahrplan (eine Struktur). -->
+<section class="abschnitt ki-faehig" aria-labelledby="t-faehig"><div class="huelle huelle-weit">
+  <div class="ki-faehig-kopf">
+    <h2 id="t-faehig" class="klein-titel">Was du in allen Phasen übst</h2>
+    <p>Fünf Fähigkeiten. Keine Stufen: Du übst jede an deinem eigenen Material – so weit, wie es für deinen Unterricht passt.</p>
   </div>
-  <form class="schnell-form" id="schnell-form" novalidate>
-    <fieldset class="schnell-anlaesse">
-      <legend>Wofür brauchst du einen Prompt?</legend>
-      <div class="anlass-raster" id="anlaesse"></div>
-    </fieldset>
-    <div class="schnell-felder">
-      <div class="eingabe"><label for="s-fach">Fach</label><input type="text" id="s-fach" autocomplete="off" placeholder="z. B. Kfz-Technik"></div>
-      <div class="eingabe"><label for="s-thema">Thema</label><input type="text" id="s-thema" autocomplete="off" placeholder="z. B. Bremsanlage"></div>
-      <div class="eingabe"><label for="s-gruppe">Lerngruppe</label><input type="text" id="s-gruppe" autocomplete="off" placeholder="z. B. 1. Ausbildungsjahr"></div>
-    </div>
-  </form>
-  <div class="schnell-ergebnis">
-    <label for="schnell-prompt"><b>Dein Prompt</b> – du kannst ihn ändern</label>
-    <textarea id="schnell-prompt" rows="16" spellcheck="false"></textarea>
-    <div class="kopieren"><button type="button" class="knopf" id="schnell-kopieren">Prompt kopieren</button><span id="schnell-status" class="leise" aria-live="polite"></span></div>
-    <p class="klein">Die fünf Überschriften im Prompt – Ziel, Kontext, Anforderungen, Format, Prüfkriterien – lernst du unten bei <a href="#lernen-weg">Prompten lernen</a> kennen.</p>
-  </div>
-  <noscript><p class="box">Die Schnell-Anfrage braucht JavaScript.</p></noscript>
-</div></section>
-
-
-<!-- Ab 4.46: das KI-Training in vier Phasen – dieselben wie im Digitalen Unterricht (Namen der Phasen 2–4 wie in src/fahrplan.json).
-     Hier entsteht vieles auf Papier, mit KI vorbereitet. Statisch, weil die Werkzeuge auf verschiedenen Seiten liegen. -->
-<section class="abschnitt ki-werkstatt" aria-labelledby="t-werkstatt"><div class="huelle huelle-weit stapel">
-  <div class="ki-phasen-kopf">
-    <h2 id="t-werkstatt">Weiter im KI-Training: vier Phasen</h2>
-    <p class="mass">Dieselben Phasen wie im Digitalen Unterricht. Nur bleibt hier vieles auf Papier – mit KI vorbereitet. Auch das ist ein gutes Ergebnis.</p>
-  </div>
-  <ol class="ki-phasen">
-    <li class="ki-phase">
-      <p class="ki-phase-kopf"><b class="ki-phase-nr" aria-hidden="true">1</b><span><small>zuerst</small>Grundlagen</span></p>
-      <ul class="gruppe-liste">
-        <li class="werkzeug"><a href="#t-erste"><span class="werkzeug-text"><b>Deine ersten zehn Minuten</b>Vier Schritte für den Anfang.</span><span class="werkzeug-los" aria-hidden="true">↑</span></a></li>
-        <li class="werkzeug"><a href="sicher.html"><span class="werkzeug-text"><b>Sicher arbeiten in fünf Regeln</b>Daten, Prüfen, Bildrechte, Lernseiten, Persönliches.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
-        <li class="werkzeug"><a href="ki-fach.html"><span class="werkzeug-text"><b>KI für dein Fach einrichten</b>Einmal aufschreiben, was in deinem Fach gilt.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
-        <li class="werkzeug"><a href="ki-aufgaben.html"><span class="werkzeug-text"><b>Trainingsaufgaben</b>Zwölf Übungen mit dem KI-System deiner Schule: Assistent, Lernszenario, Dialogpartner.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
-      </ul>
-    </li>
-    <li class="ki-phase">
-      <p class="ki-phase-kopf"><b class="ki-phase-nr" aria-hidden="true">2</b><span><small>vor der Stunde</small>Unterricht mit KI vorbereiten</span></p>
-      <ul class="gruppe-liste">
-        <li class="werkzeug"><a href="#schnell"><span class="werkzeug-text"><b>Schnell-Anfrage</b>Anlass wählen, drei Angaben, kopieren.</span><span class="werkzeug-los" aria-hidden="true">↑</span></a></li>
-        <li class="werkzeug"><a href="#lernen-weg"><span class="werkzeug-text"><b>Prompten lernen</b>In fünf Schritten zu deiner eigenen Anfrage.</span><span class="werkzeug-los" aria-hidden="true">↓</span></a></li>
-        <li class="werkzeug"><a href="papierkoffer.html"><span class="werkzeug-text"><b>Aufgabenkoffer auf Papier</b>Die Ideen des Aufgabenkoffers für Papier, Tafel und Raum – je mit einem Auftrag für das Material.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
-        <li class="werkzeug"><a href="auftraege.html"><span class="werkzeug-text"><b>Aufträge zum Kopieren</b>Lernmethode einführen, KI-Regeln für eine Aufgabe, KI-Antworten prüfen und mehr.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
-      </ul>
-    </li>
-    <li class="ki-phase">
-      <p class="ki-phase-kopf"><b class="ki-phase-nr" aria-hidden="true">3</b><span><small>in der Stunde</small>Unterrichten</span></p>
-      <ul class="gruppe-liste">
-        <li class="werkzeug"><a href="lernende-ki.html"><span class="werkzeug-text"><b>Wenn deine Lernenden mit KI arbeiten</b>Drei Regeln, damit die KI das Denken nicht übernimmt.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
-        <li class="werkzeug"><a href="ki-aufgaben.html#tr-begleiten"><span class="werkzeug-text"><b>Lernszenario und Dialogpartner vorher testen</b>Spiel selbst durch, was deine Lernenden erleben.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
-      </ul>
-    </li>
-    <li class="ki-phase">
-      <p class="ki-phase-kopf"><b class="ki-phase-nr" aria-hidden="true">4</b><span><small>nach der Stunde</small>Nach der Stunde</span></p>
-      <ul class="gruppe-liste">
-        <li class="werkzeug"><a href="auftraege.html#erkunden"><span class="werkzeug-text"><b>Eine Idee im Unterricht erproben</b>Eine Frage, Belege aus dem Alltag, eine ehrliche Auswertung.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
-        <li class="werkzeug"><a href="fortbildungsbogen.html"><span class="werkzeug-text"><b>Mein Fortbildungsbogen</b>Wo stehst du mit KI und digitalem Unterricht?</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
-      </ul>
-    </li>
-  </ol>
-  <ul class="werkzeuge ki-extra">
-    <li class="werkzeug">
-      <a href="skillkoffer.html">
-        <span class="werkzeug-text"><b>Skillkoffer · für Fortgeschrittene</b>Die Anleitungen hinter den Werkzeugen als Skills zum Herunterladen – und was damit entsteht.</span>
-        <span class="werkzeug-los" aria-hidden="true">→</span>
-      </a>
-    </li>
+  <ul class="ki-faehig-liste">
+    <li><b>Abgeben oder selbst machen</b><span>Welche Aufgabe gebe ich ab, welche bleibt bei mir – und warum?</span></li>
+    <li><b>Gut beschreiben</b><span>Was braucht die KI, damit sie nicht rät?</span></li>
+    <li><b>Kritisch prüfen</b><span>Stimmt das? Fehlt etwas? Woher weiß ich das?</span></li>
+    <li><b>Verantwortlich handeln</b><span>Darf ich das eingeben? Wie mache ich KI-Hilfe sichtbar?</span></li>
+    <li><b>Lernende begleiten</b><span>Wie lernen Lernende mit KI, ohne dass die KI das Denken übernimmt?</span></li>
   </ul>
-</div></section>
-
-<section class="abschnitt lernen-auftakt" id="lernen-weg" aria-labelledby="t-lernen" tabindex="-1"><div class="huelle ki-raster">
-  <div class="ki-aufbau">
-    <h2 id="t-lernen">Prompten lernen</h2>
-    <p>Eine gute Anfrage hat fünf Teile. Der Generator unten baut sie Schritt für Schritt mit dir zusammen. Seine Schritte heißen anders als die Teile: Bei jedem Schritt steht, welcher Teil gerade entsteht. Im Schritt »Anfrage« siehst du alle fünf Teile und kannst jeden ändern.</p>
-    <details class="mehr">
-      <summary>Die fünf Teile einer guten Anfrage</summary>
-      <ol class="bausteine-liste" id="bausteine-liste"></ol>
-      <noscript><p class="klein">Ziel · Kontext · Anforderungen · Format · Prüfkriterien</p></noscript>
-    </details>
-    <details class="mehr">
-      <summary>Vorher und nachher: derselbe Wunsch, zwei Prompts</summary>
-      <div class="vorher-nachher">
-        <div><p class="vn-titel">Schwach</p><p class="vn-text">»Mach mir ein Arbeitsblatt über die Bremsanlage.«</p><p class="klein">Die KI muss raten: für wen, wie schwer, in welcher Form. Das Ergebnis passt selten.</p></div>
-        <div><p class="vn-titel">Gut</p><p class="vn-text">»<b>Ziel:</b> Erstelle ein Arbeitsblatt zur Scheibenbremse. <b>Kontext:</b> Kfz-Technik, 1. Ausbildungsjahr, viele Lernende mit Deutsch als Zweitsprache. <b>Anforderungen:</b> kurze Sätze, drei Aufgaben vom Benennen bis zum Begründen. <b>Format:</b> eine Seite, Tabelle für die Bauteile. <b>Prüfkriterien:</b> Prüfe die Fachbegriffe und markiere, was ich nachsehen sollte.«</p><p class="klein">Jeder Teil nimmt der KI eine Vermutung ab.</p></div>
-      </div>
-    </details>
-  </div>
-  <div class="ki-regeln">
-    <h2 class="klein-titel">Bevor du loslegst</h2>
-    <ul class="leitsaetze">
-      <li>Nutze ein an deiner Schule freigegebenes KI-System. In Baden-Württemberg sind das zum Beispiel F13 für Lehrkräfte und AIS.chat, wenn die Schulleitung es freigeschaltet hat.</li>
-      <li>Gib keine Namen, Noten oder anderen personenbezogenen Daten ein.</li>
-      <li>KI kann Fakten und Quellen erfinden. Du prüfst, was du übernimmst.</li>
-      <li>Der Entwurf geht schneller. Die Prüfung bleibt bei dir – plane Zeit dafür ein.</li>
-      <li>Das Ergebnis darf ganz analog bleiben, zum Beispiel als Arbeitsblatt auf Papier.</li>
-    </ul>
-    <p class="klein"><a class="textlink" href="sicher.html">Alle fünf Regeln zum sicheren Arbeiten <span aria-hidden="true">→</span></a></p>
-  </div>
-</div></section>
-
-<section class="abschnitt weg-abschnitt" aria-labelledby="t-generator"><div class="huelle">
-  <h2 id="t-generator" class="weg-titel">Prompt-Generator</h2>
-  <p class="kopfnotiz">In fünf Schritten zu einem Prompt, den du kopieren und anpassen kannst. Kidu ist mit keiner KI verbunden.</p>
-  <nav class="schritte-nav" aria-label="Schritte des Prompt-Generators"><ol class="schritte" id="fortschritt"></ol><p class="schritte-stand" id="schritte-stand" aria-hidden="true"></p></nav>
-  <form id="weg" class="weg" novalidate></form>
-  <p id="ansage" class="sr-only" aria-live="polite"></p>
-  <p id="hinweis" class="hinweis-fehler" role="alert" hidden></p>
-  <div class="weg-steuerung" id="steuerung">
-    <button type="button" class="knopf still" id="zurueck">← Zurück</button>
-    <button type="button" class="knopf" id="weiter">Weiter →</button>
-  </div>
-  <p class="leise klein speicherhinweis">Deine Auswahl bleibt nur in diesem Browser. Freitexte werden nicht gespeichert. <button type="button" class="linkknopf" id="loeschen">Eingaben löschen</button></p>
-  <noscript><p class="box">Der Prompt-Generator braucht JavaScript. Beispiele findest du auch bei den <a href="galerie.html">Unterrichtsbeispielen</a>.</p></noscript>
-</div></section>
-
-<section class="abschnitt band-karton" aria-labelledby="t-bezug"><div class="huelle bezug-band">
-  <h2 id="t-bezug" class="klein-titel">KI-Training und Digitaler Unterricht</h2>
-  <p>KI kann Unterricht vorbereiten, der ganz analog bleibt. Mit KI können aber auch digitale Lernangebote entstehen. Du findest sie bei den Unterrichtsbeispielen.</p>
-  <p><a class="textlink" href="galerie.html">Zu den Unterrichtsbeispielen <span aria-hidden="true">→</span></a> <a class="textlink" href="unterricht.html">Zum Digitalen Unterricht <span aria-hidden="true">→</span></a></p>
+  <details class="mehr ki-faehig-warum">
+    <summary>Warum Anliegen statt Stufen?</summary>
+    <p>Im Kollegium arbeiten manche jeden Tag mit KI, andere noch nie. Eine Rangfolge von »Anfänger« bis »Profi« hilft dabei wenig. Wer sich selbst einstuft, liegt oft daneben – gerade bei KI. Deshalb fragt Kidu nach dem Anliegen: Was brauchst du gerade?</p>
+    <p>Fortbildungen wirken eher, wenn sie am eigenen Unterricht ansetzen, sich über mehrere Termine ziehen und Austausch mit Kolleg*innen einplanen. Das ist gut untersucht. Ob das KI-Training von Kidu so wirkt, ist noch offen: Es ist ein Vorschlag und noch nicht erprobt.</p>
+    <p class="klein">Grundlage: Recherche vom 17.11.2026, unter anderem Lipowsky und Rzejak zu wirksamen Fortbildungen, die Übersichtsarbeit von Sims und anderen (2021) zu den Bausteinen wirksamer Fortbildung, die Handlungsempfehlung der Kultusministerkonferenz zum Umgang mit KI (2024) und eine Studie der Aalto-Universität (2025) zur Selbsteinschätzung beim Arbeiten mit KI.</p>
+  </details>
 </div></section>
 </div>
-<script src="assets/daten/taxonomien.js?v=eb73b10b"></script>
-<script src="assets/daten/beispiele.js?v=859fc8ba"></script>
-<script src="assets/daten/galerie.js?v=0f292602"></script>
-<script src="assets/daten/texte.js?v=7a655256"></script>
-<script src="assets/ki-anfrage.js?v=3a346bc2"></script>
-<script src="assets/hilde.js?v=e22353fb"></script>
-<script src="assets/ki-weg.js?v=9b485aed"></script>
-<script src="assets/daten/schnell.js?v=3b6b187b"></script>
-<script src="assets/schnell-anfrage.js?v=c93dfd0d"></script>
-<script src="assets/ki-schnell.js?v=b37d3447"></script>
-<script>
-(function () {
-  var l = document.getElementById("bausteine-liste");
-  if (l && window.KI_TEXTE) l.innerHTML = KI_TEXTE.bausteine.map(function (b) {
-    return "<li><b>" + HILDE.esc(b.name) + "</b><span>" + HILDE.esc(b.warum) + (b.schritt ? ' <span class="leise">' + HILDE.esc(b.schritt) + "</span>" : "") + "</span></li>";
-  }).join("");
-})();
-</script>
+<script src="assets/fahrplan.js?v=5f01291a"></script>
 
 </main>
 <footer class="fuss"><div class="huelle">

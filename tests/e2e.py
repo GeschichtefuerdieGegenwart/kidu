@@ -171,9 +171,9 @@ def main():
         pruefe(not pg.konsole, f"Keine Konsolenfehler im Kernweg {pg.konsole}")
         pg.context.close()
 
-        # 2b. KI-Weg (Szenario 1): KI-unerfahrene Lehrkraft, analog genutztes Arbeitsblatt
+        # 2b. KI-Weg (Szenario 1): KI-unerfahrene Lehrkraft, analog genutztes Arbeitsblatt. Ab 4.47 auf eigener Seite (prompten.html)
         pg = neue_seite(b)
-        pg.goto(url("ki.html"))
+        pg.goto(url("prompten.html"))
         pg.click("#weiter")
         pruefe(pg.is_visible("#hinweis"), "KI-Weg: Hinweis, wenn kein Ziel gewählt ist")
         pruefe(pg.locator('input[name="ziel"]').count() == 4 and "Guter Anfang" in pg.inner_text(".optionen .option >> nth=0"), "KI-Weg: zuerst vier Ziele, »KI erst einmal ausprobieren« als guter Anfang vorn")
@@ -208,12 +208,13 @@ def main():
         pruefe(not pg.konsole, f"KI-Weg: keine Konsolenfehler {pg.konsole}")
         pg.context.close()
 
-        # 2b2. Version 4.3: Prompt-Labor (Schnell-Anfrage) und »Unterricht digitalisieren«
+        # 2b2. Version 4.3: Prompt-Labor (Schnell-Anfrage) und »Unterricht digitalisieren«. Ab 4.47: Die Schnell-Anfrage hat eine
+        # eigene Seite, ki.html zeigt den Fahrplan; die alte Sprungmarke #schnell führt zur neuen Seite.
         pg = neue_seite(b)
-        pg.goto(url("ki.html"))
-        k = pg.locator(".ki-eingang").first.bounding_box()
-        pruefe(pg.locator(".ki-eingang").count() == 2 and k and k["y"] + k["height"] <= 720, "KI-Training: zwei Eingänge im ersten Bildschirm (1280 × 720)")
-        pg.click(".ki-eingang >> nth=0")
+        pg.goto(url("ki.html#schnell"))
+        pg.wait_for_url("**/schnell-anfrage.html")
+        k = pg.locator(".anlass-raster .anlass").first.bounding_box()
+        pruefe(k and k["y"] + k["height"] <= 720, "Schnell-Anfrage (4.47): alte Sprungmarke führt zur eigenen Seite, der erste Anlass steht im ersten Bildschirm")
         pg.check('input[name="anlass"][value="exit"]')
         pg.fill("#s-fach", "Kfz-Technik"); pg.fill("#s-thema", "Bremsanlage")
         t = pg.input_value("#schnell-prompt")
@@ -765,8 +766,10 @@ def main():
         pg.goto(url("sicher.html"))
         pruefe(pg.locator(".sicher-liste > li").count() == 5, "Sicher arbeiten: fünf Regeln")
         pg.goto(url("ki.html"))
-        pruefe(pg.locator(".ki-phasen > .ki-phase").count() == 4 and all(pg.locator(f'.ki-phasen a[href="{z}"]').count() == 1 for z in ["sicher.html", "ki-fach.html", "ki-aufgaben.html", "papierkoffer.html", "auftraege.html", "lernende-ki.html", "fortbildungsbogen.html"]), "KI-Training (4.46): vier Phasen wie im Digitalen Unterricht, mit Trainingsaufgaben und Aufgabenkoffer auf Papier")
-        pruefe(pg.locator('.ki-phasen a[href="muster.html"], .ki-phasen a[href="werkzeugkiste.html"]').count() == 0 and pg.locator('.ki-extra a[href="skillkoffer.html"]').count() == 1, "KI-Training (4.46): keine alten Wege, der Skillkoffer für Fortgeschrittene darunter")
+        # ab 4.47: die Werkzeuge stehen im Fahrplan KI-Training (vorher .ki-phasen, 4.46)
+        pruefe(pg.locator(".fahrplan > .fahrplan-phase").count() == 4 and all(pg.locator(f'.fahrplan a[href="{z}"]').count() == 1 for z in ["sicher.html", "ki-fach.html", "ki-aufgaben.html", "papierkoffer.html", "auftraege.html", "lernende-ki.html", "fortbildungsbogen.html", "skillkoffer.html", "pruef-labor.html", "kollegium.html"]), "KI-Training (4.47): alle Werkzeuge im Fahrplan, je einmal")
+        pruefe(pg.locator('.fahrplan a[href="muster.html"], .fahrplan a[href="werkzeugkiste.html"]').count() == 0, "KI-Training (4.47): keine alten Wege")
+        pg.goto(url("prompten.html"))
         pruefe("F13" in pg.inner_text(".ki-regeln") and "AIS.chat" in pg.inner_text(".ki-regeln"), "KI-Training: Landesangebote genannt (Entscheidung 31.10.2026)")
         # 2i. Version 4.25: Methodenkoffer und eine Quelle für alles
         # Aufgabenkoffer (ab 4.32)
@@ -849,13 +852,63 @@ def main():
         pg.select_option("#d-ausgabe", vorher[1])  # gemerkte Wahl zurücksetzen, damit spätere Tests den alten Stand sehen
         pg.goto(url("digital-check.html"))
         pruefe("# Typische Schwächen" in pg.input_value("#pruef-prompt") and "digital-check" in (pg.text_content("[data-kurzfassung]") or ""), "Digital-Check: typische Schwächen aus dem Skill (4.25)")
+        # 2g2. Version 4.47: KI-Training als Fahrplan (Entscheidung Mario, 17.11.2026) – vier Phasen mit Anliegen, die Werkzeuge aus
+        # src/fahrplan-ki.json, keine Schnell-Anfrage mehr oben; die alten Teile der Seite haben eigene Seiten.
         pg.goto(url("ki.html"))
-        pruefe(pg.locator('.ki-extra a[href="skillkoffer.html"]').count() == 1, "KI-Training: Weg zum Skillkoffer")
-        phasen = pg.eval_on_selector_all(".ki-phase", "ps => ps.map(p => [p.querySelector('.ki-phase-kopf span').lastChild.textContent.trim(), p.querySelectorAll('.werkzeug').length])")
-        oben = pg.evaluate("document.getElementById('t-werkstatt').compareDocumentPosition(document.getElementById('schnell')) & Node.DOCUMENT_POSITION_FOLLOWING")
-        reihe = pg.evaluate("['t-erste','schnell','t-werkstatt'].map(i => Math.round(document.getElementById(i).getBoundingClientRect().top + scrollY))")
-        pruefe(phasen == [["Grundlagen", 4], ["Unterricht mit KI vorbereiten", 4], ["Unterrichten", 2], ["Nach der Stunde", 2]] and not bool(oben), f"KI-Training (4.46): vier Phasen unter der Schnell-Anfrage {phasen}")
-        pruefe(reihe[0] < reihe[1] < reihe[2] and pg.locator(".erste-schritte > li").count() == 4 and "nachfragen" in pg.inner_text(".erste-minuten").lower() and "F13" in pg.inner_text(".erste-minuten"), f"KI-Training (4.33): erste zehn Minuten, dann Schnell-Anfrage, dann die Gruppen {reihe}")
+        phasen = pg.eval_on_selector_all("#fahrplan .fahrplan-phase", "ps => ps.map(p => [p.querySelector('.fahrplan-name').textContent.trim(), p.querySelectorAll('.fahrplan-inhalt a').length, p.querySelector('.fahrplan-anliegen').textContent.trim()])")
+        pruefe([x[:2] for x in phasen] == [["Grundlagen", 5], ["Unterricht mit KI vorbereiten", 5], ["Unterrichten", 2], ["Nach der Stunde", 3]] and all(x[2].startswith("»Ich") or x[2].startswith("»Meine") for x in phasen), f"KI-Training (4.47): vier Phasen, jede mit einem Anliegen {phasen}")
+        pruefe(pg.locator("#schnell, #schnell-form, #weg, .ki-eingang").count() == 0 and not any(pg.eval_on_selector_all("details.fahrplan-platte", "ds => ds.map(d => d.open)")), "KI-Training (4.47): beginnt mit dem Fahrplan, nicht mit der Schnell-Anfrage; alle Phasen zu")
+        k4 = pg.locator("#phase-nach .fahrplan-name").bounding_box()
+        pruefe(k4 and k4["y"] + k4["height"] <= 720, "KI-Training (4.47): alle vier Phasen im ersten Bildschirm (1280 × 720)")
+        farben = pg.evaluate("getComputedStyle(document.querySelector('.fahrplan-nr')).borderTopColor")
+        pruefe(farben == "rgb(125, 90, 28)", f"KI-Training (4.47): Fahrplan in Ocker ({farben})")
+        pg.click("#phase-vorbereiten summary")
+        pruefe(pg.locator('#phase-vorbereiten .werkzeuge.tueren a[href="schnell-anfrage.html"]').count() == 1 and pg.locator('#phase-vorbereiten .werkzeuge.tueren a[href="prompten.html"]').count() == 1, "KI-Training (4.47): Phase 2 mit zwei Türen – Schnell-Anfrage oder Prompten lernen")
+        pg.click("#phase-grundlagen summary")
+        pruefe("geht ohne KI · auch auf Papier" in pg.inner_text('#phase-grundlagen a[href="pruef-labor.html"]'), "KI-Training (4.47): das Prüf-Labor sagt, dass es ohne KI und auf Papier geht")
+        pruefe(pg.locator(".ki-faehig-liste > li").count() == 5 and pg.locator(".ki-faehig-liste a").count() == 0, "KI-Training (4.47): fünf Fähigkeiten ohne Rangfolge und ohne zweite Navigation")
+        pg.goto(url("unterricht.html"))
+        pruefe(pg.evaluate("getComputedStyle(document.querySelector('.fahrplan-nr')).borderTopColor") == "rgb(47, 93, 98)", "Digitaler Unterricht: Fahrplan bleibt Petrol")
+        for alt, neu in [("#t-erste", "erste-minuten.html"), ("#lernen-weg", "prompten.html"), ("#t-generator", "prompten.html#t-generator")]:
+            pg.goto(url("ki.html" + alt)); pg.wait_for_url("**/" + neu)
+            pruefe(pg.url.endswith(neu), f"KI-Training (4.47): alte Sprungmarke {alt} führt zu {neu}")
+        pg.goto(url("ki.html#t-werkstatt"))
+        pruefe(pg.url.endswith("ki.html#fahrplan") and pg.locator("#fahrplan").count() == 1, "KI-Training (4.47): #t-werkstatt bleibt auf der Seite beim Fahrplan")
+        for seite, phase in [("erste-minuten.html", "grundlagen"), ("pruef-labor.html", "grundlagen"), ("sicher.html", "grundlagen"), ("schnell-anfrage.html", "vorbereiten"),
+                             ("prompten.html", "vorbereiten"), ("lernende-ki.html", "unterrichten"), ("kollegium.html", "nach")]:
+            pg.goto(url(seite))
+            pruefe(pg.locator('.ort-zeile a[href="ki.html#fahrplan"]').count() == 1 and pg.locator(f'nav.fahrplan-fuss[aria-label="Fahrplan KI-Training"] .ist-hier a[href="ki.html#phase-{phase}"]').count() == 1, f"{seite} (4.47): Zeile oben und Fahrplan KI-Training unten, Phase {phase}")
+        pg.goto(url("skillkoffer.html"))
+        pruefe(pg.locator('.ort-zeile a[href="unterricht.html#fahrplan"]').count() == 1, "Skillkoffer (4.47): steht auch im KI-Training, sein Zuhause bleibt der Digitale Unterricht")
+        pg.goto(url("erste-minuten.html"))
+        pruefe(pg.locator(".erste-schritte > li").count() == 4 and "nachfragen" in pg.inner_text(".erste-minuten").lower() and "F13" in pg.inner_text(".erste-minuten") and pg.locator('.erste-weiter a[href="schnell-anfrage.html"]').count() == 1, "Deine ersten zehn Minuten (4.47): eigene Seite, vier Schritte, weiter zur Schnell-Anfrage")
+        # Prüf-Labor (4.47): erst festlegen, dann auflösen; Rückmeldung in Worten, keine Punkte
+        pg.goto(url("pruef-labor.html"))
+        pg.evaluate("localStorage.removeItem('hilde.prueflabor')"); pg.reload()
+        pruefe(pg.locator(".pl-satz-knopf").count() == 8 and pg.locator(".pl-urteil").count() == 0 and pg.locator(".pl-vorschlag").count() == 0, "Prüf-Labor: acht Sätze, keine Auflösung vor dem Festlegen")
+        pg.click('[data-satz="s3"]')
+        pg.focus('[data-satz="s5"]'); pg.keyboard.press("Enter")
+        pruefe(pg.get_attribute('[data-satz="s3"]', "aria-pressed") == "true" and pg.get_attribute('[data-satz="s5"]', "aria-pressed") == "true", "Prüf-Labor: Markieren mit Maus und Tastatur")
+        pg.reload()
+        pruefe(pg.get_attribute('[data-satz="s3"]', "aria-pressed") == "true", "Prüf-Labor: Markierung bleibt nach Neuladen")
+        pg.click("#pl-aufloesen")
+        text1 = pg.inner_text("#pl-saetze")
+        pruefe(pg.locator(".pl-urteil").count() == 8 and pg.locator(".pl-urteil.ist-fehler").count() == 5 and "Du hast den Satz markiert." in text1 and "Du hast den Satz nicht markiert." in text1, "Prüf-Labor: bei jedem Satz die Auflösung in Worten")
+        pruefe(not re.search(r"\d+ von \d+|Punkte", pg.inner_text("#pl-fehler")) and pg.is_visible("#pl-schritte"), "Prüf-Labor: keine Zählung, danach die Prüfschritte für echte Texte")
+        pruefe(pg.locator("#pl-a2 .pl-vorschlag").count() == 0, "Abgeben oder selbst machen: der Vorschlag kommt erst nach der eigenen Wahl")
+        pg.check('#pl-a2 input[value="abgeben"]')
+        pruefe("Vorschlag von Kidu: Selbst machen" in pg.inner_text("#pl-a2") and "Du: Abgeben und prüfen" in pg.inner_text("#pl-a2"), "Abgeben oder selbst machen: eigene Wahl und Vorschlag mit Begründung")
+        pg.check('#pl-h7 input[value="gruen"]')
+        pruefe("datensparsam" in pg.inner_text("#pl-h7") and "Erst umschreiben" in pg.inner_text("#pl-h7 .pl-vorschlag"), "Was darf hinein: Vorschlag und datensparsame Fassung")
+        gesp = pg.evaluate("localStorage.getItem('hilde.prueflabor')") or ""
+        pruefe('"a2":"abgeben"' in gesp and "Jonas" not in gesp, "Prüf-Labor: gespeichert werden nur die Wahlen, keine Texte")
+        pg.click("#pl-loeschen")
+        pruefe(pg.locator(".pl-urteil").count() == 0 and pg.locator(".pl-vorschlag").count() == 0 and pg.evaluate("localStorage.getItem('hilde.prueflabor')") is None, "Prüf-Labor: »Eingaben löschen« setzt alles zurück")
+        pruefe(pg.evaluate("document.getAnimations().filter(a => a.playState === 'running').length") == 0 and not pg.konsole, f"Prüf-Labor: nichts bewegt sich, keine Konsolenfehler {pg.konsole}")
+        pg.goto(url("kollegium.html"))
+        pruefe(pg.locator(".ko-format").count() == 6 and pg.locator(".ko-blick a").count() == 6 and pg.locator(".ko-format details").count() == 6, "Mit dem Kollegium (4.47): sechs Formate, jedes mit »Was dazu bekannt ist«")
+        pg.goto(url("ki-aufgaben.html"))
+        pruefe(pg.locator(".tr-zeit").count() == 12 and "geschätzt" in pg.inner_text(".bereichskopf"), "Trainingsaufgaben (4.47): grober Zeitbedarf bei jeder Aufgabe, als Schätzung gekennzeichnet")
         # 2h. Version 4.10: Lernende und KI, Beratungsstunde, Lese-Kriterium, Selbstcheck, Beobachtungsbogen
         pg.goto(url("lernende-ki.html"))
         pruefe(pg.locator(".regel-drei > li").count() == 3, "Lernende und KI: drei Regeln")
@@ -887,7 +940,8 @@ def main():
         pruefe(pg.evaluate("(()=>{const v=document.querySelector('#kurzfilm video'); return !!v && v.controls && v.preload==='none' && !v.autoplay && v.paused && !!v.querySelector('source[src=\"assets/film/kidu-pitch.mp4\"]') && !!document.querySelector('#kurzfilm-text li')})()"), "Über Kidu: Kurzfilm als Video mit Bedienung, lädt und startet nicht von selbst, Text daneben (4.43)")
         pruefe("@" not in pg.inner_text("#kurzfilm"), "Über Kidu: Kurzfilm ohne Kontaktadresse (4.43)")
         pruefe(pg.locator("#t-arten ~ .inhalte-liste > div").count() == 4, "Über: vier Arten, KI und Tablet zu nutzen")
-        for seite in ("lernende-ki.html", "papierfrage.html", "skillkoffer.html", "tipps.html", "ki-aufgaben.html", "papierkoffer.html", "fortbildungsleitung.html"):
+        for seite in ("lernende-ki.html", "papierfrage.html", "skillkoffer.html", "tipps.html", "ki-aufgaben.html", "papierkoffer.html", "fortbildungsleitung.html",
+                      "ki.html", "erste-minuten.html", "schnell-anfrage.html", "prompten.html", "pruef-labor.html", "kollegium.html"):  # ab 4.47
             pg.set_viewport_size({"width": 390, "height": 800})
             pg.goto(url(seite))
             breit = pg.evaluate("document.documentElement.scrollWidth")
@@ -1243,7 +1297,7 @@ def main():
         w.click("#loeschen")
         pruefe(w.inner_text('[data-wort="zeit"]') == "Noch nichts gewählt", "Stufenwort: nach dem Löschen zurückgesetzt")
         # Geführte Wege: »Schritt n von m« sichtbar
-        for s_, m_ in [("tablets.html", 5), ("selbstcheck.html", 6), ("ki.html", 5)]:
+        for s_, m_ in [("tablets.html", 5), ("selbstcheck.html", 6), ("prompten.html", 5)]:
             w.goto(url(s_)); w.evaluate("localStorage.clear()"); w.reload()
             pruefe(w.locator("#schritte-stand").is_visible() and w.inner_text("#schritte-stand") == f"Schritt 1 von {m_}", f"{s_}: »Schritt 1 von {m_}« steht sichtbar neben den Punkten")
         w.goto(url("tablets.html")); w.check('input[name="phase"][value="einstieg"]'); w.click("#weiter")
@@ -1360,7 +1414,7 @@ def main():
         i.context.close()
         for breite, hoehe in ((1920, 1080), (1440, 900)):
             sw = neue_seite(b, viewport={"width": breite, "height": hoehe})
-            for s_, sel in [("index.html", ".start > .huelle"), ("ki.html", ".bereichskopf > .huelle"), ("unterricht.html", ".phasen-abschnitt > .huelle"), ("galerie.html", ".galerie-kopf-raster")]:
+            for s_, sel in [("index.html", ".start > .huelle"), ("ki.html", ".phasen-abschnitt > .huelle"), ("unterricht.html", ".phasen-abschnitt > .huelle"), ("galerie.html", ".galerie-kopf-raster")]:
                 sw.goto(url(s_))
                 weit = sw.evaluate(f"document.querySelector('{sel}').getBoundingClientRect().width")
                 kopf = sw.evaluate("document.querySelector('.kopf > .huelle').getBoundingClientRect().width")
@@ -1384,8 +1438,12 @@ def main():
         kn = [bm.locator(s).first.bounding_box() for s in (".wahlflaeche.ki .weiter", ".wahlflaeche.lernen .weiter", ".galerie-zugang")]
         pruefe(all(k and k["y"] + k["height"] <= 720 for k in kn), "Beamer 1280 × 720 (4.39): Startseite zeigt beide Einstiege und den Weg zu den Unterrichtsbeispielen ohne Scrollen")
         bm.goto(url("ki.html"))
-        kn = [bm.locator(s).first.bounding_box() for s in ("h1", ".erste-minuten h2")]
-        pruefe(all(k and k["y"] + k["height"] <= 720 for k in kn), "Beamer 1280 × 720 (4.39): KI-Training zeigt Überschrift, beide Einstiege und »Deine ersten zehn Minuten« ohne Scrollen")
+        kn = [bm.locator(s).first.bounding_box() for s in ("h1", "#phase-grundlagen summary", "#phase-nach .fahrplan-name")]
+        pruefe(all(k and k["y"] + k["height"] <= 720 for k in kn), "Beamer 1280 × 720 (4.47): KI-Training zeigt Überschrift, die erste Phase zum Antippen und alle vier Phasen ohne Scrollen")
+        for s_, sel in [("pruef-labor.html", ".pl-satz-knopf"), ("erste-minuten.html", ".erste-weiter .knopf"), ("prompten.html", '.ki-aufbau a.knopf'), ("schnell-anfrage.html", ".anlass-raster .anlass")]:
+            bm.goto(url(s_))
+            k = bm.locator(sel).first.bounding_box()
+            pruefe(k and k["y"] + k["height"] <= 720, f"Beamer 1280 × 720 (4.47): {s_} zeigt die erste Handlung ohne Scrollen")
         bm.context.close()
 
         # 5h. Version 4.41: Fahrplan der Bereichsseite »Digitaler Unterricht« (Entwurf B2 aus Claude Design, Entscheidung Mario 14.11.2026)

@@ -2,7 +2,7 @@
 
 Seit 10. November 2026 heißt das Projekt **Kidu** – Künstliche Intelligenz und digitaler Unterricht. Vorher: »Hilde Digital« (bis 1. November 2026), »Papierprobe« (1.–10. November 2026). Kidu ist nicht an eine Schule gebunden. Repository und Adresse heißen `kidu`.
 
-Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training, Digitaler Unterricht in vier Phasen (Grundlagen · Digitalen Unterricht erstellen · Unterrichten · Nach der Stunde) und Unterrichtsbeispiele, analog und digital – beides mit KI erstellt. Kidu ist ohne Auftrag einer Schule entstanden. Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.
+Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen (Grundlagen · Unterricht mit KI vorbereiten · Unterrichten · Nach der Stunde), Digitaler Unterricht in vier Phasen (Grundlagen · Digitalen Unterricht erstellen · Unterrichten · Nach der Stunde) und Unterrichtsbeispiele, analog und digital – beides mit KI erstellt. Kidu ist ohne Auftrag einer Schule entstanden. Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.
 
 ## Aufbau
 
@@ -24,7 +24,11 @@ Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training, Digitaler Unt
 | `src/film/`, `tools/film.py`, `assets/film.js` | Film auf der Startseite (ab 4.40 eine Quelle): Bühne in `src/film/buehne.html`, Kapitel, Standbilder, Abschnitte und der Film als Text in `src/film/kapitel.json`; `tools/film.py` erzeugt `assets/film-buehne.js` (nie von Hand ändern, läuft in `tools/bauen.py`); `assets/film.js` spielt ihn ab – Kapitelleiste, Tastatur, »Als Text«; Bilder in `assets/film/` |
 | `assets/daten/galerie.js`, `assets/galerie-buehne.js`, `assets/galerie/` | Unterrichtsbeispiele: echte Ansichten mit Bild- und Alternativtexten, Einblicke; Herkunft in `docs/galerie-quellen.md` |
 | `assets/anfangen.js` | Unterrichtsbeispiele: »Zum Anfangen« – sechs erprobte Beispiele, zwei je Umfang (Feld `auswahl` in `beispiele.js`) |
-| `assets/daten/schnell.js`, `assets/schnell-anfrage.js`, `assets/ki-schnell.js` | KI-Training: Schnell-Anfrage für häufige Anlässe |
+| `assets/daten/schnell.js`, `assets/schnell-anfrage.js`, `assets/ki-schnell.js` | KI-Training: Schnell-Anfrage für häufige Anlässe (ab 4.47 eigene Seite `schnell-anfrage.html`) |
+| `src/fahrplan-ki.json` | Fahrplan »KI-Training« aus einer Quelle (ab 4.47): vier Phasen mit Anliegen und alle Werkzeuge; `tools/fahrplan.py` setzt die Zeichen `<!-- kiplan:… -->` auf `ki.html` und den Werkzeugseiten ein. `zuhause` = die Seite gehört zum anderen Fahrplan |
+| `src/erste-minuten.html`, `src/prompten.html` | Deine ersten zehn Minuten und Prompten lernen mit dem Prompt-Generator (ab 4.47 eigene Seiten; alte Sprungmarken auf `ki.html` leiten dorthin) |
+| `src/pruef-labor.html`, `assets/daten/pruef-labor.js`, `assets/pruef-labor.js` | Prüf-Labor (ab 4.47): drei Übungen ohne KI-System – Fehler finden (Übungstext, von Hand geschrieben), Abgeben oder selbst machen, Was darf hinein? Erst festlegen, dann auflösen; Rückmeldung in Worten |
+| `src/kollegium.html` | Mit dem Kollegium (ab 4.47): sechs Formate, um gemeinsam weiterzulernen, je mit »Was dazu bekannt ist« |
 | `assets/daten/digitalisieren.js`, `assets/digitalisieren-prompt.js`, `assets/digitalisieren.js` | Werkzeug »Bisherigen Unterricht digitalisieren« |
 | `assets/einheit.js` | »Unterricht neu planen«: eine Stunde oder eine ganze Einheit – bei einer Einheit zuerst Schritt E »Landkarte der Einheit« (ab 4.37, Regel `REGELN.einheit`) |
 | `assets/phasen-bild.js` | Schaubild »Wo in der Stunde das Gerät hilft« auf `sechs-hebel.html`: Namen und Aufgaben der Phasen aus `taxonomien.js` (ab 4.37) |

@@ -1,0 +1,26 @@
+{
+  "_hinweis": "Eine Quelle für den Fahrplan »KI-Training« (ab 4.47, Entscheidung Mario 17.11.2026: dieselbe Übersicht wie im Digitalen Unterricht, die Phasen bleiben, die Seite beginnt nicht mehr mit der Schnell-Anfrage). Dieselben vier Phasen wie im Digitalen Unterricht; Phase 2 heißt hier »Unterricht mit KI vorbereiten«. Jede Phase beginnt mit einem Anliegen in der Ich-Form (Einstieg nach Anliegen statt nach Kenntnisstand, Recherche vom 17.11.2026). tools/fahrplan.py baut daraus die Werkzeuglisten von ki.html und auf jeder Werkzeugseite die Zeile oben und den Fahrplan unten (Zeichen <!-- kiplan:zeile --> und <!-- kiplan:fuss -->). »zuhause« = die Seite gehört zum Fahrplan »Digitaler Unterricht« und trägt dessen Zeichen. »marken« = kurze Hinweise: »geht ohne KI« (braucht kein KI-System und kein Kontingent), »auch auf Papier«.",
+  "phasen": [
+    {"id": "grundlagen", "nr": 1, "wann": "zuerst", "name": "Grundlagen", "anliegen": "Ich will erst verstehen.", "satz": "Was KI kann, wo sie irrt und was nicht hineingehört.", "auch": "Auch bei den Grundlagen"},
+    {"id": "vorbereiten", "nr": 2, "wann": "vor der Stunde", "name": "Unterricht mit KI vorbereiten", "anliegen": "Ich brauche etwas für morgen.", "satz": "Prompt holen, Ergebnis prüfen, anpassen.", "auch": "Auch vor der Stunde"},
+    {"id": "unterrichten", "nr": 3, "wann": "in der Stunde", "name": "Unterrichten", "anliegen": "Meine Lernenden arbeiten mit KI.", "satz": "Regeln und Aufgaben, bei denen sie selbst denken.", "auch": "Auch in der Stunde"},
+    {"id": "nach", "nr": 4, "wann": "nach der Stunde", "name": "Nach der Stunde", "anliegen": "Ich will auswerten und teilen.", "satz": "Was hat geholfen? Mit dem Kollegium weiterlernen.", "auch": "Auch nach der Stunde"}
+  ],
+  "werkzeuge": [
+    {"phase": "grundlagen", "href": "erste-minuten.html", "name": "Deine ersten zehn Minuten", "fuer": "für den Anfang", "text": "Vier Schritte: KI-System öffnen, Prompt holen, Ergebnis prüfen, einmal nachfragen."},
+    {"phase": "grundlagen", "href": "pruef-labor.html", "name": "Prüf-Labor", "text": "Drei Übungen: Fehler finden, abgeben oder selbst machen, was darf hinein.", "marken": ["geht ohne KI", "auch auf Papier"]},
+    {"phase": "grundlagen", "href": "sicher.html", "name": "Sicher arbeiten in fünf Regeln", "text": "Daten, Prüfen, Bildrechte, Lernseiten, Persönliches. Gilt auch für den Digitalen Unterricht.", "marken": ["geht ohne KI"]},
+    {"phase": "grundlagen", "href": "ki-fach.html", "name": "KI für dein Fach einrichten", "text": "Einmal aufschreiben, was in deinem Fach gilt. Danach reicht ein kurzer Auftrag."},
+    {"phase": "grundlagen", "href": "ki-aufgaben.html", "name": "Trainingsaufgaben", "text": "Zwölf Übungen mit dem KI-System deiner Schule, an deinem eigenen Material."},
+    {"phase": "vorbereiten", "href": "schnell-anfrage.html", "name": "Schnell-Anfrage", "tuer": "Ich brauche schnell etwas", "text": "Anlass wählen, drei Angaben, Prompt kopieren."},
+    {"phase": "vorbereiten", "href": "prompten.html", "name": "Prompten lernen", "tuer": "Ich will es selbst können", "text": "In fünf Schritten zu deiner eigenen Anfrage, mit Erklärung."},
+    {"phase": "vorbereiten", "href": "auftraege.html", "name": "Aufträge zum Kopieren", "text": "Lernmethode einführen, KI-Regeln für eine Aufgabe, KI-Antworten prüfen und mehr."},
+    {"phase": "vorbereiten", "href": "papierkoffer.html", "name": "Aufgabenkoffer auf Papier", "text": "Die Ideen des Aufgabenkoffers für Papier, Tafel und Raum – je mit einem Auftrag für das Material."},
+    {"phase": "vorbereiten", "href": "skillkoffer.html", "zuhause": "fahrplan", "name": "Skillkoffer", "fuer": "für Fortgeschrittene · im Digitalen Unterricht", "text": "Die Anleitungen hinter den Werkzeugen als Skills zum Herunterladen – und was damit entsteht."},
+    {"phase": "unterrichten", "href": "lernende-ki.html", "name": "Wenn deine Lernenden mit KI arbeiten", "text": "Drei Regeln, damit die KI das Denken nicht übernimmt.", "marken": ["geht ohne KI"]},
+    {"phase": "unterrichten", "href": "ki-aufgaben.html#tr-begleiten", "name": "Lernszenario und Dialogpartner vorher testen", "text": "Spiel selbst durch, was deine Lernenden erleben."},
+    {"phase": "nach", "gruppe": "Für dich", "href": "fortbildungsbogen.html", "zuhause": "fahrplan", "name": "Mein Fortbildungsbogen", "fuer": "im Digitalen Unterricht", "text": "Wo du mit KI und Tablets stehst. Am Ende eine PDF für deine Fortbildung und bis zu drei nächste Schritte."},
+    {"phase": "nach", "gruppe": "Für dich", "href": "auftraege.html#erkunden", "name": "Eine Idee im Unterricht erproben", "text": "Eine Frage, Belege aus dem Alltag, eine ehrliche Auswertung."},
+    {"phase": "nach", "gruppe": "Im Kollegium", "gruppe_id": "t-ki-kollegium", "href": "kollegium.html", "name": "Mit dem Kollegium", "text": "Sechs Formate, um gemeinsam weiterzulernen: vom Tandem bis zur Fachgruppe.", "marken": ["geht ohne KI"]}
+  ]
+}

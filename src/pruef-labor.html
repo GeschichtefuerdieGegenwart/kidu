@@ -1,0 +1,82 @@
+<div class="bereich-ki pl">
+<!-- kiplan:zeile weit -->
+<!-- Ab 4.47: Prüf-Labor – drei Übungen ohne KI-System (Entscheidung Mario, 17.11.2026: die Erkenntnisse der Recherche umsetzen).
+     Für alle Vorkenntnisse: Wer noch keinen Zugang oder kein Kontingent hat, übt hier dieselben Fähigkeiten wie in den
+     Trainingsaufgaben. Erst festlegen, dann auflösen; die Rückmeldung steht in Worten, ohne Punkte. Daten: assets/daten/pruef-labor.js. -->
+<section class="bereichskopf kompakt"><div class="huelle huelle-weit pl-kopf">
+  <div class="stapel">
+    <h1 class="h1-frage">Prüf-Labor</h1>
+    <p class="marker">Geht ohne KI · auch auf Papier</p>
+    <p class="detail-kurz">Drei Übungen zum Umgang mit KI – ohne KI-System und ohne Kontingent. Du legst dich zuerst fest, dann siehst du die Auflösung. Es gibt keine Punkte, nur Erklärungen.</p>
+    <p class="kopfnotiz"><button type="button" class="knopf still" data-drucken>Alle drei drucken</button> <button type="button" class="linkknopf" id="pl-loeschen">Eingaben löschen</button></p>
+  </div>
+  <nav aria-labelledby="t-pl-uebungen"><h2 id="t-pl-uebungen" class="sr-only">Die drei Übungen</h2>
+    <ol class="pk-linie pl-linie">
+      <li><a href="#pl-fehler"><b>Fehler finden</b><span>Ein Text mit acht Sätzen</span></a></li>
+      <li><a href="#pl-abgeben"><b>Abgeben oder selbst machen</b><span>Acht Aufgaben aus dem Schulalltag</span></a></li>
+      <li><a href="#pl-hinein"><b>Was darf hinein?</b><span>Acht Angaben für das KI-System</span></a></li>
+    </ol>
+  </nav>
+</div></section>
+
+<section class="abschnitt pl-uebung" id="pl-fehler" aria-labelledby="t-pl-fehler" tabindex="-1"><div class="huelle huelle-weit pl-raster">
+  <div class="pl-auftrag">
+    <p class="pl-nr">Übung 1 · Kritisch prüfen</p>
+    <h2 id="t-pl-fehler">Fehler finden</h2>
+    <p>Lies den Text. Tipp jeden Satz an, den du so nicht übernehmen würdest. Dann löse auf.</p>
+    <p class="pl-hinweis">Übungstext. Von Hand geschrieben, nicht von einer KI. Er enthält absichtlich Fehler, wie sie auch in KI-Entwürfen vorkommen.</p>
+    <div class="pl-schritte" id="pl-schritte" hidden>
+      <h3 class="klein-titel">So prüfst du einen echten Text</h3>
+      <ol class="pl-schritte-liste"></ol>
+    </div>
+  </div>
+  <div class="pl-arbeit">
+    <h3 class="pl-text-titel">Der Buchdruck</h3>
+    <ol class="pl-saetze" id="pl-saetze"></ol>
+    <p class="pl-steuerung"><button type="button" class="knopf" id="pl-aufloesen">Auflösen</button><button type="button" class="knopf still" id="pl-neu" hidden>Neu anfangen</button></p>
+    <noscript><p class="box">Zum Antippen braucht diese Übung JavaScript. Auf Papier geht sie auch: »Alle drei drucken«.</p></noscript>
+  </div>
+</div></section>
+
+<section class="abschnitt pl-uebung band-flaeche" id="pl-abgeben" aria-labelledby="t-pl-abgeben" tabindex="-1"><div class="huelle huelle-weit pl-raster">
+  <div class="pl-auftrag">
+    <p class="pl-nr">Übung 2 · Abgeben oder selbst machen</p>
+    <h2 id="t-pl-abgeben">Abgeben oder selbst machen?</h2>
+    <p>Entscheide für jede Aufgabe: Machst du sie selbst, gemeinsam mit KI – oder gibst du sie ab und prüfst das Ergebnis? Danach siehst du, was Kidu vorschlägt und warum.</p>
+    <p class="pl-hinweis">Es gibt hier kein Richtig oder Falsch. Deine Begründung zählt. Bewertung und Entscheidungen über Personen bleiben immer bei dir.</p>
+    <details class="mehr">
+      <summary>Was eine Studie zur Unterrichtsplanung fand</summary>
+      <p>In England haben 259 Lehrkräfte ihren Unterricht mit und ohne KI geplant. Mit KI brauchten sie für die Planung rund 31 Prozent weniger Zeit. Die Qualität der Pläne war nicht schlechter (Education Endowment Foundation, 2024).</p>
+      <p>Das gilt für die Planung. Über Bewertung, Rückmeldungen und Gespräche sagt die Studie nichts.</p>
+    </details>
+  </div>
+  <div class="pl-arbeit">
+    <ol class="pl-wahl-liste" id="pl-abgeben-liste"></ol>
+  </div>
+</div></section>
+
+<section class="abschnitt pl-uebung" id="pl-hinein" aria-labelledby="t-pl-hinein" tabindex="-1"><div class="huelle huelle-weit pl-raster">
+  <div class="pl-auftrag">
+    <p class="pl-nr">Übung 3 · Verantwortlich handeln</p>
+    <h2 id="t-pl-hinein">Was darf hinein?</h2>
+    <p>Darf diese Angabe in ein KI-System? Wähl für jede: darf hinein, erst umschreiben oder bleibt draußen. Danach siehst du eine datensparsame Fassung.</p>
+    <p class="pl-hinweis">Grundlage sind die fünf Regeln in <a class="textlink" href="sicher.html">Sicher arbeiten</a>. Sie ersetzen keine Prüfung durch Schulleitung oder Datenschutzbeauftragte.</p>
+  </div>
+  <div class="pl-arbeit">
+    <ol class="pl-wahl-liste" id="pl-hinein-liste"></ol>
+  </div>
+</div></section>
+
+<section class="abschnitt pl-weiter" aria-labelledby="t-pl-weiter"><div class="huelle huelle-weit stapel">
+  <h2 id="t-pl-weiter" class="klein-titel">Mit KI-System weiterüben</h2>
+  <p class="mass">Dieselben Fähigkeiten übst du mit deinem eigenen Material in den <a class="textlink" href="ki-aufgaben.html">Trainingsaufgaben</a>. Für deine Lernenden gibt es die Übung als Auftrag: <a class="textlink" href="auftraege.html#faktencheck">KI-Antworten prüfen</a>.</p>
+  <p class="leise klein">Status: Vorschlag, noch nicht erprobt. Stand: November 2026.</p>
+</div></section>
+
+<section class="pl-druck-loesung" id="pl-loesungen" aria-hidden="true"></section>
+<p id="pl-ansage" class="sr-only" aria-live="polite"></p>
+<!-- kiplan:fuss weit -->
+</div>
+<script src="assets/daten/pruef-labor.js"></script>
+<script src="assets/pruef-labor.js"></script>
+<script src="assets/druck.js"></script>

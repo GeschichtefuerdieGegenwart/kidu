@@ -27,12 +27,24 @@ test("Trainingsaufgaben: jede gehört zu einer Fähigkeit und nutzt eine bekannt
   for (const g of T.gruppen) assert.ok(T.aufgaben.some((a) => a.gruppe === g.id), g.id + " hat Aufgaben");
 });
 
-test("Trainingsaufgaben: keine Sprachmodelle, keine Zeitangaben, keine Prozentwerte", () => {
+test("Trainingsaufgaben: keine Sprachmodelle, keine Minutenangaben, keine Prozentwerte", () => {
   const text = JSON.stringify(T);
   assert.doesNotMatch(text, MODELLE);
   assert.doesNotMatch(text, /\b\d+\s?(Minuten|Min\.|Stunden)\b/);
   assert.doesNotMatch(text, /\d\s?%/);
   assert.equal(T.status, "Vorschlag, noch nicht erprobt");
+});
+
+/* ab 4.47: grober Zeitbedarf je Aufgabe (Recherche 17.11.2026: Zeit und KI-Bedarf auf einen Blick) – nur aus der Liste, geschätzt.
+   Feld »zeit«, nicht »umfang«: »Umfang« ist in taxonomien.js der Umfang des Gerätes im Unterricht (CLAUDE.md). */
+test("Trainingsaufgaben: jede Aufgabe hat einen groben Zeitbedarf aus der Liste, ohne Zahlen", () => {
+  const zeiten = T.zeiten.map((z) => z.id);
+  assert.deepEqual(zeiten, ["kurz", "freistunde"]);
+  for (const a of T.aufgaben) assert.ok(zeiten.includes(a.zeit), a.id + ": Zeit " + a.zeit);
+  assert.ok(T.aufgaben.every((a) => !("umfang" in a)), "kein Feld »umfang« (Begriff aus taxonomien.js)");
+  for (const z of T.zeiten) assert.doesNotMatch(z.name + z.text, /\d/, z.id + ": keine Zahl");
+  const seite = fs.readFileSync(path.join(__dirname, "..", "src", "ki-aufgaben.html"), "utf8");
+  assert.match(seite, /Das ist geschätzt\./, "die Seite sagt, dass der Umfang geschätzt ist");
 });
 
 test("Trainingsaufgaben: Aufträge haben die fünf Teile der Schnell-Anfrage und fragen nach fehlenden Angaben", () => {
@@ -50,11 +62,22 @@ test("Trainingsaufgaben: Aufträge haben die fünf Teile der Schnell-Anfrage und
 test("Trainingsaufgaben: die Zahlen auf den Seiten stimmen mit den Daten", () => {
   const n = ZAHLWORT[T.aufgaben.length];
   const seite = fs.readFileSync(path.join(__dirname, "..", "src", "ki-aufgaben.html"), "utf8");
-  const ki = fs.readFileSync(path.join(__dirname, "..", "src", "ki.html"), "utf8");
+  const ki = fs.readFileSync(path.join(__dirname, "..", "src", "fahrplan-ki.json"), "utf8");  // ab 4.47: die Liste steht im Fahrplan KI-Training
   const ueber = fs.readFileSync(path.join(__dirname, "..", "src", "ueber.html"), "utf8");
   const gross = n.charAt(0).toUpperCase() + n.slice(1);
   assert.ok(seite.includes(gross + " Übungen"), "ki-aufgaben.html: »" + gross + " Übungen«");
-  assert.ok(ki.includes(gross + " Übungen"), "ki.html: »" + gross + " Übungen«");
+  assert.ok(ki.includes(gross + " Übungen"), "src/fahrplan-ki.json: »" + gross + " Übungen«");
   assert.ok(ueber.includes(n + " <a href=\"ki-aufgaben.html\">Trainingsaufgaben</a>") || ueber.includes(n + " Trainingsaufgaben"), "ueber.html");
   assert.ok(seite.includes(ZAHLWORT[T.gruppen.length].charAt(0).toUpperCase() + ZAHLWORT[T.gruppen.length].slice(1) + " Fähigkeiten"), "Zahl der Fähigkeiten");
+});
+
+/* ab 4.47: ki.html zeigt die Fähigkeiten als Band unter dem Fahrplan – dieselben Namen und Fragen wie in den Daten, ohne Links */
+test("Trainingsaufgaben: das Band der Fähigkeiten auf ki.html stimmt mit den Daten", () => {
+  const ki = fs.readFileSync(path.join(__dirname, "..", "src", "ki.html"), "utf8");
+  const band = ki.slice(ki.indexOf('<ul class="ki-faehig-liste">'), ki.indexOf("</ul>", ki.indexOf('<ul class="ki-faehig-liste">')));
+  const paare = [...band.matchAll(/<li><b>([^<]+)<\/b><span>([^<]+)<\/span><\/li>/g)].map((m) => [m[1], m[2]]);
+  assert.deepEqual(paare, T.gruppen.map((g) => [g.name, g.frage]));
+  assert.doesNotMatch(band, /<a /, "das Band verlinkt nicht – die Werkzeuge stehen nur im Fahrplan");
+  const n = ZAHLWORT[T.gruppen.length];
+  assert.ok(ki.includes(n.charAt(0).toUpperCase() + n.slice(1) + " Fähigkeiten"), "ki.html: Zahl der Fähigkeiten");
 });
