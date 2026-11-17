@@ -7,7 +7,7 @@
 <meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
 <title>KI-Training – Kidu</title>
 <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/hilde.css?v=eda662d7">
+<link rel="stylesheet" href="assets/hilde.css?v=90679a57">
 <script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
 </head>
 <body>
@@ -77,59 +77,51 @@
 </div></section>
 
 
-<section class="abschnitt ki-werkstatt" aria-labelledby="t-werkstatt"><div class="huelle stapel">
-  <h2 id="t-werkstatt">Weiter im KI-Training</h2>
-  <ul class="werkzeuge ki-gruppen">
-    <li class="ki-gruppe">
-      <p class="gruppe-titel">Einmal einrichten</p>
+<!-- Ab 4.46: das KI-Training in vier Phasen – dieselben wie im Digitalen Unterricht (Namen der Phasen 2–4 wie in src/fahrplan.json).
+     Hier entsteht vieles auf Papier, mit KI vorbereitet. Statisch, weil die Werkzeuge auf verschiedenen Seiten liegen. -->
+<section class="abschnitt ki-werkstatt" aria-labelledby="t-werkstatt"><div class="huelle huelle-weit stapel">
+  <div class="ki-phasen-kopf">
+    <h2 id="t-werkstatt">Weiter im KI-Training: vier Phasen</h2>
+    <p class="mass">Dieselben Phasen wie im Digitalen Unterricht. Nur bleibt hier vieles auf Papier – mit KI vorbereitet. Auch das ist ein gutes Ergebnis.</p>
+  </div>
+  <ol class="ki-phasen">
+    <li class="ki-phase">
+      <p class="ki-phase-kopf"><b class="ki-phase-nr" aria-hidden="true">1</b><span><small>zuerst</small>Grundlagen</span></p>
       <ul class="gruppe-liste">
-        <li class="werkzeug">
-          <a href="ki-fach.html">
-            <span class="werkzeug-text"><b>KI für dein Fach einrichten</b>Einmal aufschreiben, was in deinem Fach gilt. Danach reicht ein kurzer Auftrag.</span>
-            <span class="werkzeug-los" aria-hidden="true">→</span>
-          </a>
-        </li>
+        <li class="werkzeug"><a href="#t-erste"><span class="werkzeug-text"><b>Deine ersten zehn Minuten</b>Vier Schritte für den Anfang.</span><span class="werkzeug-los" aria-hidden="true">↑</span></a></li>
+        <li class="werkzeug"><a href="sicher.html"><span class="werkzeug-text"><b>Sicher arbeiten in fünf Regeln</b>Daten, Prüfen, Bildrechte, Lernseiten, Persönliches.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
+        <li class="werkzeug"><a href="ki-fach.html"><span class="werkzeug-text"><b>KI für dein Fach einrichten</b>Einmal aufschreiben, was in deinem Fach gilt.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
+        <li class="werkzeug"><a href="ki-aufgaben.html"><span class="werkzeug-text"><b>Trainingsaufgaben</b>Zwölf Übungen mit dem KI-System deiner Schule: Assistent, Lernszenario, Dialogpartner.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
       </ul>
     </li>
-    <li class="ki-gruppe">
-      <p class="gruppe-titel">Fertig zum Kopieren</p>
+    <li class="ki-phase">
+      <p class="ki-phase-kopf"><b class="ki-phase-nr" aria-hidden="true">2</b><span><small>vor der Stunde</small>Unterricht mit KI vorbereiten</span></p>
       <ul class="gruppe-liste">
-        <li class="werkzeug">
-          <a href="auftraege.html">
-            <span class="werkzeug-text"><b>Aufträge zum Kopieren</b>Lernmethode einführen, KI-Regeln für eine Aufgabe, KI-Antworten prüfen üben, eine Idee erproben, eine Fortbildung planen.</span>
-            <span class="werkzeug-los" aria-hidden="true">→</span>
-          </a>
-        </li>
-        <li class="werkzeug">
-          <a href="muster.html">
-            <span class="werkzeug-text"><b>Unterrichtsmuster aus der Praxis</b>Elf Muster, je mit einem Auftrag, der dir das Material vorbereitet – auch für Unterricht auf Papier.</span>
-            <span class="werkzeug-los" aria-hidden="true">→</span>
-          </a>
-        </li>
+        <li class="werkzeug"><a href="#schnell"><span class="werkzeug-text"><b>Schnell-Anfrage</b>Anlass wählen, drei Angaben, kopieren.</span><span class="werkzeug-los" aria-hidden="true">↑</span></a></li>
+        <li class="werkzeug"><a href="#lernen-weg"><span class="werkzeug-text"><b>Prompten lernen</b>In fünf Schritten zu deiner eigenen Anfrage.</span><span class="werkzeug-los" aria-hidden="true">↓</span></a></li>
+        <li class="werkzeug"><a href="papierkoffer.html"><span class="werkzeug-text"><b>Aufgabenkoffer auf Papier</b>Die Ideen des Aufgabenkoffers für Papier, Tafel und Raum – je mit einem Auftrag für das Material.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
+        <li class="werkzeug"><a href="auftraege.html"><span class="werkzeug-text"><b>Aufträge zum Kopieren</b>Lernmethode einführen, KI-Regeln für eine Aufgabe, KI-Antworten prüfen und mehr.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
       </ul>
     </li>
-    <li class="ki-gruppe sicher">
-      <p class="gruppe-titel">Sicher bleiben</p>
+    <li class="ki-phase">
+      <p class="ki-phase-kopf"><b class="ki-phase-nr" aria-hidden="true">3</b><span><small>in der Stunde</small>Unterrichten</span></p>
       <ul class="gruppe-liste">
-        <li class="werkzeug">
-          <a href="sicher.html">
-            <span class="werkzeug-text"><b>Sicher arbeiten in fünf Regeln</b>Daten, Prüfen, Bildrechte, Lernseiten, Persönliches – auf einer Seite zum Ausdrucken.</span>
-            <span class="werkzeug-los" aria-hidden="true">→</span>
-          </a>
-        </li>
-        <li class="werkzeug">
-          <a href="lernende-ki.html">
-            <span class="werkzeug-text"><b>Wenn deine Lernenden mit KI arbeiten</b>Drei Regeln, damit die KI das Denken nicht übernimmt. Mit einem Auftrag, der Hinweise statt Lösungen gibt.</span>
-            <span class="werkzeug-los" aria-hidden="true">→</span>
-          </a>
-        </li>
+        <li class="werkzeug"><a href="lernende-ki.html"><span class="werkzeug-text"><b>Wenn deine Lernenden mit KI arbeiten</b>Drei Regeln, damit die KI das Denken nicht übernimmt.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
+        <li class="werkzeug"><a href="ki-aufgaben.html#tr-begleiten"><span class="werkzeug-text"><b>Lernszenario und Dialogpartner vorher testen</b>Spiel selbst durch, was deine Lernenden erleben.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
       </ul>
     </li>
-  </ul>
+    <li class="ki-phase">
+      <p class="ki-phase-kopf"><b class="ki-phase-nr" aria-hidden="true">4</b><span><small>nach der Stunde</small>Nach der Stunde</span></p>
+      <ul class="gruppe-liste">
+        <li class="werkzeug"><a href="auftraege.html#erkunden"><span class="werkzeug-text"><b>Eine Idee im Unterricht erproben</b>Eine Frage, Belege aus dem Alltag, eine ehrliche Auswertung.</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
+        <li class="werkzeug"><a href="fortbildungsbogen.html"><span class="werkzeug-text"><b>Mein Fortbildungsbogen</b>Wo stehst du mit KI und digitalem Unterricht?</span><span class="werkzeug-los" aria-hidden="true">→</span></a></li>
+      </ul>
+    </li>
+  </ol>
   <ul class="werkzeuge ki-extra">
     <li class="werkzeug">
-      <a href="werkzeugkiste.html">
-        <span class="werkzeug-text"><b>Methodenkoffer</b>Für Fortgeschrittene: welche Anleitung in welchem Werkzeug steckt – und die ganzen Anleitungen zum Herunterladen.</span>
+      <a href="skillkoffer.html">
+        <span class="werkzeug-text"><b>Skillkoffer · für Fortgeschrittene</b>Die Anleitungen hinter den Werkzeugen als Skills zum Herunterladen – und was damit entsteht.</span>
         <span class="werkzeug-los" aria-hidden="true">→</span>
       </a>
     </li>
@@ -210,7 +202,7 @@
 <footer class="fuss"><div class="huelle">
   <p class="fuss-marke" aria-hidden="true"><img class="kidu-wortmarke" src="assets/logo/kidu-logo.svg" alt="" width="224" height="92"></p>
   <p class="fuss-unterzeile"><span class="ini ki">K</span>ünstliche <span class="ini ki">I</span>ntelligenz und <span class="ini du">d</span>igitaler <span class="ini du">U</span>nterricht</p>
-  <nav class="fusslinks" aria-label="Über Kidu"><ul><li><a href="ueber.html">Über Kidu</a></li><li><a href="ueber.html#inhalte">Inhalte und Funktionen</a></li><li><a href="ueber.html#t-daten">Hinweise zu Daten und KI</a></li><li><a href="gestaltung.html">Gestaltungssystem</a></li><li><a href="werkzeugkiste.html">Methodenkoffer</a></li><li><a href="fortbildungsbogen.html">Mein Fortbildungsbogen</a></li><li><a href="ueber.html#t-daten">Eingaben löschen</a></li></ul></nav>
+  <nav class="fusslinks" aria-label="Über Kidu"><ul><li><a href="ueber.html">Über Kidu</a></li><li><a href="ueber.html#inhalte">Inhalte und Funktionen</a></li><li><a href="ueber.html#t-daten">Hinweise zu Daten und KI</a></li><li><a href="gestaltung.html">Gestaltungssystem</a></li><li><a href="skillkoffer.html">Skillkoffer</a></li><li><a href="fortbildungsbogen.html">Mein Fortbildungsbogen</a></li><li><a href="rueckmeldebogen.html">Mein Rückmeldebogen</a></li><li><a href="fortbildungsleitung.html">Für die Fortbildungsleitung <span class="fuss-schloss">· mit Passwort</span></a></li><li><a href="ueber.html#t-daten">Eingaben löschen</a></li></ul></nav>
   <p class="fuss-einstellung"><button type="button" class="knopf still bewegung-schalter" id="bewegung-schalter" data-bewegung-schalter aria-pressed="false">Weniger Bewegung</button><span class="leise">Gilt in diesem Browser. Nichts gleitet, nichts fliegt, alles steht sofort da.</span></p>
   <p class="fuss-einstellung"><button type="button" class="knopf still theme-schalter" id="theme-schalter" data-theme-schalter aria-pressed="false">Beamer-Ansicht</button><span class="leise">Gilt in diesem Browser. Reines Weiß, tiefes Schwarz, kräftigere Farben – für den Beamer im Klassenzimmer.</span></p>
   <p class="kennzeichnung">Kidu · Künstliche Intelligenz und digitaler Unterricht · Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.</p>

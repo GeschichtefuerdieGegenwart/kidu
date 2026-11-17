@@ -46,6 +46,7 @@ Nur bei digitalem Material. Je Regel nur nennen, was auffällt, mit Fundstelle; 
 8. **Ergebnisse überleben den Gerätewechsel:** Zwischenstand, Fehler einzeln zurücklegen, Stand gespeichert, Ergebnis als Datei?
 9. **Kontrast über Bildern:** Hält Text über einem Bild 4,5:1 auch an der ungünstigsten Stelle – bei heller Schrift an der hellsten?
 10. **Lehrkraftbereich:** Von Anfang an verschlüsselt und in die Seite eingebettet, nicht nur hinter einem Codewort?
+11. **Orientierung wie auf einem Arbeitsblatt:** Sehen die Lernenden, wo sie sind und was als Nächstes kommt (etwa Register)? Ein Auftrag je Seite? Wird gescrollt, statt alles in einen Bildschirm zu pressen? Schrift mindestens 16 px, Ziele zum Tippen mindestens 44 px?
 
 ## Regeln der Einschätzung
 
@@ -78,6 +79,12 @@ Aus der Analyse von 26 Lernseiten eines Kollegiums – sie kommen immer wieder:
 - **Legeaufgabe ohne Beziehungen:** Karten werden nur in Gruppen geschoben, ohne benannte Beziehung und ohne Begründung; die fertige Struktur der Lehrkraft ist vorher sichtbar; bei vielen Karten gibt es keinen Zwischenstand und kein Zurücklegen einzelner Karten.
 - **Mit KI erstelltes Material auf Reproduktionsniveau:** viele Aufgaben zum Erinnern und Wiedergeben, kaum Analyse, Urteil oder Gegenpositionen. In einer Untersuchung von 310 KI-Stundenplanungen für Politikunterricht zielten nur 10 % der Aktivitäten auf höheres Denken (Trust et al. 2025). Prüfe gezielt: Wo müssen Lernende selbst denken?
 - **Lernangebot mit KI ohne Abruf ohne KI:** Lernende arbeiten mit einem Chatbot, aber nirgends zeigen sie, was sie ohne ihn können. Leistung mit KI ist kein Lernnachweis (Bastani et al. 2025). Prüfe auch: Gibt der Chatbot Lösungen aus, oder stellt er Rückfragen? Ist die Reihenfolge »erst selbst, dann KI« eingebaut?
+- **Aufdecken vor dem Festlegen:** Das Gerät zeigt eine Auflösung, eine Studie oder die Stimmen der anderen, bevor sich alle festgelegt haben; der nächste Teil ist frei, bevor die Klasse so weit ist. Besser: erst festlegen, dann aufdecken – der nächste Teil auf Ansage (Erprobungen im Psycho-Labor und GGK-Labor, November 2026).
+- **Kriterien vor dem eigenen Text:** Kriterien, Musterlösung oder Beispielantworten stehen schon da, wenn die Lernenden zu schreiben beginnen. Geschrieben wird gar nicht oder nur am Gerät. Besser: in der Stunde selbst schreiben, auch von Hand; Kriterien erst danach.
+- **Ohne Kernentscheidung:** Viele kleine Abfragen, aber keine Entscheidung, über die vor der Auflösung im Raum gesprochen wird. Eine Kernentscheidung je Stunde trägt mehr.
+- **Ohne Denkwerkzeug des Fachs:** Es bleibt offen, womit die Lernenden denken – Quellenkritik, Kriterien eines Urteils, eine Versuchsanordnung. Benenne es, oder frag danach.
+- **Sicherung ohne Maß:** Die Zusammenfassung von Wissen und Können ist länger als zwei Seiten oder fehlt.
+- **Rechte und Würde:** Bilder und Texte ohne Quelle und geklärte Rechtelage; Opfer, Betroffene oder Gruppen werden bloßgestellt oder als Kulisse benutzt.
 - **Veraltete oder zurückgezogene Belege:** Wirkungsangaben in Material und Doku auf zurückgezogene Studien prüfen (z. B. Wang & Fan 2025 zu einem KI-Chatbot, 2026 zurückgezogen).
 
 ## Form der Antwort
@@ -128,6 +135,13 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 - Mit KI erstelltes Material bleibt oft beim Wiedergeben: Wo müssen die Lernenden selbst deuten, urteilen und Gegenpositionen prüfen?
 - Arbeiten Lernende mit KI: Gibt es eine Stelle, an der sie zeigen, was sie ohne KI können? Stellt die KI Rückfragen, oder gibt sie Lösungen aus?
 - Abhängig vom Netz: Schriften, Skripte, Videos oder Dienste von fremden Seiten; die Seite läuft nicht ohne Internet.
+- Erst festlegen, dann aufdecken: Legen sich die Lernenden fest, bevor das Gerät eine Auflösung, eine Studie oder die Stimmen der anderen zeigt? Wird der nächste Teil erst auf Ansage frei, wenn alle so weit sind?
+- Schreiben: Schreiben die Lernenden in der Stunde selbst, auch von Hand? Sehen sie Kriterien und Beispielantworten erst nach dem eigenen Text?
+- Eine Kernentscheidung: Gibt es je Stunde eine Entscheidung, über die vor der Auflösung im Raum gesprochen wird?
+- Denkwerkzeug des Fachs: Ist benannt, womit die Lernenden denken – etwa Quellenkritik, Kriterien eines Urteils oder eine Versuchsanordnung?
+- Sicherung mit Maß: Gibt es am Ende eine Zusammenfassung von Wissen und Können auf höchstens zwei Seiten?
+- Ergebnisse vieler Geräte: Müssen Lernende Ergebnisse über QR-Code oder Import zusammenführen? Einfacher ist ein Gerät vorne und das Gespräch im Raum.
+- Rechte und Würde: Haben Bilder und Texte eine Quelle und eine geklärte Rechtelage? Werden Betroffene und Gruppen würdig gezeigt?
 
 **Gestaltung**
 
@@ -135,7 +149,9 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 - Ruhe in der Arbeitsphase: Bewegt sich dort etwas anderes als die Antwort auf eine eigene Handlung? Gibt es ein Arbeitsfenster je Phase?
 - Zähle den Weg: Wie viele Tipps oder Klicks brauchen die Lernenden bis zur ersten eigenen Antwort, und wie oft wechselt die Seite innerhalb einer Arbeitsphase? Mehr als drei Tipps oder ein Seitenwechsel mitten in der Phase sind ein Hinweis auf Unruhe. Öffnet sich die Hilfe am selben Ort?
 - Zwischenstand und Ergebnis: Gibt es bei Sortier- und Legeaufgaben einen Zwischenstand, kann man Fehler einzeln zurücknehmen, bleibt der Stand gespeichert? Überleben die Ergebnisse die Stunde außerhalb des Browsers, etwa als Datei?
-- Bildschirmbreite: Nutzt eine Übersicht die Breite des Tablets quer und hoch, ohne dass eine Textzeile zu lang wird?
+- Orientierung wie auf einem Arbeitsblatt: Sehen die Lernenden, wo sie sind und was als Nächstes kommt, etwa mit Registern? Steht ein Auftrag je Seite? Wird gescrollt, statt alles in einen Bildschirm zu pressen?
+- Lesbar und bedienbar: Ist die Schrift mindestens 16 Pixel groß? Sind Ziele zum Tippen mindestens 44 Pixel groß?
+- Bildschirmbreite: Nutzt eine Übersicht die Breite des Tablets quer und hoch, ohne dass eine Textzeile zu lang wird? Richten sich Bilder in Karten nach der Breite der Karte?
 - Linien: Trägt jede Linie und jeder Rahmen eine Beziehung? Endet jede Verbindungslinie an ihrem Ziel, ohne fremde Felder zu kreuzen?
 - Eine Ordnung je Bild: Zeigt ein Bild zwei Reihenfolgen zugleich, etwa eine Zeitachse und eine zweite Zählung?
 - Filme: Steht vor einem interaktiven Film ein Satz, was man tun kann? Zeigt ein Erklärfilm die echte Oberfläche der Seite, die er erklärt?
@@ -144,6 +160,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 
 ## Versionen
 
+- **v1.5, 17.11.2026:** Nach den Erprobungen im Psycho-Labor, GGK-Labor und in der Politik-Werkstatt (persönliche Beobachtungen, November 2026): sechs typische Schwächen ergänzt – Aufdecken vor dem Festlegen, Kriterien vor dem eigenen Text, ohne Kernentscheidung, ohne Denkwerkzeug des Fachs, Sicherung ohne Maß, Rechte und Würde. Kurzfassung: sieben Prüfpunkte in »Anforderungen« (dazu »Ergebnisse vieler Geräte« aus v1.4), in »Gestaltung« Orientierung wie auf einem Arbeitsblatt, Schrift- und Zielgröße, Bilder nach Kartenbreite. Block 2 hat dafür eine elfte Prüffrage.
 - **v1.4, 13.11.2026:** Zwei Prüfblöcke, getrennt eingeschätzt: Block 1 Didaktik (bisheriges Vorgehen, neu: Lehrfunktion je Phase mit Prüffragen; bei mehreren Stunden »Hat jede Stunde ihren eigenen, begründeten Umfang?«), Block 2 Gestaltung (zehn Prüffragen zu den elf Gestaltungsregeln, benannte Regeln in `DESIGN.md` von Kidu). Form der Antwort mit eigenem Teil »Gestaltung«. Typische Schwächen aus der Sichtung vom 13.11.2026: Rückmeldung vor der Festlegung lesbar, Übersicht nimmt die Antwort vorweg, Sichern ohne Üben, kein Übertragen, mehrere Stunden ohne Rahmen, ohne Weg und Ende, Ergebnisse vieler Geräte bündeln. Unterrichtsbeispiele (früher Galerie): Status »in der Praxis erprobt«, Bereich »Außerhalb des Unterrichts«, Einheit als eigener Eintrag. Kurzfassung: neue Liste »Gestaltung« (Block 2).
 - **v1.3, 11.11.2026:** Zwei typische Schwächen ergänzt: Leseaufgabe ohne Weg, Legeaufgabe ohne Beziehungen (nach der Recherche zu Lesen und Strukturlegen, `lernmethode-einfuehren/references/lesen-und-strukturlegen.md`).
 - **v1.2, 10.11.2026:** Name Kidu (vorher »Hilde Digital«); Abschnitt »Kurzfassung für Kidu« als einzige Quelle für den kopierbaren Auftrag auf der Website.

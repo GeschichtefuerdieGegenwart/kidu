@@ -268,7 +268,9 @@ test("Papierfrage: ohne erste Antwort bleibt das Ergebnis offen und nennt die n�
     assert.equal(e.frage, "neu");
   }
   assert.deepEqual(R.papierprobe({ neu: "nein" }), { id: null, frage: "ablage" });
-  assert.deepEqual(R.papierprobe({ neu: "ja" }), { id: null, frage: "ziel" });
+  assert.deepEqual(R.papierprobe({ neu: "ja" }), { id: null, frage: "prinzip" }, "ab 4.46: erst was das Gerät tut");
+  assert.deepEqual(R.papierprobe({ neu: "ja", prinzip: "verdecken" }), { id: null, frage: "ziel" });
+  assert.deepEqual(R.papierprobe({ neu: "ja", prinzip: "anderes" }), { id: null, frage: "ziel" });
 });
 
 test("Papierfrage: nichts Neues und nur Ablage ist organisatorischer Nutzen", () => {
@@ -301,6 +303,54 @@ test("Papierfrage: Neues mit Lernzielbezug ist klarer Mehrwert, ohne Bezug Anpas
   assert.equal(R.papierprobe({ neu: "ja", ziel: "ja" }).id, "klar");
   assert.equal(R.papierprobe({ neu: "ja", ziel: "nein" }).id, "anpassung");
   assert.equal(R.papierprobe({ neu: "ja", ziel: "offen" }).id, "anpassung");
+});
+
+test("Papierfrage (4.46): das Prinzip schreibt den Satz zum Vorteil, ändert aber nie die Einstufung", () => {
+  const P = require("../assets/daten/prinzipien.js");
+  for (const p of P) {
+    for (const ziel of ["ja", "nein", "offen"]) {
+      const mit = R.papierprobe({ neu: "ja", prinzip: p.id, ziel });
+      const ohne = R.papierprobe({ neu: "ja", ziel });
+      assert.equal(mit.id, ohne.id, "Einstufung bleibt: " + p.id);
+      assert.equal(mit.satz, p.satz);
+      assert.match(mit.satz, /^Das Gerät .* hier /);
+      assert.equal(ohne.satz, undefined);
+    }
+  }
+  const anders = R.papierprobe({ neu: "ja", prinzip: "anderes", ziel: "ja" });
+  assert.equal(anders.id, "klar");
+  assert.equal(anders.satz, undefined);
+  assert.match(anders.eigenerSatz, /eigenen Satz/);
+  assert.match(anders.eigenerSatz, /Papier/);
+  assert.equal(R.papierprobe({ neu: "nein", ablage: "nein", prinzip: "verdecken" }).satz, undefined, "ohne Mehrwert kein Satz");
+});
+
+test("Papierfrage (4.46): »So trägt es« – höchstens drei Hinweise, bei Anpassung zuerst das Lernziel", () => {
+  const klar = R.papierprobe({ neu: "ja", prinzip: "buendeln", ziel: "ja" }).hinweise;
+  assert.equal(klar.length, 3);
+  assert.match(klar[0], /Erst festlegen, dann aufdecken/);
+  assert.match(klar[1], /Zurück in den Raum/);
+  assert.match(klar[2], /Hybrid/);
+  const anp = R.papierprobe({ neu: "ja", prinzip: "messen", ziel: "nein" }).hinweise;
+  assert.equal(anp.length, 3);
+  assert.match(anp[0], /Lernziel/);
+  for (const a of [{ neu: "nein", ablage: "ja" }, { neu: "nein", ablage: "nein" }, { neu: "offen" }, {}]) {
+    assert.equal(R.papierprobe(a).hinweise, undefined, JSON.stringify(a));
+  }
+  for (const h of klar.concat(anp)) assert.ok(!/\d+ ?%/.test(h), "keine Prozentwerte");
+});
+
+test("Prinzipien (4.46): sechs, mit denselben Namen wie im Aufgabenkoffer, und jeder Satz steht so auf der Prinzipien-Seite", () => {
+  const P = require("../assets/daten/prinzipien.js");
+  const A = require("../assets/daten/aufgaben.js");
+  const fs = require("node:fs");
+  const seite = fs.readFileSync(require("node:path").join(__dirname, "..", "src", "sechs-hebel.html"), "utf8");
+  assert.equal(P.length, 6);
+  assert.deepEqual(P.map((p) => p.id), Object.keys(A.hebel));
+  for (const p of P) {
+    assert.equal(p.name, A.hebel[p.id]);
+    assert.ok(seite.includes(p.kann), "steht auf sechs-hebel.html: " + p.kann);
+  }
 });
 
 test("Papierfrage: Lese-Kriterium ergänzt bei längerem Text einen Hinweis, ändert aber die Einstufung nicht", () => {
@@ -399,7 +449,7 @@ test("Ist-Stand im Bogen: »vor allem Ablage« heißt organisatorischer Nutzen �
   const e = R.startpunkt({ d_klassen: "alle", tablet: ["ablage"], d_mehrwert: "selten" });
   assert.equal(e.tablet.id, "ablage");
   assert.match(e.tablet.text, /organisatorischer Nutzen – legitim und keine Vorstufe/);
-  assert.ok(e.schritte.some((s) => s.link === "unterricht.html#t-probe"), "die Papierfrage als Schritt");
+  assert.ok(e.schritte.some((s) => s.link === "papierfrage.html"), "die Papierfrage als Schritt");
 });
 
 test("Ist-Stand im Bogen: der Wunsch »Schnellere Rückmeldung« wird ein Schritt – direkt nach dem ersten Anlass, vor den Tablet-Phasen", () => {
@@ -442,7 +492,7 @@ test("Rückmeldebogen: höchstens zwei Hilfen in der Reihenfolge der Kreuze – 
   const e = R.rueckmeldebogen({ hakt: ["technik", "plenum", "ablenkung", "auftrag"] });
   assert.deepEqual(e.hilfen.map((h) => h.link), ["sechs-hebel.html#fuenf-saetze", "tablet-phasen.html#t-regeln"]);
   assert.equal(R.rueckmeldebogen({ hakt: ["technik", "nichts", "anderes"] }).hilfen.length, 0);
-  assert.equal(R.rueckmeldebogen({ hakt: ["zeit"] }).hilfen[0].link, "unterricht.html#t-probe");
+  assert.equal(R.rueckmeldebogen({ hakt: ["zeit"] }).hilfen[0].link, "papierfrage.html");
   assert.match(R.rueckmeldebogen({ hakt: ["zeit"] }).hilfen[0].text, /vollwertiges Ergebnis/);
 });
 
@@ -534,7 +584,7 @@ test("Startpunkt: der erste gewählte Anlass kommt zuerst, Skepsis führt zur Pa
   assert.ok(e.schritte.some((s) => s.link === "sicher.html"), "Datenschutz-Unsicherheit führt zu »Sicher arbeiten«");
   assert.ok(e.schritte.length <= 3);
   const s = R.startpunkt({ haeufigkeit: "woechentlich", gedanken: ["fach"], anlass: ["uebung"] });
-  assert.ok(s.lage.skeptisch && s.schritte[0].link.startsWith("unterricht.html#t-probe"));
+  assert.ok(s.lage.skeptisch && s.schritte[0].link.startsWith("papierfrage.html"));
   assert.ok(s.staerken.some((t) => /vollwertiges Ergebnis/.test(t)), "Skepsis wird als Stärke genannt, nicht umgestimmt");
 });
 
@@ -571,10 +621,10 @@ test("Startpunkt: Ablenkung, fehlender Überblick oder Unsicherheit führen zu d
 test("Startpunkt: »vor allem Ablage«, fehlende Ideen oder der Wunsch nach Papier führen zur Papierfrage – höchstens einmal", () => {
   for (const a of [{ tablet: ["ablage"] }, { d_schwer: ["ideen"], d_mehrwert: "oft" }, { d_wunsch: "mehrwert", d_mehrwert: "oft" }, { d_wunsch: "papier", d_mehrwert: "oft" },
                    { haeufigkeit: "mehrmals", wofuer: ["texte", "quiz"], tablet: ["ablage"] }, { gedanken: ["fach"], tablet: ["ablage"], d_wunsch: "papier" }]) {
-    const n = R.startpunkt(a).schritte.filter((s) => s.link === "unterricht.html#t-probe").length;
+    const n = R.startpunkt(a).schritte.filter((s) => s.link === "papierfrage.html").length;
     assert.equal(n, 1, JSON.stringify(a));
   }
-  assert.match(R.startpunkt({ d_wunsch: "papier", d_mehrwert: "oft" }).schritte.find((s) => /t-probe/.test(s.link)).text, /vollwertiges Ergebnis/);
+  assert.match(R.startpunkt({ d_wunsch: "papier", d_mehrwert: "oft" }).schritte.find((s) => /papierfrage\.html/.test(s.link)).text, /vollwertiges Ergebnis/);
 });
 
 test("Startpunkt: Stärken aus dem Unterricht mit Tablets – Absprachen und ausprobierte Formen; fünftes Feld »Tablet-Phase«", () => {

@@ -32,11 +32,11 @@ Der Bereich »Digitaler Unterricht« ist eine Fortbildung zum Selbermachen, geor
 | Phase | Werkzeuge auf der Website | passender Skill |
 | --- | --- | --- |
 | Grundlagen | Wann funktioniert digitaler Unterricht? (sechs Prinzipien, fünf Sätze, Schaubild »Wo in der Stunde«) · Was passt gerade zu mir? · Mein Fortbildungsbogen | – |
-| Digitalen Unterricht erstellen | Unterricht neu planen · Bisherigen Unterricht digitalisieren · Aufgabenkoffer · Ideen und Kniffe · Methodenkoffer · Papierfrage · Digital-Check | `unterricht-digitalisieren`, `digital-check`, `lernmethode-einfuehren`, `ki-grenzen-einer-aufgabe` |
-| Unterrichten | Tablet-Phasen gut führen | – |
-| Nach der Stunde | Beobachtungsbogen · Fortbildungsbaustein · Beratungsstunde · Leitsätze zur Diskussion · Mein Rückmeldebogen | Beobachtungsbogen aus `unterricht-digitalisieren`, `praxisforschung-im-kollegium`, `ki-kompetenz-kollegium` |
+| Digitalen Unterricht erstellen | Zuerst die Papierfrage · dann Unterricht neu planen oder Bisherigen Unterricht digitalisieren · dazu der Aufgabenkoffer (mit den Kniffen aus der Praxis) und der Skillkoffer für Fortgeschrittene · zum Schluss der Digital-Check | `unterricht-digitalisieren`, `digital-check`, `lernmethode-einfuehren`, `ki-grenzen-einer-aufgabe` |
+| Unterrichten | Tablet-Phasen gut führen · Tipps und Tricks | – |
+| Nach der Stunde | Beobachtungsbogen · Mein Rückmeldebogen | Beobachtungsbogen aus `unterricht-digitalisieren`, `praxisforschung-im-kollegium` |
 
-Dazu kommen das KI-Training und die Unterrichtsbeispiele (»analog und digital, beides mit KI erstellt«).
+Dazu kommen die Unterrichtsbeispiele (»analog und digital, beides mit KI erstellt«) und das KI-Training mit denselben vier Phasen: Grundlagen (mit den Trainingsaufgaben) · Unterricht mit KI vorbereiten (Schnell-Anfrage, Prompten lernen, Aufgabenkoffer auf Papier, Aufträge zum Kopieren) · Unterrichten · Nach der Stunde. Bausteine für Fortbildungen stehen nicht im Fahrplan; sie liegen geschützt bei der Fortbildungsleitung (→ `ki-kompetenz-kollegium`).
 
 ## So gehst du vor
 
@@ -59,6 +59,7 @@ Lösungen vor der eigenen Festlegung zeigen · Ranglisten, Punkte, Konfetti · I
 
 ## Versionen
 
+- **v3.3, 17.11.2026:** Kidu 4.46: Phase 2 mit Reihenfolge (Papierfrage zuerst, Digital-Check zum Schluss), »Ideen und Kniffe« im Aufgabenkoffer, Skillkoffer statt Methodenkoffer, »Tipps und Tricks« in Phase 3; Fortbildungsbaustein, Beratungsstunde und Leitsätze nicht mehr im Fahrplan. KI-Training in vier Phasen mit Trainingsaufgaben und Aufgabenkoffer auf Papier.
 - **v3.2, 13.11.2026:** Neue Wege und Namen von Kidu 4.36/4.37: Einstieg »Digitalen Unterricht erstellen« mit »Unterricht neu planen« und »Bisherigen Unterricht digitalisieren«, bei mehreren Stunden zuerst Schritt E; »Unterrichtsbeispiele« statt »Galerie«; Digital-Check mit zwei Blöcken. Neuer Abschnitt »Kidu auf der Website: vier Phasen« (Grundlagen · Digitalen Unterricht erstellen · Unterrichten · Nach der Stunde) mit den passenden Skills.
 - **v3.1, 11.11.2026:** Die Seite »Werkzeugkiste« von Kidu heißt jetzt »Methodenkoffer«.
 - **v3, 10.11.2026:** Umbenannt von `hilde-digital-start` in `kidu-start`, Plugin »kidu« (vorher »hilde-digital«); nicht mehr an eine Schule gebunden; Abschnitt »Kidu ohne Plugin«.

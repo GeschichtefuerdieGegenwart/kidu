@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Eine Quelle für alles (ab Version 4.25): baut aus den Skills die Aufträge der Website und die Downloads des Methodenkoffers.
+"""Eine Quelle für alles (ab Version 4.25): baut aus den Skills die Aufträge der Website und die Downloads des Skillkoffers (bis 4.45 »Methodenkoffer«).
 
 Aufruf:  python3 tools/werkzeugkiste.py          (schreibt alles neu; tools/bauen.py ruft das selbst auf)
          python3 tools/werkzeugkiste.py --pruefen (meldet nur, ob etwas veraltet ist; nutzt tools/pruefen.py)
@@ -28,6 +28,8 @@ Format einer Kurzfassung im Skill:
     **Prüfen**   (freiwillig)
     - …
     **Gestaltung**   (freiwillig, ab 4.38; im Skill digital-check: Prüfblock 2, getrennt von der Didaktik)
+    - …
+    **Papierfrage**  (freiwillig, ab 4.46; im Skill unterricht-digitalisieren: Regeln für den Prompt »Die ganze Stunde prüfen«)
     - …
 """
 import io
@@ -58,7 +60,8 @@ def lies_kurzfassung(teil):
         m = re.search(r"^- \*\*" + feld + r":\*\* (.+)$", teil, re.M)
         if m:
             k[schluessel] = m.group(1).strip()
-    for marke, schluessel in (("Anforderungen", "anforderungen"), ("Prüfen", "pruef"), ("Gestaltung", "gestaltung")):
+    for marke, schluessel in (("Anforderungen", "anforderungen"), ("Prüfen", "pruef"), ("Gestaltung", "gestaltung"),
+                              ("Papierfrage", "papierfrage")):  # ab 4.46: Regeln für »Die ganze Stunde prüfen«
         m = re.search(r"^\*\*" + marke + r"\*\*\n([\s\S]*?)(?=^\*\*|\Z)", teil, re.M)
         if m:
             k[schluessel] = [z[2:].strip() for z in m.group(1).splitlines() if z.startswith("- ")]
@@ -190,7 +193,7 @@ def veraltet():
 def main():
     if "--pruefen" in sys.argv:
         f = veraltet()
-        print("\n".join(f) or "Methodenkoffer: alles aktuell")
+        print("\n".join(f) or "Skillkoffer: alles aktuell")
         sys.exit(1 if f else 0)
     for teil in (texte, downloads):  # erst die Texte, dann die Zip-Dateien, die sie enthalten
         ziele = teil()
@@ -204,7 +207,7 @@ def main():
                 pfad.write_bytes(inhalt)
                 print("geschrieben:", pfad.relative_to(WURZEL).as_posix())
     d = sammle()
-    print(f"Methodenkoffer: Plugin {d['plugin']['name']} {d['plugin']['version']}, {len(d['skills'])} Kurzfassungen")
+    print(f"Skillkoffer: Plugin {d['plugin']['name']} {d['plugin']['version']}, {len(d['skills'])} Kurzfassungen")
 
 
 if __name__ == "__main__":

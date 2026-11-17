@@ -5,7 +5,7 @@
 var KURZFASSUNGEN = {
   "plugin": {
     "name": "kidu",
-    "version": "0.6.0"
+    "version": "0.7.0"
   },
   "skills": {
     "digital-check": {
@@ -25,7 +25,14 @@ var KURZFASSUNGEN = {
         "Legeaufgabe ohne Beziehungen: Werden Karten nur sortiert, ohne benannte Beziehung und Begründung? Ist die fertige Lösung vorher zu sehen? Gibt es bei vielen Karten einen Zwischenstand?",
         "Mit KI erstelltes Material bleibt oft beim Wiedergeben: Wo müssen die Lernenden selbst deuten, urteilen und Gegenpositionen prüfen?",
         "Arbeiten Lernende mit KI: Gibt es eine Stelle, an der sie zeigen, was sie ohne KI können? Stellt die KI Rückfragen, oder gibt sie Lösungen aus?",
-        "Abhängig vom Netz: Schriften, Skripte, Videos oder Dienste von fremden Seiten; die Seite läuft nicht ohne Internet."
+        "Abhängig vom Netz: Schriften, Skripte, Videos oder Dienste von fremden Seiten; die Seite läuft nicht ohne Internet.",
+        "Erst festlegen, dann aufdecken: Legen sich die Lernenden fest, bevor das Gerät eine Auflösung, eine Studie oder die Stimmen der anderen zeigt? Wird der nächste Teil erst auf Ansage frei, wenn alle so weit sind?",
+        "Schreiben: Schreiben die Lernenden in der Stunde selbst, auch von Hand? Sehen sie Kriterien und Beispielantworten erst nach dem eigenen Text?",
+        "Eine Kernentscheidung: Gibt es je Stunde eine Entscheidung, über die vor der Auflösung im Raum gesprochen wird?",
+        "Denkwerkzeug des Fachs: Ist benannt, womit die Lernenden denken – etwa Quellenkritik, Kriterien eines Urteils oder eine Versuchsanordnung?",
+        "Sicherung mit Maß: Gibt es am Ende eine Zusammenfassung von Wissen und Können auf höchstens zwei Seiten?",
+        "Ergebnisse vieler Geräte: Müssen Lernende Ergebnisse über QR-Code oder Import zusammenführen? Einfacher ist ein Gerät vorne und das Gespräch im Raum.",
+        "Rechte und Würde: Haben Bilder und Texte eine Quelle und eine geklärte Rechtelage? Werden Betroffene und Gruppen würdig gezeigt?"
       ],
       "pruef": [],
       "gestaltung": [
@@ -33,7 +40,9 @@ var KURZFASSUNGEN = {
         "Ruhe in der Arbeitsphase: Bewegt sich dort etwas anderes als die Antwort auf eine eigene Handlung? Gibt es ein Arbeitsfenster je Phase?",
         "Zähle den Weg: Wie viele Tipps oder Klicks brauchen die Lernenden bis zur ersten eigenen Antwort, und wie oft wechselt die Seite innerhalb einer Arbeitsphase? Mehr als drei Tipps oder ein Seitenwechsel mitten in der Phase sind ein Hinweis auf Unruhe. Öffnet sich die Hilfe am selben Ort?",
         "Zwischenstand und Ergebnis: Gibt es bei Sortier- und Legeaufgaben einen Zwischenstand, kann man Fehler einzeln zurücknehmen, bleibt der Stand gespeichert? Überleben die Ergebnisse die Stunde außerhalb des Browsers, etwa als Datei?",
-        "Bildschirmbreite: Nutzt eine Übersicht die Breite des Tablets quer und hoch, ohne dass eine Textzeile zu lang wird?",
+        "Orientierung wie auf einem Arbeitsblatt: Sehen die Lernenden, wo sie sind und was als Nächstes kommt, etwa mit Registern? Steht ein Auftrag je Seite? Wird gescrollt, statt alles in einen Bildschirm zu pressen?",
+        "Lesbar und bedienbar: Ist die Schrift mindestens 16 Pixel groß? Sind Ziele zum Tippen mindestens 44 Pixel groß?",
+        "Bildschirmbreite: Nutzt eine Übersicht die Breite des Tablets quer und hoch, ohne dass eine Textzeile zu lang wird? Richten sich Bilder in Karten nach der Breite der Karte?",
         "Linien: Trägt jede Linie und jeder Rahmen eine Beziehung? Endet jede Verbindungslinie an ihrem Ziel, ohne fremde Felder zu kreuzen?",
         "Eine Ordnung je Bild: Zeigt ein Bild zwei Reihenfolgen zugleich, etwa eine Zeitachse und eine zweite Zählung?",
         "Filme: Steht vor einem interaktiven Film ein Satz, was man tun kann? Zeigt ein Erklärfilm die echte Oberfläche der Seite, die er erklärt?",
@@ -41,8 +50,8 @@ var KURZFASSUNGEN = {
         "Lehrkraftbereich: Wenn es einen gibt – ist er von Anfang an verschlüsselt und in die Seite eingebettet, nicht nur hinter einem Codewort?"
       ],
       "wo": "Digital-Check · Weg »Mit KI prüfen«, Abschnitte »Typische Schwächen« und »Gestaltung«",
-      "fassung": "v1.4",
-      "datum": "13.11.2026",
+      "fassung": "v1.5",
+      "datum": "17.11.2026",
       "lizenz": false,
       "herunterladen": true
     },
@@ -121,8 +130,8 @@ var KURZFASSUNGEN = {
       "ziel": "Plane mit mir eine KI-Fortbildung für mein Kollegium. Sie geht von echten Aufgaben im Schulalltag aus, nicht von einzelnen Werkzeugen.",
       "format": "Ein Ablaufplan mit Minuten je Baustein, die Übung am eigenen Material, eine Materialliste und ein Entwurf für die Regel-Seite. Dann: was nach der Fortbildung passiert – Erprobung und ein Termin für die Auswertung.",
       "wo": "Aufträge zum Kopieren · »Eine KI-Fortbildung im Kollegium planen«",
-      "fassung": "v2.2",
-      "datum": "13.11.2026",
+      "fassung": "v2.3",
+      "datum": "17.11.2026",
       "lizenz": false,
       "herunterladen": true
     },
@@ -199,9 +208,20 @@ var KURZFASSUNGEN = {
         "Gib mir zum Schluss fünf kurze Fragen für die Beobachtung nach der Stunde, ohne Noten: Haben die Lernenden das Entscheidende selbst getan? Was ging besser als auf Papier? Wie viel Zeit ging an die Technik? Waren sie bei der Sache? So lassen, nachschärfen oder zurück zu Papier?"
       ],
       "pruef": [],
+      "papierfrage": [
+        "Hybrid ist der Normalfall: Das Gerät nur dort, wo es mehr kann. Längere Texte – mehr als eine Bildschirmseite – liegen auf Papier. Deuten, Streiten und Urteilen geschieht im Raum.",
+        "Erst festlegen, dann aufdecken: Vor jeder Auflösung, Rückmeldung oder Bewegung steht eine eigene Antwort. Was das Urteil vorwegnimmt, gibt die Lehrkraft erst danach frei – auf Ansage oder nach der eigenen Antwort.",
+        "Eine Kernentscheidung je Stunde reicht: lieber eine Festlegung mit Austausch im Plenum als viele kleine Klicks.",
+        "Zurück in den Raum: Jede Phase am Gerät endet mit einer Stelle im Plenum. Oft reicht ein Gerät vorne – Ergebnisse vieler Geräte zusammenzuführen kostet Zeit.",
+        "Ruhe: eine Seite je Phase, Hilfen am selben Ort, höchstens drei Tipps bis zur ersten eigenen Antwort.",
+        "Schreiben geht auch von Hand. Kriterien und Beispielantworten sehen die Lernenden erst nach dem eigenen Text.",
+        "Ergebnisse überleben die Stunde: als Datei, im Heft oder an der Tafel – nicht nur im Browser.",
+        "Für alle: Braucht jemand das Gerät, um mitzumachen – zum Vorlesen, Vergrößern oder Übersetzen –, ist es für diese Person begründet.",
+        "Kein Rang: Eine Stunde ganz auf Papier ist ein gutes Ergebnis. Punktuell, phasenweise und durchgängig sind gleichwertig."
+      ],
       "wo": "Bisherigen Unterricht digitalisieren · Abschnitt »Vorgehen« im Prompt",
-      "fassung": "v4.5",
-      "datum": "13.11.2026",
+      "fassung": "v4.6",
+      "datum": "17.11.2026",
       "lizenz": false,
       "herunterladen": true
     },

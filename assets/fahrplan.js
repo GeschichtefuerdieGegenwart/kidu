@@ -4,9 +4,18 @@
    1. »Alle Werkzeuge zeigen« / »Alle zuklappen« (Muster GOV.UK step by step); der Knopf steht nur mit Skript da.
    2. Eine Sprungmarke in den Fahrplan (#phase-erstellen, #t-kollegium …) öffnet ihre Phase.
    3. Drucken zeigt alle Phasen offen; danach ist alles wie vorher.
+   Ab 4.46: Die Papierfrage hat eine eigene Seite. Alte Links auf #t-probe führen dorthin.
+   Ab 4.46: #t-kollegium (Fortbildungsbaustein, Beratungsstunde, Leitsätze) liegt im geschützten Bereich – alte Links öffnen Phase 4.
    Nichts bewegt sich von selbst, nichts wird gespeichert. */
 (function () {
   "use strict";
+  // Alte Sprungmarken: beim Laden und beim Wechsel der Marke auf derselben Seite (hashchange).
+  function alteMarke() {
+    if (location.hash === "#t-probe") { location.replace("papierfrage.html"); return true; }
+    if (location.hash === "#t-kollegium") { try { history.replaceState(null, "", "#phase-nach"); } catch (e) { /* ohne Verlauf weiter */ } }
+    return false;
+  }
+  if (alteMarke()) return;
   var liste = document.getElementById("fahrplan");
   if (!liste) return;
   var knopf = document.getElementById("fahrplan-alle");
@@ -46,7 +55,7 @@
       ziel.scrollIntoView();
     }
   }
-  window.addEventListener("hashchange", oeffneZiel);
+  window.addEventListener("hashchange", function () { if (!alteMarke()) oeffneZiel(); });
   oeffneZiel();
 
   // Druck: alle Phasen offen, danach der Stand von vorher.

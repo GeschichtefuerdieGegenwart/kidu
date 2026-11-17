@@ -11,7 +11,10 @@ reduzierte Bewegung, Digital-Check (Weg B: Prüf-Auftrag), Galerie mit Bildansic
 Ab Version 4.7: »Zum Anfangen«, Stundenlinie auf Karten und Detailseite, Umfang-Chips mit Vorschau, 390 px.
 Ab Version 4.8: Schalter »Weniger Bewegung«, Beamer-Prüfung für Digitaler Unterricht und Galerie, Fächer nur ein Durchlauf,
 Regler »Vom Blatt zum Tablet«, Wort der Stufe, »Schritt n von m«, Tafelkarte in Bricolage, Status-Variablen.
-Ab Version 4.25: Methodenkoffer, Kurzfassungen aus den Skills in den Aufträgen, im Prompt und im Prüf-Auftrag.
+Ab Version 4.25: Methodenkoffer (ab 4.46 Skillkoffer), Kurzfassungen aus den Skills in den Aufträgen, im Prompt und im Prüf-Auftrag.
+Ab Version 4.46: Papierfrage als Seite, Kniffe im Aufgabenkoffer, Skillkoffer, Tipps und Tricks, KI-Training in vier Phasen mit
+Trainingsaufgaben und Aufgabenkoffer auf Papier, Schloss für die Fortbildungsleitung. Die Inhalte hinter dem Schloss prüft der Test nur,
+wenn das Passwort in der Umgebungsvariable KIDU_PASS steht (es steht nie im Repository): KIDU_PASS='…' python3 tests/e2e.py
 Ab Version 4.39: Input-First (nach dem Laden läuft nichts von selbst, außer Passer und Platten einmal je Sitzung;
 Leporello, Abspielen »Vom Blatt zum Tablet« und Zeichnen der Stundenlinie gestrichen) und Screen-Width
 (Startseite, KI-Training, Digitaler Unterricht und Unterrichtsbeispiele nutzen bei 1920 px die Breite, der Kopf folgt).
@@ -25,7 +28,18 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 W = Path(__file__).resolve().parent.parent
-SEITEN = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "digital-check.html", "tablets.html", "galerie.html", "beispiel.html#psycho-ds2", "beispiel.html#quest", "beispiel.html#anleitertreffen", "beispiel.html#kfz-fehlersuche", "beispiel.html#teacch", "passt.html", "beobachtung.html", "tablet-phasen.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "sechs-hebel.html", "sechs-hebel-film.html", "mehrwert.html", "selbstcheck.html", "ueber.html", "gestaltung.html", "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "werkzeugkiste.html"]
+SEITEN = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "digital-check.html", "tablets.html", "galerie.html", "beispiel.html#psycho-ds2", "beispiel.html#quest", "beispiel.html#anleitertreffen", "beispiel.html#kfz-fehlersuche", "beispiel.html#teacch", "passt.html", "beobachtung.html", "tablet-phasen.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "sechs-hebel.html", "sechs-hebel-film.html", "mehrwert.html", "selbstcheck.html", "ueber.html", "gestaltung.html", "papierkoffer.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "skillkoffer.html",
+          "papierfrage.html", "tipps.html", "ki-aufgaben.html", "fortbildungsleitung.html"]  # ab 4.46
+PASS = os.environ.get("KIDU_PASS", "")
+
+
+def schloss_auf(seite, pfad):
+    """Öffnet eine Seite hinter dem Schloss mit KIDU_PASS. Ist der Schlüssel schon in dieser Sitzung, öffnet sie ohne Eingabe."""
+    seite.goto(url(pfad))
+    seite.wait_for_timeout(150)
+    if seite.locator("#schloss-inhalt").is_hidden() and seite.locator("#schloss-pass").is_enabled():
+        seite.fill("#schloss-pass", PASS); seite.click('#schloss-form button[type="submit"]')
+    seite.wait_for_selector("#schloss-inhalt:not([hidden])", timeout=30000)
 AXE = Path(os.environ.get("AXE_PFAD", W / "tests" / "vendor" / "axe.min.js"))
 fehler = []
 
@@ -88,7 +102,9 @@ def main():
         reg = [a.get_attribute("href") for a in pg.locator("#fahrplan .fahrplan-inhalt a").all()]
         titel = [x.strip() for x in pg.locator("#fahrplan .fahrplan-name").all_inner_texts()]
         pruefe(titel == ["Grundlagen", "Digitalen Unterricht erstellen", "Unterrichten", "Nach der Stunde"] and pg.locator("#fahrplan > li.fahrplan-phase").count() == 4, f"Digitaler Unterricht (4.36, Fahrplan ab 4.41): vier Phasen in dieser Reihenfolge {titel}")
-        pruefe(pg.locator(".werkzeuge.tueren .werkzeug").count() == 2 and "Unterricht neu planen" in pg.text_content(".werkzeuge.tueren") and "Bisherigen Unterricht digitalisieren" in pg.text_content(".werkzeuge.tueren") and pg.locator('#phase-grundlagen a[href="sechs-hebel.html"]').count() == 1 and reg == ["sechs-hebel.html", "sechs-hebel-film.html", "passt.html", "fortbildungsbogen.html", "tablets.html", "digitalisieren.html", "aufgabenkoffer.html", "muster.html", "werkzeugkiste.html", "#t-probe", "digital-check.html", "tablet-phasen.html", "tablet-phasen.html#t-karte", "beobachtung.html", "fortbildung.html", "beratung.html", "leitsaetze.html", "rueckmeldebogen.html"] and "Ideen und Kniffe" in pg.text_content("main") and pg.locator('#phase-nach a[href="rueckmeldebogen.html"]').count() == 1 and pg.locator(".register, .phasen-weg").count() == 0, f"Digitaler Unterricht (4.41): alle Werkzeuge im Fahrplan, eine Struktur, zwei Türen in Phase 2, der Rückmeldebogen als letzter Schritt {reg}")
+        pruefe(pg.locator(".werkzeuge.tueren .werkzeug").count() == 2 and "Unterricht neu planen" in pg.text_content(".werkzeuge.tueren") and "Bisherigen Unterricht digitalisieren" in pg.text_content(".werkzeuge.tueren") and pg.locator('#phase-grundlagen a[href="sechs-hebel.html"]').count() == 1 and reg == ["sechs-hebel.html", "sechs-hebel-film.html", "passt.html", "fortbildungsbogen.html", "papierfrage.html", "tablets.html", "digitalisieren.html", "aufgabenkoffer.html", "skillkoffer.html", "digital-check.html", "tablet-phasen.html", "tipps.html", "beobachtung.html", "rueckmeldebogen.html"] and "Ideen und Kniffe" not in pg.text_content("main") and pg.locator('#phase-nach a[href="rueckmeldebogen.html"]').count() == 1 and pg.locator('#fahrplan a[href="fortbildung.html"], #fahrplan a[href="beratung.html"], #fahrplan a[href="leitsaetze.html"]').count() == 0 and pg.locator(".register, .phasen-weg").count() == 0, f"Digitaler Unterricht (4.46): alle Werkzeuge im Fahrplan in der neuen Reihenfolge, eine Struktur, zwei Türen in Phase 2, der Rückmeldebogen als letzter Schritt, Fortbildungsleitung nicht im Fahrplan {reg}")
+        schritte_p2 = [x.strip() for x in pg.locator("#phase-erstellen .fahrplan-schritt-wort").all_text_contents()]
+        pruefe(schritte_p2 == ["Zuerst", "Dann", "Dazu", "Zum Schluss"] and pg.locator('#phase-erstellen .ist-zuerst a[href="papierfrage.html"]').count() == 1 and pg.locator('#phase-erstellen .ist-schluss a[href="digital-check.html"]').count() == 1, f"Phase 2 (4.46): Zuerst Papierfrage, dann zwei Türen, dazu Aufgabenkoffer und Skillkoffer, zum Schluss Digital-Check {schritte_p2}")
         pruefe(pg.locator('.leitband-beispiele a[href="galerie.html"]').count() == 1 and "beides mit KI erstellt" in pg.inner_text(".leitband-beispiele"), "Digitaler Unterricht (4.36): Weg zu den Unterrichtsbeispielen im Kopf")
         pg.click("#phase-erstellen summary")
         pg.click('.werkzeug a[href="tablets.html"]')
@@ -317,12 +333,13 @@ def main():
         pg = neue_seite(b)
         pg.goto(url("tablet-phasen.html"))
         pruefe(pg.locator(".regel-liste").first.locator("li").count() == 6, "Tablet-Phasen: sechs Regeln")
-        pg.fill("#k-auftrag", "Freitext"); pg.fill("#k-zeit", "10:35")
-        pg.evaluate("document.documentElement.classList.add('nur-karte')"); pg.emulate_media(media="print")
-        pruefe(pg.is_visible("#tafelkarte") and not pg.is_visible("#t-regeln") and not pg.is_visible(".kopf"), "Tablet-Phasen: Druck zeigt nur die Karte")
-        pg.emulate_media(media="screen")
-        pruefe(pg.evaluate("Object.keys(localStorage).filter(k => k.startsWith('hilde.') && k !== 'hilde.merkliste').length") == 0, "Tablet-Phasen: Karte speichert nichts")
+        pruefe(pg.locator("#tafelkarte, #k-auftrag").count() == 0 and pg.locator(".tp-regeln-kurz li").count() == 6 and pg.locator('a[href="tipps.html"]').count() >= 1, "Tablet-Phasen (4.46): ohne Karte für die Tafel, sechs Regeln auf einen Blick, Weg zu Tipps und Tricks")
+        pruefe(pg.evaluate("Object.keys(localStorage).filter(k => k.startsWith('hilde.') && k !== 'hilde.merkliste').length") == 0, "Tablet-Phasen: speichert nichts")
         pruefe(not pg.konsole, f"Tablet-Phasen: keine Konsolenfehler {pg.konsole}")
+        pg.goto(url("tipps.html"))
+        momente = [pg.locator(f".tt-spalte:has(#t-{m}) .tt-tipp").count() for m in ("vorher", "waehrend", "nachher")]
+        pruefe(momente == [4, 6, 4] and pg.locator(".tt-tipp .tt-herkunft").count() == 14, f"Tipps und Tricks (4.46): 4 · 6 · 4 Tipps, jeder mit Herkunft {momente}")
+        pruefe(not pg.konsole, f"Tipps und Tricks: keine Konsolenfehler {pg.konsole}")
         pg.goto(url("ist-stand.html")); pg.wait_for_timeout(500)
         pruefe(pg.url.endswith("fortbildungsbogen.html"), "Ist-Stand (4.36): die alte Adresse ist-stand.html führt zum Fortbildungsbogen")
         pg.goto(url("fortbildungsbogen.html"))
@@ -403,16 +420,38 @@ def main():
         pruefe(pg.is_hidden(".kopf .nav") and pg.is_visible("#rb-form") and pg.is_hidden(".weg-steuerung"), "Rückmeldebogen: ohne fertigen Bogen druckt die Seite die Fragen zum Ausfüllen von Hand, ohne Knöpfe")
         pg.emulate_media(media="screen")
         pruefe(not pg.konsole, f"Rückmeldebogen: keine Konsolenfehler {pg.konsole}")
-        pg.goto(url("fortbildung.html"))
-        pruefe(pg.locator(".ablauf > li").count() == 5 and "Noch nicht erprobt" in pg.inner_text("main"), "Fortbildung: fünf Schritte, als nicht erprobt gekennzeichnet")
-        pg.goto(url("leitsaetze.html"))
-        pruefe(pg.locator("[data-leitsatz]").count() == 10 and "kein Beschluss" in pg.inner_text("main"), "Leitsätze: zehn Sätze, als Entwurf gekennzeichnet")
-        pruefe(pg.locator(".ls-station").count() == 5 and pg.locator(".ls-fahrplan a").count() == 5, "Leitsätze: fünf Stationen mit Fahrplan")
-        pruefe(pg.locator(".ls-akzent, .ls-eins-nr, .ls-eins-strich").count() == 3 and pg.locator("[style*=leitakzent]").count() == 0, "Leitsätze: Leitakzent nur bei Leitsatz 1")
-        pg.emulate_media(media="print")
-        pdf = pg.pdf(format="A4", print_background=True)
-        seiten = len(re.findall(rb"/Type\s*/Page(?!s)", pdf))
-        pruefe(seiten == 1, f"Leitsätze: Druck auf genau einer Seite A4 ({seiten})")
+        # Ab 4.46: Fortbildungsbaustein, Beratungsstunde und Leitsätze stehen verschlüsselt hinter einem Schloss (Entscheidung Mario 17.11.2026)
+        for s_ in ("fortbildungsleitung.html", "fortbildung.html", "beratung.html", "leitsaetze.html"):
+            pg.goto(url(s_))
+            roh = (W / s_).read_text(encoding="utf-8")
+            pruefe(pg.is_visible("#schloss-form") and pg.is_hidden("#schloss-inhalt") and '"ct"' in roh and '"iter":600000' in roh.replace(" ", "")
+                   and not any(w in roh for w in ("Noch nicht erprobt", "kein Beschluss", "Warum acht Wochen?", "Mit Kurzfassung für 20 Minuten")),
+                   f"Schloss (4.46) {s_}: nur die Tür ist zu sehen, der Inhalt steht verschlüsselt in der Seite")
+        pruefe(pg.locator(".fuss a[href=\"fortbildungsleitung.html\"]").count() == 1 and pg.locator("#fahrplan").count() == 0, "Schloss (4.46): der Weg steht unten in der Fußzeile, nicht im Fahrplan")
+        pg.fill("#schloss-pass", "falsch und falsch"); pg.click('#schloss-form button[type="submit"]')
+        pg.wait_for_function("document.getElementById('schloss-meldung').textContent.includes('passt nicht')", timeout=30000)
+        pruefe(pg.is_hidden("#schloss-inhalt") and pg.evaluate("sessionStorage.getItem('kidu.schluessel')") is None, "Schloss (4.46): ein falsches Passwort öffnet nichts und merkt sich nichts")
+        if PASS:
+            schloss_auf(pg, "fortbildung.html")
+            pruefe(pg.locator("#schloss-inhalt .ablauf > li").count() == 5 and "Noch nicht erprobt" in pg.inner_text("main") and pg.is_hidden("#schloss-tuer"), "Fortbildung (hinter dem Schloss): fünf Schritte, als nicht erprobt gekennzeichnet")
+            schloss_auf(pg, "leitsaetze.html")
+            pruefe(pg.locator("[data-leitsatz]").count() == 10 and "kein Beschluss" in pg.inner_text("main") and "für alle und für dieses Ziel" in pg.inner_text("main"), "Leitsätze (hinter dem Schloss, ohne neue Eingabe in derselben Sitzung): zehn Sätze, als Entwurf gekennzeichnet")
+            pruefe(pg.locator(".ls-station").count() == 5 and pg.locator(".ls-fahrplan a").count() == 5, "Leitsätze: fünf Stationen mit Fahrplan")
+            pruefe(pg.locator(".ls-akzent, .ls-eins-nr, .ls-eins-strich").count() == 3 and pg.locator("[style*=leitakzent]").count() == 0, "Leitsätze: Leitakzent nur bei Leitsatz 1")
+            pg.emulate_media(media="print")
+            pdf = pg.pdf(format="A4", print_background=True)
+            seiten = len(re.findall(rb"/Type\s*/Page(?!s)", pdf))
+            pruefe(seiten == 1, f"Leitsätze: Druck auf genau einer Seite A4 ({seiten})")
+            pg.emulate_media(media="screen")
+            schloss_auf(pg, "beratung.html")
+            pruefe(pg.locator(".ablauf > li").count() == 8, "Beratungsstunde (hinter dem Schloss): acht Wochen")
+            schloss_auf(pg, "fortbildungsleitung.html")
+            pruefe(all(pg.locator(f'#schloss-inhalt a[href="{z}"]').count() >= 1 for z in ("fortbildung.html", "beratung.html", "leitsaetze.html")), "Für die Fortbildungsleitung: Übersicht führt zu den drei Bausteinen")
+            pg.click("[data-schloss-zu]"); pg.wait_for_load_state(); pg.wait_for_timeout(150)
+            pruefe(pg.is_visible("#schloss-form") and pg.evaluate("sessionStorage.getItem('kidu.schluessel')") is None, "Schloss (4.46): »Bereich schließen« vergisst den Schlüssel")
+        else:
+            print("– Schloss: Inhalte nicht geprüft, KIDU_PASS ist nicht gesetzt")
+        pruefe(not pg.konsole, f"Schloss: keine Konsolenfehler {pg.konsole}")
         pg.context.close()
 
         # 2i. Fünf Sätze (ab Version 4.18; seit 4.36 auf der Seite der Prinzipien, ohne Scrollytelling)
@@ -657,8 +696,8 @@ def main():
 
         # 2h. Papierfrage und Beobachtungsbogen geschärft (ab Version 4.13)
         pg = neue_seite(b)
-        pg.goto(url("unterricht.html#t-probe"))
-        pruefe(pg.is_visible("#probe-ziel"), "Papierfrage: zuerst das Lernziel in einem Satz")
+        pg.goto(url("unterricht.html#t-probe")); pg.wait_for_url("**/papierfrage.html")
+        pruefe(pg.is_visible("#probe-ziel"), "Papierfrage (4.46): die alte Adresse #t-probe führt zur eigenen Seite, zuerst das Lernziel in einem Satz")
         pg.check('#probe input[name="neu"][value="offen"]')
         t = pg.inner_text("#probe-ergebnis")
         pruefe("Noch offen" in t and "Lernenden" in t and "Analog" not in t, "Papierfrage: »Noch nicht sicher« führt zum Klären, nicht zu Papier")
@@ -670,28 +709,49 @@ def main():
         pruefe(pg.evaluate("Object.keys(localStorage).filter(k => k.startsWith('hilde.') && JSON.stringify(localStorage.getItem(k)).includes('Freitext')).length") == 0, "Papierfrage: Lernziel-Satz wird nicht gespeichert")
         pg.goto(url("beobachtung.html"))
         pruefe(pg.locator('#bogen input[name="nachweis"]').count() == 4 and "Frage 2 von 6" in pg.inner_text("#bogen"), "Beobachtung: neue Frage zum Lernnachweis")
-        pg.goto(url("leitsaetze.html"))
-        pruefe("für alle und für dieses Ziel" in pg.inner_text("main") and "Alle können mitmachen" in pg.inner_text("main"), "Leitsätze: 3 und 9 geschärft")
-        pruefe(not pg.konsole, f"Papierfrage/Beobachtung/Leitsätze: keine Konsolenfehler {pg.konsole}")
+        pg.goto(url("papierfrage.html"))
+        pg.check('#probe input[name="neu"][value="ja"]')
+        pruefe(pg.is_visible('#probe input[name="prinzip"][value="verdecken"]') and pg.is_hidden('#probe input[name="ziel"][value="ja"]'), "Papierfrage (4.46): nach »Ja« zuerst die Frage nach dem Prinzip")
+        pg.check('#probe input[name="prinzip"][value="verdecken"]'); pg.check('#probe input[name="ziel"][value="ja"]')
+        t = pg.inner_text("#probe-ergebnis")
+        pruefe("Klarer Lernmehrwert" in t and "hält hier die Auflösung zurück" in t, "Papierfrage (4.46): das Prinzip gibt einen Satz für die Planung, die Einstufung bleibt")
+        pg.check('#probe input[name="ziel"][value="nein"]')
+        t = pg.inner_text("#probe-ergebnis")
+        pruefe("So trägt es" in t, "Papierfrage (4.46): bei »Anpassung nötig« stehen Hinweise, wie es trägt")
+        pg.fill("#pf-fach", "Pflege")
+        pt = pg.input_value("#pf-prompt")
+        pruefe("Fach: Pflege" in pt and "»Bleibt auf Papier«" in pt and "Erst festlegen, dann aufdecken" in pt and "unterricht-digitalisieren" in pg.inner_text("[data-kurzfassung]"), "Papierfrage (4.46): der Auftrag »Die ganze Stunde prüfen« mit den Regeln aus dem Skill")
+        pruefe(pg.evaluate("Object.keys(localStorage).filter(k => JSON.stringify(localStorage.getItem(k)).includes('Pflege')).length") == 0, "Papierfrage (4.46): Fach, Thema und Lerngruppe werden nicht gespeichert")
+        pruefe(not pg.konsole, f"Papierfrage/Beobachtung: keine Konsolenfehler {pg.konsole}")
         pg.context.close()
 
         # 2g. Werkstatt-Seiten (ab Version 4.9): Unterrichtsmuster, Aufträge, KI für dein Fach, Sicher arbeiten
         pg = neue_seite(b)
-        pg.goto(url("muster.html"))
-        pruefe(pg.locator(".muster-karte").count() == 11 and pg.locator(".muster-karte .muster-weg").count() == 33, "Muster: elf Muster mit je drei Wegen")
-        pg.fill("#w-fach", "Pflege")
-        pruefe("Fach: Pflege" in pg.input_value("#a-stolper") and "# Prüfkriterien" in pg.input_value("#a-stolper"), "Muster: Fach steht in jedem Auftrag")
-        pg.click('#muster-landkarte [data-filter="erarbeitung"]')  # ab 4.42 filtert am Beamer die Landkarte
-        sichtbar = pg.locator(".muster-karte:not([hidden])").count()
-        pruefe(0 < sichtbar < 11 and "Muster" in pg.inner_text("#muster-anzahl"), f"Muster: Filter nach Phase ({sichtbar})")
+        pg.goto(url("muster.html")); pg.wait_for_url("**/aufgabenkoffer.html*")
+        pruefe(pg.url.endswith("aufgabenkoffer.html"), "Ideen und Kniffe (4.46): die alte Adresse führt in den Aufgabenkoffer")
+        pg.goto(url("papierkoffer.html"))
+        linie = pg.eval_on_selector_all("#pk-linie a", "as => as.map(a => a.getAttribute('href'))")
+        karten = pg.evaluate("[...document.querySelectorAll('#pk-phasen .pk-phase')].map(s => s.querySelectorAll('.pk-karte').length)")
+        pruefe(linie == ["#pk-einstieg", "#pk-erarbeitung", "#pk-sicherung", "#pk-abschluss", "#pk-jede"] and sum(karten[:4]) == 18 and karten[4] == 3, f"Aufgabenkoffer auf Papier (4.46): Stundenlinie wie im Koffer, alle 18 Aufgabenformen einmal, drei Kniffe für jede Phase {karten}")
+        pg.fill("#pk-fach", "Pflege")
+        pk = pg.input_value("#a-pk-entscheiden")
+        pruefe("Fach: Pflege" in pk and "So geht es auf Papier:" in pk and "Nutze den Kniff »Zusatzinformation kippt das Urteil«" in pk and "# Prüfkriterien" in pk, "Aufgabenkoffer auf Papier (4.46): der Auftrag kennt Fach, Papierfassung und die Kniffe der Idee")
+        pruefe(pg.locator('#pk-entscheiden a[href="aufgabenkoffer.html#k-entscheiden"]').count() == 1 and pg.locator('#pk-urteil a[href^="aufgabenkoffer.html"]').count() == 0, "Aufgabenkoffer auf Papier (4.46): Weg zur selben Idee am Gerät – nicht bei den Aufgaben ohne Gerät")
+        pg.click("#pk-entscheiden details summary"); pg.click('[data-kopieren="a-pk-entscheiden"]'); pg.wait_for_timeout(150)
+        pruefe(len(pg.inner_text("#pk-entscheiden [aria-live]")) > 5, "Aufgabenkoffer auf Papier (4.46): Kopieren meldet sich")
         pg.reload()
-        pruefe(pg.locator(".muster-karte:not([hidden])").count() == sichtbar and pg.input_value("#w-fach") == "", "Muster: Filter bleibt, Freitext nicht")
-        pruefe(pg.locator('.weg-tablet a[href^="beispiel.html#"]').count() >= 5, "Muster: Tablet-Wege verlinken Galerie-Beispiele")
-        pruefe(not pg.konsole, f"Muster: keine Konsolenfehler {pg.konsole}")
+        pruefe(pg.input_value("#pk-fach") == "" and pg.evaluate("Object.keys(localStorage).filter(k => JSON.stringify(localStorage.getItem(k)).includes('Pflege')).length") == 0, "Aufgabenkoffer auf Papier (4.46): Freitext wird nicht gespeichert")
+        pruefe(not pg.konsole and not pg.extern, f"Aufgabenkoffer auf Papier: keine Konsolenfehler, nichts aus dem Netz {pg.konsole} {pg.extern}")
+        pg.goto(url("ki-aufgaben.html"))
+        gruppen = pg.eval_on_selector_all("#tr-liste .tr-gruppe", "gs => gs.map(g => g.querySelectorAll('.tr-karte').length)")
+        pruefe(gruppen == [3, 3, 2, 2, 2] and pg.locator("#tr-funktionen li").count() == 6 and "AIS.chat" in pg.inner_text(".tr-blick") and "Stand: November 2026" in pg.inner_text(".tr-blick"), f"Trainingsaufgaben (4.46): zwölf Aufgaben in fünf Fähigkeiten, die Funktionen von AIS.chat mit Stand {gruppen}")
+        pruefe(pg.locator(".tr-karte .tr-schritte").count() == 12 and pg.locator(".tr-geschafft").count() == 12 and pg.locator("textarea[data-training]").count() == 2, "Trainingsaufgaben (4.46): je drei Schritte und »Geschafft, wenn …«, zwei Aufträge zum Kopieren")
+        pruefe("Frage mich zuerst nach" in pg.input_value("#a-tr-dialogpartner") and "von einer KI gespielt" in pg.input_value("#a-tr-dialogpartner"), "Trainingsaufgaben (4.46): der Auftrag für den Dialogpartner fragt zuerst nach Fach, Thema und Lerngruppe")
+        pruefe(not pg.konsole and not pg.extern, f"Trainingsaufgaben: keine Konsolenfehler, nichts aus dem Netz {pg.konsole} {pg.extern}")
         pg.goto(url("auftraege.html"))
         pruefe(pg.locator("#auftraege-liste > li").count() == 5 and pg.locator('a[href="digitalisieren.html"]').count() >= 1, "Aufträge: fünf Aufträge und Verweis auf Unterricht digitalisieren")
         pruefe("Fassung" in pg.inner_text("#fortbildung") and "ki-kompetenz-kollegium" in pg.inner_text("#fortbildung"), "Aufträge: neuer Auftrag aus dem Skill mit Fassung (4.25)")
-        pruefe(pg.locator('#auftraege-liste a[href="werkzeugkiste.html#t-laden"]').count() == 5, "Aufträge: jeder Auftrag verweist auf den Methodenkoffer (4.25)")
+        pruefe(pg.locator('#auftraege-liste a[href="skillkoffer.html"]').count() == 5, "Aufträge: jeder Auftrag verweist auf den Skillkoffer (4.25, ab 4.46 Skillkoffer)")
         pruefe("CC BY-SA 4.0" in pg.inner_text("#ki-grenzen"), "Aufträge: Lizenzhinweis bei übertragenen Aufträgen")
         pruefe(not pg.konsole, f"Aufträge: keine Konsolenfehler {pg.konsole}")
         pg.goto(url("ki-fach.html"))
@@ -700,22 +760,22 @@ def main():
         pruefe("Ich unterrichte Geschichte" in t and "Quelle und Darstellung trennen" in t and "[ungeprüft]" in t, "KI für dein Fach: Beispiel füllt die Anweisung")
         pg.check('input[name="anrede"][value="Sie"]')
         pruefe("Anrede »Sie«" in pg.input_value("#fach-text"), "KI für dein Fach: Anrede wählbar")
-        pruefe(pg.evaluate("Object.keys(localStorage).filter(k => k.startsWith('hilde.') && k !== 'hilde.muster').length") == 0, "KI für dein Fach: speichert nichts")
+        pruefe(pg.evaluate("Object.keys(localStorage).filter(k => k.startsWith('hilde.') && k !== 'hilde.muster' && k !== 'hilde.merkliste').length") == 0, "KI für dein Fach: speichert nichts")
         pruefe(not pg.konsole, f"KI für dein Fach: keine Konsolenfehler {pg.konsole}")
         pg.goto(url("sicher.html"))
         pruefe(pg.locator(".sicher-liste > li").count() == 5, "Sicher arbeiten: fünf Regeln")
         pg.goto(url("ki.html"))
-        pruefe(all(pg.locator(f'#t-werkstatt ~ .werkzeuge a[href="{z}"]').count() == 1 for z in ["ki-fach.html", "auftraege.html", "muster.html", "sicher.html"]), "KI-Training: vier Wege in die Werkstatt")
-        pruefe(pg.locator('#t-werkstatt ~ .werkzeuge a[href="lernende-ki.html"]').count() == 1, "KI-Training: Weg zu »Wenn deine Lernenden mit KI arbeiten«")
+        pruefe(pg.locator(".ki-phasen > .ki-phase").count() == 4 and all(pg.locator(f'.ki-phasen a[href="{z}"]').count() == 1 for z in ["sicher.html", "ki-fach.html", "ki-aufgaben.html", "papierkoffer.html", "auftraege.html", "lernende-ki.html", "fortbildungsbogen.html"]), "KI-Training (4.46): vier Phasen wie im Digitalen Unterricht, mit Trainingsaufgaben und Aufgabenkoffer auf Papier")
+        pruefe(pg.locator('.ki-phasen a[href="muster.html"], .ki-phasen a[href="werkzeugkiste.html"]').count() == 0 and pg.locator('.ki-extra a[href="skillkoffer.html"]').count() == 1, "KI-Training (4.46): keine alten Wege, der Skillkoffer für Fortgeschrittene darunter")
         pruefe("F13" in pg.inner_text(".ki-regeln") and "AIS.chat" in pg.inner_text(".ki-regeln"), "KI-Training: Landesangebote genannt (Entscheidung 31.10.2026)")
         # 2i. Version 4.25: Methodenkoffer und eine Quelle für alles
         # Aufgabenkoffer (ab 4.32)
         pg.goto(url("aufgabenkoffer.html"))
         vorher = pg.evaluate("Object.keys(localStorage).length")
         # ab 4.44: der Koffer nach Unterrichtsphasen – Stundenlinie, Ideenkarten, ein Arbeitsfenster je Idee
-        pruefe(pg.locator("#stunde .phase").count() == 4 and pg.locator('#stunde .phase[aria-pressed="true"]').count() == 1 and pg.locator("#ideen .ak-karte").count() == 4 and "Einstieg" in pg.inner_text("#ideen-titel"), "Aufgabenkoffer (4.44): vier Phasen, zuerst der Einstieg mit vier Ideen")
+        pruefe(pg.locator("#stunde .phase").count() == 5 and pg.locator('#stunde .phase[aria-pressed="true"]').count() == 1 and pg.locator("#ideen .ak-karte").count() == 4 and "Einstieg" in pg.inner_text("#ideen-titel"), "Aufgabenkoffer (4.44, ab 4.46 mit »In jeder Phase«): vier Phasen und die Kniffe für jede Phase, zuerst der Einstieg mit vier Ideen")
         namen = pg.locator("#stunde .phase b").all_inner_texts()
-        pruefe(namen == ["Einstieg", "Erarbeitung", "Sichern und üben", "Übertragen und Ausblick"], f"Aufgabenkoffer (4.44): Phasennamen aus taxonomien.js {namen}")
+        pruefe(namen == ["Einstieg", "Erarbeitung", "Sichern und üben", "Übertragen und Ausblick", "In jeder Phase"], f"Aufgabenkoffer (4.44): Phasennamen aus taxonomien.js {namen}")
         pg.click("#alle"); pg.wait_for_timeout(700)
         pruefe(pg.locator("#ideen .ak-karte").count() == 16 and pg.locator("#ohne-liste [data-idee]").count() == 2 and "Alle 16 Ideen" in pg.inner_text("#ideen-titel"), "Aufgabenkoffer (4.44): 16 Ideen als Karten, zwei Aufgaben ohne Gerät darunter – zusammen 18")
         pg.click('#stunde [data-phase="sicherung"]'); pg.wait_for_timeout(700)
@@ -769,13 +829,14 @@ def main():
         pruefe(pg.locator("#sh-variieren .sh-beispiele a").count() == 3 and pg.locator(".sh-beispiele").count() == 6, "Sechs Prinzipien (4.33): unter jedem Prinzip Beispiele aus der Galerie")
         pg.goto(url("index.html"))
         pruefe("Kolleg" not in pg.inner_text("main"), "Startseite (4.33): keine Behauptung über Beiträge des Kollegiums")
-        pg.goto(url("werkzeugkiste.html"))
+        pg.goto(url("werkzeugkiste.html")); pg.wait_for_url("**/skillkoffer.html")
         namen = [h.inner_text().replace("→", "").strip() for h in pg.locator("#kf-liste > li h3").all()]
-        pruefe(namen == ["Bisherigen Unterricht digitalisieren", "Digital-Check: Mit KI prüfen", "Aufträge zum Kopieren"] and pg.locator("#kf-liste .kf-teile > li").count() == 8, f"Methodenkoffer (4.32): drei Werkzeuge, jedes einmal, mit acht Anleitungen {namen}")
-        hrefs = pg.eval_on_selector_all("#laden-liste a[download]", "as => as.map(a => a.getAttribute('href'))")
-        pruefe(len(hrefs) == 10 and all((W / h).exists() for h in hrefs), f"Methodenkoffer: zehn Downloads, alle vorhanden ({len(hrefs)})")
-        pruefe("lernseite-bauen" not in " ".join(hrefs), "Methodenkoffer: Bau-Skill wird nicht angeboten")
-        pruefe(not pg.konsole and not pg.extern, f"Methodenkoffer: keine Konsolenfehler, nichts aus dem Netz {pg.konsole} {pg.extern}")
+        pruefe(namen == ["Bisherigen Unterricht digitalisieren", "Papierfrage: Die ganze Stunde prüfen", "Digital-Check: Mit KI prüfen", "Aufträge zum Kopieren"] and pg.locator("#kf-liste .kf-teile > li").count() == 9, f"Skillkoffer (4.46, vorher Methodenkoffer): vier Werkzeuge, jedes einmal, mit neun Anleitungen {namen}")
+        hrefs = sorted(set(pg.eval_on_selector_all("a[download]", "as => as.map(a => a.getAttribute('href'))")))
+        pruefe(len(hrefs) == 10 and all((W / h).exists() for h in hrefs), f"Skillkoffer: zehn Downloads, alle vorhanden ({len(hrefs)})")
+        pruefe("lernseite-bauen" not in " ".join(hrefs) and pg.locator("#sk-bau a[download]").count() == 0 and pg.locator("#sk-bau > *").count() == 6, "Skillkoffer (4.46): die Bau-Skills zeigen nur, was entsteht – kein Download")
+        pruefe(pg.locator("#sk-karten .sk-wo a").count() >= 8 and all(pg.locator(f'#sk-karten a[download][href$="{s}.zip"]').count() == 1 for s in ("kidu-start", "unterricht-digitalisieren", "digital-check")), "Skillkoffer (4.46): je Skill ein Download und Wege »In Aktion auf Kidu«")
+        pruefe(not pg.konsole and not pg.extern, f"Skillkoffer: keine Konsolenfehler, nichts aus dem Netz {pg.konsole} {pg.extern}")
         pg.goto(url("digitalisieren.html"))
         vorher = (pg.eval_on_selector('input[name="vorhaben"]:checked', "e => e.value"), pg.input_value("#d-ausgabe"))
         pg.check('input[name="vorhaben"][value="arbeitsblatt"]', force=True)
@@ -789,11 +850,11 @@ def main():
         pg.goto(url("digital-check.html"))
         pruefe("# Typische Schwächen" in pg.input_value("#pruef-prompt") and "digital-check" in (pg.text_content("[data-kurzfassung]") or ""), "Digital-Check: typische Schwächen aus dem Skill (4.25)")
         pg.goto(url("ki.html"))
-        pruefe(pg.locator('#t-werkstatt ~ .werkzeuge a[href="werkzeugkiste.html"]').count() == 1, "KI-Training: Weg zum Methodenkoffer")
-        gruppen = pg.eval_on_selector_all(".ki-gruppe", "gs => gs.map(g => [g.querySelector('.gruppe-titel').textContent, g.querySelectorAll('.werkzeug').length])")
+        pruefe(pg.locator('.ki-extra a[href="skillkoffer.html"]').count() == 1, "KI-Training: Weg zum Skillkoffer")
+        phasen = pg.eval_on_selector_all(".ki-phase", "ps => ps.map(p => [p.querySelector('.ki-phase-kopf span').lastChild.textContent.trim(), p.querySelectorAll('.werkzeug').length])")
         oben = pg.evaluate("document.getElementById('t-werkstatt').compareDocumentPosition(document.getElementById('schnell')) & Node.DOCUMENT_POSITION_FOLLOWING")
         reihe = pg.evaluate("['t-erste','schnell','t-werkstatt'].map(i => Math.round(document.getElementById(i).getBoundingClientRect().top + scrollY))")
-        pruefe(gruppen == [["Einmal einrichten", 1], ["Fertig zum Kopieren", 2], ["Sicher bleiben", 2]] and not bool(oben), f"KI-Training (4.33): drei benannte Gruppen, jetzt unter der Schnell-Anfrage {gruppen}")
+        pruefe(phasen == [["Grundlagen", 4], ["Unterricht mit KI vorbereiten", 4], ["Unterrichten", 2], ["Nach der Stunde", 2]] and not bool(oben), f"KI-Training (4.46): vier Phasen unter der Schnell-Anfrage {phasen}")
         pruefe(reihe[0] < reihe[1] < reihe[2] and pg.locator(".erste-schritte > li").count() == 4 and "nachfragen" in pg.inner_text(".erste-minuten").lower() and "F13" in pg.inner_text(".erste-minuten"), f"KI-Training (4.33): erste zehn Minuten, dann Schnell-Anfrage, dann die Gruppen {reihe}")
         # 2h. Version 4.10: Lernende und KI, Beratungsstunde, Lese-Kriterium, Selbstcheck, Beobachtungsbogen
         pg.goto(url("lernende-ki.html"))
@@ -802,17 +863,17 @@ def main():
         pruefe(pg.locator('a[href="auftraege.html#ki-grenzen"]').count() == 1, "Lernende und KI: Verweis auf den Auftrag KI-Regeln")
         pruefe(pg.locator("#vertiefung-forschung .belegstand").count() >= 3, "Lernende und KI: Belege mit Belegstand in der Vertiefung")
         pruefe(not pg.konsole, f"Lernende und KI: keine Konsolenfehler {pg.konsole}")
-        pg.goto(url("beratung.html"))
-        pruefe(pg.locator(".ablauf > li").count() == 8, "Beratungsstunde: acht Wochen")
-        pg.goto(url("unterricht.html"))
+        pg.goto(url("papierfrage.html"))
         pg.check('input[name="neu"][value="ja"]')
+        pg.check('input[name="prinzip"][value="messen"]')
         pg.check('input[name="ziel"][value="ja"]')
         pruefe(pg.locator(".probe-lesen").count() == 0, "Papierfrage: ohne längeren Text kein Lesehinweis")
         pg.check('input[name="lesen"][value="ja"]')
         pruefe(pg.locator(".probe-lesen").count() == 1 and "Papier" in pg.inner_text(".probe-lesen"), "Papierfrage: Lese-Kriterium ergänzt einen Hinweis")
-        pruefe(pg.locator('#phase-nach a[href="beratung.html"]').count() == 1, "Nach der Stunde: Beratungsstunde verlinkt (seit 4.36 in Phase 4, ab 4.41 im Fahrplan)")
-        pg.goto(url("muster.html"))
-        pruefe(pg.locator("#m-ranking .muster-lernende").count() == 1, "Muster: Weg für Lernende mit KI bei »Antworten vergleichen«")
+        pg.goto(url("unterricht.html"))
+        pruefe(pg.locator('#phase-nach a[href="beratung.html"]').count() == 0 and pg.locator('.fuss a[href="fortbildungsleitung.html"]').count() == 1, "Nach der Stunde (4.46): die Beratungsstunde steht nicht mehr im Fahrplan, sondern geschützt bei der Fortbildungsleitung")
+        pg.goto(url("muster.html#m-ranking")); pg.wait_for_url("**/aufgabenkoffer.html#kn-ranking"); pg.wait_for_timeout(300)
+        pruefe(pg.locator(".ak-kniff-blatt").count() == 1 and "Wenn deine Lernenden mit KI arbeiten" in pg.inner_text("#fenster"), "Kniffe (4.46): die alte Adresse muster.html#m-ranking öffnet den Kniff im Aufgabenkoffer, mit dem Weg für Lernende mit KI")
         pg.goto(url("mehrwert.html"))
         pruefe(pg.locator("#vertiefung-forschung .belegstand").count() >= 8, "Mehrwert: Forschung mit Belegstand")
         pg.goto(url("beispiel.html"))
@@ -826,15 +887,11 @@ def main():
         pruefe(pg.evaluate("(()=>{const v=document.querySelector('#kurzfilm video'); return !!v && v.controls && v.preload==='none' && !v.autoplay && v.paused && !!v.querySelector('source[src=\"assets/film/kidu-pitch.mp4\"]') && !!document.querySelector('#kurzfilm-text li')})()"), "Über Kidu: Kurzfilm als Video mit Bedienung, lädt und startet nicht von selbst, Text daneben (4.43)")
         pruefe("@" not in pg.inner_text("#kurzfilm"), "Über Kidu: Kurzfilm ohne Kontaktadresse (4.43)")
         pruefe(pg.locator("#t-arten ~ .inhalte-liste > div").count() == 4, "Über: vier Arten, KI und Tablet zu nutzen")
-        for seite in ("lernende-ki.html", "beratung.html"):
+        for seite in ("lernende-ki.html", "papierfrage.html", "skillkoffer.html", "tipps.html", "ki-aufgaben.html", "papierkoffer.html", "fortbildungsleitung.html"):
             pg.set_viewport_size({"width": 390, "height": 800})
             pg.goto(url(seite))
             breit = pg.evaluate("document.documentElement.scrollWidth")
             pruefe(breit <= 390, f"{seite}: kein waagerechtes Scrollen bei 390 px ({breit})")
-        pg.set_viewport_size({"width": 390, "height": 800})
-        pg.goto(url("muster.html"))
-        breit = pg.evaluate("document.documentElement.scrollWidth")
-        pruefe(breit <= 390, f"Muster: kein waagerechtes Scrollen bei 390 px ({breit})")
         pg.context.close()
 
         # 3. Nur Tastatur (Szenario 10)
@@ -1191,11 +1248,9 @@ def main():
             pruefe(w.locator("#schritte-stand").is_visible() and w.inner_text("#schritte-stand") == f"Schritt 1 von {m_}", f"{s_}: »Schritt 1 von {m_}« steht sichtbar neben den Punkten")
         w.goto(url("tablets.html")); w.check('input[name="phase"][value="einstieg"]'); w.click("#weiter")
         pruefe(w.inner_text("#schritte-stand") == "Schritt 2 von 5", "Planungsweg: der Schrittstand zählt mit")
-        # Tafelkarte in der Überschriftenschrift, Gewicht 700
+        # Tafelkarte: gestrichen in 4.46 (Entscheidung Mario 17.11.2026)
         w.goto(url("tablet-phasen.html"))
-        ff = w.evaluate("getComputedStyle(document.querySelector('.tafelkarte-titel')).fontFamily"); fw = w.evaluate("getComputedStyle(document.querySelector('.tafelkarte-titel')).fontWeight")
-        pruefe("Bricolage Grotesque" in ff and fw == "700", f"Tafelkarte: Titel in Bricolage Grotesque, Gewicht 700 ({fw})")
-        pruefe(w.evaluate("[...document.querySelectorAll('.ablauf-zeit, .leitsatz-liste li')].every(e => getComputedStyle(e).fontWeight !== '800')") and w.evaluate("getComputedStyle(document.documentElement).getPropertyValue('--titel')") == "", "Tafelkarte: kein Gewicht 800 und keine unbekannte Variable --titel")
+        pruefe(w.locator(".tafelkarte-titel, #tafelkarte").count() == 0 and w.evaluate("getComputedStyle(document.documentElement).getPropertyValue('--titel')") == "", "Tafelkarte (4.46): gestrichen; keine unbekannte Variable --titel")
         # Status-Variablen
         w.goto(url("tablets.html")); w.click("#weiter")
         bg = w.evaluate("getComputedStyle(document.getElementById('hinweis')).backgroundColor")
@@ -1345,7 +1400,7 @@ def main():
         pruefe(wann == ["zuerst", "vor der Stunde", "in der Stunde", "nach der Stunde"] and ids == ["phase-grundlagen", "phase-erstellen", "phase-unterrichten", "phase-nach"],
                f"Fahrplan (4.41): Wann je Phase und die Sprungmarken von 4.36 bleiben {wann}")
         zahlen = fp.evaluate("[...document.querySelectorAll('#fahrplan details')].map(d => [parseInt(d.querySelector('.fahrplan-zahl').textContent), d.querySelectorAll('.fahrplan-inhalt a').length])")
-        pruefe([z[0] for z in zahlen] == [4, 7, 2, 5] and all(z[0] == z[1] for z in zahlen), f"Fahrplan (4.41): die Zahl im Kopf stimmt mit den Werkzeugen der Phase überein {zahlen}")
+        pruefe([z[0] for z in zahlen] == [4, 6, 2, 2] and all(z[0] == z[1] for z in zahlen), f"Fahrplan (4.41, Zahlen ab 4.46): die Zahl im Kopf stimmt mit den Werkzeugen der Phase überein {zahlen}")
         flaechen = fp.evaluate("[...document.querySelectorAll('#fahrplan .fahrplan-platte')].map(d => getComputedStyle(d).backgroundColor)")
         pruefe(flaechen == ["rgb(248, 245, 238)", "rgb(219, 231, 230)"] * 2, f"Fahrplan (4.41): Flächen im Wechsel – 1 und 3 hell, 2 und 4 Petrol-zart (Two-Inks Rule) {flaechen}")
         linien = fp.evaluate("""(() => { const li = [...document.querySelectorAll('#fahrplan > li')]; const cs = (e, p) => getComputedStyle(e, p);
@@ -1370,8 +1425,8 @@ def main():
         pruefe(min(ziele[:4]) >= 44 and ziele[4] >= 48, f"Fahrplan (4.41): jeder Kopf mindestens 44 px hoch, der Knopf 48 px (Zielfläche) {ziele}")
         # Maus und Tastatur
         fp.click("#phase-unterrichten summary")
-        pruefe(fp.evaluate(auf) == [False, False, True, False] and fp.is_visible('#phase-unterrichten a[href="tablet-phasen.html#t-karte"]') and fp.is_visible("#phase-unterrichten .fahrplan-karte"),
-               "Fahrplan (4.41): Maus – die Phase klappt am selben Ort auf; Werkzeuge und Vorschau der Karte für die Tafel stehen da")
+        pruefe(fp.evaluate(auf) == [False, False, True, False] and fp.is_visible('#phase-unterrichten a[href="tablet-phasen.html"]') and fp.is_visible('#phase-unterrichten a[href="tipps.html"]') and fp.locator("#phase-unterrichten .fahrplan-karte").count() == 0,
+               "Fahrplan (4.41): Maus – die Phase klappt am selben Ort auf; ab 4.46 Tablet-Phasen und Tipps und Tricks, ohne Karte für die Tafel")
         fp.click("#phase-unterrichten summary")
         pruefe(fp.evaluate(auf) == [False] * 4, "Fahrplan (4.41): Maus – noch einmal tippen klappt zu")
         fp.focus("#phase-grundlagen summary"); fp.keyboard.press("Enter")
@@ -1396,15 +1451,14 @@ def main():
         fp.goto(url("unterricht.html"))
         tipps = fp.evaluate("""(() => { let da = 0, n = 0; for (const d of document.querySelectorAll('#fahrplan details')) { d.querySelector('summary').click();
             for (const a of d.querySelectorAll('.fahrplan-inhalt a')) { n++; if (a.getBoundingClientRect().height > 0) da++; } d.querySelector('summary').click(); } return [da, n]; })()""")
-        pruefe(tipps == [18, 18], f"Three-Tap (4.41): jedes der {tipps[1]} Werkzeuge ist mit zwei Tipps erreichbar – Phase antippen, Werkzeug wählen ({tipps[0]} sichtbar)")
+        pruefe(tipps == [14, 14], f"Three-Tap (4.41): jedes der {tipps[1]} Werkzeuge ist mit zwei Tipps erreichbar – Phase antippen, Werkzeug wählen ({tipps[0]} sichtbar)")
         # Sprungmarken öffnen ihre Phase
         fp.goto(url("unterricht.html#phase-unterrichten")); fp.wait_for_timeout(120)
         pruefe(fp.evaluate(auf) == [False, False, True, False], "Fahrplan (4.41): eine Sprungmarke auf eine Phase öffnet genau diese Phase")
         fp.goto(url("unterricht.html#t-kollegium")); fp.wait_for_timeout(120)
-        box = fp.locator("#t-kollegium").bounding_box()
-        pruefe(fp.evaluate(auf)[3] and box and 0 <= box["y"] < 720, "Fahrplan (4.41): die Sprungmarke #t-kollegium öffnet Phase 4 und zeigt »Im Kollegium«")
-        fp.goto(url("unterricht.html#t-probe")); fp.wait_for_timeout(120)
-        pruefe(fp.is_visible("#probe-ziel") and fp.evaluate(auf) == [False, False, True, True], "Fahrplan (4.41): #t-probe führt weiter zur Papierfrage unter dem Fahrplan")
+        pruefe(fp.evaluate(auf)[3] and fp.evaluate("location.hash") == "#phase-nach", "Fahrplan (4.46): die alte Sprungmarke #t-kollegium öffnet Phase 4 – auch als Wechsel auf derselben Seite")
+        fp.goto(url("unterricht.html#t-probe")); fp.wait_for_url("**/papierfrage.html")
+        pruefe(fp.is_visible("#probe-ziel"), "Fahrplan (4.46): #t-probe führt zur Seite der Papierfrage")
         # Druck: alle Phasen offen, kein Knopf; danach wie vorher
         fp.goto(url("unterricht.html")); fp.click("#phase-erstellen summary")
         fp.evaluate("window.dispatchEvent(new Event('beforeprint'))")
@@ -1446,7 +1500,7 @@ def main():
             for u in w_.get("unterseiten", []):
                 heimat[u] = w_["phase"]
         nr = {q["id"]: q["nr"] for q in daten["phasen"]}
-        pruefe(len(heimat) == 18, f"Wo bin ich (4.42): 18 Seiten tragen den Fahrplan – 16 Werkzeuge und zwei Unterseiten des Digital-Checks ({len(heimat)})")
+        pruefe(len(heimat) == 16, f"Wo bin ich (4.42, ab 4.46): 16 Seiten tragen den Fahrplan – 14 Werkzeuge und zwei Unterseiten des Digital-Checks ({len(heimat)})")
         wo = neue_seite(b)
         for s_, ph in heimat.items():
             wo.goto(url(s_))
@@ -1459,13 +1513,13 @@ def main():
         wo.goto(url("selbstcheck.html"))
         pruefe(wo.evaluate("[...document.querySelectorAll('.ort-zeile a')].map(a => a.getAttribute('href'))")[-1] == "digital-check.html", "Wo bin ich (4.42): die Unterseite nennt in der Zeile auch den Digital-Check")
         wo.goto(url("tablet-phasen.html"))
-        pruefe(wo.locator(".fahrplan-fuss-auch").count() == 0 and wo.locator(".fahrplan-fuss .fahrplan-klein").count() == 1, "Wo bin ich (4.42): Phase 3 hat keine weitere Seite – unten steht nur der Fahrplan")
+        pruefe(wo.locator('.fahrplan-fuss-auch a[href="tipps.html"]').count() == 1 and wo.locator(".fahrplan-fuss .fahrplan-klein").count() == 1, "Wo bin ich (4.46): in Phase 3 steht unten der Nachbar »Tipps und Tricks«")
         wo.goto(url("beobachtung.html"))
         gruppen = wo.locator(".fahrplan-fuss-auch h3").all_inner_texts()
-        pruefe(gruppen == ["Im Kollegium", "Zum Weitergeben"], f"Wo bin ich (4.42): in Phase 4 stehen die Nachbarn in ihren Gruppen, die eigene Gruppe fällt weg {gruppen}")
+        pruefe(gruppen == ["Zum Weitergeben"], f"Wo bin ich (4.42, ab 4.46): in Phase 4 steht der Nachbar in seiner Gruppe, die eigene Gruppe fällt weg {gruppen}")
         wo.goto(url("aufgabenkoffer.html"))
-        papier = wo.locator('.fahrplan-fuss-auch a[href="unterricht.html#t-probe"]')
-        pruefe(papier.count() == 1 and "hier auf der Seite" not in papier.inner_text(), "Wo bin ich (4.42): die Papierfrage führt auf die Bereichsseite und sagt nicht »hier auf der Seite«")
+        papier = wo.locator('.fahrplan-fuss-auch a[href="papierfrage.html"]')
+        pruefe(papier.count() == 1 and wo.locator('.fahrplan-fuss-auch a[href^="unterricht.html#t-"]').count() == 0, "Wo bin ich (4.46): die Papierfrage ist eine eigene Seite und steht unten bei den Nachbarn")
         ring = wo.evaluate("""(() => { const li = [...document.querySelectorAll('.fahrplan-klein > li')], cs = (e, p) => getComputedStyle(e, p);
             return [cs(li[0], '::before').borderLeftStyle, cs(li[1], '::before').borderLeftStyle, cs(li[3], '::before').content, cs(li[1], '::after').borderTopWidth, cs(li[3], '::after').borderBottomWidth]; })()""")
         pruefe(ring == ["dashed", "solid", "none", "3px", "3px"], f"Wo bin ich (4.42): der Fahrplan im Kleinen wie auf der Bereichsseite – Petrol von Phase zu Phase, Rückweg von 4 zu 2 (Same-Face) {ring}")
@@ -1473,7 +1527,7 @@ def main():
         pruefe(min(ziele) >= 44, f"Wo bin ich (4.42): jede Zeile und jeder Link mindestens 44 px hoch {ziele}")
         wo.goto(url("unterricht.html#phase-erstellen")); wo.wait_for_timeout(120)
         pruefe(wo.evaluate("[...document.querySelectorAll('#fahrplan details')].map(d => d.open)") == [False, True, False, False], "Wo bin ich (4.42): der Link zur Phase öffnet sie auf der Bereichsseite")
-        wo.emulate_media(media="print"); wo.goto(url("fortbildung.html"))
+        wo.emulate_media(media="print"); wo.goto(url("papierfrage.html"))
         pruefe(wo.evaluate("[...document.querySelectorAll('.ort-zeile, .fahrplan-fuss, .blick')].every(e => getComputedStyle(e).display === 'none')"), "Wo bin ich (4.42): im Druck fallen Zeile, Fahrplan und »Auf einen Blick« weg")
         wo.emulate_media(media="screen")
         pruefe(not wo.konsole and not wo.extern, f"Wo bin ich (4.42): keine Konsolenfehler, keine Anfragen nach außen {wo.konsole} {wo.extern}")
@@ -1519,12 +1573,12 @@ def main():
           return k.length ? Math.round(k[0].getBoundingClientRect().bottom + scrollY) : null; }"""
         unten = {}
         for s_ in heimat:
-            if s_ in ("werkzeugkiste.html", "digital-check.html", "selbstcheck.html", "mehrwert.html"):
+            if s_ in ("digital-check.html", "selbstcheck.html", "mehrwert.html"):
                 continue
             bm.goto(url(s_)); bm.wait_for_timeout(250)
             unten[s_] = bm.evaluate(erste)
         drueber = {s_: v for s_, v in unten.items() if not v or v > 720}
-        pruefe(len(unten) == 14 and not drueber, f"Beamer 1280 × 720 (4.42): auf allen 14 Werkzeugseiten steht die erste Handlung im ersten Bildschirm {drueber or max(unten.values())}")
+        pruefe(len(unten) == len(heimat) - 3 and not drueber, f"Beamer 1280 × 720 (4.42): auf allen {len(unten)} Werkzeugseiten steht die erste Handlung im ersten Bildschirm {drueber or max(unten.values())}")
         # ab 4.44: Aufgabenkoffer am Beamer – die Stundenlinie ist die erste Handlung, Karten in voller Breite
         bm.goto(url("aufgabenkoffer.html")); bm.wait_for_timeout(250)
         unten_ = bm.evaluate("Math.round(document.querySelector('#stunde .phase').getBoundingClientRect().bottom)")
@@ -1532,28 +1586,25 @@ def main():
         laeuft = bm.evaluate("document.getAnimations().filter(a => a.playState === 'running').length")
         klein = bm.evaluate("Math.min(...[...document.querySelectorAll('.ak button')].filter(e => e.offsetParent).map(e => Math.round(e.getBoundingClientRect().height)))")
         pruefe(unten_ <= 720 and spalten == 4 and laeuft == 0 and klein >= 44 and bm.evaluate("document.documentElement.scrollWidth") <= 1280, f"Aufgabenkoffer (4.44) Beamer: Phasen im ersten Bildschirm ({unten_} px), vier Karten nebeneinander ({spalten}), nichts bewegt sich ({laeuft}), kleinste Fläche {klein} px")
-        bm.goto(url("muster.html"))
-        pruefe(bm.locator("#muster-landkarte button").count() == 6 and bm.locator("#muster-landkarte td a").count() == 11, "Ideen und Kniffe (4.42): Landkarte mit fünf Phasen und allen elf Mustern")
-        bm.click('#muster-landkarte [data-filter="erarbeitung"]')
-        gefiltert = bm.locator(".muster-karte:not([hidden])").count()
-        bm.click('#muster-landkarte a[href^="#m-"] >> nth=0'); bm.wait_for_timeout(100)
-        pruefe(gefiltert == 5 and bm.locator(".muster-karte[hidden]").count() == 0, f"Ideen und Kniffe (4.42): Spaltenkopf filtert ({gefiltert}), ein Name zeigt wieder alle und springt zum Muster")
-        bm.evaluate("localStorage.removeItem('hilde.muster')")
+        bm.click('#stunde [data-phase="jede"]'); bm.wait_for_timeout(700)
+        pruefe(bm.locator("#ideen .ak-karte").count() == 3 and "In jeder Phase" in bm.inner_text("#ideen-titel") and bm.locator("#kniffe-liste li").count() == 11, "Kniffe (4.46): »In jeder Phase« zeigt drei Kniffe; die Liste unten nennt alle elf")
+        bm.click('#ideen .ak-karte >> nth=0'); bm.wait_for_timeout(700)
+        pruefe(bm.locator(".ak-kniff-blatt").count() == 1 and all(w in bm.inner_text("#fenster") for w in ("Warum es trägt", "Am Gerät", "Auf Papier")) and bm.evaluate("location.hash").startswith("#kn-"), "Kniffe (4.46): jeder Kniff hat sein Fenster – am Gerät, auf Papier, mit KI-Auftrag")
+        bm.goto(url("aufgabenkoffer.html#k-entscheiden")); bm.reload(); bm.wait_for_timeout(300)
+        pruefe("Der Kniff dazu" in bm.inner_text("#fenster") and bm.locator('#fenster [data-kniff="zusatz"]').count() >= 1, "Kniffe (4.46): die Idee zeigt ihren Kniff und öffnet ihn")
         sm = neue_seite(b, viewport={"width": 900, "height": 900})
         sm.goto(url("aufgabenkoffer.html#k-film")); sm.reload(); sm.wait_for_timeout(300)
         pruefe(sm.evaluate("document.documentElement.scrollWidth") <= 900 and sm.evaluate("getComputedStyle(document.querySelector('.ak .blatt')).gridTemplateColumns.split(' ').length") == 1, "Aufgabenkoffer (4.44) 900 px: das Arbeitsfenster steht in einer Spalte, nichts läuft über")
-        sm.goto(url("muster.html")); sm.click('#muster-filter [data-filter="erarbeitung"]')
-        pruefe(sm.locator("#muster-landkarte").is_hidden() and sm.locator(".muster-karte:not([hidden])").count() == 5, "Ideen und Kniffe (4.42) 900 px: statt der Landkarte filtern die Chips")
-        sm.evaluate("localStorage.removeItem('hilde.muster')")
         sm.context.close()
         # Auf einen Blick: Zeitleisten (die Höhe zeigt die Dauer)
-        bm.goto(url("fortbildung.html"))
-        hoehen = bm.evaluate("[...document.querySelectorAll('.zeitleiste .zeitleiste-platte')].map(e => Math.round(e.getBoundingClientRect().height))")
-        pruefe(len(hoehen) == 5 and abs(hoehen[0] - 44) <= 2 and abs(hoehen[2] - 132) <= 2 and abs(hoehen[1] - 88) <= 2, f"Fortbildungsbaustein (4.42): Zeitleiste – fünf Minuten 44 px, zehn 88 px, fünfzehn 132 px {hoehen}")
-        bm.goto(url("beratung.html"))
-        wochen = bm.evaluate("[...document.querySelectorAll('.zeitleiste .zeitleiste-platte')].map(e => Math.round(e.getBoundingClientRect().height))")
-        pruefe(len(wochen) == 8 and max(wochen) - min(wochen) <= 2 and bm.locator(".zeitleiste a[href='#woche-8']").count() == 1 and bm.locator("#woche-8").count() == 1,
-               f"Beratungsstunde (4.42): acht gleich hohe Wochen, jede führt zu ihrer Woche {wochen}")
+        if PASS:
+            schloss_auf(bm, "fortbildung.html")
+            hoehen = bm.evaluate("[...document.querySelectorAll('.zeitleiste .zeitleiste-platte')].map(e => Math.round(e.getBoundingClientRect().height))")
+            pruefe(len(hoehen) == 5 and abs(hoehen[0] - 44) <= 2 and abs(hoehen[2] - 132) <= 2 and abs(hoehen[1] - 88) <= 2, f"Fortbildungsbaustein (4.42): Zeitleiste – fünf Minuten 44 px, zehn 88 px, fünfzehn 132 px {hoehen}")
+            schloss_auf(bm, "beratung.html")
+            wochen = bm.evaluate("[...document.querySelectorAll('.zeitleiste .zeitleiste-platte')].map(e => Math.round(e.getBoundingClientRect().height))")
+            pruefe(len(wochen) == 8 and max(wochen) - min(wochen) <= 2 and bm.locator(".zeitleiste a[href='#woche-8']").count() == 1 and bm.locator("#woche-8").count() == 1,
+                   f"Beratungsstunde (4.42): acht gleich hohe Wochen, jede führt zu ihrer Woche {wochen}")
         for s_, n_ in (("beobachtung.html", 6), ("rueckmeldebogen.html", 6)):
             bm.goto(url(s_))
             ziele_ = bm.evaluate("[...document.querySelectorAll('.bogen-blick a')].map(a => a.getAttribute('href'))")
@@ -1569,8 +1620,10 @@ def main():
         bm.context.close()
         # Ohne Skript: Zeile, Fahrplan und die gebauten Überblicke stehen trotzdem da
         oj = b.new_context(java_script_enabled=False, viewport={"width": 1280, "height": 720}); oq = oj.new_page()
+        oq.goto(url("papierfrage.html"))
+        pruefe(oq.is_visible(".ort-zeile") and oq.is_visible(".fahrplan-fuss") and oq.locator(".pf-weg .pf-ast").count() == 2, "Wo bin ich (4.42): ohne Skript stehen Zeile, Fahrplan und »Auf einen Blick« da")
         oq.goto(url("fortbildung.html"))
-        pruefe(oq.is_visible(".ort-zeile") and oq.is_visible(".fahrplan-fuss") and oq.locator(".zeitleiste li").count() == 5, "Wo bin ich (4.42): ohne Skript stehen Zeile, Fahrplan und Zeitleiste da")
+        pruefe("braucht JavaScript" in oq.inner_text("main") and "Noch nicht erprobt" not in oq.inner_text("main"), "Schloss (4.46): ohne Skript bleibt der Bereich zu und sagt, warum")
         oj.close()
 
         # 5c. Breiten 375, 768, 1280, 1440: kein waagerechtes Scrollen, Navigation sichtbar

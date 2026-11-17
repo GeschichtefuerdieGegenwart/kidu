@@ -30,16 +30,21 @@ from pathlib import Path
 
 WURZEL = Path(__file__).resolve().parent.parent
 SEITEN = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "tablets.html", "passt.html", "beobachtung.html", "tablet-phasen.html", "ist-stand.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "fuenf-saetze.html", "sechs-hebel.html", "sechs-hebel-film.html", "digital-check.html", "selbstcheck.html", "mehrwert.html",
-          "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "lernende-ki.html", "beratung.html", "galerie.html", "beispiel.html", "showroom.html", "ueber.html", "gestaltung.html", "werkzeugkiste.html"]
+          "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "lernende-ki.html", "beratung.html", "galerie.html", "beispiel.html", "showroom.html", "ueber.html", "gestaltung.html", "werkzeugkiste.html",
+          # ab 4.46: Papierfrage als Seite, Skillkoffer, Tipps und Tricks, geschützter Bereich
+          "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html"]
 # Seiten, auf denen Fachbegriffe nur in aufklappbaren Vertiefungen (<details>) stehen dürfen
 MIT_VERTIEFUNG = ["mehrwert.html", "selbstcheck.html", "digital-check.html", "ueber.html"]
-EINSTIEG = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "tablets.html", "passt.html", "beobachtung.html", "tablet-phasen.html", "ist-stand.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "fuenf-saetze.html", "sechs-hebel.html", "galerie.html", "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "lernende-ki.html", "beratung.html"]
+EINSTIEG = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "tablets.html", "passt.html", "beobachtung.html", "tablet-phasen.html", "ist-stand.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "fuenf-saetze.html", "sechs-hebel.html", "galerie.html", "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "lernende-ki.html", "beratung.html", "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html"]
 # Skripte, deren Texte auf Einstiegs- und Bereichsseiten erscheinen
 EINSTIEG_SKRIPTE = ["assets/start.js", "assets/check-weg.js", "assets/check-regeln.js", "assets/tablets-weg.js", "assets/einheit.js", "assets/regeln.js", "assets/daten/taxonomien.js",
                     "assets/ki-weg.js", "assets/ki-anfrage.js", "assets/daten/texte.js", "assets/passt.js", "assets/beobachtung.js", "assets/fortbildungsbogen.js", "assets/rueckmeldebogen.js",
                     "assets/probe.js", "assets/digital-check.js", "assets/ki-schnell.js", "assets/schnell-anfrage.js", "assets/daten/schnell.js", "assets/digitalisieren.js", "assets/daten/digitalisieren.js", "assets/galerie-buehne.js", "assets/daten/galerie.js", "assets/anfangen.js", "assets/werkstatt.js", "assets/werkstatt-anfrage.js", "assets/daten/werkstatt.js", "assets/sechs-hebel.js", "assets/sechs-hebel-proben.js", "assets/sechs-hebel-rad.js", "assets/phasen-bild.js",
                     "assets/film-buehne.js", "assets/film.js",  # ab 4.40: der Film auf der Startseite
-                    "assets/fahrplan.js"]  # ab 4.41: Fahrplan der Bereichsseite »Digitaler Unterricht«
+                    "assets/fahrplan.js",  # ab 4.41: Fahrplan der Bereichsseite »Digitaler Unterricht«
+                    "assets/papierfrage-prompt.js", "assets/daten/prinzipien.js", "assets/daten/skillkoffer.js", "assets/werkzeugkiste.js",
+                    "assets/aufgabenkoffer.js", "assets/daten/koffer-ideen.js", "assets/schloss.js",
+                    "assets/papierkoffer.js", "assets/training.js", "assets/daten/training.js"]  # ab 4.46
 FACHBEGRIFFE = ["Adaptivität", "kognitive Aktivierung", "formative Diagnostik", "Multimodalität",
                 "Gamification", "selbstreguliert", "responsive Lernumgebung", "digitale Transformation",
                 "Anforderungsbereich", "Beutelsbacher", "Binnendifferenzierung",
@@ -404,8 +409,9 @@ def pruefe_fahrplan(fehler):
     doppelt = sorted({x for x in alle if alle.count(x) > 1})
     if doppelt:
         fehler.append(f"unterricht.html: Werkzeug mehrfach im Fahrplan {doppelt}")
-    # die Übersicht: alles vor der Papierfrage (deren eigene Verweise, etwa »Genauer planen«, gehören zum Werkzeug)
-    rest = re.sub(r'<ol class="fahrplan"[\s\S]*?</ol>', " ", html.split('aria-labelledby="t-probe"')[0])
+    # die Übersicht ohne den Fahrplan. Ab 4.46 steht die Papierfrage auf einer eigenen Seite, und Phase 2 enthält ein eigenes
+    # <ol> (die Kette) – deshalb bis zum letzten </ol> vor der Ringzeile, nicht bis zum ersten.
+    rest = re.sub(r'<ol class="fahrplan"[\s\S]*</ol>\s*<p class="fahrplan-ring">', " ", html)
     for ziel in alle:
         if ziel.startswith("#"):
             continue
@@ -451,11 +457,39 @@ def pruefe_fahrplan(fehler):
                 fehler.append(f"src/{datei}: Überblick {blick} und Fragen {fragen} heißen verschieden")
 
 
+def pruefe_schloss(fehler):
+    """Ab 4.46: Der Bereich »Für die Fortbildungsleitung« steht nur verschlüsselt im Repository.
+    Jede Seite mit data-schloss trägt ihre verschlüsselten Daten (AES-GCM, PBKDF2 mit mindestens 600 000 Runden),
+    kein Zeichen <!-- schloss: --> bleibt stehen, und privat/ (der Klartext) ist in .gitignore."""
+    import json
+    seiten = 0
+    for pfad in sorted(WURZEL.glob("*.html")):
+        html = pfad.read_text(encoding="utf-8")
+        m = re.search(r'data-schloss="([a-z0-9-]+)"', html)
+        if "<!-- schloss:" in html:
+            fehler.append(f"{pfad.name}: Zeichen <!-- schloss: --> nicht ersetzt")
+        if not m:
+            continue
+        seiten += 1
+        d = re.search(r'<script type="application/json" id="schloss-daten">([\s\S]*?)</script>', html)
+        try:
+            daten = json.loads(d.group(1)) if d else None
+        except ValueError:
+            daten = None
+        if not daten or not all(daten.get(k) for k in ("salt", "iv", "ct")) or int(daten.get("iter", 0)) < 600000:
+            fehler.append(f"{pfad.name}: verschlüsselte Daten fehlen oder sind zu schwach (Schloss)")
+        if not (WURZEL / "schloss" / f"{m.group(1)}.enc.json").exists():
+            fehler.append(f"{pfad.name}: schloss/{m.group(1)}.enc.json fehlt")
+    if seiten and "privat/" not in (WURZEL / ".gitignore").read_text(encoding="utf-8"):
+        fehler.append(".gitignore: privat/ (Klartext des geschützten Bereichs) fehlt")
+
+
 def main():
     fehler = []
     pruefe_werkzeugkiste(fehler)
     pruefe_film(fehler)
     pruefe_fahrplan(fehler)
+    pruefe_schloss(fehler)  # ab 4.46
     pruefe_seiten(fehler)
     pruefe_skripte(fehler)
     pruefe_css(fehler)

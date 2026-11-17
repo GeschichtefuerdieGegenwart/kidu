@@ -86,11 +86,51 @@ def gruppiert(eintraege, auf_bereichsseite, einzug, ebene):
 
 # ---------------------------------------------------------------- Bereichsseite
 
+def tuer_eintrag(w, einzug, klasse="werkzeug tuer"):
+    ueber = f'<span class="tuer-ueber">{e(w["tuer"])}</span>' if w.get("tuer") else ""
+    fuer = f' <span class="fahrplan-fuer">{e(w["fuer"])}</span>' if w.get("fuer") else ""
+    return (f'{einzug}  <li class="{klasse}">\n{einzug}    <a href="{w["href"]}">\n'
+            f'{einzug}      <span class="werkzeug-text">{ueber}<b>{e(w["name"])}</b>{fuer}{e(w["text"])}</span>\n'
+            f'{einzug}      <span class="werkzeug-los" aria-hidden="true">→</span>\n{einzug}    </a>\n{einzug}  </li>')
+
+
+def kette(daten, ws, einzug):
+    """Ab 4.46: die Werkzeuge einer Phase als Kette (»schritt«: zuerst · dann · dazu · schluss), Entscheidung Mario 17.11.2026.
+    Ein geordnetes <ol>: jeder Schritt hat sein Wort (Zuerst, Dann, Dazu, Zum Schluss). »zuerst« steht als breite Tür über den
+    zwei Türen von »dann« – die Papierfrage kommt vor jeder Planung; »dazu« und »schluss« stehen als Liste wie bisher."""
+    worte = daten.get("schritte", {})
+    reihe = []
+    for w in ws:
+        if not reihe or reihe[-1][0] != w["schritt"]:
+            reihe.append((w["schritt"], []))
+        reihe[-1][1].append(w)
+    teile = []
+    for schritt, gruppe in reihe:
+        if schritt == "zuerst":
+            inhalt = (f'<ul class="werkzeuge vorab">\n' + "\n".join(tuer_eintrag(w, einzug + "    ") for w in gruppe)
+                      + f'\n{einzug}    </ul>')
+        elif any(w.get("tuer") for w in gruppe):
+            t = []
+            for i, w in enumerate(gruppe):
+                if i:
+                    t.append(f'{einzug}      <li class="tueren-oder" aria-hidden="true">oder</li>')
+                t.append(tuer_eintrag(w, einzug + "    "))
+            inhalt = '<ul class="werkzeuge tueren">\n' + "\n".join(t) + f"\n{einzug}    </ul>"
+        else:
+            inhalt = liste(gruppe, True, einzug + "    ")
+        teile.append(f'{einzug}  <li class="fahrplan-schritt ist-{schritt}">\n'
+                     f'{einzug}    <p class="fahrplan-schritt-wort">{e(worte.get(schritt, schritt))}</p>\n'
+                     f'{einzug}    {inhalt}\n{einzug}  </li>')
+    return '<ol class="fahrplan-kette">\n' + "\n".join(teile) + f"\n{einzug}</ol>"
+
+
 def bereich_liste(daten, pid):
     ws = [w for w in daten["werkzeuge"] if w["phase"] == pid]
     einzug = "          "
     if any(w.get("gruppe") for w in ws):
         return gruppiert(ws, True, einzug, "h4").lstrip()
+    if any(w.get("schritt") for w in ws):
+        return kette(daten, ws, einzug)
     tueren = [w for w in ws if w.get("tuer")]
     rest = [w for w in ws if not w.get("tuer")]
     teile = []

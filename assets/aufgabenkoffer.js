@@ -2,16 +2,29 @@
    Stundenlinie → Ideenkarten → ein Arbeitsfenster je Idee: »So setzt du es digital um«, eine Probe zum Ausprobieren
    (ausgedachte Beispiele, nichts wird gespeichert oder gesendet) und der Auftrag für ein freigegebenes KI-System.
    Adressen: #einstieg · #erarbeitung · #sichern · #uebertragen · #alle und #k-<id> je Aufgabenform (wie bisher).
-   Braucht: AUFGABEN (aufgaben.js), KOFFER (koffer-ideen.js), TAXONOMIEN (taxonomien.js). */
+   Ab 4.46 (Entscheidung Mario, 17.11.2026): »Ideen und Kniffe« gehen im Koffer auf – ohne die Form zu ändern.
+   - Ideen mit Kniff tragen auf der Karte »+ Kniff«; im Fenster der Idee steht »Der Kniff dazu« (was, warum, Link).
+   - Jeder Kniff hat sein eigenes Fenster (#kn-<id>): warum es trägt, am Gerät mit Unterrichtsbeispielen, auf Papier,
+     zu welchen Ideen er passt, Herkunft und der KI-Auftrag aus WERKSTATT.muster (eine Quelle, gebaut mit WERKSTATT_ANFRAGE).
+   - Unter der Stundenlinie »In jeder Phase« (#jede-phase): die Kniffe, die die ganze Stunde tragen.
+   - Alte Adressen von muster.html (#m-<id>) öffnen das Fenster des Kniffs.
+   Braucht: AUFGABEN (aufgaben.js), KOFFER (koffer-ideen.js), TAXONOMIEN (taxonomien.js);
+   für die Kniffe WERKSTATT (werkstatt.js), WERKSTATT_ANFRAGE, SCHNELL, BEISPIELE – fehlen sie, bleibt der Koffer wie vorher. */
 (function () {
   "use strict";
   if (typeof AUFGABEN === "undefined" || typeof KOFFER === "undefined" || typeof TAXONOMIEN === "undefined" || !document.getElementById("stunde")) return;
   var A = {}; AUFGABEN.aufgaben.forEach(function (a) { A[a.id] = a; });
   var IDS = Object.keys(KOFFER.ideen);
   var PH = KOFFER.phasen.map(function (id) { return TAXONOMIEN.phasen.filter(function (p) { return p.id === id; })[0]; }), PHN = {}; PH.forEach(function (p) { PHN[p.id] = p; });
-  var ADR = { einstieg: "einstieg", erarbeitung: "erarbeitung", sicherung: "sichern", abschluss: "uebertragen", alle: "alle" };
+  var ADR = { einstieg: "einstieg", erarbeitung: "erarbeitung", sicherung: "sichern", abschluss: "uebertragen", alle: "alle", jede: "jede-phase" };
   var VON = {}; Object.keys(ADR).forEach(function (k) { VON[ADR[k]] = k; });
-  var stand = { phase: "einstieg", idee: null };
+  var stand = { phase: "einstieg", idee: null, kniff: null, von: null };
+  /* Kniffe (ab 4.46): eine Quelle in WERKSTATT.muster; hier nur nachgeschlagen */
+  var KN = {}; if (typeof WERKSTATT !== "undefined") WERKSTATT.muster.forEach(function (m) { KN[m.id] = m; });
+  var KNIFFE = KOFFER.kniffe || {}, JEDE = (KOFFER.jedePhase || []).filter(function (id) { return KN[id]; });
+  var UEBER = TAXONOMIEN.phasen.filter(function (p) { return p.id === "uebergreifend"; })[0];
+  function kniffeVon(id) { return (KNIFFE[id] || []).filter(function (k) { return KN[k]; }); }
+  function ideenMit(kid) { return Object.keys(KNIFFE).filter(function (id) { return KNIFFE[id].indexOf(kid) > -1 && A[id]; }); }
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
   var ruhig = function () { return window.matchMedia("(prefers-reduced-motion:reduce)").matches || document.documentElement.getAttribute("data-bewegung") === "weniger"; };
@@ -51,16 +64,35 @@
       var n = inPhase(p.id).length;
       return '<li><button type="button" class="phase" data-phase="' + p.id + '" aria-pressed="' + (stand.phase === p.id) + '"><b>' + esc(p.name) + '</b><span class="ak-hilfe">' + esc(p.hilfe) + '</span><span class="zahl">' + n + " Ideen</span></button></li>";
     }).join("");
+    if (JEDE.length && UEBER) {
+      $("#stunde").insertAdjacentHTML("beforeend", '<li class="ak-jede"><button type="button" class="phase" data-phase="jede" aria-pressed="' + (stand.phase === "jede") + '"><b>' + esc(UEBER.name) + '</b><span class="ak-hilfe">' + esc(UEBER.hilfe) + '</span><span class="zahl">' + JEDE.length + " Kniffe</span></button></li>");
+    }
     var alle = $("#alle"); alle.setAttribute("aria-pressed", stand.phase === "alle");
   }
+  function marke(id) {
+    var ks = kniffeVon(id);
+    if (!ks.length) return "";
+    return '<span class="ak-kniff-marke">+ ' + (ks.length === 1 ? "Kniff: " + esc(KN[ks[0]].name) : ks.length + " Kniffe aus der Praxis") + "</span>";
+  }
+  function kniffKarte(kid) {
+    var m = KN[kid];
+    return '<li><button type="button" class="ak-karte ak-kniff-karte" data-kniff="' + kid + '"><span class="ak-bild">' + svg(KNIFF) + '</span><span class="wort"><b>' + esc(m.name) + '</b><span class="kurz">' + esc(m.tun) + '</span><span class="kann">Kniff aus der Praxis</span></span></button></li>';
+  }
   function karten() {
+    if (stand.phase === "jede") {
+      $("#ideen-titel").textContent = "Kniffe für: " + UEBER.name;
+      $("#ideen-satz").textContent = "Diese Kniffe tragen die ganze Stunde. Tipp einen an. Dann siehst du, wie er am Gerät und auf Papier geht – mit einem Auftrag für ein KI-System.";
+      $("#ideen").innerHTML = JEDE.map(kniffKarte).join("");
+      return;
+    }
     var l = inPhase(stand.phase), p = PHN[stand.phase];
     $("#ideen-titel").textContent = p ? "Ideen für: " + p.name : "Alle " + IDS.length + " Ideen";
-    $("#ideen-satz").textContent = "Tipp eine Idee an. Dann siehst du, wie sie am Gerät geht – mit einem Beispiel zum Ausprobieren.";
+    $("#ideen-satz").textContent = "Tipp eine Idee an. Dann siehst du, wie sie am Gerät geht – mit einem Beispiel zum Ausprobieren und dem Kniff aus der Praxis, wo es einen gibt.";
     $("#ideen").innerHTML = l.map(function (e) {
       var a = A[e.id], k = KOFFER.ideen[e.id], kn = kann(a);
       return '<li><button type="button" class="ak-karte' + (e.auch ? " auch" : "") + '" data-idee="' + e.id + '"><span class="ak-bild">' + svg(BILD[e.id]) + '</span><span class="wort"><b>' + esc(a.name) + '</b><span class="kurz">' + esc(k.kurz) + "</span>" +
         (kn.length ? '<span class="kann">Das Gerät kann hier: ' + esc(kn.join(" · ").toLowerCase()) + "</span>" : "") +
+        marke(e.id) +
         (e.auch ? '<span class="auchhier">Passt auch hier. Zuerst gedacht für: ' + esc(PHN[k.phasen[0]].name) + "</span>" : "") + "</span></button></li>";
     }).join("");
   }
@@ -91,9 +123,56 @@
       '<details class="mehr"><summary>Zum Nachlesen: Belegstand</summary><div><p><b>' + esc(a.stand.charAt(0).toUpperCase() + a.stand.slice(1)) + ".</b> " + esc(a.beleg) + "</p></div></details>";
   }
   var PAPIER = '<rect class="ak-f" x="42" y="8" width="76" height="74" rx="3"/><path class="lt" d="M42 8h76v74H42z"/><path class="lt" d="M54 26h52M54 40h52M54 54h36"/><path class="o" d="M96 60l22-22 8 8-22 22-10 2z"/>';
+  /* ab 4.46: Kniff – eine Karte mit umgeknickter Ecke: der Handgriff, der die Aufgabe trägt */
+  var KNIFF = '<rect class="ak-f" x="34" y="10" width="92" height="70" rx="3"/><path class="lt" d="M34 10h66l26 26v44H34z"/><path class="o" d="M100 10v26h26z"/><path class="lt" d="M46 40h44M46 52h56M46 64h36"/><circle class="p" cx="58" cy="24" r="6"/>';
+
+  /* ab 4.46: »Der Kniff dazu« im Fenster einer Idee – kurz, mit dem Weg ins ganze Fenster des Kniffs */
+  var EINSATZ_KNIFF = { eingesetzt: "Im eigenen Unterricht eingesetzt", geplant: "Ausgearbeitet, noch nicht im Unterricht eingesetzt", offen: "Einsatz im Unterricht: noch offen" };
+  function kniffDazu(id) {
+    var ks = kniffeVon(id);
+    if (!ks.length) return "";
+    return '<section class="ak-kniff"><h4>' + (ks.length === 1 ? "Der Kniff dazu" : "Die Kniffe dazu") + "</h4>" + ks.map(function (kid) {
+      var m = KN[kid];
+      return '<div class="ak-kniff-eintrag"><p class="ak-kniff-name"><b>' + esc(m.name) + "</b></p><p>" + esc(m.tun) + "</p><p><b>Warum es trägt:</b> " + esc(m.warum) + "</p>" +
+        '<p><button type="button" class="textknopf" data-kniff="' + kid + '">Ganzen Kniff öffnen: am Gerät, auf Papier, mit KI-Auftrag <span aria-hidden="true">→</span></button></p></div>';
+    }).join("") + "</section>";
+  }
+  function beispielLinks(m) {
+    var B = typeof BEISPIELE !== "undefined" ? BEISPIELE : [];
+    var bsp = (m.tablet.beispiele || []).map(function (id) { return B.filter(function (b) { return b.id === id; })[0]; }).filter(Boolean);
+    return bsp.length ? '<p><b>Unterrichtsbeispiele:</b></p><ul class="ak-kniff-bsp">' + bsp.map(function (b) { return '<li><a class="textlink" href="beispiel.html#' + esc(b.slug) + '">' + esc(b.titel) + "</a></li>"; }).join("") + "</ul>" : "";
+  }
+  function kniffAuftrag(m) {
+    var text = typeof WERKSTATT_ANFRAGE !== "undefined" ? WERKSTATT_ANFRAGE.auftrag(Object.assign({ id: m.id }, m.ki), {}) : "";
+    if (!text) return "";
+    return '<section class="ki-box"><h4 style="color:var(--text)">Mit KI vorbereiten</h4><p>Ein fertiger Auftrag für ein an deiner Schule freigegebenes KI-System. Das Ergebnis darf auf Papier bleiben. Gib keine Namen, Noten oder anderen personenbezogenen Daten ein.</p><label class="sr-only" for="auftrag">Auftrag – du kannst ihn ändern</label><textarea id="auftrag" spellcheck="false">' + esc(text) + '</textarea><div class="ak-zeile"><button type="button" class="knopf" data-kopieren>Auftrag kopieren</button><span class="leise" id="kopiert" aria-live="polite"></span></div></section>';
+  }
+  function kniffFenster(f) {
+    var m = KN[stand.kniff], von = stand.von && A[stand.von] ? A[stand.von] : null, p = PHN[stand.phase] || (stand.phase === "jede" ? UEBER : null);
+    var zurueck = von ? "Zurück zu: " + esc(von.name) : (p ? (stand.phase === "jede" ? "Alle Kniffe für: " : "Alle Ideen für: ") + esc(p.name) : "Alle Ideen");
+    var nb = stand.phase === "jede" && !von ? JEDE : [];
+    var kopf = '<div class="zurueck"><button type="button" class="knopf still ak-klein" data-zurueck>‹ ' + zurueck + "</button>" +
+      (nb.length ? '<ul class="nachbarn" aria-label="Weitere Kniffe für jede Phase">' + nb.map(function (kid) { return '<li><button type="button" data-kniff="' + kid + '"' + (kid === m.id ? ' aria-current="true"' : "") + ">" + esc(KN[kid].name) + "</button></li>"; }).join("") + "</ul>" : "") + "</div>";
+    var ideen = ideenMit(m.id);
+    var passt = (ideen.length ? '<ul class="nachbarn">' + ideen.map(function (id) { return '<li><button type="button" data-idee="' + id + '">' + esc(A[id].name) + "</button></li>"; }).join("") + "</ul>" : "") +
+      (JEDE.indexOf(m.id) > -1 ? '<p>Und in jeder Phase der Stunde.</p>' : "");
+    var titel = '<header class="blatt-kopf"><span class="ak-bild" style="view-transition-name:ak-bild">' + svg(KNIFF) + '</span><div><h2 id="idee-titel" tabindex="-1">' + esc(m.name) + '</h2><p class="auch">Kniff aus der Praxis · ' + esc(TAXONOMIEN.name("phasen", m.phase)) + '</p></div><p class="tun">' + esc(m.tun) + "</p></header>";
+    f.innerHTML = kopf + '<article class="blatt ak-kniff-blatt" aria-labelledby="idee-titel">' + titel +
+      '<div class="spalte">' +
+      '<section class="teil"><h3>Warum es trägt</h3><p class="mass">' + esc(m.warum) + "</p></section>" +
+      '<section class="kann-box"><h4>Am Gerät</h4><p>' + esc(m.tablet.text) + "</p>" + beispielLinks(m) + "</section>" +
+      '<section class="teil"><h4>Auf Papier</h4><p class="mass">' + esc(m.papier) + "</p></section>" +
+      (passt ? '<section class="teil"><h4>Passt zu diesen Ideen</h4>' + passt + "</section>" : "") +
+      '<p class="leise">' + esc(EINSATZ_KNIFF[m.einsatz] || "") + " · " + esc(m.herkunft) + ". Eine persönliche Angabe, kein Nachweis der Wirkung.</p>" +
+      "</div>" +
+      '<div class="spalte">' + kniffAuftrag(m) +
+      (m.lernende ? '<section class="teil"><h4>Wenn deine Lernenden mit KI arbeiten</h4><p class="mass">' + esc(m.lernende) + ' <a class="textlink" href="lernende-ki.html">Drei Regeln dazu <span aria-hidden="true">→</span></a></p></section>' : "") +
+      "</div></article>";
+  }
 
   function detail() {
     var f = $("#fenster"), u = $("#uebersicht");
+    if (stand.kniff && KN[stand.kniff]) { u.hidden = true; f.hidden = false; kniffFenster(f); return; }
     if (!stand.idee) { f.hidden = true; u.hidden = false; f.innerHTML = ""; return; }
     var a = A[stand.idee], k = KOFFER.ideen[stand.idee], kn = k ? kann(a) : [], p = PHN[stand.phase];
     var nb = k ? inPhase(stand.phase) : [];
@@ -104,7 +183,7 @@
     var achtung = '<section class="achtung"><h4>Darauf achten</h4><p><b>' + esc(a.regel) + "</b></p><p>Wenig sinnvoll ist die Idee:</p><ul>" + a.wenig.map(function (w) { return "<li>" + esc(w) + "</li>"; }).join("") + "</ul></section>";
     if (!k) {
       f.innerHTML = kopf + '<article class="blatt" aria-labelledby="idee-titel">' + titel +
-        '<div class="spalte"><section class="teil"><h3>So geht es auf Papier</h3><p class="mass">' + esc(a.papier) + '</p></section><section class="kann-box"><h4>Und das Gerät?</h4><p>' + esc(a.geraet) + '</p><ul class="chips" aria-label="Prinzipien"><li class="kein">keines der sechs Prinzipien</li></ul></section>' + achtung + "</div>" +
+        '<div class="spalte"><section class="teil"><h3>So geht es auf Papier</h3><p class="mass">' + esc(a.papier) + '</p></section><section class="kann-box"><h4>Und das Gerät?</h4><p>' + esc(a.geraet) + '</p><ul class="chips" aria-label="Prinzipien"><li class="kein">keines der sechs Prinzipien</li></ul></section>' + kniffDazu(a.id) + achtung + "</div>" +
         '<div class="spalte">' + erfahrung(a) + klappen(a, false) + auftrag(a, null) + "</div></article>";
       return;
     }
@@ -112,6 +191,7 @@
       '<div class="spalte">' +
       '<section class="teil"><h3>So setzt du es digital um</h3><ol class="ak-schritte">' + k.schritte.map(function (s) { return "<li><span>" + esc(s) + "</span></li>"; }).join("") + "</ol></section>" +
       '<section class="kann-box"><h4>Das trägt das Gerät bei</h4><p>' + esc(a.geraet) + '</p><ul class="chips" aria-label="Prinzipien">' + (kn.length ? a.hebel.map(function (h) { return '<li><a href="sechs-hebel.html#sh-' + h + '">' + esc(AUFGABEN.hebel[h]) + "</a></li>"; }).join("") : '<li class="kein">keines der sechs Prinzipien</li>') + "</ul></section>" +
+      kniffDazu(a.id) +
       achtung +
       '<section class="teil"><h4>In anderen Fächern</h4><ul class="faecher">' + k.faecher.map(function (x) { return "<li><b>" + esc(x[0]) + "</b><span>" + esc(x[1]) + "</span></li>"; }).join("") + '</ul><p class="leise">Ausgedachte Beispiele zur Anregung – nicht erprobt.</p></section>' +
       erfahrung(a) + klappen(a, true) +
@@ -125,25 +205,34 @@
     var tun = function () { aendern(); linie(); karten(); detail(); };
     if (document.startViewTransition && !ruhig()) document.startViewTransition(tun).updateCallbackDone.then(nach, nach); else { tun(); nach(); }
     function nach() {
-      var ziel = stand.idee ? "k-" + stand.idee : ADR[stand.phase];
+      var ziel = stand.kniff ? "kn-" + stand.kniff : stand.idee ? "k-" + stand.idee : ADR[stand.phase];
       if (location.hash.slice(1) !== ziel) { try { history.replaceState(null, "", "#" + ziel); } catch (e) { } }
       if (fokus === "idee") { var t = $("#idee-titel"); if (t) { t.focus({ preventScroll: true }); $("#fenster").scrollIntoView({ block: "start", behavior: ruhig() ? "auto" : "smooth" }); } }
-      if (fokus === "karte") { var b = $('#ideen [data-idee="' + fokus2 + '"]'); if (b) b.focus({ preventScroll: true }); }
+      if (fokus === "karte") { var b = $('#ideen [data-idee="' + fokus2 + '"]') || $('#ideen [data-kniff="' + fokus2 + '"]'); if (b) b.focus({ preventScroll: true }); }
     }
   }
   var fokus2 = null;
 
   document.addEventListener("click", function (e) {
     var b = e.target.closest("[data-phase]");
-    if (b) { zeig(function () { stand.phase = b.getAttribute("data-phase"); stand.idee = null; }); return; }
+    if (b) { zeig(function () { stand.phase = b.getAttribute("data-phase"); stand.idee = null; stand.kniff = null; stand.von = null; }); return; }
     b = e.target.closest("[data-idee]");
     if (b) {
       var id = b.getAttribute("data-idee"), bild = b.querySelector(".ak-bild");
       if (bild) bild.style.viewTransitionName = "ak-bild";
-      zeig(function () { stand.idee = id; }, "idee"); return;
+      zeig(function () {
+        stand.idee = id; stand.kniff = null; stand.von = null;
+        var ki = KOFFER.ideen[id]; if (ki && stand.phase !== "alle" && ki.phasen.indexOf(stand.phase) < 0) stand.phase = ki.phasen[0];
+      }, "idee"); return;
+    }
+    b = e.target.closest("[data-kniff]");
+    if (b) {
+      var kid = b.getAttribute("data-kniff"), bildK = b.querySelector(".ak-bild");
+      if (bildK) bildK.style.viewTransitionName = "ak-bild";
+      zeig(function () { stand.von = stand.idee || stand.von; stand.kniff = kid; stand.idee = null; }, "idee"); return;
     }
     b = e.target.closest("[data-zurueck]");
-    if (b) { fokus2 = stand.idee; zeig(function () { stand.idee = null; }, "karte"); return; }
+    if (b) { zurueck(); return; }
     b = e.target.closest("[data-kopieren]");
     if (b) {
       var feld = $("#auftrag"), st = $("#kopiert");
@@ -151,12 +240,24 @@
       try { navigator.clipboard.writeText(feld.value).then(function () { st.textContent = "Kopiert. Füg ihn in dein KI-System ein."; }, selbst); } catch (x) { selbst(); }
     }
   });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && stand.idee && !e.target.closest("textarea,input,select")) { fokus2 = stand.idee; zeig(function () { stand.idee = null; }, "karte"); } });
+  /* Zurück: aus einem Kniff, der aus einer Idee geöffnet wurde, zur Idee; sonst zu den Karten */
+  function zurueck() {
+    if (stand.kniff && stand.von) { var v = stand.von; zeig(function () { stand.idee = v; stand.kniff = null; stand.von = null; }, "idee"); return; }
+    fokus2 = stand.kniff || stand.idee; zeig(function () { stand.idee = null; stand.kniff = null; stand.von = null; }, "karte");
+  }
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && (stand.idee || stand.kniff) && !e.target.closest("textarea,input,select")) zurueck(); });
 
   function ausAdresse() {
     var h = location.hash.slice(1);
-    if (h.indexOf("k-") === 0 && A[h.slice(2)]) { stand.idee = h.slice(2); var ki = KOFFER.ideen[stand.idee]; if (ki && stand.phase !== "alle" && ki.phasen.indexOf(stand.phase) < 0) stand.phase = ki.phasen[0]; }
-    else if (VON[h]) { stand.phase = VON[h]; stand.idee = null; }
+    var kid = h.indexOf("kn-") === 0 ? h.slice(3) : (h.indexOf("m-") === 0 ? h.slice(2) : ""); // #m-… von muster.html (bis 4.45)
+    if (kid && KN[kid]) {
+      stand.kniff = kid; stand.idee = null; stand.von = null;
+      if (JEDE.indexOf(kid) > -1) stand.phase = "jede";
+      else { var heim = ideenMit(kid)[0], kh = heim && KOFFER.ideen[heim]; stand.phase = kh ? kh.phasen[0] : "alle"; }
+      if (h.indexOf("m-") === 0) { try { history.replaceState(null, "", "#kn-" + kid); } catch (e) { } }
+    }
+    else if (h.indexOf("k-") === 0 && A[h.slice(2)]) { stand.idee = h.slice(2); stand.kniff = null; var ki = KOFFER.ideen[stand.idee]; if (ki && stand.phase !== "alle" && ki.phasen.indexOf(stand.phase) < 0) stand.phase = ki.phasen[0]; }
+    else if (VON[h] && (h !== "jede-phase" || JEDE.length)) { stand.phase = VON[h]; stand.idee = null; stand.kniff = null; }
   }
   window.addEventListener("hashchange", function () { ausAdresse(); linie(); karten(); detail(); });
 
@@ -422,6 +523,12 @@
 
   /* ---------- Start ---------- */
   $("#ohne-liste").innerHTML = KOFFER.ohneGeraet.map(function (id) { var a = A[id]; return '<li><button type="button" class="textknopf" data-idee="' + id + '">' + esc(a.name) + "</button> " + esc(a.geraet) + "</li>"; }).join("");
+  var kl = $("#kniffe-liste");
+  if (kl) {
+    var alleK = Object.keys(KN);
+    kl.innerHTML = alleK.map(function (kid) { return '<li><button type="button" class="textknopf" data-kniff="' + kid + '">' + esc(KN[kid].name) + "</button></li>"; }).join("");
+    var kb = $("#kniffe-block"); if (kb) kb.hidden = !alleK.length;
+  }
   var quellen = $("#koffer-quellen");
   if (quellen) quellen.innerHTML = AUFGABEN.quellen.map(function (q) { return "<li>" + esc(q.text) + (q.ort ? ' <span class="leise">' + esc(q.ort) + "</span>" : "") + "</li>"; }).join("");
   ausAdresse(); linie(); karten(); detail();
