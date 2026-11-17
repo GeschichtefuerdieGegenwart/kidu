@@ -1,4 +1,4 @@
-/* Kidu – Fahrplan der Bereichsseite »Digitaler Unterricht« (ab Version 4.41, Entwurf B2 aus Claude Design,
+/* Kidu – Fahrplan der Bereichsseiten »Digitaler Unterricht« und (ab 4.47) »KI-Training« (ab Version 4.41, Entwurf B2 aus Claude Design,
    Entscheidung Mario 14.11.2026).
    Jede Phase ist ein <details>: Aufklappen und Zuklappen gehen auch ohne Skript. Das Skript ergänzt nur drei Dinge:
    1. »Alle Werkzeuge zeigen« / »Alle zuklappen« (Muster GOV.UK step by step); der Knopf steht nur mit Skript da.
@@ -6,17 +6,23 @@
    3. Drucken zeigt alle Phasen offen; danach ist alles wie vorher.
    Ab 4.46: Die Papierfrage hat eine eigene Seite. Alte Links auf #t-probe führen dorthin.
    Ab 4.46: #t-kollegium (Fortbildungsbaustein, Beratungsstunde, Leitsätze) liegt im geschützten Bereich – alte Links öffnen Phase 4.
+   Ab 4.47 läuft dasselbe Skript auch auf ki.html (Fahrplan KI-Training). Die alten Sprungmarken stehen deshalb an der Liste selbst:
+   data-alte-marken='{"#alt": "neue-seite.html"}' leitet auf eine andere Seite, '{"#alt": "#phase-…"}' bleibt auf der Seite.
    Nichts bewegt sich von selbst, nichts wird gespeichert. */
 (function () {
   "use strict";
+  var liste = document.getElementById("fahrplan");
+  var ALT = {};
+  try { ALT = JSON.parse((liste && liste.getAttribute("data-alte-marken")) || "{}"); } catch (e) { ALT = {}; }
   // Alte Sprungmarken: beim Laden und beim Wechsel der Marke auf derselben Seite (hashchange).
   function alteMarke() {
-    if (location.hash === "#t-probe") { location.replace("papierfrage.html"); return true; }
-    if (location.hash === "#t-kollegium") { try { history.replaceState(null, "", "#phase-nach"); } catch (e) { /* ohne Verlauf weiter */ } }
+    var ziel = Object.prototype.hasOwnProperty.call(ALT, location.hash) ? ALT[location.hash] : "";
+    if (!ziel) return false;
+    if (ziel.charAt(0) !== "#") { location.replace(ziel); return true; }
+    try { history.replaceState(null, "", ziel); } catch (e) { /* ohne Verlauf weiter */ }
     return false;
   }
   if (alteMarke()) return;
-  var liste = document.getElementById("fahrplan");
   if (!liste) return;
   var knopf = document.getElementById("fahrplan-alle");
   var platten = Array.prototype.slice.call(liste.querySelectorAll("details.fahrplan-platte"));

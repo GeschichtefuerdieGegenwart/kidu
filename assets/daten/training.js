@@ -5,8 +5,10 @@
    funktion  – was die Aufgabe im KI-System nutzt (Schlüssel aus funktionen). »ohne« = ohne KI.
    schritte  – drei Schritte. geschafft – woran du merkst, dass es geklappt hat: ein Nebensatz nach »Geschafft, wenn …«.
    dazu      – Werkzeuge in Kidu, die du dafür brauchst ([Adresse, Name]).
+   zeit      – (ab 4.47) grob geschätzt, wie viel Zeit die Aufgabe braucht: Schlüssel aus zeiten. Keine Minutenangaben –
+               die Aufgaben sind noch nicht erprobt (Recherche 17.11.2026: Zeit und KI-Bedarf auf einen Blick).
    ki        – (freiwillig) ein Auftrag zum Kopieren, gleiche fünf Teile wie die Schnell-Anfrage; gebaut mit WERKSTATT_ANFRAGE.auftrag.
-   Regeln: Alle Aufgaben sind Vorschläge und noch nicht erprobt. Keine Zeitangaben, keine Wirkungsversprechen.
+   Regeln: Alle Aufgaben sind Vorschläge und noch nicht erprobt. Keine Minutenangaben (nur der grobe Zeitbedarf), keine Wirkungsversprechen.
    Keine Namen von KI-Anbietern oder Sprachmodellen. AIS.chat und F13 nur mit Stand (Ausnahme in CLAUDE.md).
    Funktionen von AIS.chat laut Land Baden-Württemberg (Pressemitteilung zum Start, Oktober 2025), Berliner Bildungsverwaltung
    (Pressemitteilung 2026) und Schulministerium NRW (Umbenennung von »telli« in »AIS.chat«, Mai 2026). Stand: November 2026.
@@ -24,6 +26,12 @@ var TRAINING = {
     { id: "kontingent", name: "Kontingent", text: "Deine Nutzung ist begrenzt. Ein guter Auftrag spart Nachfragen." }
   ],
 
+  // ab 4.47: grober Zeitbedarf, geschätzt – nicht gemessen. Bewusst nicht »Umfang«: Das ist in taxonomien.js der Umfang des Gerätes im Unterricht.
+  zeiten: [
+    { id: "kurz", name: "kurz", text: "zwischendurch, in einer Pause oder vor dem Unterricht" },
+    { id: "freistunde", name: "eine Freistunde", text: "etwa so lang wie eine Schulstunde" }
+  ],
+
   gruppen: [
     { id: "abgeben", name: "Abgeben oder selbst machen", frage: "Welche Aufgabe gebe ich ab, welche bleibt bei mir – und warum?" },
     { id: "beschreiben", name: "Gut beschreiben", frage: "Was braucht die KI, damit sie nicht rät?" },
@@ -34,7 +42,7 @@ var TRAINING = {
 
   aufgaben: [
     {
-      id: "woche", gruppe: "abgeben", funktion: "chat",
+      id: "woche", gruppe: "abgeben", funktion: "chat", zeit: "kurz",
       name: "Deine Woche sortieren",
       ziel: "Du entscheidest bewusst, was die KI übernehmen darf.",
       schritte: [
@@ -43,10 +51,10 @@ var TRAINING = {
         "Nimm eine Aufgabe aus »gemeinsam« und gib sie mit der Schnell-Anfrage an das KI-System."
       ],
       geschafft: "du für jede Aufgabe sagen kannst, warum sie in ihrer Spalte steht.",
-      dazu: [["ki.html#schnell", "Schnell-Anfrage"]]
+      dazu: [["schnell-anfrage.html", "Schnell-Anfrage"]]
     },
     {
-      id: "erst-selbst", gruppe: "abgeben", funktion: "chat",
+      id: "erst-selbst", gruppe: "abgeben", funktion: "chat", zeit: "kurz",
       name: "Erst selbst, dann KI",
       ziel: "Du siehst, was die KI ergänzt – und was nur du über deine Klasse weißt.",
       schritte: [
@@ -55,10 +63,10 @@ var TRAINING = {
         "Vergleich: Was hattest du, was die KI nicht hatte? Was nimmst du mit?"
       ],
       geschafft: "du einen Unterschied nennen kannst, den nur deine Lerngruppe erklärt.",
-      dazu: [["ki.html#schnell", "Schnell-Anfrage »Einstieg mit Vermutung«"]]
+      dazu: [["schnell-anfrage.html", "Schnell-Anfrage »Einstieg mit Vermutung«"]]
     },
     {
-      id: "modelle", gruppe: "abgeben", funktion: "modell",
+      id: "modelle", gruppe: "abgeben", funktion: "modell", zeit: "kurz",
       name: "Zwei Sprachmodelle vergleichen",
       ziel: "Du weißt, welches Sprachmodell für eine Aufgabe reicht. Größer ist nicht immer besser.",
       schritte: [
@@ -67,10 +75,10 @@ var TRAINING = {
         "Vergleich die Ergebnisse mit den Prüfkriterien am Ende des Auftrags."
       ],
       geschafft: "du für eine Aufgabe, die oft wiederkommt, ein Sprachmodell gewählt hast – mit Grund.",
-      dazu: [["ki.html#schnell", "Schnell-Anfrage"]]
+      dazu: [["schnell-anfrage.html", "Schnell-Anfrage"]]
     },
     {
-      id: "umbauen", gruppe: "beschreiben", funktion: "chat",
+      id: "umbauen", gruppe: "beschreiben", funktion: "chat", zeit: "kurz",
       name: "Eine schwache Anfrage umbauen",
       ziel: "Du erlebst, was die fünf Teile einer guten Anfrage ausmachen.",
       schritte: [
@@ -79,10 +87,10 @@ var TRAINING = {
         "Leg beide Ergebnisse nebeneinander. Was ist besser geworden?"
       ],
       geschafft: "du sagen kannst, welcher der fünf Teile am meisten gebracht hat.",
-      dazu: [["ki.html#lernen-weg", "Prompten lernen"]]
+      dazu: [["prompten.html", "Prompten lernen"]]
     },
     {
-      id: "assistent", gruppe: "beschreiben", funktion: "assistent",
+      id: "assistent", gruppe: "beschreiben", funktion: "assistent", zeit: "freistunde",
       name: "Einen Assistenten für dein Fach anlegen",
       ziel: "Du schreibst einmal auf, was in deinem Fach gilt – und musst es nicht jedes Mal neu erklären.",
       schritte: [
@@ -94,7 +102,7 @@ var TRAINING = {
       dazu: [["ki-fach.html", "KI für dein Fach einrichten"]]
     },
     {
-      id: "anhaengen", gruppe: "beschreiben", funktion: "chat",
+      id: "anhaengen", gruppe: "beschreiben", funktion: "chat", zeit: "kurz",
       name: "Eigenes Material anhängen",
       ziel: "Die KI arbeitet an deinem Material statt an einem ausgedachten.",
       schritte: [
@@ -103,10 +111,10 @@ var TRAINING = {
         "Prüf: Führen alle drei Fassungen zum selben Lernziel?"
       ],
       geschafft: "du drei Fassungen hast, die du auf Papier einsetzen würdest.",
-      dazu: [["ki.html#schnell", "Schnell-Anfrage"], ["sicher.html", "Sicher arbeiten in fünf Regeln"]]
+      dazu: [["schnell-anfrage.html", "Schnell-Anfrage"], ["sicher.html", "Sicher arbeiten in fünf Regeln"]]
     },
     {
-      id: "gegenprobe", gruppe: "pruefen", funktion: "modell",
+      id: "gegenprobe", gruppe: "pruefen", funktion: "modell", zeit: "kurz",
       name: "Gegenprobe mit einem zweiten Sprachmodell",
       ziel: "Du lässt prüfen – und entscheidest selbst.",
       schritte: [
@@ -129,7 +137,7 @@ var TRAINING = {
       }
     },
     {
-      id: "faktencheck", gruppe: "pruefen", funktion: "chat",
+      id: "faktencheck", gruppe: "pruefen", funktion: "chat", zeit: "freistunde",
       name: "Drei Stellen nachprüfen",
       ziel: "Du merkst, wo eine KI-Antwort sicher klingt, ohne sicher zu sein.",
       schritte: [
@@ -141,7 +149,7 @@ var TRAINING = {
       dazu: [["auftraege.html#faktencheck", "Eine Übung: KI-Antworten prüfen"]]
     },
     {
-      id: "darf-rein", gruppe: "verantworten", funktion: "ohne",
+      id: "darf-rein", gruppe: "verantworten", funktion: "ohne", zeit: "kurz",
       name: "Darf das rein?",
       ziel: "Du entscheidest sicher, was du eingeben darfst.",
       schritte: [
@@ -153,7 +161,7 @@ var TRAINING = {
       dazu: [["sicher.html", "Sicher arbeiten in fünf Regeln"]]
     },
     {
-      id: "sichtbar", gruppe: "verantworten", funktion: "ohne",
+      id: "sichtbar", gruppe: "verantworten", funktion: "ohne", zeit: "kurz",
       name: "KI-Hilfe sichtbar machen",
       ziel: "Wer dein Material nutzt, weiß, wobei die KI geholfen hat.",
       schritte: [
@@ -165,7 +173,7 @@ var TRAINING = {
       dazu: []
     },
     {
-      id: "lernszenario", gruppe: "begleiten", funktion: "lernszenario",
+      id: "lernszenario", gruppe: "begleiten", funktion: "lernszenario", zeit: "freistunde",
       name: "Ein Lernszenario selbst durchspielen",
       ziel: "Du prüfst, ob die KI deinen Lernenden hilft – oder ihnen das Denken abnimmt.",
       schritte: [
@@ -177,7 +185,7 @@ var TRAINING = {
       dazu: [["lernende-ki.html", "Wenn deine Lernenden mit KI arbeiten"]]
     },
     {
-      id: "dialogpartner", gruppe: "begleiten", funktion: "dialogpartner",
+      id: "dialogpartner", gruppe: "begleiten", funktion: "dialogpartner", zeit: "freistunde",
       name: "Einen Dialogpartner testen",
       ziel: "Du weißt, wofür eine gespielte Person im Unterricht taugt – und wofür nicht.",
       schritte: [

@@ -32,10 +32,13 @@ WURZEL = Path(__file__).resolve().parent.parent
 SEITEN = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "tablets.html", "passt.html", "beobachtung.html", "tablet-phasen.html", "ist-stand.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "fuenf-saetze.html", "sechs-hebel.html", "sechs-hebel-film.html", "digital-check.html", "selbstcheck.html", "mehrwert.html",
           "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "lernende-ki.html", "beratung.html", "galerie.html", "beispiel.html", "showroom.html", "ueber.html", "gestaltung.html", "werkzeugkiste.html",
           # ab 4.46: Papierfrage als Seite, Skillkoffer, Tipps und Tricks, geschützter Bereich
-          "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html"]
+          "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html",
+          # ab 4.47: KI-Training als Fahrplan – drei Seiten aus der alten ki.html, Prüf-Labor, Mit dem Kollegium
+          "erste-minuten.html", "schnell-anfrage.html", "prompten.html", "pruef-labor.html", "kollegium.html"]
 # Seiten, auf denen Fachbegriffe nur in aufklappbaren Vertiefungen (<details>) stehen dürfen
 MIT_VERTIEFUNG = ["mehrwert.html", "selbstcheck.html", "digital-check.html", "ueber.html"]
-EINSTIEG = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "tablets.html", "passt.html", "beobachtung.html", "tablet-phasen.html", "ist-stand.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "fuenf-saetze.html", "sechs-hebel.html", "galerie.html", "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "lernende-ki.html", "beratung.html", "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html"]
+EINSTIEG = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "tablets.html", "passt.html", "beobachtung.html", "tablet-phasen.html", "ist-stand.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "fuenf-saetze.html", "sechs-hebel.html", "galerie.html", "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "lernende-ki.html", "beratung.html", "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html",
+            "erste-minuten.html", "schnell-anfrage.html", "prompten.html", "pruef-labor.html", "kollegium.html"]
 # Skripte, deren Texte auf Einstiegs- und Bereichsseiten erscheinen
 EINSTIEG_SKRIPTE = ["assets/start.js", "assets/check-weg.js", "assets/check-regeln.js", "assets/tablets-weg.js", "assets/einheit.js", "assets/regeln.js", "assets/daten/taxonomien.js",
                     "assets/ki-weg.js", "assets/ki-anfrage.js", "assets/daten/texte.js", "assets/passt.js", "assets/beobachtung.js", "assets/fortbildungsbogen.js", "assets/rueckmeldebogen.js",
@@ -44,7 +47,8 @@ EINSTIEG_SKRIPTE = ["assets/start.js", "assets/check-weg.js", "assets/check-rege
                     "assets/fahrplan.js",  # ab 4.41: Fahrplan der Bereichsseite »Digitaler Unterricht«
                     "assets/papierfrage-prompt.js", "assets/daten/prinzipien.js", "assets/daten/skillkoffer.js", "assets/werkzeugkiste.js",
                     "assets/aufgabenkoffer.js", "assets/daten/koffer-ideen.js", "assets/schloss.js",
-                    "assets/papierkoffer.js", "assets/training.js", "assets/daten/training.js"]  # ab 4.46
+                    "assets/papierkoffer.js", "assets/training.js", "assets/daten/training.js",  # ab 4.46
+                    "assets/pruef-labor.js", "assets/daten/pruef-labor.js"]  # ab 4.47
 FACHBEGRIFFE = ["Adaptivität", "kognitive Aktivierung", "formative Diagnostik", "Multimodalität",
                 "Gamification", "selbstreguliert", "responsive Lernumgebung", "digitale Transformation",
                 "Anforderungsbereich", "Beutelsbacher", "Binnendifferenzierung",
@@ -388,50 +392,72 @@ def pruefe_fahrplan(fehler):
     Die Zahl im Kopf (»7 Werkzeuge«) muss zu den Links in der Phase passen, und jedes Werkzeug steht nur einmal
     auf der Seite (eine Struktur, keine doppelten Links; One-Order Rule).
     Ab 4.42 kommen die Werkzeuge aus src/fahrplan.json (tools/fahrplan.py): geprüft wird die Seite, wie sie gebaut wird,
-    dazu, dass jede Werkzeugseite die Zeile oben und den Fahrplan unten trägt – und nur sie."""
+    dazu, dass jede Werkzeugseite die Zeile oben und den Fahrplan unten trägt – und nur sie.
+    Ab 4.47 dasselbe für den Fahrplan »KI-Training« (src/fahrplan-ki.json, ki.html, Zeichen <!-- kiplan:… -->). Dazu:
+    Namen und Anliegen der Phasen auf der Bereichsseite wie in den Daten; ein Werkzeug mit »zuhause« steht im anderen
+    Fahrplan; keine Seite gehört zu zwei Fahrplänen."""
     import importlib.util
     spec = importlib.util.spec_from_file_location("fahrplan", WURZEL / "tools" / "fahrplan.py")
     fp = importlib.util.module_from_spec(spec); spec.loader.exec_module(fp)
-    daten = fp.laden()
-    html = fp.einsetzen((WURZEL / "src" / "unterricht.html").read_text(encoding="utf-8"), "unterricht.html", daten)
-    phasen = re.findall(r'<details class="fahrplan-platte">([\s\S]*?)</details>', html)
-    if len(phasen) != 4:
-        fehler.append(f"unterricht.html: Fahrplan braucht vier Phasen, gefunden {len(phasen)}")
-    if re.findall(r'id="phase-([a-z]+)"', html) != [q["id"] for q in daten["phasen"]]:
-        fehler.append("unterricht.html: die Phasen der Bereichsseite und von src/fahrplan.json stimmen nicht überein")
-    alle = []
-    for nr, phase in enumerate(phasen, 1):
-        zahl = re.search(r'class="fahrplan-zahl">(\d+) Werkzeug', phase)
-        links = re.findall(r'<a href="([^"]+)"', phase)
-        alle += links
-        if not zahl or int(zahl.group(1)) != len(links):
-            fehler.append(f"unterricht.html: Phase {nr} nennt {zahl.group(1) if zahl else 'keine'} Werkzeuge, verlinkt sind {len(links)}")
-    doppelt = sorted({x for x in alle if alle.count(x) > 1})
-    if doppelt:
-        fehler.append(f"unterricht.html: Werkzeug mehrfach im Fahrplan {doppelt}")
-    # die Übersicht ohne den Fahrplan. Ab 4.46 steht die Papierfrage auf einer eigenen Seite, und Phase 2 enthält ein eigenes
-    # <ol> (die Kette) – deshalb bis zum letzten </ol> vor der Ringzeile, nicht bis zum ersten.
-    rest = re.sub(r'<ol class="fahrplan"[\s\S]*</ol>\s*<p class="fahrplan-ring">', " ", html)
-    for ziel in alle:
-        if ziel.startswith("#"):
-            continue
-        if f'href="{ziel}"' in rest:
-            fehler.append(f"unterricht.html: {ziel} steht außerhalb des Fahrplans noch einmal (eine Struktur)")
-    # ab 4.42: Zeile und Fahrplan auf jeder Werkzeugseite (Weg B der Recherche »Werkzeugseiten: Wo bin ich?«)
-    seiten = {fp.seite(w["href"]) for w in daten["werkzeuge"] if "#" not in w["href"]}
-    seiten |= {u for w in daten["werkzeuge"] for u in w.get("unterseiten", [])}
-    for w in daten["werkzeuge"]:
-        if not (WURZEL / "src" / fp.seite(w["href"])).exists():
-            fehler.append(f"src/fahrplan.json: {w['href']} gibt es nicht")
+    plaene = fp.alle_laden()
+    seiten_je_plan = {}
+    for art, daten in plaene.items():
+        bereich, json_quelle = daten["_bereich"], daten["_quelle"]
+        html = fp.einsetzen((WURZEL / "src" / bereich).read_text(encoding="utf-8"), bereich, plaene)
+        phasen = re.findall(r'<details class="fahrplan-platte">([\s\S]*?)</details>', html)
+        if len(phasen) != 4:
+            fehler.append(f"{bereich}: Fahrplan braucht vier Phasen, gefunden {len(phasen)}")
+        if re.findall(r'id="phase-([a-z]+)"', html) != [q["id"] for q in daten["phasen"]]:
+            fehler.append(f"{bereich}: die Phasen der Bereichsseite und von {json_quelle} stimmen nicht überein")
+        if re.findall(r'<h3 class="fahrplan-name">([^<]+)</h3>', html) != [q["name"] for q in daten["phasen"]]:
+            fehler.append(f"{bereich}: die Namen der Phasen und {json_quelle} stimmen nicht überein")
+        if any("anliegen" in q for q in daten["phasen"]):  # ab 4.47: das Anliegen jeder Phase (KI-Training)
+            if re.findall(r'<b class="fahrplan-anliegen">»([^«]+)«</b>', html) != [q.get("anliegen") for q in daten["phasen"]]:
+                fehler.append(f"{bereich}: die Anliegen der Phasen und {json_quelle} stimmen nicht überein")
+        alle = []
+        for nr, phase in enumerate(phasen, 1):
+            zahl = re.search(r'class="fahrplan-zahl">(\d+) Werkzeug', phase)
+            links = re.findall(r'<a href="([^"]+)"', phase)
+            alle += links
+            if not zahl or int(zahl.group(1)) != len(links):
+                fehler.append(f"{bereich}: Phase {nr} nennt {zahl.group(1) if zahl else 'keine'} Werkzeuge, verlinkt sind {len(links)}")
+        doppelt = sorted({x for x in alle if alle.count(x) > 1})
+        if doppelt:
+            fehler.append(f"{bereich}: Werkzeug mehrfach im Fahrplan {doppelt}")
+        # die Übersicht ohne den Fahrplan. Ab 4.46 steht die Papierfrage auf einer eigenen Seite, und Phase 2 enthält ein eigenes
+        # <ol> (die Kette) – deshalb bis zum letzten </ol> vor der Ringzeile, nicht bis zum ersten.
+        rest = re.sub(r'<ol class="fahrplan"[\s\S]*</ol>\s*<p class="fahrplan-ring">', " ", html)
+        for ziel in alle:
+            if ziel.startswith("#"):
+                continue
+            if f'href="{ziel}"' in rest:
+                fehler.append(f"{bereich}: {ziel} steht außerhalb des Fahrplans noch einmal (eine Struktur)")
+        # ab 4.42: Zeile und Fahrplan auf jeder Werkzeugseite (Weg B der Recherche »Werkzeugseiten: Wo bin ich?«)
+        seiten = {fp.seite(w["href"]) for w in daten["werkzeuge"] if "#" not in w["href"] and not w.get("zuhause")}
+        seiten |= {u for w in daten["werkzeuge"] for u in w.get("unterseiten", [])}
+        for w in daten["werkzeuge"]:
+            if not (WURZEL / "src" / fp.seite(w["href"])).exists():
+                fehler.append(f"{json_quelle}: {w['href']} gibt es nicht")
+            if w.get("zuhause"):  # ab 4.47: gehört zum anderen Fahrplan und steht dort
+                anderer = plaene.get(w["zuhause"])
+                if not anderer or not any(fp.seite(x["href"]) == fp.seite(w["href"]) for x in anderer["werkzeuge"]):
+                    fehler.append(f"{json_quelle}: {w['href']} hat »zuhause: {w['zuhause']}«, steht dort aber nicht")
+        seiten_je_plan[art] = seiten
+    for a, b in [("fahrplan", "kiplan")]:
+        for datei in sorted(seiten_je_plan[a] & seiten_je_plan[b]):
+            fehler.append(f"src/{datei}: gehört zu zwei Fahrplänen – eine Seite hat ein Zuhause (»zuhause« im anderen)")
+    bereichsname = {"fahrplan": "Digitaler Unterricht", "kiplan": "KI-Training"}
     for datei in sorted(p.name for p in (WURZEL / "src").glob("*.html")):
         quelle = (WURZEL / "src" / datei).read_text(encoding="utf-8")
-        zeilen, fuesse = len(re.findall(r"<!-- fahrplan:zeile( weit)? -->", quelle)), len(re.findall(r"<!-- fahrplan:fuss( weit)? -->", quelle))
-        if datei in seiten and (zeilen, fuesse) != (1, 1):
-            fehler.append(f"src/{datei}: Werkzeugseite braucht genau eine Zeile oben und einen Fahrplan unten (gefunden {zeilen} und {fuesse})")
-        if datei not in seiten and (zeilen or fuesse):
-            fehler.append(f"src/{datei}: trägt Fahrplan-Zeichen, steht aber nicht in src/fahrplan.json")
-        if datei in seiten and re.search(r'class="marker">[^<]*Bereich: Digitaler Unterricht', quelle):
-            fehler.append(f"src/{datei}: »Bereich: Digitaler Unterricht« steht schon in der Zeile oben")
+        for art, seiten in seiten_je_plan.items():
+            zeilen = len(re.findall(rf"<!-- {art}:zeile( weit)? -->", quelle))
+            fuesse = len(re.findall(rf"<!-- {art}:fuss( weit)? -->", quelle))
+            if datei in seiten and (zeilen, fuesse) != (1, 1):
+                fehler.append(f"src/{datei}: Werkzeugseite braucht genau eine Zeile oben und einen Fahrplan unten (gefunden {zeilen} und {fuesse})")
+            if datei not in seiten and (zeilen or fuesse):
+                fehler.append(f"src/{datei}: trägt Zeichen <!-- {art}: -->, steht aber nicht in {plaene[art]['_quelle']}")
+            if datei in seiten and re.search(rf'class="marker">[^<]*Bereich: {bereichsname[art]}', quelle):
+                fehler.append(f"src/{datei}: »Bereich: {bereichsname[art]}« steht schon in der Zeile oben")
         # ab 4.42: »Auf einen Blick« zeigt dieselben Werte wie die Seite
         if 'class="zeitleiste' in quelle:
             blick = [(int(a), int(b)) for a, b in re.findall(r"--von:(\d+);--bis:(\d+)", quelle)]

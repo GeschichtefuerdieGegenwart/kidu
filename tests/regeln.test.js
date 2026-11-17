@@ -455,7 +455,7 @@ test("Ist-Stand im Bogen: »vor allem Ablage« heißt organisatorischer Nutzen �
 test("Ist-Stand im Bogen: der Wunsch »Schnellere Rückmeldung« wird ein Schritt – direkt nach dem ersten Anlass, vor den Tablet-Phasen", () => {
   const e = R.startpunkt({ haeufigkeit: "woechentlich", anlass: ["eltern"], d_klassen: "alle", tablet: ["ablage"], d_schwer: ["ablenkung"], d_wunsch: "feedback" });
   assert.equal(e.schritte.length, 3);
-  assert.equal(e.schritte[0].link, "ki.html#t-schnell");
+  assert.equal(e.schritte[0].link, "schnell-anfrage.html");
   assert.equal(e.schritte[1].link, "digitalisieren.html");
   assert.match(e.schritte[1].text, /Rückmeldung/);
   assert.equal(e.schritte[1].linktext, "Bisherigen Unterricht digitalisieren");
@@ -580,7 +580,7 @@ test("Startpunkt: keine Rangfolge – Lagen heißen nicht Stufe, Niveau oder Anf
 
 test("Startpunkt: der erste gewählte Anlass kommt zuerst, Skepsis führt zur Papierfrage, höchstens drei Schritte", () => {
   const e = R.startpunkt({ haeufigkeit: "nie", anlass: ["eltern", "uebung"], hindernis: ["datenschutz"] });
-  assert.equal(e.schritte[0].link, "ki.html#t-schnell");
+  assert.equal(e.schritte[0].link, "schnell-anfrage.html");
   assert.ok(e.schritte.some((s) => s.link === "sicher.html"), "Datenschutz-Unsicherheit führt zu »Sicher arbeiten«");
   assert.ok(e.schritte.length <= 3);
   const s = R.startpunkt({ haeufigkeit: "woechentlich", gedanken: ["fach"], anlass: ["uebung"] });
@@ -611,7 +611,7 @@ test("Startpunkt: Unterricht mit Tablets – keine Tablet-Klasse, vor allem Abla
 test("Startpunkt: Ablenkung, fehlender Überblick oder Unsicherheit führen zu den Regeln für Tablet-Phasen – direkt nach dem ersten Anlass", () => {
   const e = R.startpunkt({ haeufigkeit: "woechentlich", anlass: ["eltern", "uebung", "einstieg"], d_klassen: "alle", tablet: ["ablage"], d_schwer: ["ablenkung"] });
   assert.equal(e.schritte.length, 3);
-  assert.equal(e.schritte[0].link, "ki.html#t-schnell");
+  assert.equal(e.schritte[0].link, "schnell-anfrage.html");
   assert.equal(e.schritte[1].link, "tablet-phasen.html#t-regeln");
   for (const a of [{ s_fuehren: "unsicher" }, { d_regeln: ["keine"] }, { d_schwer: ["ueberblick"] }, { d_wunsch: "ruhe" }])
     assert.ok(R.startpunkt(a).schritte.some((s) => s.link === "tablet-phasen.html#t-regeln"), JSON.stringify(a));

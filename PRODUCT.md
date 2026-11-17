@@ -33,7 +33,7 @@ Die Unterrichtsbeispiele (»analog und digital«, beides mit KI erstellt; bis 13
 
 Die Oberfläche trennt die zwei Perspektiven, die den Grobzielen entsprechen:
 
-- **KI-Training (Grobziel A):** Lehrkräfte nutzen KI als professionelle Anwender*innen, um analogen oder digitalen Unterricht vorzubereiten (geführter Weg, höchstens 5 Schritte).
+- **KI-Training (Grobziel A):** Lehrkräfte nutzen KI als professionelle Anwender*innen, um analogen oder digitalen Unterricht vorzubereiten (geführter Weg, höchstens 5 Schritte). Ab 4.47 ein Fahrplan in denselben vier Phasen wie der Digitale Unterricht. Jede Phase beginnt mit einem Anliegen (»Ich will erst verstehen« · »Ich brauche etwas für morgen« · »Meine Lernenden arbeiten mit KI« · »Ich will auswerten und teilen«), damit Lehrkräfte mit sehr verschiedenen Vorkenntnissen dort einsteigen, wo sie stehen – ohne Stufen und ohne Selbsteinstufung. Für alle ohne Zugang oder Kontingent gibt es das Prüf-Labor; für das gemeinsame Lernen sechs Formate »Mit dem Kollegium«.
 - **Digitaler Unterricht (Grobziel B):** Digitalität aus Sicht der Lernenden; beginnt beim Lernzweck, nicht beim Werkzeug (geführter Weg, höchstens 6 Schritte).
 
 Es gibt genau zwei Bereiche. Ein Lernangebot, das mit KI gebaut wurde, gehört zum Digitalen Unterricht, sobald Lernende damit arbeiten; eine eigene Kategorie »mit KI entwickelt« gibt es nicht. Dazu kommen die Unterrichtsbeispiele mit echten Beispielen. Ihre Maske unterscheidet »Unterricht« und »Außerhalb des Unterrichts« (Schlüssel `lernen` und `ki`, Farben Petrol und Ocker). Bisher stammen alle Beispiele aus dem Unterricht des Urhebers und aus seiner Arbeit außerhalb des Unterrichts.

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
+<title>Prompten lernen – Kidu</title>
+<link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/hilde.css?v=844b013d">
+<script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
+</head>
+<body>
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+<header class="kopf"><div class="huelle">
+  <a class="marke" href="index.html"><span class="marke-text"><span class="marke-name"><span class="sr-only">Kidu</span><img class="kidu-wortmarke" src="assets/logo/kidu-logo.svg" alt="" width="224" height="92"></span><span class="marke-zeile" aria-hidden="true"><span class="ini ki">K</span>ünstliche <span class="ini ki">I</span>ntelligenz und <span class="ini du">d</span>igitaler <span class="ini du">U</span>nterricht</span></span><span class="sr-only">, zum Start</span></a>
+  <nav class="nav" aria-label="Bereiche"><a href="ki.html" aria-current="true">KI-Training</a><a href="unterricht.html">Digitaler Unterricht</a><a href="galerie.html">Unterrichts&shy;beispiele</a></nav>
+  <a class="hefter-link" href="galerie.html#hefter" aria-label="Mein Schnellhefter"><svg viewBox="0 0 30 24" aria-hidden="true"><rect x="1" y="2" width="28" height="21" rx="2" fill="#b68235" stroke="#7d5a1c" stroke-width="2"/><rect x="1" y="2" width="6" height="21" fill="#7d5a1c"/><circle cx="4" cy="8" r="1.3" fill="#efeadf"/><circle cx="4" cy="17" r="1.3" fill="#efeadf"/></svg><span class="hefter-zahl" aria-hidden="true">0</span></a>
+</div></header>
+<main id="inhalt" tabindex="-1">
+<div class="bereich-ki">
+<nav class="ort-zeile" aria-label="Wo du bist"><div class="huelle"><ol><li class="ort-weg"><a href="ki.html#fahrplan">Fahrplan KI-Training</a></li><li><a href="ki.html#phase-vorbereiten">2 · Unterricht mit KI vorbereiten</a> <span class="ort-wann">(vor der Stunde)</span></li></ol></div></nav>
+<!-- Ab 4.47 eigene Seite (vorher auf ki.html, Sprungmarke #lernen-weg leitet hierher). Phase 2 im Fahrplan KI-Training, Tür »Ich will es selbst können«. -->
+<section class="abschnitt lernen-auftakt" id="lernen-weg" aria-labelledby="t-lernen" tabindex="-1"><div class="huelle ki-raster">
+  <div class="ki-aufbau">
+    <h1 id="t-lernen" class="h1-frage">Prompten lernen</h1>
+    <p>Eine gute Anfrage hat fünf Teile. Der Generator unten baut sie Schritt für Schritt mit dir zusammen. Seine Schritte heißen anders als die Teile: Bei jedem Schritt steht, welcher Teil gerade entsteht. Im Schritt »Anfrage« siehst du alle fünf Teile und kannst jeden ändern.</p>
+    <p><a class="knopf" href="#t-generator">Mit Schritt 1 anfangen <span aria-hidden="true">↓</span></a></p>
+    <details class="mehr">
+      <summary>Die fünf Teile einer guten Anfrage</summary>
+      <ol class="bausteine-liste" id="bausteine-liste"></ol>
+      <noscript><p class="klein">Ziel · Kontext · Anforderungen · Format · Prüfkriterien</p></noscript>
+    </details>
+    <details class="mehr">
+      <summary>Vorher und nachher: derselbe Wunsch, zwei Prompts</summary>
+      <div class="vorher-nachher">
+        <div><p class="vn-titel">Schwach</p><p class="vn-text">»Mach mir ein Arbeitsblatt über die Bremsanlage.«</p><p class="klein">Die KI muss raten: für wen, wie schwer, in welcher Form. Das Ergebnis passt selten.</p></div>
+        <div><p class="vn-titel">Gut</p><p class="vn-text">»<b>Ziel:</b> Erstelle ein Arbeitsblatt zur Scheibenbremse. <b>Kontext:</b> Kfz-Technik, 1. Ausbildungsjahr, viele Lernende mit Deutsch als Zweitsprache. <b>Anforderungen:</b> kurze Sätze, drei Aufgaben vom Benennen bis zum Begründen. <b>Format:</b> eine Seite, Tabelle für die Bauteile. <b>Prüfkriterien:</b> Prüfe die Fachbegriffe und markiere, was ich nachsehen sollte.«</p><p class="klein">Jeder Teil nimmt der KI eine Vermutung ab.</p></div>
+      </div>
+    </details>
+  </div>
+  <div class="ki-regeln">
+    <h2 class="klein-titel">Bevor du loslegst</h2>
+    <ul class="leitsaetze">
+      <li>Nutze ein an deiner Schule freigegebenes KI-System. In Baden-Württemberg sind das zum Beispiel F13 für Lehrkräfte und AIS.chat, wenn die Schulleitung es freigeschaltet hat.</li>
+      <li>Gib keine Namen, Noten oder anderen personenbezogenen Daten ein.</li>
+      <li>KI kann Fakten und Quellen erfinden. Du prüfst, was du übernimmst.</li>
+      <li>Der Entwurf geht schneller. Die Prüfung bleibt bei dir – plane Zeit dafür ein.</li>
+      <li>Das Ergebnis darf ganz analog bleiben, zum Beispiel als Arbeitsblatt auf Papier.</li>
+    </ul>
+    <p class="klein"><a class="textlink" href="sicher.html">Alle fünf Regeln zum sicheren Arbeiten <span aria-hidden="true">→</span></a></p>
+  </div>
+</div></section>
+
+<section class="abschnitt weg-abschnitt" aria-labelledby="t-generator"><div class="huelle">
+  <h2 id="t-generator" class="weg-titel">Prompt-Generator</h2>
+  <p class="kopfnotiz">In fünf Schritten zu einem Prompt, den du kopieren und anpassen kannst. Kidu ist mit keiner KI verbunden.</p>
+  <nav class="schritte-nav" aria-label="Schritte des Prompt-Generators"><ol class="schritte" id="fortschritt"></ol><p class="schritte-stand" id="schritte-stand" aria-hidden="true"></p></nav>
+  <form id="weg" class="weg" novalidate></form>
+  <p id="ansage" class="sr-only" aria-live="polite"></p>
+  <p id="hinweis" class="hinweis-fehler" role="alert" hidden></p>
+  <div class="weg-steuerung" id="steuerung">
+    <button type="button" class="knopf still" id="zurueck">← Zurück</button>
+    <button type="button" class="knopf" id="weiter">Weiter →</button>
+  </div>
+  <p class="leise klein speicherhinweis">Deine Auswahl bleibt nur in diesem Browser. Freitexte werden nicht gespeichert. <button type="button" class="linkknopf" id="loeschen">Eingaben löschen</button></p>
+  <noscript><p class="box">Der Prompt-Generator braucht JavaScript. Beispiele findest du auch bei den <a href="galerie.html">Unterrichtsbeispielen</a>.</p></noscript>
+</div></section>
+<nav class="fahrplan-fuss" aria-label="Fahrplan KI-Training"><div class="huelle fahrplan-fuss-innen">
+  <div class="fahrplan-fuss-auch">
+    <h2 class="fahrplan-fuss-titel">Auch vor der Stunde</h2>
+    <ul class="fahrplan-werkzeuge">
+      <li><a href="schnell-anfrage.html"><b>Schnell-Anfrage</b><span class="fahrplan-text">Anlass wählen, drei Angaben, Prompt kopieren.</span></a></li>
+      <li><a href="auftraege.html"><b>Aufträge zum Kopieren</b><span class="fahrplan-text">Lernmethode einführen, KI-Regeln für eine Aufgabe, KI-Antworten prüfen und mehr.</span></a></li>
+      <li><a href="papierkoffer.html"><b>Aufgabenkoffer auf Papier</b><span class="fahrplan-text">Die Ideen des Aufgabenkoffers für Papier, Tafel und Raum – je mit einem Auftrag für das Material.</span></a></li>
+      <li><a href="skillkoffer.html"><b>Skillkoffer</b> <span class="fahrplan-fuer">für Fortgeschrittene · im Digitalen Unterricht</span><span class="fahrplan-text">Die Anleitungen hinter den Werkzeugen als Skills zum Herunterladen – und was damit entsteht.</span></a></li>
+    </ul>
+  </div>
+  <div class="fahrplan-fuss-plan">
+    <h2 class="fahrplan-fuss-titel">Der Fahrplan</h2>
+    <ol class="fahrplan-klein">
+      <li class="ist-vorspann"><a href="ki.html#phase-grundlagen"><span class="fahrplan-klein-nr" aria-hidden="true">1</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">1 · </span>Grundlagen</span><span class="fahrplan-klein-wann">zuerst</span></span></a></li>
+      <li class="ist-zart ist-ring-start ist-hier"><a href="ki.html#phase-vorbereiten" aria-current="location"><span class="fahrplan-klein-nr" aria-hidden="true">2</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">2 · </span>Unterricht mit KI vorbereiten</span><b class="fahrplan-klein-hier">Du bist hier</b></span></a></li>
+      <li class="ist-ring-mitte"><a href="ki.html#phase-unterrichten"><span class="fahrplan-klein-nr" aria-hidden="true">3</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">3 · </span>Unterrichten</span><span class="fahrplan-klein-wann">in der Stunde</span></span></a></li>
+      <li class="ist-zart ist-ring-ende"><a href="ki.html#phase-nach"><span class="fahrplan-klein-nr" aria-hidden="true">4</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">4 · </span>Nach der Stunde</span><span class="fahrplan-klein-wann">nach der Stunde</span></span></a></li>
+    </ol>
+    <p class="fahrplan-ring"><span class="fahrplan-ring-pfeil" aria-hidden="true">↑</span> Nach der Stunde geht es mit der nächsten Stunde wieder bei 2 weiter.</p>
+    <p class="fahrplan-fuss-alle"><a class="textlink" href="ki.html#fahrplan">Alle Werkzeuge im Fahrplan <span aria-hidden="true">→</span></a></p>
+  </div>
+</div></nav>
+</div>
+<script src="assets/daten/taxonomien.js?v=eb73b10b"></script>
+<script src="assets/daten/beispiele.js?v=859fc8ba"></script>
+<script src="assets/daten/galerie.js?v=0f292602"></script>
+<script src="assets/daten/texte.js?v=7a655256"></script>
+<script src="assets/ki-anfrage.js?v=3a346bc2"></script>
+<script src="assets/hilde.js?v=e22353fb"></script>
+<script src="assets/ki-weg.js?v=9b485aed"></script>
+<script>
+(function () {
+  var l = document.getElementById("bausteine-liste");
+  if (l && window.KI_TEXTE) l.innerHTML = KI_TEXTE.bausteine.map(function (b) {
+    return "<li><b>" + HILDE.esc(b.name) + "</b><span>" + HILDE.esc(b.warum) + (b.schritt ? ' <span class="leise">' + HILDE.esc(b.schritt) + "</span>" : "") + "</span></li>";
+  }).join("");
+})();
+</script>
+
+</main>
+<footer class="fuss"><div class="huelle">
+  <p class="fuss-marke" aria-hidden="true"><img class="kidu-wortmarke" src="assets/logo/kidu-logo.svg" alt="" width="224" height="92"></p>
+  <p class="fuss-unterzeile"><span class="ini ki">K</span>ünstliche <span class="ini ki">I</span>ntelligenz und <span class="ini du">d</span>igitaler <span class="ini du">U</span>nterricht</p>
+  <nav class="fusslinks" aria-label="Über Kidu"><ul><li><a href="ueber.html">Über Kidu</a></li><li><a href="ueber.html#inhalte">Inhalte und Funktionen</a></li><li><a href="ueber.html#t-daten">Hinweise zu Daten und KI</a></li><li><a href="gestaltung.html">Gestaltungssystem</a></li><li><a href="skillkoffer.html">Skillkoffer</a></li><li><a href="fortbildungsbogen.html">Mein Fortbildungsbogen</a></li><li><a href="rueckmeldebogen.html">Mein Rückmeldebogen</a></li><li><a href="fortbildungsleitung.html">Für die Fortbildungsleitung <span class="fuss-schloss">· mit Passwort</span></a></li><li><a href="ueber.html#t-daten">Eingaben löschen</a></li></ul></nav>
+  <p class="fuss-einstellung"><button type="button" class="knopf still bewegung-schalter" id="bewegung-schalter" data-bewegung-schalter aria-pressed="false">Weniger Bewegung</button><span class="leise">Gilt in diesem Browser. Nichts gleitet, nichts fliegt, alles steht sofort da.</span></p>
+  <p class="fuss-einstellung"><button type="button" class="knopf still theme-schalter" id="theme-schalter" data-theme-schalter aria-pressed="false">Beamer-Ansicht</button><span class="leise">Gilt in diesem Browser. Reines Weiß, tiefes Schwarz, kräftigere Farben – für den Beamer im Klassenzimmer.</span></p>
+  <p class="kennzeichnung">Kidu · Künstliche Intelligenz und digitaler Unterricht · Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.</p>
+  <p class="kennzeichnung urheber leise">© 2026 Mario Walter · entwickelt mit Unterstützung eines KI-Systems · Texte CC BY-NC-SA 4.0 · Code MIT · <a href="ueber.html#t-entstehung">Entstehung und Lizenz</a></p>
+</div></footer>
+<script src="assets/motion.js?v=f6a039f2"></script>
+</body>
+</html>

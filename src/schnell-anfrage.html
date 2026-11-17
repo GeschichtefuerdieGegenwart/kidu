@@ -1,0 +1,34 @@
+<div class="bereich-ki">
+<!-- kiplan:zeile -->
+<!-- Ab 4.47 eigene Seite (vorher oben auf ki.html, Sprungmarke #schnell leitet hierher). Phase 2 im Fahrplan KI-Training, Tür »Ich brauche schnell etwas«. -->
+<section class="band band-flaeche schnell schnell-seite" id="schnell" aria-labelledby="t-schnell" tabindex="-1"><div class="huelle schnell-raster">
+  <div class="schnell-kopf">
+    <h1 id="t-schnell" class="h1-frage">Schnell-Anfrage</h1>
+    <p>Wähle einen Anlass und gib Fach, Thema und Lerngruppe an. Der Prompt entsteht sofort rechts. Kopiere ihn in ein an deiner Schule freigegebenes KI-System.</p>
+    <p class="datenhinweis">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben. Deine Angaben werden nicht gespeichert.</p>
+  </div>
+  <form class="schnell-form" id="schnell-form" novalidate>
+    <fieldset class="schnell-anlaesse">
+      <legend>Wofür brauchst du einen Prompt?</legend>
+      <div class="anlass-raster" id="anlaesse"></div>
+    </fieldset>
+    <div class="schnell-felder">
+      <div class="eingabe"><label for="s-fach">Fach</label><input type="text" id="s-fach" autocomplete="off" placeholder="z. B. Kfz-Technik"></div>
+      <div class="eingabe"><label for="s-thema">Thema</label><input type="text" id="s-thema" autocomplete="off" placeholder="z. B. Bremsanlage"></div>
+      <div class="eingabe"><label for="s-gruppe">Lerngruppe</label><input type="text" id="s-gruppe" autocomplete="off" placeholder="z. B. 1. Ausbildungsjahr"></div>
+    </div>
+  </form>
+  <div class="schnell-ergebnis">
+    <label for="schnell-prompt"><b>Dein Prompt</b> – du kannst ihn ändern</label>
+    <textarea id="schnell-prompt" rows="16" spellcheck="false"></textarea>
+    <div class="kopieren"><button type="button" class="knopf" id="schnell-kopieren">Prompt kopieren</button><span id="schnell-status" class="leise" aria-live="polite"></span></div>
+    <p class="klein">Die fünf Überschriften im Prompt – Ziel, Kontext, Anforderungen, Format, Prüfkriterien – lernst du bei <a href="prompten.html">Prompten lernen</a> kennen.</p>
+  </div>
+  <noscript><p class="box">Die Schnell-Anfrage braucht JavaScript.</p></noscript>
+</div></section>
+<!-- kiplan:fuss -->
+</div>
+<script src="assets/hilde.js"></script>
+<script src="assets/daten/schnell.js"></script>
+<script src="assets/schnell-anfrage.js"></script>
+<script src="assets/ki-schnell.js"></script>
