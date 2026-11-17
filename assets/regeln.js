@@ -340,7 +340,8 @@
     };
   }
 
-  /* 7. Papierfrage (Startseite) – die Kurzform des Prüfsteins »Geht es auf Papier genauso gut?«.
+  /* 7. Papierfrage (ab 4.46 eigene Seite papierfrage.html, der erste Schritt in Phase 2; vorher auf der Bereichsseite)
+        – die Kurzform des Prüfsteins »Geht es auf Papier genauso gut?«.
         Drei Ja/Nein-Fragen, jeweils mit »noch nicht sicher«. Ergebnis ist eine der vier Einstufungen
         aus taxonomien.js – dieselben Namen wie auf der Entscheidungskarte. Der Planungsweg prüft genauer.
           neu:    Tun die Lernenden mit dem Tablet etwas, das auf Papier nicht oder nur mühsam ginge?
@@ -367,16 +368,47 @@
                     Oder ist der Umgang mit dem Digitalen selbst das Lernziel?
           teilhabe = ja und Ergebnis analog oder organisatorisch → zusätzlicher Hinweis »teilhabe«: das Gerät ist für
           diese Lernenden oder dieses Ziel begründet. Die Einstufung beschreibt weiter die Aktivität für die ganze Klasse.
-          Grund: »Geht es auf Papier genauso gut?« gilt nur, wenn es für alle und für dieses Ziel genauso gut geht. */
+          Grund: »Geht es auf Papier genauso gut?« gilt nur, wenn es für alle und für dieses Ziel genauso gut geht.
+        Ab Version 4.46 (Papierfrage als eigene Seite, Lehren aus GGK-Labor, Politik-Werkstatt und Psycho-Labor):
+          prinzip: Was genau tut das Gerät dabei?  (nur bei neu = ja; vor der Frage »ziel«)
+                   verdecken | rueckmelden | messen | variieren | stufen | buendeln | anderes  (Ids aus assets/daten/prinzipien.js)
+          Fehlt prinzip und ziel, ist die nächste Frage »prinzip«. Für die Einstufung zählt weiter nur ziel –
+          prinzip ändert sie nie. Es schreibt den Satz zum Vorteil:
+            prinzip = eines der sechs → satz: »Das Gerät … hier …« (PRINZIPIEN[].satz)
+            prinzip = anderes         → kein Satz, dafür der Hinweis, den Vorteil in einem eigenen Satz zu sagen –
+                                        gelingt das nicht, bleibt es Papier (Faustregel aus dem Orientierungsmodell).
+          Bei »klar« und »anpassung« stehen dazu höchstens drei Hinweise »So trägt es« (hinweise), in dieser Reihenfolge:
+            1. nur bei anpassung: zuerst das Lernziel – dient die Stelle dem Satz zum Ziel?
+            2. Erst festlegen, dann aufdecken (Satz 2 der fünf Sätze; GGK-Labor M19, M20, M22: Freigabe erst nach der Festlegung)
+            3. Zurück in den Raum, ein Gerät vorne reicht oft (Psycho-Labor 06. und 09.11.2026)
+            4. Hybrid ist der Normalfall: lange Texte, Schreiben und Urteilen auf Papier und im Raum (Entscheidung 01.11.2026,
+               GGK-Labor M25–M27 vom 11.11.2026)
+          Keine Punkte, keine Prozentwerte, keine Rangfolge der Prinzipien. */
   var TEILHABEHINWEIS = "Für die ganze Klasse geht es auf Papier genauso gut – für einzelne Lernende oder für dieses Ziel aber nicht. " +
     "Dann ist das Gerät dort begründet. Setz es gezielt ein, für die anderen kann es bei Papier bleiben.";
   var LESEHINWEIS = "Längere Sachtexte verstehen viele auf Papier etwas besser, besonders unter Zeitdruck. " +
     "Gib den Text gedruckt aus und nutze das Tablet für den Rest.";
-  function papierprobe(a) {
+  var EIGENER_SATZ = "Kein Prinzip passt? Dann sag den Vorteil in einem eigenen Satz. Gelingt das nicht, bleib beim Papier.";
+  var TRAEGT = {
+    ziel: "Zuerst das Lernziel: Dient diese Stelle dem, was die Lernenden selbst denken oder tun sollen? Sonst passt die Aufgabe noch nicht.",
+    festlegen: "Erst festlegen, dann aufdecken: Vor jeder Auflösung, Rückmeldung oder Bewegung steht eine eigene Antwort. Was das Urteil vorwegnimmt, gibst du erst danach frei.",
+    raum: "Zurück in den Raum: Plan die Stelle, an der das Ergebnis im Plenum aufgegriffen wird. Oft reicht ein Gerät vorne.",
+    hybrid: "Hybrid ist der Normalfall: Nur diese Stelle am Gerät. Lange Texte, Schreiben und Urteilen bleiben auf Papier und im Raum."
+  };
+  function prinzipien(P) {
+    return P || (typeof PRINZIPIEN !== "undefined" ? PRINZIPIEN : (typeof require !== "undefined" ? require("./daten/prinzipien.js") : []));
+  }
+  function papierprobe(a, P) {
     a = a || {};
     var e = papierprobeKern(a);
     if (e.id && a.lesen === "ja") e.lesen = LESEHINWEIS;
     if ((e.id === "analog" || e.id === "organisatorisch") && a.teilhabe === "ja") e.teilhabe = TEILHABEHINWEIS;
+    if (e.id === "klar" || e.id === "anpassung") {
+      var p = prinzipien(P).filter(function (x) { return x.id === a.prinzip; })[0];
+      if (p) { e.prinzip = p.id; e.satz = p.satz; }
+      else if (a.prinzip === "anderes") e.eigenerSatz = EIGENER_SATZ;
+      e.hinweise = (e.id === "anpassung" ? [TRAEGT.ziel] : []).concat([TRAEGT.festlegen, TRAEGT.raum, TRAEGT.hybrid]).slice(0, 3);
+    }
     return e;
   }
   function papierprobeKern(a) {
@@ -389,7 +421,7 @@
         "Das Tablet ersetzt hier vor allem den Schnellhefter. Das spart Zeit, verändert aber das Lernen noch nicht." };
       return { id: "analog", grund: "Geht es auf Papier genauso gut – für alle und für dieses Ziel –, bleib beim Papier." };
     }
-    if (!a.ziel) return { id: null, frage: "ziel" };
+    if (!a.ziel) return { id: null, frage: a.prinzip ? "ziel" : "prinzip" };
     if (a.ziel === JA) return { id: "klar", grund:
       "Die Lernenden tun etwas, das auf Papier kaum ginge, und es dient dem Lernziel. Entscheidend bleibt, dass die Ergebnisse im Unterricht aufgegriffen werden." };
     return { id: "anpassung", grund:
@@ -551,7 +583,7 @@
     /* Schritte: der erste gewählte Anlass zuerst, dann nach Lage, höchstens drei. */
     var schritte = [], seen = {};
     function push(s) { if (s && !seen[s.link + s.text]) { seen[s.link + s.text] = 1; schritte.push(s); } }
-    if (skeptisch) push({ text: "Prüf deine mitgebrachte Stunde mit der Papierfrage. »Bleibt auf Papier« ist ein gutes Ergebnis.", link: "unterricht.html#t-probe", linktext: "Zur Papierfrage" });
+    if (skeptisch) push({ text: "Prüf deine mitgebrachte Stunde mit der Papierfrage. »Bleibt auf Papier« ist ein gutes Ergebnis.", link: "papierfrage.html", linktext: "Zur Papierfrage" });
     /* Der erste Anlass, dann der gewählte Wunsch »Schnellere Rückmeldung« (aus dem Ist-Stand, ab 4.36),
        dann höchstens ein weiterer Schritt zum Unterricht mit Tablets, dann die übrigen Anlässe. */
     push(SP_ANLASS[(a.anlass || [])[0]]);
@@ -559,13 +591,13 @@
     if (tid !== "keine") {
       if (a.d_wunsch === "feedback") push(SP_ANLASS.uebung);
       if (unruhe) push({ text: "Lies die sechs Regeln für Tablet-Phasen und nimm eine davon in deine nächste Stunde mit.", link: "tablet-phasen.html#t-regeln", linktext: "Tablet-Phasen gut führen" });
-      else if (!papier && a.d_wunsch === "papier") { papier = true; push({ text: "Prüf eine Tablet-Phase mit der Papierfrage. »Zurück auf Papier« ist ein vollwertiges Ergebnis.", link: "unterricht.html#t-probe", linktext: "Zur Papierfrage" }); }
-      else if (!papier && (tid === "ablage" || hat("d_schwer", "ideen") || a.d_wunsch === "mehrwert")) { papier = true; push({ text: "Such in deiner mitgebrachten Stunde die eine Stelle, an der das Tablet mehr kann als Papier.", link: "unterricht.html#t-probe", linktext: "Zur Papierfrage" }); }
+      else if (!papier && a.d_wunsch === "papier") { papier = true; push({ text: "Prüf eine Tablet-Phase mit der Papierfrage. »Zurück auf Papier« ist ein vollwertiges Ergebnis.", link: "papierfrage.html", linktext: "Zur Papierfrage" }); }
+      else if (!papier && (tid === "ablage" || hat("d_schwer", "ideen") || a.d_wunsch === "mehrwert")) { papier = true; push({ text: "Such in deiner mitgebrachten Stunde die eine Stelle, an der das Tablet mehr kann als Papier.", link: "papierfrage.html", linktext: "Zur Papierfrage" }); }
     }
     (a.anlass || []).slice(1).forEach(function (k) { push(SP_ANLASS[k]); });
     if (id === "anfang" || a.s_duerfen === "unsicher" || hat("hindernis", "datenschutz")) push({ text: "Lies die fünf Regeln zum sicheren Arbeiten – dann weißt du, was in die KI darf und was nicht.", link: "sicher.html", linktext: "Sicher arbeiten" });
     if (id === "enttaeuscht") push({ text: "Bau deine alte Anfrage nach den fünf Teilen um: Ziel, Kontext, Vorgaben, Format, Prüfkriterien.", link: "ki.html#t-lernen", linktext: "Prompten lernen" });
-    if (id === "fuersich" && !papier) push({ text: "Prüf eine Stelle deiner Stunde mit der Papierfrage: Was kann das Tablet hier besser?", link: "unterricht.html#t-probe", linktext: "Zur Papierfrage" });
+    if (id === "fuersich" && !papier) push({ text: "Prüf eine Stelle deiner Stunde mit der Papierfrage: Was kann das Tablet hier besser?", link: "papierfrage.html", linktext: "Zur Papierfrage" });
     if (id === "weit") push({ text: "Prüf dein bestes Material mit dem Digital-Check. Der Bericht beginnt mit den Stärken.", link: "selbstcheck.html", linktext: "Digital-Check" });
     if (id === "offen") push({ text: "Bring deine Stunde mit und nenn die Stelle, an der die Lernenden hängen bleiben. Mehr braucht die erste Stunde nicht.", link: "beratung.html", linktext: "Beratungsstunde" });
     push({ text: "Sieh dir an, was im Unterricht schon ausprobiert wurde.", link: "galerie.html", linktext: "Zu den Unterrichtsbeispielen" });
@@ -610,12 +642,12 @@
           - Leere Felder fehlen im Bogen; die Seite füllt nichts mit allgemeinen Sätzen. */
   var RB = {
     art: { erfahrung: "Eine Erfahrung aus meinem Unterricht", herausforderung: "Eine Herausforderung, bei der ich nicht weiterkomme", kidu: "Eine Rückmeldung zu Kidu", wunsch: "Ein Wunsch für die nächste Fortbildung" },
-    womit: { planen: "Unterricht neu planen", digitalisieren: "Bisherigen Unterricht digitalisieren", koffer: "Aufgabenkoffer oder Methodenkoffer", check: "Papierfrage oder Digital-Check", phasen: "Tablet-Phasen gut führen", beispiel: "Eines der Unterrichtsbeispiele", ki: "KI-Training", anderes: "Etwas anderes" },
+    womit: { planen: "Unterricht neu planen", digitalisieren: "Bisherigen Unterricht digitalisieren", koffer: "Aufgabenkoffer oder Skillkoffer", check: "Papierfrage oder Digital-Check", phasen: "Tablet-Phasen gut führen", beispiel: "Eines der Unterrichtsbeispiele", ki: "KI-Training", anderes: "Etwas anderes" },
     hakt: { technik: "Technik: Anmelden, Netz, Akku", zeit: "Die Zeit hat nicht gereicht", ablenkung: "Ablenkung am Gerät", auftrag: "Der Auftrag war nicht klar", niveau: "Für manche zu schwer oder zu leicht", plenum: "Das Ergebnis kam nicht zurück ins Gespräch", anderes: "Woanders", nichts: "Nirgends" },
     brauche: { beispiel: "Ein Beispiel aus meinem Fach", gespraech: "Ein kurzes Gespräch", planung: "Hilfe beim Planen der nächsten Stunde", technik: "Hilfe bei der Technik", nichts: "Nichts – ich möchte nur berichten" },
     weitergabe: { ja: "Ja, ohne meinen Namen", fragen: "Erst mich fragen", nein: "Nein, nur für die Leitung" },
     hilfe: {
-      zeit: { text: "Prüf mit der Papierfrage, ob die Phase am Gerät die Zeit wert ist. »Zurück auf Papier« ist ein vollwertiges Ergebnis.", link: "unterricht.html#t-probe", linktext: "Zur Papierfrage" },
+      zeit: { text: "Prüf mit der Papierfrage, ob die Phase am Gerät die Zeit wert ist. »Zurück auf Papier« ist ein vollwertiges Ergebnis.", link: "papierfrage.html", linktext: "Zur Papierfrage" },
       ablenkung: { text: "Lies die sechs Regeln für Tablet-Phasen und nimm eine davon in die nächste Stunde mit.", link: "tablet-phasen.html#t-regeln", linktext: "Tablet-Phasen gut führen" },
       auftrag: { text: "Im Aufgabenkoffer steht zu jeder Aufgabenform, wie du sie stellst.", link: "aufgabenkoffer.html", linktext: "Aufgabenkoffer" },
       niveau: { text: "Ein Inhalt, mehrere Zugänge: das Prinzip »Stufen«.", link: "sechs-hebel.html#sh-stufen", linktext: "Prinzip Stufen" },

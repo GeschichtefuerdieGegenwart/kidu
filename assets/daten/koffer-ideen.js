@@ -7,10 +7,34 @@
    demoFach – Fach der Probe zum Ausprobieren (assets/aufgabenkoffer.js). Die Proben sind ausgedacht und nicht erprobt.
    faecher  – drei ausgedachte Beispiele aus anderen Fächern, zur Anregung, nicht erprobt.
    ohneGeraet – Aufgabenformen, bei denen das Gerät kaum etwas beiträgt: keine Karte, nur der Hinweis und die Papierfassung.
-   Regeln: Nichts erfinden. Erfahrungen und Belege bleiben in aufgaben.js und werden hier nicht wiederholt. */
+   Regeln: Nichts erfinden. Erfahrungen und Belege bleiben in aufgaben.js und werden hier nicht wiederholt.
+   Ab 4.46 (Entscheidung Mario, 17.11.2026): »Ideen und Kniffe« gehen im Koffer auf. Die elf Kniffe selbst stehen weiter an einer
+   Stelle – WERKSTATT.muster in assets/daten/werkstatt.js (auch der KI-Auftrag je Kniff). Hier steht nur, wo sie hingehören:
+   kniffe    – je Idee die Kniffe, mit denen sie sich überschneidet (Id aus WERKSTATT.muster). Die Zuordnung ist ein VORSCHLAG,
+               begründet in docs/version-4-46.md. Ein Kniff darf bei mehreren Ideen stehen; im Fenster der Idee steht er kurz,
+               sein eigenes Fenster (#kn-<id>) zeigt ihn ganz: am Gerät, auf Papier, mit KI-Auftrag.
+   jedePhase – Kniffe, die in jede Phase passen; sie stehen unter »In jeder Phase« (Name und Hilfe aus taxonomien.js).
+   Ab 4.46 auch für den »Aufgabenkoffer auf Papier« (papierkoffer.html, assets/papierkoffer.js): dieselben Ideen, Kniffe und Phasen.
+   papierPhasen – Phase der zwei Aufgabenformen ohne Gerät (ohneGeraet), die im digitalen Koffer keine Phase haben. VORSCHLAG,
+               bis Mario ihn prüft (docs/version-4-46.md). */
 var KOFFER = {
   phasen: ["einstieg", "erarbeitung", "sicherung", "abschluss"],
   ohneGeraet: ["lesen-schritte", "urteil"],
+  kniffe: {
+    versuch: ["erleben"],
+    entscheiden: ["zusatz"],
+    markieren: ["beleg"],
+    zuordnen: ["zwischenstand", "beleg"],
+    reihe: ["zwischenstand"],
+    struktur: ["stolper"],
+    stufen: ["hilfekarten"],
+    auswahl: ["fehlvorstellungen"],
+    einschaetzen: ["selbstdiagnose"],
+    klassenbild: ["thesen"],
+    urteil: ["ranking"]
+  },
+  jedePhase: ["uebersicht", "hilfekarten", "fehlvorstellungen"],
+  papierPhasen: { "lesen-schritte": ["erarbeitung"], urteil: ["abschluss", "erarbeitung"] },
   ideen: {
     abruf: {
       phasen: ["einstieg", "sicherung"],

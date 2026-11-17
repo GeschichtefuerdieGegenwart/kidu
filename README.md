@@ -11,7 +11,7 @@ Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training, Digitaler Unt
 | `src/*.html` | Inhalt der Seiten (ohne Kopf- und Fußzeile) |
 | `tools/bauen.py` | setzt Kopfzeile, Inhalt und Fußzeile zu fertigen Seiten zusammen |
 | `tools/pruefen.py` | prüft Kennzeichnung, Fachbegriffe, Platzhalter, externe Dateien |
-| `tools/werkzeugkiste.py` | eine Quelle für alles (ab 4.25): überträgt die »Kurzfassung für Kidu« jedes Skills nach `assets/daten/kurzfassungen.js`, schreibt `docs/pruef-auftrag.md` und packt die Downloads des Methodenkoffers; läuft in `tools/bauen.py` mit |
+| `tools/werkzeugkiste.py` | eine Quelle für alles (ab 4.25): überträgt die »Kurzfassung für Kidu« jedes Skills nach `assets/daten/kurzfassungen.js`, schreibt `docs/pruef-auftrag.md` und packt die Downloads des Skillkoffers (bis 4.45 »Methodenkoffer«); läuft in `tools/bauen.py` mit |
 | `werkzeugkiste/kidu/` | das Plugin »kidu« für das Kollegium – hier werden die Skills gepflegt |
 | `assets/hilde.css` | Gestaltungssystem (Farben, Schrift, Bausteine) |
 | `assets/daten/beispiele.js` | alle Beispiele an einem Ort |
@@ -43,6 +43,12 @@ Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training, Digitaler Unt
 | `PRODUCT.md`, `DESIGN.md`, `.impeccable/design.json` | Produktbeschreibung und Gestaltungssystem »Überdruck« (Format von Impeccable); ab 4.38 mit elf benannten Gestaltungsregeln und der einzigen Liste erlaubter Ausnahmen von »kein Autoplay« |
 | `.taste-skill/direction.json` | begründete Ausnahmen für die Gestaltungsprüfung mit dem Taste Skill |
 | `assets/bilder/` | Bildschirmfotos der Beispiele, auch für den Betrieb ohne Netz |
+| `src/papierfrage.html`, `assets/probe.js`, `assets/papierfrage-prompt.js`, `assets/daten/prinzipien.js` | Papierfrage als eigene Seite (ab 4.46): eine Stelle in drei Fragen mit dem Prinzip, das das Gerät einlöst, oder die ganze Stunde mit KI; Regeln aus der Liste »Papierfrage« im Skill `unterricht-digitalisieren` |
+| `src/skillkoffer.html`, `assets/daten/skillkoffer.js`, `assets/werkzeugkiste.js` | Skillkoffer für Fortgeschrittene (ab 4.46, vorher »Methodenkoffer«): je Skill, was er tut, wie das Ergebnis aussieht, wo er auf Kidu in Aktion ist, Download; die Bau-Skills nur als Ansicht |
+| `src/tipps.html` | Tipps und Tricks für die Stunde mit Tablet (ab 4.46), jeder mit Herkunft |
+| `src/ki-aufgaben.html`, `assets/daten/training.js`, `assets/training.js` | Trainingsaufgaben im KI-Training (ab 4.46): zwölf Übungen in fünf Fähigkeiten, mit den Funktionen von AIS.chat (Stand November 2026) |
+| `src/papierkoffer.html`, `assets/papierkoffer.js` | Aufgabenkoffer auf Papier (ab 4.46): dieselben Ideen, Kniffe und Phasen wie der Aufgabenkoffer, je mit einem KI-Auftrag für Material auf Papier |
+| `schloss/*.enc.json`, `assets/schloss-kern.js`, `assets/schloss.js`, `tools/schloss.mjs`, `tools/schloss_buendel.py` | Bereich »Für die Fortbildungsleitung« (ab 4.46): Fortbildungsbaustein, Beratungsstunde und Leitsätze verschlüsselt (AES-GCM, Schlüssel aus dem Passwort mit PBKDF2-SHA-256, 600 000 Runden). Der Klartext liegt nur in `privat/` (nicht im Repository, `.gitignore`) |
 
 ## Arbeiten
 
@@ -53,6 +59,17 @@ python3 tools/bauen.py && python3 tools/pruefen.py && node --test && python3 tes
 ```
 
 Die Browser-Tests brauchen Python Playwright mit Chromium. Für die Prüfung mit axe-core `axe.min.js` nach `tests/vendor/` legen (nicht im Repository).
+
+**Geschützter Bereich (ab 4.46).** Das Passwort steht nie im Repository, nicht in Dokumenten und nicht im Tresor. Ändern sich die Inhalte, so:
+
+```
+python3 tools/schloss_buendel.py teilen <Bündel.md>   # nur wenn die Inhalte aus einem Bündel kommen: privat/*.html entstehen
+KIDU_PASS='…' node tools/schloss.mjs                  # verschlüsselt privat/*.html nach schloss/*.enc.json (nur Geändertes)
+KIDU_PASS='…' node tools/schloss.mjs --pruefen        # öffnet zur Probe alle Dateien
+python3 tools/schloss_buendel.py packen               # privat/kidu-geschuetzt-buendel.md zum Sichern außerhalb des Repositorys
+```
+
+Fehlt `privat/` (etwa in einer neuen Arbeitsumgebung): `KIDU_PASS='…' node tools/schloss.mjs --auspacken` schreibt den Klartext aus den verschlüsselten Dateien zurück. Neues Passwort: `KIDU_PASS='…' node tools/schloss.mjs --neu` verschlüsselt alles neu. Mit `KIDU_PASS` prüfen die Browser-Tests auch die Inhalte hinter dem Schloss; ohne die Variable nur die Tür. Ältere Fassungen der drei Seiten bleiben in der Geschichte des Repositorys lesbar.
 
 Nach Änderungen an den Beispielen: `python3 tools/datenluecken.py` aktualisiert `docs/datenluecken.md`.
 

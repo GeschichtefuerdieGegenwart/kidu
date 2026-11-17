@@ -151,6 +151,13 @@ Diese Schwächen kommen in Unterrichtsmaterial immer wieder vor. Sieh bei jeder 
 - Mit KI erstelltes Material bleibt oft beim Wiedergeben: Wo müssen die Lernenden selbst deuten, urteilen und Gegenpositionen prüfen?
 - Arbeiten Lernende mit KI: Gibt es eine Stelle, an der sie zeigen, was sie ohne KI können? Stellt die KI Rückfragen, oder gibt sie Lösungen aus?
 - Abhängig vom Netz: Schriften, Skripte, Videos oder Dienste von fremden Seiten; die Seite läuft nicht ohne Internet.
+- Erst festlegen, dann aufdecken: Legen sich die Lernenden fest, bevor das Gerät eine Auflösung, eine Studie oder die Stimmen der anderen zeigt? Wird der nächste Teil erst auf Ansage frei, wenn alle so weit sind?
+- Schreiben: Schreiben die Lernenden in der Stunde selbst, auch von Hand? Sehen sie Kriterien und Beispielantworten erst nach dem eigenen Text?
+- Eine Kernentscheidung: Gibt es je Stunde eine Entscheidung, über die vor der Auflösung im Raum gesprochen wird?
+- Denkwerkzeug des Fachs: Ist benannt, womit die Lernenden denken – etwa Quellenkritik, Kriterien eines Urteils oder eine Versuchsanordnung?
+- Sicherung mit Maß: Gibt es am Ende eine Zusammenfassung von Wissen und Können auf höchstens zwei Seiten?
+- Ergebnisse vieler Geräte: Müssen Lernende Ergebnisse über QR-Code oder Import zusammenführen? Einfacher ist ein Gerät vorne und das Gespräch im Raum.
+- Rechte und Würde: Haben Bilder und Texte eine Quelle und eine geklärte Rechtelage? Werden Betroffene und Gruppen würdig gezeigt?
 
 # Gestaltung – ein eigener Prüfblock
 Prüfe danach, wie die Seite aussieht und sich bedient – getrennt von der Didaktik. Die Gestaltung ändert keine Stufe im Qualitätsmodell. Nenne nur, was auffällt, jeweils mit Fundstelle. Was es im Material nicht gibt, etwa einen Film oder einen Lehrkraftbereich, lässt du weg.
@@ -158,7 +165,9 @@ Prüfe danach, wie die Seite aussieht und sich bedient – getrennt von der Dida
 - Ruhe in der Arbeitsphase: Bewegt sich dort etwas anderes als die Antwort auf eine eigene Handlung? Gibt es ein Arbeitsfenster je Phase?
 - Zähle den Weg: Wie viele Tipps oder Klicks brauchen die Lernenden bis zur ersten eigenen Antwort, und wie oft wechselt die Seite innerhalb einer Arbeitsphase? Mehr als drei Tipps oder ein Seitenwechsel mitten in der Phase sind ein Hinweis auf Unruhe. Öffnet sich die Hilfe am selben Ort?
 - Zwischenstand und Ergebnis: Gibt es bei Sortier- und Legeaufgaben einen Zwischenstand, kann man Fehler einzeln zurücknehmen, bleibt der Stand gespeichert? Überleben die Ergebnisse die Stunde außerhalb des Browsers, etwa als Datei?
-- Bildschirmbreite: Nutzt eine Übersicht die Breite des Tablets quer und hoch, ohne dass eine Textzeile zu lang wird?
+- Orientierung wie auf einem Arbeitsblatt: Sehen die Lernenden, wo sie sind und was als Nächstes kommt, etwa mit Registern? Steht ein Auftrag je Seite? Wird gescrollt, statt alles in einen Bildschirm zu pressen?
+- Lesbar und bedienbar: Ist die Schrift mindestens 16 Pixel groß? Sind Ziele zum Tippen mindestens 44 Pixel groß?
+- Bildschirmbreite: Nutzt eine Übersicht die Breite des Tablets quer und hoch, ohne dass eine Textzeile zu lang wird? Richten sich Bilder in Karten nach der Breite der Karte?
 - Linien: Trägt jede Linie und jeder Rahmen eine Beziehung? Endet jede Verbindungslinie an ihrem Ziel, ohne fremde Felder zu kreuzen?
 - Eine Ordnung je Bild: Zeigt ein Bild zwei Reihenfolgen zugleich, etwa eine Zeitachse und eine zweite Zählung?
 - Filme: Steht vor einem interaktiven Film ein Satz, was man tun kann? Zeigt ein Erklärfilm die echte Oberfläche der Seite, die er erklärt?

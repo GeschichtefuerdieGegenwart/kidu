@@ -1,75 +1,25 @@
-<div class="bereich-lernen">
-<!-- fahrplan:zeile weit -->
-<section class="bereichskopf kompakt"><div class="huelle huelle-weit werkzeugkopf">
-  <div class="werkzeugkopf-text">
-    <h1 class="h1-frage">Fortbildungsbaustein: 45 Minuten</h1>
-    <p class="marker">Für Konferenz, Fachgruppe oder pädagogischen Tag</p>
-    <p class="detail-kurz">Ein Ablauf für eine kurze Fortbildung im Kollegium. Alle arbeiten an eigenem Material. Am Ende hat jede Person eine Stelle, die sie in der nächsten Woche ausprobiert – oder bewusst auf Papier lässt.</p>
-    <p class="kopfnotiz"><button type="button" class="knopf still" data-drucken>Ablauf drucken</button></p>
-    <div class="stapel werkzeugkopf-mehr">
-      <h2 id="t-ziel">Worum es geht</h2>
-      <p class="mass">Die Leitfrage für alle 45 Minuten: <b>Was kann das Tablet hier besser als Papier?</b> Die Antwort »nichts« ist erlaubt. Dann bleibt das Material auf Papier.</p>
-      <p class="konzept-hinweis"><b>Noch nicht erprobt.</b> Dieser Ablauf ist ein Vorschlag. Wie gut er in 45 Minuten aufgeht, ist noch offen.</p>
-      <p class="mass">Der Baustein ist ein Einstieg. Eine einzelne Fortbildung verändert Unterricht allein kaum. Wer weitermachen will, findet sich danach zu einer <a class="textlink" href="beratung.html">Beratungsstunde über acht Wochen</a> zusammen.</p>
-    </div>
+<div class="bereich-lernen schloss-seite" data-schloss="fortbildung">
+<!-- Ab 4.46: geschützter Bereich »Für die Fortbildungsleitung« (Entscheidung Mario, 17.11.2026). Der Inhalt steht verschlüsselt
+     in schloss/fortbildung.enc.json; tools/bauen.py bettet ihn hier ein. Der Klartext liegt nicht im Repository (privat/, .gitignore). -->
+<section class="bereichskopf kompakt schloss-tuer" id="schloss-tuer"><div class="huelle huelle-weit">
+  <div class="schloss-kasten stapel">
+    <p class="marker">Für die Fortbildungsleitung · mit Passwort geschützt</p>
+    <h1 class="h1-frage">Geschützter Bereich</h1>
+    <p class="detail-kurz">Hier liegen Bausteine für Fortbildungen mit Kidu. Der Bereich ist verschlüsselt und öffnet nur mit dem Passwort.</p>
+    <form class="schloss-form" id="schloss-form" novalidate>
+      <label for="schloss-pass">Passwort</label>
+      <div class="schloss-zeile"><input id="schloss-pass" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="schloss-hilfe schloss-meldung"><button type="submit" class="knopf">Öffnen</button></div>
+      <p id="schloss-meldung" class="schloss-meldung" role="status" aria-live="polite"></p>
+    </form>
+    <p class="leise klein" id="schloss-hilfe">Das Passwort wird nur auf diesem Gerät geprüft und nicht übertragen. Groß- und Kleinschreibung zählen. Danach bleibt der Bereich offen, bis du ihn schließt oder den Tab zumachst.</p>
+    <noscript><p class="box">Der geschützte Bereich braucht JavaScript.</p></noscript>
+    <p><a class="textlink" href="index.html">‹ Zur Startseite</a></p>
   </div>
-  <!-- Ab 4.42: »Auf einen Blick« – der Ablauf als Zeitleiste. Die Zeiten stehen unten im Ablauf; hier dieselben Werte (--von, --bis in Minuten). -->
-  <figure class="blick" aria-labelledby="t-blick">
-    <p class="blick-titel" id="t-blick">Auf einen Blick: die 45 Minuten</p>
-    <ol class="zeitleiste">
-      <li style="--von:0;--bis:5"><a href="#ablauf-1"><span class="zeitleiste-zeit">0–5 Min.</span><span class="zeitleiste-platte"><b>Einstieg</b> · Die Papierfrage</span></a></li>
-      <li style="--von:5;--bis:15"><a href="#ablauf-2"><span class="zeitleiste-zeit">5–15 Min.</span><span class="zeitleiste-platte"><b>Ansehen</b> · Ein Beispiel aus dem eigenen Fach</span></a></li>
-      <li style="--von:15;--bis:30"><a href="#ablauf-3"><span class="zeitleiste-zeit">15–30 Min.</span><span class="zeitleiste-platte"><b>Prüfen</b> · Das eigene Material</span></a></li>
-      <li style="--von:30;--bis:40"><a href="#ablauf-4"><span class="zeitleiste-zeit">30–40 Min.</span><span class="zeitleiste-platte"><b>Planen</b> · Eine Stelle wählen</span></a></li>
-      <li style="--von:40;--bis:45"><a href="#ablauf-5"><span class="zeitleiste-zeit">40–45 Min.</span><span class="zeitleiste-platte"><b>Verabreden</b> · Ausprobieren und beobachten</span></a></li>
-    </ol>
-    <figcaption>Die Höhe zeigt die Minuten. Ein Vorschlag, noch nicht erprobt.</figcaption>
-  </figure>
 </div></section>
-
-<section class="abschnitt" style="padding-top:var(--a4)" aria-labelledby="t-ablauf"><div class="huelle huelle-weit stapel-gross">
-  <div class="stapel">
-    <h2 id="t-ablauf">Ablauf</h2>
-    <ol class="ablauf ablauf-breit">
-      <li id="ablauf-1"><span class="ablauf-zeit">0–5 Min.</span><div><h3>Einstieg: Die Papierfrage</h3><p>Zeig die drei Fragen der Papierfrage am Beamer. Geh sie an einem der Unterrichtsbeispiele gemeinsam durch.</p><p class="leise klein">Werkzeug: <a class="textlink" href="unterricht.html#t-probe">Papierfrage</a></p></div></li>
-      <li id="ablauf-2"><span class="ablauf-zeit">5–15 Min.</span><div><h3>Ansehen: Ein Beispiel aus dem eigenen Fach</h3><p>Zu zweit eines der Unterrichtsbeispiele öffnen und selbst ausprobieren. Zwei Fragen: Was tun die Lernenden? Was ginge auf Papier genauso?</p><p class="leise klein">Werkzeug: <a class="textlink" href="galerie.html">Unterrichtsbeispiele</a></p></div></li>
-      <li id="ablauf-3"><span class="ablauf-zeit">15–30 Min.</span><div><h3>Prüfen: Das eigene Material</h3><p>Jede Person nimmt ein eigenes Arbeitsblatt oder eine Präsentation. Zu zweit mit dem Digital-Check prüfen. Der Bericht beginnt mit den Stärken.</p><p class="leise klein">Werkzeug: <a class="textlink" href="selbstcheck.html">Digital-Check: Selbst prüfen</a></p></div></li>
-      <li id="ablauf-4"><span class="ablauf-zeit">30–40 Min.</span><div><h3>Planen: Eine Stelle wählen</h3><p>Eine Stelle aussuchen, an der das Tablet etwas besser kann. Mit »Unterricht neu planen« die Entscheidungskarte holen. Die Regeln für Tablet-Phasen mitnehmen.</p><p class="leise klein">Werkzeuge: <a class="textlink" href="tablets.html">Unterricht neu planen</a> · <a class="textlink" href="tablet-phasen.html">Tablet-Phasen gut führen</a></p></div></li>
-      <li id="ablauf-5"><span class="ablauf-zeit">40–45 Min.</span><div><h3>Verabreden: Ausprobieren und beobachten</h3><p>Jede Person sagt in einem Satz, was sie ausprobiert – oder warum sie beim Papier bleibt. Den Beobachtungsbogen für die Zeit nach der Stunde mitgeben. Wer mag, schickt danach mit »Mein Rückmeldebogen«, was gelungen ist und wo es noch hakt.</p><p class="leise klein">Werkzeuge: <a class="textlink" href="beobachtung.html">Beobachtungsbogen</a> · <a class="textlink" href="rueckmeldebogen.html">Mein Rückmeldebogen</a></p></div></li>
-    </ol>
-  </div>
-
-  <div class="nebeneinander">
-  <div class="stapel">
-    <h2 id="t-vorbereitung">Vorbereitung</h2>
-    <ul class="regel-liste punkte-liste">
-      <li>Die Teilnehmenden bringen ein eigenes Material mit – ohne Namen, Noten oder Schülerdaten.</li>
-      <li>Wer will, füllt vorab <a class="textlink" href="fortbildungsbogen.html">Mein Fortbildungsbogen</a> aus und gibt ihn als PDF an die Leitung – dann kann sie die Stunde zuschneiden.</li>
-      <li>Ein Gerät je zwei Personen, ein Beamer, verlässliches Netz für die Unterrichtsbeispiele.</li>
-      <li>Ausdrucke: Karte für die Tafel, Beobachtungsbogen, <a class="textlink" href="leitsaetze.html">Leitsätze zur Diskussion</a>.</li>
-      <li>Ohne Netz: das Unterrichtsbeispiel vorher als Bildschirmfoto zeigen, Papierfrage und Beobachtungsbogen auf Papier.</li>
-    </ul>
-  </div>
-
-  <div class="stapel">
-    <h2 id="t-moderation">Für die Moderation</h2>
-    <ul class="regel-liste punkte-liste">
-      <li>»Bleibt auf Papier« ist ein gutes Ergebnis. Lob es genauso wie eine digitale Idee.</li>
-      <li>Mehr Tablet ist nicht besser. Ein kurzer, punktueller Einsatz ist keine Vorstufe.</li>
-      <li>Wer schon viel macht, zeigt ein eigenes Beispiel. Wer wenig macht, darf nur zuhören und prüfen.</li>
-      <li>Ergebnisse der Erprobung sind persönliche Beobachtungen, kein Nachweis der Wirkung.</li>
-      <li>Versprich keine Zeitersparnis durch KI. Ehrlicher ist: Der Entwurf geht schneller, die Prüfung bleibt bei dir.</li>
-    </ul>
-  </div>
-  </div>
-
-  <details class="mehr">
-    <summary>Wenn du nur 20 Minuten hast</summary>
-    <p>Einstieg mit der Papierfrage (5 Minuten), dann das eigene Material zu zweit nur mit den drei Fragen der Papierfrage prüfen (10 Minuten), dann verabreden (5 Minuten).</p>
-  </details>
-
-  <p class="mass">Weiter: <a class="textlink" href="beratung.html">Beratungsstunde: acht Wochen <span aria-hidden="true">→</span></a></p>
-</div></section>
-<!-- fahrplan:fuss weit -->
+<div id="schloss-inhalt" hidden></div>
+<div class="huelle huelle-weit schloss-zu" id="schloss-zu" hidden><button type="button" class="knopf still" data-schloss-zu>Bereich schließen</button></div>
+<!-- schloss:fortbildung -->
 </div>
+<script src="assets/schloss-kern.js"></script>
+<script src="assets/schloss.js"></script>
 <script src="assets/druck.js"></script>

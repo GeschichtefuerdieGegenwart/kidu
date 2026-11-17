@@ -7,7 +7,7 @@
 <meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
 <title>Mein Rückmeldebogen – Kidu</title>
 <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/hilde.css?v=eda662d7">
+<link rel="stylesheet" href="assets/hilde.css?v=90679a57">
 <script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
 </head>
 <body>
@@ -58,7 +58,7 @@
       <div class="probe-wahl">
         <label><input type="checkbox" name="womit" value="planen"><span>Unterricht neu planen</span></label>
         <label><input type="checkbox" name="womit" value="digitalisieren"><span>Bisherigen Unterricht digitalisieren</span></label>
-        <label><input type="checkbox" name="womit" value="koffer"><span>Aufgabenkoffer oder Methodenkoffer</span></label>
+        <label><input type="checkbox" name="womit" value="koffer"><span>Aufgabenkoffer oder Skillkoffer</span></label>
         <label><input type="checkbox" name="womit" value="check"><span>Papierfrage oder Digital-Check</span></label>
         <label><input type="checkbox" name="womit" value="phasen"><span>Tablet-Phasen gut führen</span></label>
         <label><input type="checkbox" name="womit" value="beispiel"><span>Eines der Unterrichtsbeispiele</span></label>
@@ -145,14 +145,6 @@
           <li><a href="beobachtung.html"><b>Nach der Stunde: Beobachtungsbogen</b><span class="fahrplan-text">Sechs Fragen in zwei Minuten: so lassen, nachschärfen oder zurück zu Papier.</span></a></li>
         </ul>
       </div>
-      <div class="fahrplan-gruppe">
-        <h3>Im Kollegium</h3>
-        <ul class="fahrplan-werkzeuge">
-          <li><a href="fortbildung.html"><b>Fortbildungsbaustein: 45 Minuten</b><span class="fahrplan-text">Der Einstieg für Konferenz oder Fachgruppe. Alle arbeiten an eigenem Material.</span></a></li>
-          <li><a href="beratung.html"><b>Beratungsstunde: acht Wochen</b><span class="fahrplan-text">Zwei bis drei Lehrkräfte, eine eigene Stunde, zweimal ausprobiert.</span></a></li>
-          <li><a href="leitsaetze.html"><b>Leitsätze zur Diskussion</b><span class="fahrplan-text">Zehn Sätze auf einer Seite – ein Entwurf zum Gespräch, kein Beschluss.</span></a></li>
-        </ul>
-      </div>
     </div>
   </div>
   <div class="fahrplan-fuss-plan">
@@ -169,7 +161,7 @@
 </div></nav>
 </div>
 <script src="assets/daten/taxonomien.js?v=eb73b10b"></script>
-<script src="assets/regeln.js?v=fb711ed9"></script>
+<script src="assets/regeln.js?v=ee2ebb9e"></script>
 <script src="assets/hilde.js?v=e22353fb"></script>
 <script src="assets/druck.js?v=474b771e"></script>
 <script src="assets/rueckmeldebogen.js?v=1e3d4d81"></script>
@@ -178,7 +170,7 @@
 <footer class="fuss"><div class="huelle">
   <p class="fuss-marke" aria-hidden="true"><img class="kidu-wortmarke" src="assets/logo/kidu-logo.svg" alt="" width="224" height="92"></p>
   <p class="fuss-unterzeile"><span class="ini ki">K</span>ünstliche <span class="ini ki">I</span>ntelligenz und <span class="ini du">d</span>igitaler <span class="ini du">U</span>nterricht</p>
-  <nav class="fusslinks" aria-label="Über Kidu"><ul><li><a href="ueber.html">Über Kidu</a></li><li><a href="ueber.html#inhalte">Inhalte und Funktionen</a></li><li><a href="ueber.html#t-daten">Hinweise zu Daten und KI</a></li><li><a href="gestaltung.html">Gestaltungssystem</a></li><li><a href="werkzeugkiste.html">Methodenkoffer</a></li><li><a href="fortbildungsbogen.html">Mein Fortbildungsbogen</a></li><li><a href="ueber.html#t-daten">Eingaben löschen</a></li></ul></nav>
+  <nav class="fusslinks" aria-label="Über Kidu"><ul><li><a href="ueber.html">Über Kidu</a></li><li><a href="ueber.html#inhalte">Inhalte und Funktionen</a></li><li><a href="ueber.html#t-daten">Hinweise zu Daten und KI</a></li><li><a href="gestaltung.html">Gestaltungssystem</a></li><li><a href="skillkoffer.html">Skillkoffer</a></li><li><a href="fortbildungsbogen.html">Mein Fortbildungsbogen</a></li><li><a href="rueckmeldebogen.html">Mein Rückmeldebogen</a></li><li><a href="fortbildungsleitung.html">Für die Fortbildungsleitung <span class="fuss-schloss">· mit Passwort</span></a></li><li><a href="ueber.html#t-daten">Eingaben löschen</a></li></ul></nav>
   <p class="fuss-einstellung"><button type="button" class="knopf still bewegung-schalter" id="bewegung-schalter" data-bewegung-schalter aria-pressed="false">Weniger Bewegung</button><span class="leise">Gilt in diesem Browser. Nichts gleitet, nichts fliegt, alles steht sofort da.</span></p>
   <p class="fuss-einstellung"><button type="button" class="knopf still theme-schalter" id="theme-schalter" data-theme-schalter aria-pressed="false">Beamer-Ansicht</button><span class="leise">Gilt in diesem Browser. Reines Weiß, tiefes Schwarz, kräftigere Farben – für den Beamer im Klassenzimmer.</span></p>
   <p class="kennzeichnung">Kidu · Künstliche Intelligenz und digitaler Unterricht · Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.</p>

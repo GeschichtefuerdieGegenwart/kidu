@@ -17,17 +17,20 @@ SEITEN = [
     ("index.html", "Kidu · Künstliche Intelligenz und digitaler Unterricht", ""),
     ("ki.html", "KI-Training – Kidu", "ki"),
     ("unterricht.html", "Digitaler Unterricht – Kidu", "unterricht"),
+    ("papierfrage.html", "Papierfrage – Kidu", "unterricht"),  # ab 4.46 eigene Seite, der erste Schritt in Phase 2
     ("tablets.html", "Unterricht neu planen – Kidu", "unterricht"),
     ("passt.html", "Was passt gerade zu mir? – Kidu", "unterricht"),
     ("digitalisieren.html", "Bisherigen Unterricht digitalisieren – Kidu", "unterricht"),
     ("beobachtung.html", "Nach der Stunde: Beobachtungsbogen – Kidu", "unterricht"),
     ("tablet-phasen.html", "Tablet-Phasen gut führen – Kidu", "unterricht"),
+    ("tipps.html", "Tipps und Tricks – Kidu", "unterricht"),  # ab 4.46, Phase 3
     ("ist-stand.html", "Mein Fortbildungsbogen – Kidu", "unterricht"),
     ("fortbildungsbogen.html", "Mein Fortbildungsbogen – Kidu", "unterricht"),
     ("startpunkt.html", "Mein Fortbildungsbogen – Kidu", "unterricht"),
-    ("fortbildung.html", "Fortbildungsbaustein: 45 Minuten – Kidu", "unterricht"),
-    ("beratung.html", "Beratungsstunde: acht Wochen – Kidu", "unterricht"),
-    ("leitsaetze.html", "Leitsätze zur Diskussion – Kidu", "unterricht"),
+    ("fortbildungsleitung.html", "Für die Fortbildungsleitung – Kidu", ""),  # ab 4.46 geschützt (Schloss), Tür in der Fußleiste
+    ("fortbildung.html", "Für die Fortbildungsleitung – Kidu", ""),          # ab 4.46 geschützt, vorher Phase 4 »Im Kollegium«
+    ("beratung.html", "Für die Fortbildungsleitung – Kidu", ""),             # ab 4.46 geschützt
+    ("leitsaetze.html", "Für die Fortbildungsleitung – Kidu", ""),           # ab 4.46 geschützt
     ("rueckmeldebogen.html", "Mein Rückmeldebogen – Kidu", "unterricht"),
     ("fuenf-saetze.html", "Wann digitaler Unterricht funktioniert – Kidu", "unterricht"),
     ("sechs-hebel.html", "Wann digitaler Unterricht funktioniert – Kidu", "unterricht"),
@@ -35,18 +38,21 @@ SEITEN = [
     ("digital-check.html", "Digital-Check – Kidu", "unterricht"),
     ("selbstcheck.html", "Digital-Check: Selbst prüfen – Kidu", "unterricht"),
     ("mehrwert.html", "So arbeitet der Digital-Check – Kidu", "unterricht"),
-    ("muster.html", "Unterrichtsmuster aus der Praxis – Kidu", "unterricht"),
+    ("muster.html", "Ideen und Kniffe stehen im Aufgabenkoffer – Kidu", "unterricht"),  # ab 4.46 Weiterleitung
     ("aufgabenkoffer.html", "Aufgabenkoffer – Kidu", "unterricht"),
     ("auftraege.html", "Aufträge zum Kopieren – Kidu", "ki"),
     ("ki-fach.html", "KI für dein Fach einrichten – Kidu", "ki"),
     ("sicher.html", "Sicher arbeiten in fünf Regeln – Kidu", "ki"),
     ("lernende-ki.html", "Wenn deine Lernenden mit KI arbeiten – Kidu", "ki"),
+    ("ki-aufgaben.html", "Trainingsaufgaben – Kidu", "ki"),  # ab 4.46
+    ("papierkoffer.html", "Aufgabenkoffer auf Papier – Kidu", "ki"),  # ab 4.46
     ("galerie.html", "Unterrichtsbeispiele – Kidu", "galerie"),
     ("beispiel.html", "Beispiel – Kidu", "galerie"),
     ("showroom.html", "Unterrichtsbeispiele – Kidu", "galerie"),
     ("ueber.html", "Über Kidu", ""),
     ("gestaltung.html", "Gestaltungssystem – Kidu", ""),
-    ("werkzeugkiste.html", "Methodenkoffer – Kidu", "unterricht"),  # ab 4.42 im Fahrplan, Phase 2
+    ("werkzeugkiste.html", "Der Methodenkoffer heißt jetzt Skillkoffer – Kidu", "unterricht"),  # ab 4.46 Weiterleitung
+    ("skillkoffer.html", "Skillkoffer – Kidu", "unterricht"),  # ab 4.46, Phase 2 »für Fortgeschrittene«
 ]
 
 # Logo Kidu (ab Version 4.26, Logo 5f aus Claude Design): Wortmarke »Kidu« in IBM Plex Mono (als Umrisse),
@@ -59,7 +65,8 @@ ZEILE = ('<span class="ini ki">K</span>ünstliche <span class="ini ki">I</span>n
 
 # Alte Adressen leiten weiter (alte Links bleiben gültig).
 WEITERLEITUNGEN = {"showroom.html": "galerie.html", "startpunkt.html": "fortbildungsbogen.html",
-                   "ist-stand.html": "fortbildungsbogen.html", "fuenf-saetze.html": "sechs-hebel.html#fuenf-saetze"}  # ab 4.36
+                   "ist-stand.html": "fortbildungsbogen.html", "fuenf-saetze.html": "sechs-hebel.html#fuenf-saetze",  # ab 4.36
+                   "muster.html": "aufgabenkoffer.html", "werkzeugkiste.html": "skillkoffer.html"}  # ab 4.46: #m-… öffnet den Kniff
 
 NAV = [
     # Die drei Kernbereiche. Die Wortmarke führt zum Start.
@@ -68,13 +75,17 @@ NAV = [
     ("galerie", "galerie.html", "Unterrichts&shy;beispiele"),  # ab 4.36, vorher »Galerie«; weiches Trennzeichen für das Telefon
 ]
 
+# Fußleiste (ab 4.46 neu geordnet, Entscheidung Mario 17.11.2026): erst Kidu selbst, dann was zur Fortbildung gehört,
+# zuletzt die Tür in den geschützten Bereich. »Methodenkoffer« heißt jetzt »Skillkoffer«.
 FUSS = [
     ("ueber.html", "Über Kidu"),
     ("ueber.html#inhalte", "Inhalte und Funktionen"),
     ("ueber.html#t-daten", "Hinweise zu Daten und KI"),
     ("gestaltung.html", "Gestaltungssystem"),
-    ("werkzeugkiste.html", "Methodenkoffer"),
+    ("skillkoffer.html", "Skillkoffer"),
     ("fortbildungsbogen.html", "Mein Fortbildungsbogen"),
+    ("rueckmeldebogen.html", "Mein Rückmeldebogen"),
+    ("fortbildungsleitung.html", 'Für die Fortbildungsleitung <span class="fuss-schloss">· mit Passwort</span>'),
 ]
 
 KENNZEICHNUNG = "Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept."
@@ -127,6 +138,19 @@ def rahmen(titel, aktiv, inhalt, datei):
 """
 
 
+def mit_schloss(inhalt, datei):
+    """Ab 4.46: <!-- schloss:NAME --> wird zum eingebetteten, verschlüsselten Inhalt aus schloss/NAME.enc.json.
+    Eingebettet, nicht nachgeladen – so läuft die Seite auch per file:// (Lehre aus dem GGK-Labor, 13.11.2026)."""
+    import json, re
+    def ersetze(m):
+        pfad = WURZEL / "schloss" / (m.group(1) + ".enc.json")
+        if not pfad.exists():
+            raise SystemExit(f"schloss: {pfad.relative_to(WURZEL)} fehlt für {datei} – KIDU_PASS='…' node tools/schloss.mjs")
+        d = json.loads(pfad.read_text(encoding="utf-8"))
+        return '<script type="application/json" id="schloss-daten">' + json.dumps(d, ensure_ascii=True).replace("</", "<\\/") + "</script>"
+    return re.sub(r"<!-- schloss:([a-z-]+) -->", ersetze, inhalt)
+
+
 def mit_stand(html):
     """Hängt an jede eigene CSS- und JS-Datei einen Prüfwert ihres Inhalts (?v=…).
     So lädt der Browser nach einer Änderung die neue Datei und mischt nie neue Seiten mit alten Stilen (ab Version 4.17)."""
@@ -155,7 +179,7 @@ def main():
     fp = importlib.util.module_from_spec(spec); spec.loader.exec_module(fp)
     fahrplan = fp.laden()
     for datei, titel, aktiv in SEITEN:
-        inhalt = fp.einsetzen((WURZEL / "src" / datei).read_text(encoding="utf-8"), datei, fahrplan)
+        inhalt = mit_schloss(fp.einsetzen((WURZEL / "src" / datei).read_text(encoding="utf-8"), datei, fahrplan), datei)
         (WURZEL / datei).write_text(mit_stand(rahmen(titel, aktiv, inhalt, datei)), encoding="utf-8")
         print("gebaut:", datei)
 

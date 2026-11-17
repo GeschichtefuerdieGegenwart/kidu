@@ -206,7 +206,7 @@ Quelle und Darstellung trennen · Zuschreibungen prüfen · mehrere Perspektiven
 
 ## Kurzfassung für Kidu
 
-Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopierbaren Auftrag auf der Website (Werkzeug: Bisherigen Unterricht digitalisieren · Abschnitt »Vorgehen« im Prompt). Er gilt für jedes freigegebene KI-System, auch ohne Plugin. Er ist anbieterneutral, in einfacher Sprache und an die KI gerichtet. Änderst du den Skill, prüf, ob die Kurzfassung noch stimmt – sie ist die einzige Quelle für die Website.
+Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopierbaren Auftrag auf der Website (Werkzeug: Bisherigen Unterricht digitalisieren · Abschnitt »Vorgehen« im Prompt). Die Liste »Papierfrage« geht ab Kidu 4.46 in den Prompt »Die ganze Stunde prüfen« auf der Seite Papierfrage. Er gilt für jedes freigegebene KI-System, auch ohne Plugin. Er ist anbieterneutral, in einfacher Sprache und an die KI gerichtet. Änderst du den Skill, prüf, ob die Kurzfassung noch stimmt – sie ist die einzige Quelle für die Website.
 
 
 **Anforderungen**
@@ -227,8 +227,21 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 - Schließ mit zwei Listen: »Vor dem Kopieren prüfen« (alles aus dem Gedächtnis: Zitate, Gesetze, Zahlen, Funktionen) und »Nur du kannst das« (echtes Tablet, Lernplattform, Schulregeln, Freigaben).
 - Gib mir zum Schluss fünf kurze Fragen für die Beobachtung nach der Stunde, ohne Noten: Haben die Lernenden das Entscheidende selbst getan? Was ging besser als auf Papier? Wie viel Zeit ging an die Technik? Waren sie bei der Sache? So lassen, nachschärfen oder zurück zu Papier?
 
+**Papierfrage**
+
+- Hybrid ist der Normalfall: Das Gerät nur dort, wo es mehr kann. Längere Texte – mehr als eine Bildschirmseite – liegen auf Papier. Deuten, Streiten und Urteilen geschieht im Raum.
+- Erst festlegen, dann aufdecken: Vor jeder Auflösung, Rückmeldung oder Bewegung steht eine eigene Antwort. Was das Urteil vorwegnimmt, gibt die Lehrkraft erst danach frei – auf Ansage oder nach der eigenen Antwort.
+- Eine Kernentscheidung je Stunde reicht: lieber eine Festlegung mit Austausch im Plenum als viele kleine Klicks.
+- Zurück in den Raum: Jede Phase am Gerät endet mit einer Stelle im Plenum. Oft reicht ein Gerät vorne – Ergebnisse vieler Geräte zusammenzuführen kostet Zeit.
+- Ruhe: eine Seite je Phase, Hilfen am selben Ort, höchstens drei Tipps bis zur ersten eigenen Antwort.
+- Schreiben geht auch von Hand. Kriterien und Beispielantworten sehen die Lernenden erst nach dem eigenen Text.
+- Ergebnisse überleben die Stunde: als Datei, im Heft oder an der Tafel – nicht nur im Browser.
+- Für alle: Braucht jemand das Gerät, um mitzumachen – zum Vorlesen, Vergrößern oder Übersetzen –, ist es für diese Person begründet.
+- Kein Rang: Eine Stunde ganz auf Papier ist ein gutes Ergebnis. Punktuell, phasenweise und durchgängig sind gleichwertig.
+
 ## Versionen
 
+- **v4.6, 17.11.2026:** Kurzfassung: neue Liste »Papierfrage« mit neun Regeln aus erprobtem Unterricht (GGK-Labor: Freigabe erst nach der Festlegung, Kriterien erst nach dem eigenen Text, hybrid mit langen Texten auf Papier; Psycho-Labor: ein Gerät vorne; Politik-Werkstatt: Ergebnisse als Datei). Daraus baut Kidu 4.46 den Prompt »Die ganze Stunde prüfen« auf der neuen Seite Papierfrage. Am Vorgehen des Skills ändert sich nichts.
 - **v4.5, 13.11.2026:** Ganze Einheit als Rahmen (Entscheidung Mario, Fassung B): Schritt E »Landkarte der Einheit« mit Haltepunkt, Umfang je Stunde (»ohne Gerät« ist ein vollwertiges Ergebnis), Einheit am Anfang des Übergabeblocks, Kurzfassung ergänzt. Zwei Wege in der Weiche: Unterricht neu planen (zuerst ein Verlaufsplan ohne Gerät) und Bisherigen Unterricht digitalisieren. Prüfraster »Lehrfunktion je Phase« in Schritt 2 mit den neuen Phasennamen (Sichern und üben · Übertragen und Ausblick · In jeder Phase); Modelle und Belegstand in `references/lehrfunktionen.md`. Gestaltung als eigener Prüfblock, getrennt von der Didaktik. Grundlage: Analysedokument »Digitaler Unterricht in Kidu – Sichtung und Didaktikanalyse« (13.11.2026).
 - **v4.4, 11.11.2026:** Lesen und Strukturlegen: Lese-Kriterium um Selbstüberschätzung am Bildschirm und Tiefenaufgabe ergänzt; neuer Punkt in Schritt 5 (hybrid als Regelfall, Vorher – Während – Nachher, Markieren mit Regel, selbst legen mit benannten Beziehungen, Lehren zum digitalen Legen); Kurzfassung um zwei Regeln ergänzt; Belege in `lernmethode-einfuehren/references/lesen-und-strukturlegen.md`.
 - **v4.3, 10.11.2026:** Name Kidu (vorher »Hilde Digital«); Abschnitt »Kurzfassung für Kidu« als einzige Quelle für den kopierbaren Auftrag auf der Website.

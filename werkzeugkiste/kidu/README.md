@@ -33,11 +33,11 @@ Jeder Skill hat einen Abschnitt **»Kurzfassung für Kidu«**. Aus ihm baut `too
 
 | Skill | Werkzeug auf der Website |
 | --- | --- |
-| `unterricht-digitalisieren` | Bisherigen Unterricht digitalisieren (Abschnitt »Vorgehen«) |
+| `unterricht-digitalisieren` | Bisherigen Unterricht digitalisieren (Abschnitt »Vorgehen«) · Papierfrage, Auftrag »Die ganze Stunde prüfen« (Abschnitt »Papierfrage«) |
 | `digital-check` | Digital-Check, Weg »Mit KI prüfen« (Abschnitte »Typische Schwächen« und »Gestaltung«) |
 | `lernmethode-einfuehren` · `ki-grenzen-einer-aufgabe` · `ki-faktencheck` · `praxisforschung-im-kollegium` · `ki-kompetenz-kollegium` | Aufträge zum Kopieren |
 
-Gepflegt wird nur im Skill. Die Website zeigt bei jedem Auftrag, aus welcher Fassung er stammt. Plugin und einzelne Skills liegen zum Herunterladen auf der Seite »Methodenkoffer«.
+Gepflegt wird nur im Skill. Die Website zeigt bei jedem Auftrag, aus welcher Fassung er stammt. Plugin und einzelne Skills liegen zum Herunterladen auf der Seite »Skillkoffer« (bis 4.45 »Methodenkoffer«) – je mit dem, was am Ende herauskommt, und wo der Skill auf Kidu in Aktion ist.
 
 ## Stufenplan
 
@@ -58,6 +58,7 @@ Eine Quelle: Die Skills werden im Plugin gepflegt und versioniert (Abschnitt »V
 
 ## Versionen
 
+- **0.7.0, 17.11.2026:** Kidu 4.46: `unterricht-digitalisieren` v4.6 (neue Liste »Papierfrage« in der Kurzfassung: Regeln für den Auftrag »Die ganze Stunde prüfen«) · `digital-check` v1.5 (Erkenntnisse aus Psycho-Labor, GGK-Labor und Politik-Werkstatt: erst festlegen, dann aufdecken; Schreiben und Kriterien danach; eine Kernentscheidung; Denkwerkzeug des Fachs; Sicherung mit Maß; Rechte und Würde; Orientierung wie auf einem Arbeitsblatt) · `kidu-start` v3.3 und `ki-kompetenz-kollegium` v2.3 (neue Ordnung der Website: Papierfrage zuerst, Skillkoffer, Tipps und Tricks, KI-Training in vier Phasen mit Trainingsaufgaben und Aufgabenkoffer auf Papier; Fortbildungsbausteine nicht mehr öffentlich).
 - **0.6.0, 13.11.2026:** Nach der Sichtung und Didaktikanalyse vom 13.11.2026 (Kidu 4.36–4.38): `unterricht-digitalisieren` v4.5 (ganze Einheit mit Schritt E »Landkarte der Einheit«, zwei Wege »Unterricht neu planen« und »Bisherigen Unterricht digitalisieren«, Prüfraster »Lehrfunktion je Phase« mit neuer Referenz `references/lehrfunktionen.md`, Gestaltung getrennt) · `digital-check` v1.4 (zwei Prüfblöcke Didaktik und Gestaltung, Prüffragen je Lehrfunktion, typische Schwächen aus der Sichtung; Kurzfassung mit Liste »Gestaltung«) · `kidu-start` v3.2 (neue Wege und Namen, die vier Phasen der Website) · `lernmethode-einfuehren` v1.3 (Sichern und üben mit Methode) · `ki-kompetenz-kollegium` v2.2 (Kidu als Fortbildungsplattform, Fortbildungsbogen und Rückmeldebogen).
 - **0.5.1, 11.11.2026:** Die Seite »Werkzeugkiste« von Kidu heißt jetzt »Methodenkoffer« (`kidu-start` v3.1).
 - **0.5.0, 11.11.2026:** Lesen und Strukturlegen: neue Referenz `lernmethode-einfuehren/references/lesen-und-strukturlegen.md` mit recherchierten Quellen und Belegstand; `lernmethode-einfuehren` v1.2, `unterricht-digitalisieren` v4.4, `digital-check` v1.3.

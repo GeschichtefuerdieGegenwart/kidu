@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
+<title>Aufgabenkoffer auf Papier – Kidu</title>
+<link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/hilde.css?v=90679a57">
+<script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
+</head>
+<body>
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+<header class="kopf"><div class="huelle">
+  <a class="marke" href="index.html"><span class="marke-text"><span class="marke-name"><span class="sr-only">Kidu</span><img class="kidu-wortmarke" src="assets/logo/kidu-logo.svg" alt="" width="224" height="92"></span><span class="marke-zeile" aria-hidden="true"><span class="ini ki">K</span>ünstliche <span class="ini ki">I</span>ntelligenz und <span class="ini du">d</span>igitaler <span class="ini du">U</span>nterricht</span></span><span class="sr-only">, zum Start</span></a>
+  <nav class="nav" aria-label="Bereiche"><a href="ki.html" aria-current="true">KI-Training</a><a href="unterricht.html">Digitaler Unterricht</a><a href="galerie.html">Unterrichts&shy;beispiele</a></nav>
+  <a class="hefter-link" href="galerie.html#hefter" aria-label="Mein Schnellhefter"><svg viewBox="0 0 30 24" aria-hidden="true"><rect x="1" y="2" width="28" height="21" rx="2" fill="#b68235" stroke="#7d5a1c" stroke-width="2"/><rect x="1" y="2" width="6" height="21" fill="#7d5a1c"/><circle cx="4" cy="8" r="1.3" fill="#efeadf"/><circle cx="4" cy="17" r="1.3" fill="#efeadf"/></svg><span class="hefter-zahl" aria-hidden="true">0</span></a>
+</div></header>
+<main id="inhalt" tabindex="-1">
+<div class="bereich-ki">
+<section class="bereichskopf kompakt"><div class="huelle huelle-weit pk-kopf">
+  <div class="stapel">
+    <h1 class="h1-frage">Aufgabenkoffer auf Papier</h1>
+    <p class="marker">Bereich: KI-Training · Unterricht mit KI vorbereiten</p>
+    <p class="detail-kurz">Dieselben Ideen wie im Aufgabenkoffer – hier für Papier, Tafel und Raum. Such dir eine Phase der Stunde aus. Ein KI-System bereitet dir das Material vor. Unterrichtet wird ohne Gerät.</p>
+  </div>
+  <form class="pk-form" id="pk-form" novalidate aria-labelledby="pk-t-angaben">
+    <p class="pk-form-titel" id="pk-t-angaben">Für alle Aufträge auf dieser Seite</p>
+    <div class="schnell-felder">
+      <div class="eingabe"><label for="pk-fach">Fach</label><input type="text" id="pk-fach" autocomplete="off" placeholder="z. B. Pflege"></div>
+      <div class="eingabe"><label for="pk-thema">Thema</label><input type="text" id="pk-thema" autocomplete="off" placeholder="z. B. Sturzprophylaxe"></div>
+      <div class="eingabe"><label for="pk-gruppe">Lerngruppe</label><input type="text" id="pk-gruppe" autocomplete="off" placeholder="z. B. 2. Ausbildungsjahr"></div>
+    </div>
+    <p class="leise klein">Keine Namen, Noten oder anderen personenbezogenen Daten. Deine Angaben werden nicht gespeichert. Lässt du ein Feld leer, fragt die KI zuerst danach.</p>
+  </form>
+</div></section>
+
+<section class="abschnitt pk-stunde" aria-labelledby="t-pk-stunde"><div class="huelle huelle-weit stapel">
+  <h2 id="t-pk-stunde" class="klein-titel">Wo in der Stunde brauchst du eine Idee?</h2>
+  <!-- Die Stundenlinie: dieselben Phasen wie im Aufgabenkoffer (Namen aus taxonomien.js). assets/papierkoffer.js füllt Linie und Karten. -->
+  <nav aria-labelledby="t-pk-stunde"><ol class="pk-linie" id="pk-linie"></ol></nav>
+  <div id="pk-phasen"></div>
+  <noscript><p class="box">Der Aufgabenkoffer auf Papier braucht JavaScript. Die Ideen stehen auch im <a href="aufgabenkoffer.html">Aufgabenkoffer</a>, jeweils mit »Und ohne Gerät?«.</p></noscript>
+</div></section>
+
+<section class="abschnitt band-karton" aria-labelledby="t-pk-woher"><div class="huelle stapel">
+  <h2 id="t-pk-woher" class="klein-titel">Woher die Ideen kommen</h2>
+  <p class="mass">Es sind dieselben Aufgabenformen und Kniffe wie im <a class="textlink" href="aufgabenkoffer.html">Aufgabenkoffer</a> des Digitalen Unterrichts. Was dort unter »Und ohne Gerät?« und »Auf Papier« steht, ist hier der Hauptweg. Die Kniffe stammen aus Stunden, die mit Kidu-Lernseiten gehalten wurden. Das sind persönliche Beobachtungen, kein Nachweis der Wirkung.</p>
+  <p class="mass">Zu jeder Idee steht, wo sie meist am besten aufgehoben ist. Das ist kein Rang: Papier ist ein vollwertiges Ergebnis. Willst du wissen, ob das Gerät an einer Stelle mehr kann, nimm die <a class="textlink" href="papierfrage.html">Papierfrage</a>.</p>
+</div></section>
+</div>
+<script src="assets/daten/taxonomien.js?v=eb73b10b"></script>
+<script src="assets/hilde.js?v=e22353fb"></script>
+<script src="assets/daten/aufgaben.js?v=87aa0280"></script>
+<script src="assets/daten/koffer-ideen.js?v=40cbae08"></script>
+<script src="assets/daten/werkstatt.js?v=66bf926c"></script>
+<script src="assets/daten/schnell.js?v=3b6b187b"></script>
+<script src="assets/schnell-anfrage.js?v=c93dfd0d"></script>
+<script src="assets/papierkoffer.js?v=067bd21f"></script>
+
+</main>
+<footer class="fuss"><div class="huelle">
+  <p class="fuss-marke" aria-hidden="true"><img class="kidu-wortmarke" src="assets/logo/kidu-logo.svg" alt="" width="224" height="92"></p>
+  <p class="fuss-unterzeile"><span class="ini ki">K</span>ünstliche <span class="ini ki">I</span>ntelligenz und <span class="ini du">d</span>igitaler <span class="ini du">U</span>nterricht</p>
+  <nav class="fusslinks" aria-label="Über Kidu"><ul><li><a href="ueber.html">Über Kidu</a></li><li><a href="ueber.html#inhalte">Inhalte und Funktionen</a></li><li><a href="ueber.html#t-daten">Hinweise zu Daten und KI</a></li><li><a href="gestaltung.html">Gestaltungssystem</a></li><li><a href="skillkoffer.html">Skillkoffer</a></li><li><a href="fortbildungsbogen.html">Mein Fortbildungsbogen</a></li><li><a href="rueckmeldebogen.html">Mein Rückmeldebogen</a></li><li><a href="fortbildungsleitung.html">Für die Fortbildungsleitung <span class="fuss-schloss">· mit Passwort</span></a></li><li><a href="ueber.html#t-daten">Eingaben löschen</a></li></ul></nav>
+  <p class="fuss-einstellung"><button type="button" class="knopf still bewegung-schalter" id="bewegung-schalter" data-bewegung-schalter aria-pressed="false">Weniger Bewegung</button><span class="leise">Gilt in diesem Browser. Nichts gleitet, nichts fliegt, alles steht sofort da.</span></p>
+  <p class="fuss-einstellung"><button type="button" class="knopf still theme-schalter" id="theme-schalter" data-theme-schalter aria-pressed="false">Beamer-Ansicht</button><span class="leise">Gilt in diesem Browser. Reines Weiß, tiefes Schwarz, kräftigere Farben – für den Beamer im Klassenzimmer.</span></p>
+  <p class="kennzeichnung">Kidu · Künstliche Intelligenz und digitaler Unterricht · Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.</p>
+  <p class="kennzeichnung urheber leise">© 2026 Mario Walter · entwickelt mit Unterstützung eines KI-Systems · Texte CC BY-NC-SA 4.0 · Code MIT · <a href="ueber.html#t-entstehung">Entstehung und Lizenz</a></p>
+</div></footer>
+<script src="assets/motion.js?v=f6a039f2"></script>
+</body>
+</html>
