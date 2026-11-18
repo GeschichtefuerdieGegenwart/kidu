@@ -1,97 +1,146 @@
 <div class="bereich-ki">
-<!-- Ab 4.47: das KI-Training als Fahrplan (Entscheidung Mario, 17.11.2026: dieselbe Übersicht wie im Digitalen Unterricht,
-     die Phasen bleiben, die Seite beginnt nicht mehr mit der Schnell-Anfrage). Gleiche Form wie unterricht.html, in Ocker.
-     Jede Phase beginnt mit einem Anliegen in der Ich-Form – so steigt jede Person dort ein, wo sie steht, ohne Stufen.
-     Werkzeuge der Phasen: src/fahrplan-ki.json. Was vorher auf dieser Seite stand, hat eigene Seiten: erste-minuten.html,
-     schnell-anfrage.html, prompten.html. Alte Sprungmarken leiten dorthin (data-alte-marken, assets/fahrplan.js). -->
+<!-- Ab 4.50 (Auftrag Mario, 18.11.2026): Die Startseite des KI-Trainings übernimmt die grobe Orientierung von Variante B des Aufgabenkoffers
+     auf Papier: vier große Karten, eine je Phase. Jede Karte sagt schon hier, wobei KI hilft. Tippt man eine an, öffnet sich darunter die
+     Phase in voller Breite (eine zur Zeit, Adresse #phase-…; assets/ki-start.js). Ohne Skript stehen alle Phasen untereinander.
+     Die Phasen bleiben die vier des Fahrplans (Namen eingefroren). Karte, Hilfen und Werkzeuge: src/fahrplan-ki.json (»start«, tools/fahrplan.py).
+     In Phase 2 steht der Aufgabenkoffer auf Papier in Variante C. Vorher (4.47): der Fahrplan als Liste aufklappbarer Phasen. -->
 <section class="leitband leitband-weg leitband-ki" aria-labelledby="t-leitfrage"><div class="huelle huelle-weit leitband-innen">
   <div class="leitband-text">
     <h1 class="leitband-bereich">KI-Training · Fortbildung zum Selbermachen</h1>
-    <h2 id="t-leitfrage" class="leitband-frage">In vier Phasen sicher mit KI arbeiten</h2>
-    <p>Steig dort ein, wo du gerade stehst. Jede Phase beginnt mit einem Anliegen.</p>
+    <h2 id="t-leitfrage" class="leitband-frage">Wobei hilft dir KI?</h2>
+    <p>Vier Phasen rund um deine Stunde. Jede Karte zeigt, was KI dort für dich tun kann. Du kannst bei jeder einsteigen.</p>
   </div>
   <p class="leitband-beispiele"><a href="galerie.html"><b>Unterrichtsbeispiele: analog und digital</b><span>beides mit KI erstellt <span aria-hidden="true">→</span></span></a></p>
 </div></section>
 
-<section class="abschnitt phasen-abschnitt" aria-labelledby="t-phasen"><div class="huelle huelle-weit">
+<section class="abschnitt phasen-abschnitt ki-start" aria-labelledby="t-phasen"><div class="huelle huelle-weit">
   <div class="fahrplan-leiste">
     <h2 id="t-phasen" class="fahrplan-titel">Die vier Phasen</h2>
-    <p class="fahrplan-bedienung">Tipp eine Phase an. Du kannst bei jeder Nummer einsteigen.</p>
-    <button type="button" class="knopf still fahrplan-alle" id="fahrplan-alle" aria-expanded="false" aria-controls="fahrplan" hidden>Alle Werkzeuge zeigen</button>
+    <p class="fahrplan-bedienung">Tipp eine Phase an. Nach der Stunde geht es wieder bei 2 weiter.</p>
   </div>
-  <ol class="fahrplan" id="fahrplan" data-alte-marken='{"#t-erste":"erste-minuten.html","#schnell":"schnell-anfrage.html","#t-schnell":"schnell-anfrage.html","#lernen-weg":"prompten.html","#t-lernen":"prompten.html","#t-generator":"prompten.html#t-generator","#t-werkstatt":"#fahrplan","#t-bezug":"#fahrplan"}'>
-    <li class="fahrplan-phase ist-vorspann" id="phase-grundlagen">
-      <span class="fahrplan-nr" aria-hidden="true">1</span>
-      <details class="fahrplan-platte">
-        <summary class="fahrplan-kopf">
-          <span class="fahrplan-wann">zuerst</span>
-          <h3 class="fahrplan-name">Grundlagen</h3>
-          <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich will erst verstehen.«</b> Was KI kann, wo sie irrt und was nicht hineingehört.</span>
-          <!-- kiplan:zahl:grundlagen -->
-        </summary>
-        <div class="fahrplan-inhalt">
-          <!-- kiplan:liste:grundlagen -->
+  <div class="ki-wahl-huelle">
+  <ul class="koffer-raster ist-vier ki-wahl" id="ki-wahl">
+    <li><a class="koffer-karte ki-karte" href="#phase-grundlagen" data-phase="grundlagen">
+      <span class="ki-karte-kopf"><span class="ki-karte-nr" aria-hidden="true">1</span><span class="ki-karte-wann">zuerst</span></span>
+      <span class="koffer-wort">
+        <b class="ki-karte-name">Grundlagen</b>
+        <span class="ki-karte-anliegen">»Ich will erst verstehen.«</span>
+        <!-- kiplan:karte:grundlagen -->
+        <!-- kiplan:zahl:grundlagen -->
+      </span>
+    </a></li>
+    <li><a class="koffer-karte ki-karte" href="#phase-vorbereiten" data-phase="vorbereiten">
+      <span class="ki-karte-kopf"><span class="ki-karte-nr" aria-hidden="true">2</span><span class="ki-karte-wann">vor der Stunde</span></span>
+      <span class="koffer-wort">
+        <b class="ki-karte-name">Analogen Unterricht mit KI vorbereiten</b>
+        <span class="ki-karte-anliegen">»Ich brauche etwas für morgen.«</span>
+        <!-- kiplan:karte:vorbereiten -->
+        <!-- kiplan:zahl:vorbereiten -->
+      </span>
+    </a></li>
+    <li><a class="koffer-karte ki-karte" href="#phase-unterrichten" data-phase="unterrichten">
+      <span class="ki-karte-kopf"><span class="ki-karte-nr" aria-hidden="true">3</span><span class="ki-karte-wann">in der Stunde</span></span>
+      <span class="koffer-wort">
+        <b class="ki-karte-name">Unterrichten</b>
+        <span class="ki-karte-anliegen">»Meine Lernenden arbeiten mit KI.«</span>
+        <!-- kiplan:karte:unterrichten -->
+        <!-- kiplan:zahl:unterrichten -->
+      </span>
+    </a></li>
+    <li><a class="koffer-karte ki-karte" href="#phase-nach" data-phase="nach">
+      <span class="ki-karte-kopf"><span class="ki-karte-nr" aria-hidden="true">4</span><span class="ki-karte-wann">nach der Stunde</span></span>
+      <span class="koffer-wort">
+        <b class="ki-karte-name">Nach der Stunde</b>
+        <span class="ki-karte-anliegen">»Ich will auswerten und teilen.«</span>
+        <!-- kiplan:karte:nach -->
+        <!-- kiplan:zahl:nach -->
+      </span>
+    </a></li>
+  </ul>
+  </div>
+  <p class="ki-alltag">Auch im Schulalltag hilft dir KI: bei einer <a class="textlink" href="schnell-anfrage.html#anlass=eltern">Elterninformation</a> oder bei der Vorbereitung einer <a class="textlink" href="schnell-anfrage.html#anlass=sitzung">Sitzung</a>.</p>
+  <div class="ki-phasen" id="fahrplan" data-alte-marken='{"#t-erste":"erste-minuten.html","#schnell":"schnell-anfrage.html","#t-schnell":"schnell-anfrage.html","#lernen-weg":"prompten.html","#t-lernen":"prompten.html","#t-generator":"prompten.html#t-generator","#t-werkstatt":"#fahrplan","#t-bezug":"#fahrplan"}'>
+    <section class="ki-phase" id="phase-grundlagen" aria-labelledby="t-phase-grundlagen">
+      <div class="ki-phase-kopf">
+        <span class="ki-karte-nr" aria-hidden="true">1</span>
+        <div class="ki-phase-titel">
+          <p class="ki-karte-wann">zuerst</p>
+          <h3 class="fahrplan-name" id="t-phase-grundlagen" tabindex="-1">Grundlagen</h3>
+          <p class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich will erst verstehen.«</b> Was KI kann, wo sie irrt und was nicht hineingehört.</p>
         </div>
-      </details>
-    </li>
-    <li class="fahrplan-zwischen" aria-hidden="true">dann rund um jede Stunde</li>
-    <li class="fahrplan-phase ist-zart ist-ring-start" id="phase-vorbereiten">
-      <span class="fahrplan-nr" aria-hidden="true">2</span>
-      <details class="fahrplan-platte">
-        <summary class="fahrplan-kopf">
-          <span class="fahrplan-wann">vor der Stunde</span>
-          <h3 class="fahrplan-name">Unterricht mit KI vorbereiten</h3>
-          <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich brauche etwas für morgen.«</b> Prompt holen, Ergebnis prüfen, anpassen.</span>
-          <!-- kiplan:zahl:vorbereiten -->
-        </summary>
-        <div class="fahrplan-inhalt">
-          <!-- kiplan:liste:vorbereiten -->
+        <button type="button" class="knopf still ki-phase-zu" data-phase-zu hidden>Schließen</button>
+      </div>
+      <!-- kiplan:hilfen:grundlagen -->
+      <!-- kiplan:liste:grundlagen -->
+    </section>
+    <section class="ki-phase" id="phase-vorbereiten" aria-labelledby="t-phase-vorbereiten">
+      <div class="ki-phase-kopf">
+        <span class="ki-karte-nr" aria-hidden="true">2</span>
+        <div class="ki-phase-titel">
+          <p class="ki-karte-wann">vor der Stunde</p>
+          <h3 class="fahrplan-name" id="t-phase-vorbereiten" tabindex="-1">Analogen Unterricht mit KI vorbereiten</h3>
+          <p class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich brauche etwas für morgen.«</b> Prompt holen, Ergebnis prüfen, anpassen.</p>
         </div>
-      </details>
-    </li>
-    <li class="fahrplan-phase ist-ring-mitte" id="phase-unterrichten">
-      <span class="fahrplan-nr" aria-hidden="true">3</span>
-      <details class="fahrplan-platte">
-        <summary class="fahrplan-kopf">
-          <span class="fahrplan-wann">in der Stunde</span>
-          <h3 class="fahrplan-name">Unterrichten</h3>
-          <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Meine Lernenden arbeiten mit KI.«</b> Regeln und Aufgaben, bei denen sie selbst denken.</span>
-          <!-- kiplan:zahl:unterrichten -->
-        </summary>
-        <div class="fahrplan-inhalt">
-          <!-- kiplan:liste:unterrichten -->
+        <button type="button" class="knopf still ki-phase-zu" data-phase-zu hidden>Schließen</button>
+      </div>
+      <!-- kiplan:hilfen:vorbereiten -->
+      <!-- Ab 4.50 (Auftrag Mario, 18.11.2026): der Aufgabenkoffer auf Papier in Variante C, eingebettet. Blatt, Angaben und Listen setzt
+           tools/papierkoffer.py aus PAPIERKOFFER.html() ein – dieselbe Quelle wie papierkoffer.html, hier mit Stellen als h5 und
+           »#phase-vorbereiten« als Rückweg in der Adresse (SEITEN in tools/papierkoffer.py). -->
+      <section class="ki-koffer pk pkc" id="ki-koffer" aria-labelledby="t-ki-koffer">
+        <h4 class="ki-koffer-titel" id="t-ki-koffer">Aufgaben für dein Arbeitsblatt</h4>
+        <p class="ki-koffer-satz">Der Aufgabenkoffer auf Papier: ein ganz normales Arbeitsblatt. Zu jeder Stelle bereitet dir ein KI-System das Material vor.</p>
+        <div class="pkc-huelle">
+          <!-- papierkoffer:blatt -->
+          <div class="pkc-feld" id="pk-feld">
+            <!-- papierkoffer:form -->
+            <!-- papierkoffer:listen -->
+          </div>
         </div>
-      </details>
-    </li>
-    <li class="fahrplan-phase ist-zart ist-ring-ende" id="phase-nach">
-      <span class="fahrplan-nr" aria-hidden="true">4</span>
-      <details class="fahrplan-platte">
-        <summary class="fahrplan-kopf">
-          <span class="fahrplan-wann">nach der Stunde</span>
-          <h3 class="fahrplan-name">Nach der Stunde</h3>
-          <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich will auswerten und teilen.«</b> Was hat geholfen? Mit dem Kollegium weiterlernen.</span>
-          <!-- kiplan:zahl:nach -->
-        </summary>
-        <div class="fahrplan-inhalt fahrplan-gruppen">
-          <!-- kiplan:liste:nach -->
+      </section>
+      <!-- Ende des Aufgabenkoffers auf Papier -->
+      <!-- kiplan:liste:vorbereiten -->
+    </section>
+    <section class="ki-phase" id="phase-unterrichten" aria-labelledby="t-phase-unterrichten">
+      <div class="ki-phase-kopf">
+        <span class="ki-karte-nr" aria-hidden="true">3</span>
+        <div class="ki-phase-titel">
+          <p class="ki-karte-wann">in der Stunde</p>
+          <h3 class="fahrplan-name" id="t-phase-unterrichten" tabindex="-1">Unterrichten</h3>
+          <p class="fahrplan-satz"><b class="fahrplan-anliegen">»Meine Lernenden arbeiten mit KI.«</b> Regeln und Aufgaben, bei denen sie selbst denken.</p>
         </div>
-      </details>
-    </li>
-  </ol>
-  <p class="fahrplan-ring"><span class="fahrplan-ring-pfeil" aria-hidden="true">↑</span> Nächste Stunde: wieder bei 2</p>
+        <button type="button" class="knopf still ki-phase-zu" data-phase-zu hidden>Schließen</button>
+      </div>
+      <!-- kiplan:hilfen:unterrichten -->
+      <!-- kiplan:liste:unterrichten -->
+    </section>
+    <section class="ki-phase" id="phase-nach" aria-labelledby="t-phase-nach">
+      <div class="ki-phase-kopf">
+        <span class="ki-karte-nr" aria-hidden="true">4</span>
+        <div class="ki-phase-titel">
+          <p class="ki-karte-wann">nach der Stunde</p>
+          <h3 class="fahrplan-name" id="t-phase-nach" tabindex="-1">Nach der Stunde</h3>
+          <p class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich will auswerten und teilen.«</b> Was hat geholfen? Mit dem Kollegium weiterlernen.</p>
+        </div>
+        <button type="button" class="knopf still ki-phase-zu" data-phase-zu hidden>Schließen</button>
+      </div>
+      <!-- kiplan:hilfen:nach -->
+      <!-- kiplan:liste:nach -->
+    </section>
+  </div>
   <p class="leise klein fahrplan-geschaetzt">Die Zeiten an den Werkzeugen sind geschätzt: »kurz« passt zwischendurch, »eine Freistunde« etwa in eine Schulstunde.</p>
   <p class="bezug-lernen">KI kann Unterricht vorbereiten, der ganz analog bleibt. Wenn du Lernen mit Tablets gestalten willst: <a class="textlink" href="unterricht.html">Zum Digitalen Unterricht <span aria-hidden="true">→</span></a></p>
 </div></section>
 
 <!-- Ab 4.47: die fünf Fähigkeiten der Trainingsaufgaben (assets/daten/training.js, gruppen) – ohne Stufen, ohne Rangfolge.
-     Namen und Fragen prüft tests/training.test.js gegen die Daten. Ohne Links: Die Werkzeuge stehen nur im Fahrplan (eine Struktur).
+     Namen und Fragen prüft tests/training.test.js gegen die Daten. Ohne Links: Die Werkzeuge stehen nur in den Phasen (eine Struktur).
      Ab 4.48 ein Filter (Entscheidung Mario, 17.11.2026): assets/ki-faehig.js macht aus jeder Fähigkeit einen Schalter, der im Fahrplan
      die Werkzeuge hervorhebt, die sie üben (»faehigkeiten« in src/fahrplan-ki.json). Ohne Skript bleibt das Band ein ruhiger Text. -->
 <section class="abschnitt ki-faehig" aria-labelledby="t-faehig"><div class="huelle huelle-weit">
   <div class="ki-faehig-kopf">
     <h2 id="t-faehig" class="klein-titel">Was du in allen Phasen übst</h2>
     <p>Fünf Fähigkeiten. Keine Stufen: Du übst jede an deinem eigenen Material – so weit, wie es für deinen Unterricht passt.</p>
-    <p class="ki-faehig-hilfe" hidden>Tipp eine Fähigkeit an. Der Fahrplan zeigt dann, wo du sie übst. Noch einmal tippen hebt das auf.</p>
+    <p class="ki-faehig-hilfe" hidden>Tipp eine Fähigkeit an. Die Phasen zeigen dann, wo du sie übst. Noch einmal tippen hebt das auf.</p>
   </div>
   <ul class="ki-faehig-liste">
     <li data-faehigkeit="abgeben"><b>Abgeben oder selbst machen</b><span>Welche Aufgabe gebe ich ab, welche bleibt bei mir – und warum?</span></li>
@@ -123,4 +172,13 @@
 </div></section>
 </div>
 <script src="assets/fahrplan.js"></script>
+<script src="assets/ki-start.js"></script>
 <script src="assets/ki-faehig.js"></script>
+<script src="assets/daten/taxonomien.js"></script>
+<script src="assets/hilde.js"></script>
+<script src="assets/daten/aufgaben.js"></script>
+<script src="assets/daten/koffer-ideen.js"></script>
+<script src="assets/daten/werkstatt.js"></script>
+<script src="assets/daten/schnell.js"></script>
+<script src="assets/schnell-anfrage.js"></script>
+<script src="assets/papierkoffer.js"></script>

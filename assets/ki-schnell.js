@@ -9,6 +9,9 @@
   var feld = document.getElementById("schnell-prompt"), status = document.getElementById("schnell-status");
   var gemerkt = H.lies("schnell") || {};
   var anlass = SCHNELL.anlaesse.some(function (a) { return a.id === gemerkt.anlass; }) ? gemerkt.anlass : SCHNELL.anlaesse[0].id;
+  /* Ab 4.50: Ein Sprung von der Startseite des KI-Trainings (schnell-anfrage.html#anlass=quiz) wählt den Anlass vor. */
+  var aus = /^#anlass=([a-z-]+)$/.exec(location.hash || "");
+  if (aus && SCHNELL.anlaesse.some(function (a) { return a.id === aus[1]; })) { anlass = aus[1]; H.schreib("schnell", { anlass: anlass }); }
 
   ziel.innerHTML = SCHNELL.anlaesse.map(function (a) {
     return '<label class="anlass"><input type="radio" name="anlass" value="' + a.id + '"' + (a.id === anlass ? " checked" : "") + ">" +

@@ -2798,6 +2798,123 @@ html[data-bewegung="weniger"] .ak *,html[data-bewegung="weniger"] .ak *::before,
 .ak .textknopf{background:none;border:0;padding:0;min-height:44px;font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em;cursor:pointer}
 .ak .chips li a{color:inherit;display:inline-block;min-height:24px}
 .ak .linie-kopf .knopf{margin-left:auto}
+
+/* Ab 4.49 – Aufgabenkoffer auf Papier, Variante C (Auftrag Mario 17.11.2026): das Arbeitsblatt als Bild (papierkoffer.html,
+   assets/papierkoffer.js). Auf Karton liegt ein gezeichnetes Blatt (--blatt) auf der versetzten Ocker-Platte (6 px, mit Kante);
+   links und rechts die Beschriftungen der sechs Stellen: Stanzloch-Punkt in Ocker mit Nummer am Blatt, eine Linie in Druckschwarz
+   (2 px) und Name mit Zahl der Aufträge – alles HTML, das Bild ist dekorativ. Die gewählte Stelle: Bereich auf dem Blatt Ocker-zart
+   (Überblendung --dauer-schnell), Punkt Druckschwarz, Linie 4 px, Beschriftung auf Ocker-zart mit Kante. Ab 1060 px steht das
+   Feld mit den Aufträgen daneben, darunter unter dem Blatt; unter 768 px wird das Blatt kleiner und die Stellen stehen als
+   nummerierte Liste darunter. Das Blatt richtet sich nach der Höhe (Beamer 1280 × 720: ganz sichtbar) und nach der Breite. */
+:root{--blatt:#fffffd} /* das Arbeitsblatt, eine Spur heller als --flaeche */
+.pkc{--pkc-l:11rem;--pkc-r:9.5rem;--pkc-g:1rem;--pkc-rand:1rem;--pkc-oben:1rem;--pkc-punkt:1.625rem}
+.pkc-satz{margin-top:0;text-wrap:balance}
+.pkc-huelle{container:pkc / inline-size;display:grid;gap:var(--a4)}
+.pkc-buehne{--pkc-b:clamp(14rem,min(calc((100svh - 18.5rem) * .7071),calc(100cqw - 24.5rem)),24rem);--pkc-h:calc(var(--pkc-b) * 1.41429);position:relative;display:grid;grid-template-columns:var(--pkc-l) var(--pkc-b) var(--pkc-r);column-gap:var(--pkc-g);width:max-content;max-width:100%;margin-inline:auto;padding:var(--pkc-oben) var(--pkc-rand) 1.25rem;background:var(--karton);border-radius:var(--rund)}
+.pkc-blatt{grid-column:2;position:relative;width:var(--pkc-b);height:var(--pkc-h);box-shadow:6px 6px 0 -2px var(--ki-platte),6px 6px 0 0 var(--ki)}
+.pkc-svg{display:block;width:100%;height:100%}
+.pkc-papier{fill:var(--blatt)}
+.pkc-umriss{fill:none;stroke:var(--text);stroke-width:2px;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.pkc-r{fill:var(--ki-zart);opacity:0;transition:opacity var(--dauer-schnell) var(--ease-out)}
+.pkc-buehne[data-stelle="kopf"] .pkc-r-kopf,.pkc-buehne[data-stelle="infotext"] .pkc-r-infotext,.pkc-buehne[data-stelle="aufgaben"] .pkc-r-aufgaben,
+.pkc-buehne[data-stelle="hilfe"] .pkc-r-hilfe,.pkc-buehne[data-stelle="loesung"] .pkc-r-loesung,.pkc-buehne[data-stelle="rueckseite"] .pkc-r-rueckseite{opacity:1}
+.pkc-buehne[data-stelle="rueckseite"] .pkc-ecke{fill:var(--ki-zart)}
+.pkc-loch{fill:var(--karton);stroke:var(--stahl);stroke-width:2px;vector-effect:non-scaling-stroke}
+.pkc-t{fill:var(--text)}
+.pkc-o{fill:var(--ki-platte)}
+.pkc-pt{fill:none;stroke:var(--text);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:0 5.4}
+.pkc-kasten{fill:none;stroke:var(--text);stroke-width:2px;vector-effect:non-scaling-stroke}
+.pkc-bild{fill:var(--karton);stroke:var(--text);stroke-width:2px;vector-effect:non-scaling-stroke}
+.pkc-karte{fill:var(--flaeche);stroke:var(--text);stroke-width:2px;vector-effect:non-scaling-stroke}
+.pkc-karte-o{fill:var(--ki-platte);stroke:var(--text);stroke-width:2px;vector-effect:non-scaling-stroke}
+.pkc-falz{fill:none;stroke:var(--text);stroke-width:2px;vector-effect:non-scaling-stroke;stroke-dasharray:5 4}
+.pkc-ecke{fill:var(--karton);stroke:var(--text);stroke-width:2px;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill var(--dauer-schnell) var(--ease-out)}
+/* Die Beschriftungen: absolut an ihrer Stelle (--x, --y aus KOFFER.papierStellen), links oder rechts vom Blatt */
+.pkc-stellen{position:absolute;inset:0;list-style:none;margin:0;padding:0}
+.pkc-stelle{position:absolute;top:calc(var(--pkc-oben) + var(--y) * var(--pkc-h));transform:translateY(-50%);max-width:none}
+.pkc-links{left:var(--pkc-rand);width:calc(var(--pkc-l) + var(--pkc-g) + var(--x) * var(--pkc-b) + var(--pkc-punkt) / 2)}
+.pkc-rechts{left:calc(var(--pkc-rand) + var(--pkc-l) + var(--pkc-g) + var(--x) * var(--pkc-b) - var(--pkc-punkt) / 2);width:calc((1 - var(--x)) * var(--pkc-b) + var(--pkc-g) + var(--pkc-r) + var(--pkc-punkt) / 2)}
+.pkc-knopf{display:flex;align-items:center;width:100%;min-height:44px;padding:.125rem 0;border:0;background:none;color:var(--text);font:inherit;text-align:inherit;text-decoration:none;cursor:pointer}
+.pkc-links .pkc-knopf{flex-direction:row-reverse;text-align:right}
+.pkc-nr{flex:none;display:inline-grid;place-items:center;width:var(--pkc-punkt);height:var(--pkc-punkt);border-radius:50%;background:var(--ki-platte);box-shadow:0 0 0 2px var(--ki);color:var(--text);font:700 1rem/1 var(--schrift)}
+.pkc-linie{flex:1 1 auto;min-width:.75rem;height:2px;background:var(--text)}
+.pkc-text{flex:0 1 auto;display:grid;gap:.125rem;padding:.25rem .5rem;border-radius:var(--rund)}
+.pkc-links .pkc-text{max-width:calc(var(--pkc-l) - .25rem)}.pkc-rechts .pkc-text{max-width:calc(var(--pkc-r) - .25rem)} /* die Beschriftung bleibt neben dem Blatt, die Linie trägt den Weg */
+.pkc-text b{font:600 1.125rem/1.15 var(--schrift-titel);text-wrap:balance}
+.pkc-zahl{font-size:1rem;font-weight:700}
+.pkc-knopf[aria-expanded="true"] .pkc-nr{background:var(--text);color:var(--flaeche);box-shadow:0 0 0 2px var(--text)}
+.pkc-knopf[aria-expanded="true"] .pkc-linie{height:4px}
+.pkc-knopf[aria-expanded="true"] .pkc-text{background:var(--ki-zart);box-shadow:inset 0 0 0 2px var(--ki)}
+@media (hover:hover) and (pointer:fine){.pkc-knopf:hover .pkc-text b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.15em}}
+.pkc-punkte{display:none}
+/* Beim ersten Besuch je Sitzung legt sich das Blatt einmal auf die Platte (Input-First, Ausnahme 2); nie bei weniger Bewegung */
+.pkc-legen .pkc-svg{animation:pkc-legen var(--dauer-register) var(--ease-out) both}
+@keyframes pkc-legen{from{opacity:0;transform:translate(-8px,-8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.pkc-legen .pkc-svg{animation:none}}
+html[data-bewegung="weniger"] .pkc-legen .pkc-svg{animation:none}
+/* Das Feld mit den Aufträgen */
+.pkc-feld{container:pkc-feld / inline-size;display:grid;gap:var(--a3);align-content:start;min-width:0;padding:clamp(1rem,2vw,1.75rem);background:var(--flaeche);border-radius:var(--rund);box-shadow:8px 8px 0 -2px var(--ki-platte),8px 8px 0 0 var(--ki)}
+.pkc-feld:not(.mit-skript){gap:var(--a6)}
+.pkc-anfang{font-weight:700;max-width:40ch}
+.pkc-feld.pk-einblenden .pk-anlass:not([hidden]){animation:pk-auf var(--dauer-mittel) var(--ease-out)}
+@keyframes pk-auf{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pk-blende{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.pkc-feld.pk-einblenden .pk-anlass:not([hidden]){animation:pk-blende var(--dauer-aus) linear}}
+html[data-bewegung="weniger"] .pkc-feld.pk-einblenden .pk-anlass:not([hidden]){animation:pk-blende var(--dauer-aus) linear}
+.pk-anlass{display:grid;gap:var(--a3);scroll-margin-top:var(--a2)}
+.pk-anlass-kopf{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"titel knopf" "satz satz";align-items:start;gap:.375rem var(--a2)}
+.pk-anlass-kopf h2{grid-area:titel;font-size:var(--gr-h3);display:flex;align-items:center;gap:.625rem}
+.pk-anlass-kopf h2 .pkc-nr{width:2rem;height:2rem;font-size:1.0625rem}
+.pk-anlass-satz{grid-area:satz;max-width:60ch}
+.pk-anlass-zahl{white-space:nowrap}
+.pk-schliessen{grid-area:knopf}
+.pkc-feld .pk-form{padding:0;background:none;border-top:0}
+.pkc-feld .pk-form .schnell-felder{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pkc-feld .pk-form .schnell-felder .eingabe:last-child{grid-column:auto}
+.pk-daten{font-size:1rem;font-weight:700}
+.pk-eintraege{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,26rem),1fr));gap:var(--a4);align-items:start}
+.pk-eintrag{display:grid;gap:.625rem;padding-top:var(--a2);border-top:6px solid var(--ki-platte);max-width:none;scroll-margin-top:var(--a2)}
+.pk-eintrag-titel{font-size:var(--gr-h3);line-height:1.15}
+.pk-eintrag-satz{max-width:60ch}
+.pk-kopieren{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .875rem}
+.pk-status{font-size:1rem;color:var(--leise)}
+.pk-eintrag details.mehr{background:none;padding:0}
+.pk-eintrag details.mehr[open]{padding-bottom:var(--a1)}
+.pk-vertiefung{background:var(--grund)}
+.pk-label{display:block;font-weight:700;margin-bottom:.375rem}
+.pk-auftrag textarea{display:block;width:100%;min-height:12rem;padding:.75rem;border:2px solid var(--stahl);border-radius:var(--rund);background:var(--flaeche);color:var(--text);font:1rem/1.45 var(--schrift);resize:vertical}
+.pk-auftrag .pk-daten{margin-top:.5rem}
+.pk-mehr-text{display:grid;gap:.5rem}
+.pk-mehr-text p,.pk-mehr-text li{max-width:62ch}
+.pk-pruefliste{margin:0;padding-left:1.2rem;display:grid;gap:.25rem}
+@container pkc (max-width:44rem){.pkc-feld .pk-form .schnell-felder{grid-template-columns:1fr;gap:.5rem}.pkc-feld .pk-form .eingabe{grid-template-columns:6.75rem minmax(0,1fr);align-items:center;gap:.5rem}.pkc-feld .pk-form .eingabe label{margin:0}}
+/* Ab 1060 px: Blatt und Feld nebeneinander (Desktop, iPad quer) */
+@media (min-width:1060px){
+  .pkc-huelle{grid-template-columns:max-content minmax(0,1fr);align-items:start}
+  .pkc-buehne{margin-inline:0;--pkc-b:clamp(14rem,min(calc((100svh - 18.5rem) * .7071),calc(100cqw - 50.5rem)),24rem)}
+  .pkc-feld .pk-form .schnell-felder{grid-template-columns:1fr 1fr}
+  .pkc-feld .pk-form .schnell-felder .eingabe:last-child{grid-column:1 / -1}
+}
+@container pkc-feld (min-width:26rem){.pkc-feld .pk-form .schnell-felder{grid-template-columns:repeat(3,minmax(0,1fr))}.pkc-feld .pk-form .schnell-felder .eingabe:last-child{grid-column:auto}}
+/* Unter 768 px: das Blatt kleiner, die Stellen als nummerierte Liste darunter – dort die Bedienung */
+@media (max-width:767px){
+  .pkc-buehne{--pkc-b:min(56vw,13.5rem);display:block;width:auto;padding:var(--a2)}
+  .pkc-blatt{margin-inline:auto}
+  .pkc-punkte{display:block;position:absolute;inset:0}
+  .pkc-punkt{position:absolute;left:calc(var(--x) * 100%);top:calc(var(--y) * 100%);transform:translate(-50%,-50%);display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--ki-platte);box-shadow:0 0 0 2px var(--ki);font:700 1rem/1 var(--schrift)}
+  .pkc-buehne[data-stelle="kopf"] .pkc-punkt-kopf,.pkc-buehne[data-stelle="infotext"] .pkc-punkt-infotext,.pkc-buehne[data-stelle="aufgaben"] .pkc-punkt-aufgaben,
+  .pkc-buehne[data-stelle="hilfe"] .pkc-punkt-hilfe,.pkc-buehne[data-stelle="loesung"] .pkc-punkt-loesung,.pkc-buehne[data-stelle="rueckseite"] .pkc-punkt-rueckseite{background:var(--text);color:var(--flaeche);box-shadow:0 0 0 2px var(--text)}
+  .pkc-stellen{position:static;display:grid;gap:.5rem;margin-top:var(--a3)}
+  .pkc-stelle{position:static;width:auto;transform:none}
+  .pkc-links .pkc-knopf,.pkc-knopf{flex-direction:row;gap:.75rem;padding:.5rem .75rem;min-height:48px;background:var(--flaeche);border-radius:var(--rund);text-align:left}
+  .pkc-linie{display:none}
+  .pkc-text{padding:0;display:block}
+  .pkc-text b{font-size:1.125rem}
+  .pkc-zahl::before{content:"· ";content:"· " / ""}
+  .pkc-knopf[aria-expanded="true"]{background:var(--ki-zart);box-shadow:inset 0 0 0 2px var(--ki)}
+  .pkc-knopf[aria-expanded="true"] .pkc-text{background:none;box-shadow:none}
+}
+@media print{.pk-kopieren,.pk-schliessen,.pkc-feld .pk-form,.pk-auftrag,.pkc-anfang{display:none}.pkc-feld,.pkc-blatt{box-shadow:none}}
 .ak details.mehr ul{margin:0;padding-left:1.2rem}
 .ak .knopf:disabled{background:var(--karton);border-color:var(--stahl);color:var(--leise);cursor:not-allowed}
 .ak .d-neu{color:var(--leise)}
@@ -3231,3 +3348,83 @@ html[data-bewegung="weniger"] .ak *,html[data-bewegung="weniger"] .ak *::before,
 .ki-land-liste{list-style:none;margin:var(--a1) 0 .6rem;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:var(--a2);max-width:62rem}
 .ki-land-liste li{display:grid;gap:.25rem;align-content:start;max-width:none;padding:var(--a1) var(--a2);background:var(--flaeche);border-radius:var(--rund);border-left:6px solid var(--ki-platte)}
 .ki-land-liste span{font-size:var(--gr-klein)}
+
+/* ---------- Ab 4.50: Startseite KI-Training – vier Phasen als Karten (Logik von Variante B), die Phase öffnet darunter ----------
+   Die Karten sind die Koffer-Komponente aus Variante B (.koffer-raster, .koffer-karte; dieselben Werte wie die Ideenkarten des
+   Aufgabenkoffers): Fläche, versetzte Karton-Platte, beim Überfahren die Platte des Bereichs mit Kante (Plate Edge Rule), gewählt
+   Ocker-zart mit Platte. Vier in einer Reihe (Beamer 1280 × 720: alle vier ohne Scrollen), unter 54rem zwei, unter 34rem eine.
+   Kein Bild: Die Nummer der Phase ist das Zeichen – dieselbe wie im Fahrplan unten auf jeder KI-Seite. Die gewählte Nummer
+   wird druckschwarz wie die gewählte Stelle im Aufgabenkoffer auf Papier. */
+.koffer-raster{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16.5rem),1fr));gap:1.25rem 1.125rem;list-style:none;margin:0;padding:0 6px 6px 0}
+.koffer-raster>li{max-width:none}
+.koffer-karte{display:grid;grid-template-rows:auto 1fr;width:100%;height:100%;padding:0;text-align:left;border:0;border-radius:var(--rund);background:var(--flaeche);color:var(--text);font:inherit;text-decoration:none;box-shadow:6px 6px 0 0 var(--karton);cursor:pointer;transition:transform var(--dauer-schnell) var(--ease-out),box-shadow var(--dauer-schnell) var(--ease-out),background-color var(--dauer-schnell) var(--ease-out)}
+.koffer-wort{display:grid;gap:.375rem;align-content:start;padding:.875rem 1rem 1rem}
+.koffer-kurz{font-size:1rem;line-height:1.4}
+.koffer-zahl{font-size:1rem;font-weight:700;margin-top:.125rem}
+.koffer-karte:active{transform:translate(4px,4px);box-shadow:2px 2px 0 0 var(--karton)}
+@media (hover:hover) and (pointer:fine){.koffer-karte:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 -2px var(--platte-bereich,var(--lernen)),8px 8px 0 0 var(--farbe,var(--lernen))}}
+.koffer-karte[aria-expanded="true"]{background:var(--zart);box-shadow:8px 8px 0 -2px var(--platte-bereich),8px 8px 0 0 var(--farbe)}
+.koffer-karte[aria-expanded="true"] .koffer-zahl::after{content:" · geöffnet";content:" · geöffnet" / ""}
+@media (prefers-reduced-motion:reduce){.koffer-karte:hover,.koffer-karte:active{transform:none}}
+html[data-bewegung="weniger"] .koffer-karte:hover,html[data-bewegung="weniger"] .koffer-karte:active{transform:none}
+.koffer-raster.ist-vier{grid-template-columns:repeat(4,minmax(0,1fr))}
+.ki-wahl-huelle{container:ki-wahl / inline-size}
+@container ki-wahl (max-width:54rem){.koffer-raster.ist-vier{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container ki-wahl (max-width:34rem){.koffer-raster.ist-vier{grid-template-columns:1fr}}
+.ki-karte-kopf{display:flex;align-items:center;gap:.75rem;padding:.875rem 1rem 0}
+.ki-karte-nr{display:grid;place-items:center;flex:none;width:2.5rem;height:2.5rem;border-radius:50%;border:3px solid var(--ki);background:var(--flaeche);color:var(--ki-tief);font:700 1.25rem/1 var(--schrift-titel)}
+.ki-karte-wann{font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.ki-karte .koffer-wort{display:flex;flex-direction:column;gap:.375rem;padding-top:.625rem}
+.ki-karte-name{font:600 clamp(1.25rem,1.1rem + .45vw,1.5rem)/1.15 var(--schrift-titel);letter-spacing:-.01em;text-wrap:balance}
+.ki-karte-anliegen{font-weight:700;line-height:1.35}
+.ki-karte .koffer-zahl{margin-top:auto;padding-top:.25rem;color:var(--ki-tief)}
+.ki-karte[aria-expanded="true"] .ki-karte-nr{background:var(--text);border-color:var(--text);color:var(--flaeche)}
+.ki-alltag{margin:var(--a3) 0 0;max-width:68ch;line-height:1.6}
+.ki-alltag .textlink{display:inline;min-height:0} /* im Satz: Zeilenhöhe 1,6 und Unterstreichung reichen als Ziel (WCAG 2.5.8 Ausnahme »im Satz«) */
+.ki-start .fahrplan-leiste{padding-left:0}
+.ki-start .fahrplan-geschaetzt{margin-top:var(--a4)}
+@container ki-wahl (max-width:62rem){.koffer-raster.ist-vier .ki-karte-name{font-size:1.2rem}} /* vier schmale Karten (iPad quer 1024 px): Namen bleiben zweizeilig (Two-Line Rule) */
+/* Die geöffnete Phase: eine Fläche mit Ocker-Platte und Kante, wie die gewählte Karte darüber */
+.ki-phasen{display:grid;gap:var(--a4);margin-top:var(--a4)}
+.ki-phase{display:grid;gap:var(--a3);min-width:0;padding:clamp(1rem,2.5vw,2rem);background:var(--flaeche);border-radius:var(--rund);box-shadow:8px 8px 0 -2px var(--ki-platte),8px 8px 0 0 var(--ki)}
+.ki-phase-kopf{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.25rem 1rem;align-items:start}
+.ki-phase-titel p{margin:0}
+.ki-phase .fahrplan-name{margin:.125rem 0 0;font:600 var(--gr-h3)/1.15 var(--schrift-titel);letter-spacing:-.01em;text-wrap:balance}
+.ki-phase .fahrplan-name:focus{outline:none}
+.ki-phase .fahrplan-name:focus-visible{outline:3px solid var(--text);outline-offset:4px}
+.ki-phase .fahrplan-satz{margin-top:.375rem;font-size:1rem;max-width:68ch}
+.ki-phase-einleitung{margin:0;font-weight:700;max-width:68ch;text-wrap:pretty}
+.ki-hilfen{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,17.5rem),1fr));gap:var(--a2)}
+.ki-hilfe{display:flex;flex-direction:column;gap:.375rem;max-width:none;padding:1rem 1.125rem;background:var(--karton);border-radius:var(--rund)}
+.ki-hilfe-name{font:600 1.25rem/1.2 var(--schrift-titel);letter-spacing:-.01em}
+.ki-hilfe-nutzen{margin:0;line-height:1.45;max-width:46ch}
+.ki-hilfe-wege{margin:auto 0 0;padding-top:.25rem;display:grid;gap:.125rem}
+.ki-hilfe-so,.ki-hilfe-oder{font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.ki-weg{display:block;padding:.3rem 0;color:var(--text);text-decoration:none;line-height:1.35}
+.ki-weg b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em}
+@media (hover:hover) and (pointer:fine){.ki-weg:hover b{text-decoration-color:var(--ki)}}
+.ki-hilfe.ist-treffer{box-shadow:6px 6px 0 0 var(--ki-platte)} /* taste-skill-ignore: versetzte Ocker-Platte = Treffer des Filters */
+.ki-weitere{padding:0;gap:var(--a1)}
+.ki-weitere-titel,.ki-koffer-titel{margin:0;font:600 1.375rem/1.2 var(--schrift-titel);letter-spacing:-.01em}
+.ki-weitere .fahrplan-gruppe h5{margin:var(--a1) 0 0;font:700 var(--gr-klein)/1.3 var(--schrift);color:var(--leise)}
+.ki-weitere .fahrplan-gruppen,.ki-weitere:has(.fahrplan-gruppe){grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));column-gap:var(--a4);align-items:start}
+.ki-weitere:has(.fahrplan-gruppe) .ki-weitere-titel{grid-column:1 / -1}
+.ki-phase .werkzeuge.tueren{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:var(--a2);margin-top:var(--a1)}
+.ki-phase .werkzeug.tuer .werkzeug-text b{font-size:var(--gr-h3)}
+.ki-phase .werkzeug.tuer.ist-treffer > a{box-shadow:6px 6px 0 0 var(--ki-platte)} /* taste-skill-ignore: versetzte Ocker-Platte = Treffer des Filters */
+@media (max-width:1023px){.ki-phase .werkzeuge.tueren{grid-template-columns:1fr}}
+.ki-koffer{display:grid;gap:var(--a2);min-width:0}
+.ki-koffer-satz{margin:0;max-width:62ch}
+.ki-koffer .pkc-feld{background:none;box-shadow:none;padding:0} /* in der geöffneten Phase ist die Phase selbst die Fläche: kein Kasten im Kasten */
+@keyframes ki-auf{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ki-blende{from{opacity:0}to{opacity:1}}
+.ki-phase.ki-einblenden{animation:ki-auf var(--dauer-mittel) var(--ease-out)}
+@media (prefers-reduced-motion:reduce){.ki-phase.ki-einblenden{animation:ki-blende var(--dauer-aus) linear}}
+html[data-bewegung="weniger"] .ki-phase.ki-einblenden{animation:ki-blende var(--dauer-aus) linear}
+@media (max-width:767px){
+  .ki-phase-kopf{grid-template-columns:auto minmax(0,1fr)}
+  .ki-phase-zu{grid-column:1 / -1;justify-self:start}
+  .ki-karte-nr{width:2.25rem;height:2.25rem;font-size:1.125rem}
+}
+@media print{.ki-phase[hidden]{display:grid!important}.ki-phase,.koffer-karte{box-shadow:none}.ki-phase-zu{display:none}}
+

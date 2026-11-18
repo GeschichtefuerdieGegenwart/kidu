@@ -1,4 +1,4 @@
-/* Tests für den Aufgabenkoffer auf Papier (ab Version 4.46, KI-Training): Ordnung der Stunde und KI-Auftrag je Idee.
+/* Tests für den Aufgabenkoffer auf Papier (ab Version 4.46, KI-Training; ab 4.49 Variante C: das Arbeitsblatt mit sechs Stellen) und den Auftrag je Idee.
    Aufruf: node --test */
 "use strict";
 const test = require("node:test");
@@ -11,38 +11,72 @@ const T = require("../assets/daten/taxonomien.js");
 
 const ANBIETER = /chatgpt|openai|claude|anthropic|gemini|copilot|mistral|llama|telli|fobizz|f13|ais\.chat/i;
 
-test("Stunde: dieselben vier Phasen wie der Aufgabenkoffer, jede Aufgabenform genau einmal", () => {
-  const s = PK.ordne();
-  assert.deepEqual(s.phasen.map((p) => p.id), K.phasen);
-  for (const p of s.phasen) assert.equal(p.name, T.phasen.find((x) => x.id === p.id).name);
-  const ids = s.phasen.flatMap((p) => p.ideen.map((x) => x.a.id));
-  assert.equal(ids.length, A.aufgaben.length, "alle Aufgabenformen, auch die zwei ohne Gerät");
-  assert.equal(new Set(ids).size, ids.length, "keine doppelt");
-  for (const p of s.phasen) for (const x of p.ideen) assert.equal(x.phasen[0], p.id, x.a.id + " steht in seiner ersten Phase");
-});
-
-test("Stunde: Papier zuerst, dann Papier und Gerät, dann Gerät – innerhalb jeder Phase", () => {
-  const ORT = ["papier", "hybrid", "geraet"];
-  for (const p of PK.ordne().phasen) {
-    const orte = p.ideen.map((x) => ORT.indexOf(x.a.ort));
-    assert.deepEqual(orte, [...orte].sort((a, b) => a - b), p.id);
+test("Stellen (4.49, Variante C): höchstens sechs, von oben nach unten, jeder der 21 Einträge genau einmal", () => {
+  const L = PK.stellen();
+  assert.ok(L.length <= 6 && L.length === K.papierStellen.length);
+  assert.deepEqual(L.map((st) => st.nr), L.map((_, i) => i + 1), "Nummern 1 bis n");
+  for (let i = 1; i < L.length; i++) {
+    const a = L[i - 1], b = L[i];
+    assert.ok(b.y > a.y || (b.y === a.y && a.seite === "links" && b.seite === "rechts"), b.id + ": von oben nach unten, bei gleicher Höhe links vor rechts");
+  }
+  const ids = L.flatMap((st) => st.eintraege.map((e) => e.id));
+  assert.equal(ids.length, A.aufgaben.length + K.jedePhase.length);
+  assert.equal(new Set(ids).size, ids.length, "keiner doppelt");
+  for (const a of A.aufgaben) assert.ok(ids.includes(a.id), a.id);
+  for (const st of L) {
+    assert.ok(["links", "rechts"].includes(st.seite) && st.x > 0 && st.x < 1 && st.y > 0 && st.y < 1, st.id + ": Lage auf dem Blatt");
+    assert.equal(st.satz.split(/[.!?](\s|$)/).filter((s) => s && s.trim()).length, 1, st.id + ": genau ein Satz");
   }
 });
 
-test("Stunde: die Phasen der zwei Aufgaben ohne Gerät stehen in papierPhasen und sind gültig", () => {
+test("Stellen (4.49): ein Kniff, der an der Stelle schon steht, kommt bei der Idee nur mit Verweis – die Aufträge bleiben vollständig", () => {
+  const finde = (id) => PK.stellen().flatMap((st) => st.eintraege).find((e) => e.id === id);
+  assert.deepEqual(finde("stufen").kniffe.map((k) => [k.m.id, !!(k.schon && k.schon.eintrag)]), [["hilfekarten", true]], "D1");
+  assert.equal(finde("reihe").kniffe[0].schon.bei.id, "zuordnen", "D4");
+  assert.equal(finde("zuordnen").kniffe.find((k) => k.m.id === "beleg").schon, null, "D3 an zwei Stellen ausführlich");
+  assert.equal(finde("markieren").kniffe[0].schon, null);
+  const t = PK.auftragVon(finde("reihe"), {});
+  assert.equal(t, PK.auftrag(A.aufgaben.find((a) => a.id === "reihe"), null, {}), "derselbe Auftrag wie bis 4.48");
+});
+
+test("html (4.49, Variante C): Blatt ohne Text im Bild, sechs Stellen als Sprungmarken, alle 21 Aufträge, Hinweis an jeder Eingabe", () => {
+  const h = PK.html();
+  const svg = /<svg[\s\S]*?<\/svg>/.exec(h.blatt)[0];
+  assert.match(svg, /aria-hidden="true"/);
+  assert.doesNotMatch(svg, /<text\b/, "kein Text im Bild");
+  assert.equal((h.blatt.match(/class="pkc-knopf"/g) || []).length, 6);
+  assert.equal((h.blatt.match(/href="#stelle-/g) || []).length, 6);
+  assert.match(h.blatt, /4 Aufträge/);
+  assert.doesNotMatch(h.blatt.replace(/<[^>]+>/g, " "), /Prompt/, "erste Ebene: »Auftrag an die KI«, nicht »Prompt«");
+  assert.equal((h.listen.match(/<h2 /g) || []).length, 6, "sechs Überschriften");
+  assert.equal((h.listen.match(/class="pk-eintrag"/g) || []).length, 21);
+  const felder = (h.listen.match(/<textarea [^>]*>/g) || []);
+  assert.equal(felder.length, 21);
+  for (const f of felder) {
+    const d = /aria-describedby="([^"]+)"/.exec(f)[1];
+    assert.ok(h.listen.includes('id="' + d + '">' + PK.DATEN_HINWEIS), "Hinweis bei " + f.slice(0, 40));
+  }
+  assert.match(h.listen, /Frage mich zuerst nach: Fach, Thema, Lerngruppe/);
+  assert.doesNotMatch(h.blatt + h.listen, ANBIETER);
+  assert.equal((h.listen.match(/class="pk-kopieren" hidden/g) || []).length, 21, "Kopierknopf erst mit Skript");
+});
+
+test("Phasen: die zwei Aufgaben ohne Gerät haben ihre Phase in papierPhasen; jeder Eintrag nennt in »Mehr zur Idee« eine gültige Phase", () => {
   for (const id of K.ohneGeraet) {
     assert.ok(K.papierPhasen[id] && K.papierPhasen[id].length, id);
     for (const p of K.papierPhasen[id]) assert.ok(K.phasen.includes(p), id + ": " + p);
   }
+  for (const e of PK.stellen().flatMap((st) => st.eintraege)) {
+    assert.ok(e.phasen.length && e.phasen.every((p) => T.phasen.some((x) => x.id === p)), e.id);
+  }
 });
 
-test("In jeder Phase: die Kniffe aus KOFFER.jedePhase, mit Auftrag aus der Werkstatt", () => {
-  const s = PK.ordne();
-  assert.deepEqual(s.jede.kniffe.map((m) => m.id), K.jedePhase);
-  assert.equal(s.jede.name, "In jeder Phase");
-  for (const m of s.jede.kniffe) {
-    const t = PK.kniffAuftrag(m, {});
-    assert.ok(t.startsWith("# Ziel\n" + m.ki.ziel), m.id);
+test("Kniffe für jede Phase: eigener Eintrag mit dem Auftrag aus der Werkstatt (unverändert)", () => {
+  const kniffe = PK.stellen().flatMap((st) => st.eintraege).filter((e) => e.art === "kniff");
+  assert.deepEqual(kniffe.map((e) => e.id).sort(), [...K.jedePhase].sort());
+  for (const e of kniffe) {
+    assert.deepEqual(e.phasen, ["uebergreifend"], e.id);
+    assert.ok(PK.auftragVon(e, {}).startsWith("# Ziel\n" + e.m.ki.ziel), e.id);
   }
 });
 

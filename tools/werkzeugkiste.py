@@ -17,7 +17,7 @@ Ergebnis:
 - docs/pruef-auftrag.md und werkzeugkiste/kidu/skills/digital-check/references/pruef-auftrag-weg-b.md
                                            der Prüf-Auftrag, wie assets/pruef-prompt.js ihn baut (vorher von Hand, lief auseinander)
 - werkzeugkiste/kidu/skills/digital-check/references/qualitaetsmodell.md
-                                           das Qualitätsmodell aus assets/daten/qualitaet.js (ab 4.49; vorher von Hand, lief auseinander)
+                                           das Qualitätsmodell aus assets/daten/qualitaet.js (ab 4.51; vorher von Hand, lief auseinander)
 
 Die Zip-Dateien werden mit festem Zeitstempel gebaut: Gleicher Inhalt ergibt dieselben Bytes.
 Format einer Kurzfassung im Skill:
@@ -175,8 +175,8 @@ def qualitaet_daten():
 
 
 def qualitaetsmodell(q):
-    """ab 4.49: references/qualitaetsmodell.md im Skill digital-check aus assets/daten/qualitaet.js
-    (bis 4.48 eine Kopie von Hand aus 4.5 – die Kernbereiche waren veraltet, die Rahmenfragen fehlten)."""
+    """ab 4.51: references/qualitaetsmodell.md im Skill digital-check aus assets/daten/qualitaet.js
+    (bis 4.50 eine Kopie von Hand aus 4.5 – die Kernbereiche waren veraltet, die Rahmenfragen fehlten)."""
     name = {b["id"]: b["name"] for b in q["bereiche"]}
     typ = {t["id"]: t["name"] for t in q["materialtypen"]}
     stufen_a = " · ".join(f"{i} {s}" for i, s in enumerate(q["stufenA"]))

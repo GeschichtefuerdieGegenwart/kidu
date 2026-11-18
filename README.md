@@ -2,7 +2,7 @@
 
 Seit 10. November 2026 heißt das Projekt **Kidu** – Künstliche Intelligenz und digitaler Unterricht. Vorher: »Hilde Digital« (bis 1. November 2026), »Papierprobe« (1.–10. November 2026). Kidu ist nicht an eine Schule gebunden. Repository und Adresse heißen `kidu`.
 
-Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen (Grundlagen · Unterricht mit KI vorbereiten · Unterrichten · Nach der Stunde), Digitaler Unterricht in vier Phasen (Grundlagen · Digitalen Unterricht erstellen · Unterrichten · Nach der Stunde) und Unterrichtsbeispiele, analog und digital – beides mit KI erstellt. Kidu ist ohne Auftrag einer Schule entstanden. Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.
+Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen (Grundlagen · Analogen Unterricht mit KI vorbereiten · Unterrichten · Nach der Stunde), Digitaler Unterricht in vier Phasen (Grundlagen · Digitalen Unterricht erstellen · Unterrichten · Nach der Stunde) und Unterrichtsbeispiele, analog und digital – beides mit KI erstellt. Kidu ist ohne Auftrag einer Schule entstanden. Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.
 
 ## Aufbau
 
@@ -10,8 +10,8 @@ Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen
 | --- | --- |
 | `src/*.html` | Inhalt der Seiten (ohne Kopf- und Fußzeile) |
 | `tools/bauen.py` | setzt Kopfzeile, Inhalt und Fußzeile zu fertigen Seiten zusammen |
-| `tools/pruefen.py` | prüft Kennzeichnung, Fachbegriffe, Platzhalter, externe Dateien; ab 4.49 auch, dass jeder Skill dieselbe Kurzzeile »Grundregeln« trägt (Wortlaut nur in `unterricht-digitalisieren`) |
-| `tools/werkzeugkiste.py` | eine Quelle für alles (ab 4.25): überträgt die »Kurzfassung für Kidu« jedes Skills nach `assets/daten/kurzfassungen.js`, schreibt `docs/pruef-auftrag.md`, ab 4.49 das Qualitätsmodell im Skill `digital-check` (`references/qualitaetsmodell.md` aus `assets/daten/qualitaet.js`) und packt die Downloads des Skillkoffers (bis 4.45 »Methodenkoffer«); läuft in `tools/bauen.py` mit |
+| `tools/pruefen.py` | prüft Kennzeichnung, Fachbegriffe, Platzhalter, externe Dateien; ab 4.51 auch, dass jeder Skill dieselbe Kurzzeile »Grundregeln« trägt (Wortlaut nur in `unterricht-digitalisieren`) |
+| `tools/werkzeugkiste.py` | eine Quelle für alles (ab 4.25): überträgt die »Kurzfassung für Kidu« jedes Skills nach `assets/daten/kurzfassungen.js`, schreibt `docs/pruef-auftrag.md`, ab 4.51 das Qualitätsmodell im Skill `digital-check` (`references/qualitaetsmodell.md` aus `assets/daten/qualitaet.js`) und packt die Downloads des Skillkoffers (bis 4.45 »Methodenkoffer«); läuft in `tools/bauen.py` mit |
 | `werkzeugkiste/kidu/` | das Plugin »kidu« für das Kollegium – hier werden die Skills gepflegt |
 | `assets/hilde.css` | Gestaltungssystem (Farben, Schrift, Bausteine) |
 | `assets/daten/beispiele.js` | alle Beispiele an einem Ort |
@@ -26,6 +26,7 @@ Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen
 | `assets/anfangen.js` | Unterrichtsbeispiele: »Zum Anfangen« – sechs erprobte Beispiele, zwei je Umfang (Feld `auswahl` in `beispiele.js`) |
 | `assets/daten/schnell.js`, `assets/schnell-anfrage.js`, `assets/ki-schnell.js` | KI-Training: Schnell-Anfrage für häufige Anlässe (ab 4.47 eigene Seite `schnell-anfrage.html`) |
 | `src/fahrplan-ki.json` | Fahrplan »KI-Training« aus einer Quelle (ab 4.47): vier Phasen mit Anliegen und alle Werkzeuge; `tools/fahrplan.py` setzt die Zeichen `<!-- kiplan:… -->` auf `ki.html` und den Werkzeugseiten ein. `zuhause` = die Seite gehört zum anderen Fahrplan. Ab 4.48 je Werkzeug `zeit` (Namen unter `zeiten`, gleich wie in `training.js`) und `faehigkeiten` (IDs der fünf Fähigkeiten aus `training.js`); `tools/pruefen.py` prüft beides |
+| `assets/ki-start.js` | Startseite des KI-Trainings (ab 4.50): aus den vier Karten werden Schaltflächen, die je eine Phase darunter öffnen (`#phase-…`, Escape, Fokus); ohne Skript stehen alle Phasen da. `window.KIPHASEN` für den Filter. Karte, Einleitung und Hilfen: `start` in `src/fahrplan-ki.json` |
 | `assets/ki-faehig.js` | Fähigkeiten als Filter im Fahrplan KI-Training (ab 4.48): jede Fähigkeit wird ein Schalter (`aria-pressed`), der die Werkzeuge mit dieser Fähigkeit hervorhebt und »übt: …« dazuschreibt; noch einmal tippen oder »Aufheben« stellt alles wieder her. Ohne Skript bleibt der Fahrplan wie in 4.47. Nichts wird gespeichert |
 | `src/vier-wochen.html`, `assets/vier-wochen.js` | Vier Wochen KI-Training (ab 4.48): fertiger Plan für eine Person oder ein Tandem – Prüfen · Entscheiden · Beschreiben · Erproben, je eine kurze Übung und ein echter Anlass, nur mit vorhandenen Werkzeugen. Freiwilliges Startdatum und Haken »Erledigt« (`hilde.vierwochen`), Felder werden nie gespeichert; Druckansicht |
 | `src/bewertung.html`, `assets/daten/bewertung.js`, `assets/bewertung.js` | Werkstatt Bewertungskultur (ab 4.48, Phase »Nach der Stunde«): eine eigene Aufgabe von der KI lösen lassen und umbauen (Arbeitsweg zeigen, kurz mündlich erklären, KI-Hilfe offenlegen, Absprache treffen); »Was verbindlich bleibt« steht getrennt daneben. Zwei Aufträge zum Kopieren mit `WERKSTATT_ANFRAGE` |
@@ -55,7 +56,7 @@ Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen
 | `src/skillkoffer.html`, `assets/daten/skillkoffer.js`, `assets/werkzeugkiste.js` | Skillkoffer für Fortgeschrittene (ab 4.46, vorher »Methodenkoffer«): je Skill, was er tut, wie das Ergebnis aussieht, wo er auf Kidu in Aktion ist, Download; die Bau-Skills nur als Ansicht |
 | `src/tipps.html` | Tipps und Tricks für die Stunde mit Tablet (ab 4.46), jeder mit Herkunft |
 | `src/ki-aufgaben.html`, `assets/daten/training.js`, `assets/training.js` | Trainingsaufgaben im KI-Training (ab 4.46): zwölf Übungen in fünf Fähigkeiten, mit den Funktionen von AIS.chat (Stand November 2026) |
-| `src/papierkoffer.html`, `assets/papierkoffer.js` | Aufgabenkoffer auf Papier (ab 4.46): dieselben Ideen, Kniffe und Phasen wie der Aufgabenkoffer, je mit einem KI-Auftrag für Material auf Papier |
+| `src/papierkoffer.html`, `assets/papierkoffer.js`, `tools/papierkoffer.py` | Aufgabenkoffer auf Papier (ab 4.46): dieselben Ideen und Kniffe wie der Aufgabenkoffer, je mit einem Auftrag an die KI für Material auf Papier. Ab 4.49 (Variante C) als gezeichnetes Arbeitsblatt mit sechs Stellen (`KOFFER.papierStellen` in `assets/daten/koffer-ideen.js`); `tools/papierkoffer.py` setzt beim Bauen mit Node Blatt und Listen aus `PAPIERKOFFER.html()` ein (ohne Skript gültig), `tools/pruefen.py` meldet Veraltetes |
 | `schloss/*.enc.json`, `assets/schloss-kern.js`, `assets/schloss.js`, `tools/schloss.mjs`, `tools/schloss_buendel.py` | Bereich »Für die Fortbildungsleitung« (ab 4.46): Fortbildungsbaustein, Beratungsstunde, Leitsätze und ab 4.48 der Ablauf-Koffer für das KI-Training (`ablaeufe.html`: 45 Minuten, 90 Minuten, pädagogischer Tag, je mit Folgetermin) verschlüsselt (AES-GCM, Schlüssel aus dem Passwort mit PBKDF2-SHA-256, 600 000 Runden). Der Klartext liegt nur in `privat/` (nicht im Repository, `.gitignore`) |
 
 ## Arbeiten

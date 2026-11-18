@@ -25,6 +25,10 @@
 
   function leer() { return { schritt: 0, erreicht: 0, ziel: null, form: null, niveau: "", geprueft: [], alleZiele: false }; }
   var z = H.lies(SPEICHER) || leer();
+  /* Ab 4.50: Ein Sprung von der Startseite des KI-Trainings (prompten.html#ziel=ideen) beginnt mit diesem Ziel. Ein anderer,
+     angefangener Weg wird dabei neu begonnen – wer einem Sprung folgt, will genau dieses Ziel. */
+  var zielAus = /^#ziel=([a-z-]+)$/.exec(location.hash || "");
+  if (zielAus && K.ziele.some(function (x) { return x.id === zielAus[1]; }) && z.ziel !== zielAus[1]) { z = leer(); z.ziel = zielAus[1]; }
   if (!Array.isArray(z.geprueft)) z.geprueft = [];
   z.schritt = Math.max(0, Math.min(z.schritt | 0, SCHRITTE.length - 1));
   z.erreicht = Math.max(z.schritt, z.erreicht | 0);

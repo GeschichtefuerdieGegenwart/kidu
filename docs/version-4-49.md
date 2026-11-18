@@ -1,39 +1,89 @@
-# Version 4.49 – Skills ohne Dopplungen: eine Regel, ein Ort
+# Version 4.49 (Variante C) – Aufgabenkoffer auf Papier: das Arbeitsblatt als Bild
 
-Stand: 18. November 2026 · Branch `kidu-4-49-skills-ohne-dopplungen`
+Stand: 18. November 2026 · Branch `koffer-variante-c` · zur Freigabe
 
-Grundlage: Auftrag Mario (18.11.2026): die Skills auf Redundanzen prüfen, Dopplungen vermeiden, die Fassungen im Repository mit den älteren Einzelfassungen abgleichen und aus denselben Dateien das Plugin »kidu« für das Kollegium und das private Zusatz-Plugin »kidu-bau« bauen. Entscheidung Mario (18.11.2026): Die Anrede folgt `unterricht-digitalisieren` – die Lehrkraft wird mit »du« angesprochen, Material für Lernende übernimmt die Anrede der vorhandenen Materialien.
+Grundlage: Auftrag Mario (17.11.2026) »Aufgabenkoffer ›Analogen Unterricht mit KI vorbereiten‹ – zwei Designvarianten«. Diese Fassung ist Variante C (»das Arbeitsblatt als Bild«). Variante B (»nach Anlass sortiert, im Raster des digitalen Koffers«) steht auf dem Branch `koffer-variante-b`. Es soll nur eine der beiden zusammengeführt werden. Bestandsaufnahme und Zuordnung: [`docs/koffer-zuordnung.md`](koffer-zuordnung.md).
 
-## Geändert
+## Was du freigeben musst
 
-| Bereich | Was sich ändert |
+1. Welche Variante (B oder C) zusammengeführt wird.
+2. Die Zuordnung der 21 Einträge zu den sechs Stellen des Blatts – ein Vorschlag (Tabelle unten).
+3. Die sechs Sätze der Stellen und die neue Ausnahme der Input-First Rule: Das Blatt legt sich beim ersten Besuch je Sitzung einmal auf die Platte (280 ms).
+
+## Was neu ist
+
+| Bereich | Was neu ist |
 | --- | --- |
-| Grundregeln | Der Wortlaut steht nur noch in `unterricht-digitalisieren` (v4.7). Die anderen sieben Skills tragen dieselbe Kurzzeile mit einem Stichwort je Regel. Vorher standen die Regeln in mehreren Fassungen nebeneinander: als Block »Gemeinsame Grundregeln (wortgleich in allen Skills von Kidu)« in `ki-kompetenz-kollegium` – er war nicht wortgleich, Regel 7 nannte Branch und Pull Request –, als eigene Aufzählung in `kidu-start` und als einzelne Regeln in `ki-faktencheck`, `ki-grenzen-einer-aufgabe` und `praxisforschung-im-kollegium`. `tools/pruefen.py` prüft jetzt, dass die Kurzzeile überall gleich lautet und so viele Stichworte hat, wie es Regeln gibt. |
-| Anrede | Regel 3 sagt jetzt beides: Lehrkraft »du«, Material für Lernende wie die vorhandenen Materialien (»Sie« in der Erzieher*innenausbildung), sonst »du«. `kidu-start` sagte bisher »Lernende mit ›du‹«, `ki-faktencheck` und `ki-grenzen-einer-aufgabe` schrieben »du« fest vor. Die Aufträge »Eine Übung: KI-Antworten prüfen« und »KI-Regeln für eine Aufgabe festlegen« nennen deshalb jetzt »du« oder »Sie«. |
-| Qualitätsmodell | `digital-check/references/qualitaetsmodell.md` war eine Kopie von Hand aus Version 4.5 und ist auseinandergelaufen: Kernbereiche für Moodle-Kurs, Video und Lernangebot mit KI anders als auf der Website, die HTML-Lernumgebung fehlte, zwei Risiken waren kürzer, die Rahmenfragen fehlten ganz. Jetzt erzeugt `tools/werkzeugkiste.py` die Datei aus `assets/daten/qualitaet.js`; `tools/pruefen.py` meldet, wenn sie veraltet ist. `unterricht-digitalisieren` nennt die Kernbereiche nicht mehr selbst. |
-| Eine Stelle je Regel | Ergebnisbündelung und Zeitdiagnose stehen in `unterricht-digitalisieren`, Schritt 5; `digital-check` verweist. Papierprobe: `unterricht-digitalisieren`, Schritt 2; `digital-check` und `lernmethode-einfuehren` verweisen. Grenzen für Lernende mit KI: `unterricht-digitalisieren`; `lernmethode-einfuehren` verweist. Fachregeln GGK: Fachbaustein; `ki-faktencheck` verweist. »Keine Noten, Punkte oder Prozentwerte« steht in `digital-check` bei den Regeln der Einschätzung. Übersicht im README des Plugins (»Eine Regel, ein Ort«). |
-| Aus den Einzelfassungen übernommen | Vier Fallstricke: Herkunft jeder Aussage nennen und Datum eines Bildes an einer Fundstelle prüfen (`unterricht-digitalisieren`), Rahmenfragen durchsuchen, bevor eine Prüfung »steht nirgends« festhält (`digital-check`), Effektstärken aus zweiter Hand (`lernmethode-einfuehren`). Fachbaustein GGK: NS-Regel um Flaggen, Propaganda als Schmuck und Geräusche ergänzt und als die eine Stelle markiert; neuer Abschnitt »Fachgrenzen Politik (aus Erprobungen)« mit zwei Einträgen. Ergebnisbündelung mit den Grenzen »hängt am Scan« und »kleine Zahlen sind kein Befund«. |
-| Namen und Verweise | »Unterrichtsbeispiele« statt »Galerie« (`praxisforschung-im-kollegium`), »Skillkoffer« statt »Methodenkoffer« (`kidu-start`), der Verweis auf den Abschnitt »Nur wenn Lernende mit KI arbeiten« richtiggestellt (`ki-kompetenz-kollegium`), dort auch die Werkzeuge der Bausteine auf dem Stand von 4.48 (Prüf-Labor, Sicher arbeiten in fünf Regeln). `kidu-start` und das README nennen alle sechs Bau-Skills. |
-| Plugin und Website | »kidu« 0.8.0. Die Kurzfassungen ändern sich nur in den zwei Zeilen zur Anrede; der Prüf-Auftrag Weg B ist unverändert. Auf der Website: neue Fassungsnummern an den Aufträgen, neue Downloads im Skillkoffer, ein Eintrag unter »Was ist neu?«. |
+| Umbenennung | Phase 2 des KI-Trainings heißt »Analogen Unterricht mit KI vorbereiten« (vorher »Unterricht mit KI vorbereiten«) – im Fahrplan, in der Zeile oben und im Fahrplan unten jeder Werkzeugseite, auf »Über Kidu«, in README, PRODUCT, CLAUDE, im Plugin (`kidu-start` v3.4, Plugin 0.7.1) und in den Tests. Schlüssel `vorbereiten` und Sprungmarke `#phase-vorbereiten` bleiben; `tools/pruefen.py` meldet die alte Bezeichnung und »klassischer Unterricht«. Der Leitsatz »KI kann Unterricht vorbereiten …« bleibt. |
+| Erste Ebene | Ein gezeichnetes Arbeitsblatt auf Karton, auf der versetzten Ocker-Platte. Sechs Stellen von oben nach unten, je mit einem Stanzloch-Punkt in Ocker mit Nummer am Blatt, einer Linie und der Beschriftung daneben: Name und »n Aufträge«. Alle Texte stehen als HTML neben dem Bild; das Bild ist dekorativ. |
+| Zweite Ebene | Ein Tippen auf eine Stelle hebt ihren Bereich auf dem Blatt hervor (Ocker-zart) und öffnet das Feld mit ihren Aufträgen – ab 1060 px daneben, sonst darunter. Jeder Auftrag: Name, ein Satz, »Auftrag kopieren« (Rückfall: Text aufklappen und markieren), dahinter »Auftrag an die KI ansehen« und »Mehr zur Idee«. Im Feld die Angaben für alle Aufträge (Fach, Thema, Lerngruppe). |
+| Bedienung | Nur eine Stelle zugleich offen. Pfeiltasten, Pos1 und Ende wechseln die Stelle; nur eine Stelle steht im Tab-Weg. Escape und »Schließen« schließen und setzen den Fokus auf die Stelle zurück. |
+| Telefon | Unter 768 px wird das Blatt kleiner und zeigt die sechs Nummern; darunter stehen die Stellen als nummerierte Liste – dort die Bedienung. |
+| Adresse | `#stelle=<id>` merkt die Stelle; »Zurück« im Browser und Teilen funktionieren (Pfeiltasten legen keinen neuen Eintrag an). `#pk-<id>` öffnet die Stelle eines Eintrags und zeigt ihn. |
+| Ohne JavaScript | Die Beschriftungen sind Sprungmarken; alle sechs Stellen stehen mit ihren 21 Aufträgen untereinander, die Aufträge an die KI zum Markieren. Gebaut von `tools/papierkoffer.py` aus `PAPIERKOFFER.html()` – dieselbe Funktion wie im Browser, beim Bauen mit Node. |
+| Vertiefung | »So prüfst du das Ergebnis – und was nicht hineingehört«: die drei Prüffragen, die schon in jedem Auftrag stehen, und der Datenschutz. |
+| Daten | `KOFFER.papierStellen` in `assets/daten/koffer-ideen.js`: Nummer, Name, Satz, Lage der Markierung, Einträge. Die 18 Aufgabenformen, die drei Kniffe für jede Phase und alle Aufträge sind unverändert. Der Aufgabenkoffer des Digitalen Unterrichts bleibt unverändert. |
+| Dopplungen | »Hilfe- und Expertenkarten« steht bei »Gestufte Zugänge und Hilfen« nur mit Namen und Verweis, ebenso »Sortieren mit Zwischenstand« bei »Eine Reihe legen«. Die Aufträge an die KI behalten alle Kniffe. |
+| Wortwahl | Auf der ersten Ebene heißt es »Auftrag an die KI«, nicht »Prompt«. An jeder Eingabe steht »Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.« (sichtbar und mit `aria-describedby`). |
 
-## Gemessen (18.11.2026)
+## Zuordnung der Einträge
 
-- `python3 tools/bauen.py && python3 tools/pruefen.py && node --test && python3 tests/e2e.py`: alles bestanden (193 Unit-Tests, alle Browser-Tests).
-- Ohne `KIDU_PASS` liefen die Browser-Tests für die Inhalte hinter dem Schloss nicht; an diesen Inhalten ändert sich nichts.
+| Stelle | Satz im Feld | Einträge |
+| --- | --- | --- |
+| 1 Kopf und Einstieg | Was vor der Arbeit oben steht: eine Frage, eine Vermutung, eine Entscheidung. | Erst erinnern · Vorhersagen, versuchen, vergleichen · Stimmen der Klasse sammeln · Erst entscheiden, dann auflösen (4) |
+| 2 Infotext und Material | Der Text oder das Material – und wie man es liest. | Lesen in drei Schritten · Markieren mit Grund · Einen Film selbst steuern · Regler und Modell (4) |
+| 3 Aufgaben | Die Aufträge in der Mitte: sortieren, legen, einordnen, urteilen. | Zuordnen und Sortieren · Eine Reihe legen · Struktur legen · Einen Fall einordnen · Ein Urteil schreiben (5) |
+| 4 Hilfe am Rand | Hilfen neben der Aufgabe: Tippkarten, Hilfe- und Expertenkarten, ein Hilfekasten. | Gestufte Zugänge und Hilfen · Hilfe- und Expertenkarten · Übersicht statt Klickstrecke (3) |
+| 5 Lösung und Selbstkontrolle | Unten zum Umknicken: Lösungen mit Erklärungen und eine Liste »Ich kann …«. | Auswahlaufgabe mit Rückmeldung · Sich selbst einschätzen (2) |
+| 6 Rückseite | Was dahinter liegt: Karteikarten, ein Ausgangsticket, ein Plan zum Erklären. | Karteikarten · Fehlvorstellungen dreimal nutzen · Ein Erklärvideo erstellen (3) |
 
-## Bewusst nicht umgesetzt / offen
+Angepasst gegenüber dem Vorschlag im Auftrag: Für »Kopf und Ziel« (Stundenstruktur, Lernziel) gibt es im Koffer keinen Auftrag – dort stehen die vier Einstiegsformen. Erwartungshorizont und Bewertungsraster gehören im Bestand zu »Ein Urteil schreiben« und »Fehlvorstellungen dreimal nutzen« und stehen dort. Elterninformation und Organisation stehen in der Schnell-Anfrage, nicht im Koffer. Ausführlich in `docs/koffer-zuordnung.md`.
 
-- In `digital-check` stehen die Prüffragen zur Gestaltung zweimal: als Block 2 für den Skill und als Liste »Gestaltung« in der Kurzfassung für die Website; ebenso die typischen Schwächen und die »Anforderungen«. Beide Fassungen sind verschieden formuliert. Sie zusammenzulegen hieße, die Kurzfassung zur einzigen Quelle des Skills zu machen – das entscheidet Mario.
-- `assets/papierkoffer.js` schreibt »Anrede ›du‹« fest in die Aufträge des Aufgabenkoffers auf Papier. Nicht geändert, weil es kein Skill ist.
-- Das Bau-Plugin »kidu-bau« liegt weiter nicht im Repository. Es wird aus denselben Regeln gebaut und verweist auf die Besitzer in »kidu«; »kidu« hängt nie an etwas, das nur in »kidu-bau« steht.
+## Neue Grafiken
 
-## Nur du kannst das
+| Grafik | Beschreibung |
+| --- | --- |
+| Das Arbeitsblatt (`PAPIERKOFFER.BLATT` in `assets/papierkoffer.js`) | Selbst gezeichnet, SVG im Seitenverhältnis A4 (210 × 297): Papierfläche `--blatt` #FFFFFD mit Umriss in Druckschwarz (2 px), zwei Stanzlöcher, ein Titelbalken, Kästen für Vermutung und Bild, Rasterpunkte als Platzhalter für Text, drei Aufträge mit Nummernkästchen, zwei Tippkarten am Rand (eine in Ocker), eine gestrichelte Falz mit Kästchen zur Selbstkontrolle, rechts unten die umgeknickte Ecke in Karton. Sechs Bereiche liegen zart dahinter und werden bei Wahl Ocker-zart. Kein Text im Bild, für Hilfstechnik verborgen. |
+| Stanzloch-Punkte mit Nummer | HTML und CSS (26 px, Ocker mit Kante Honig, Nummer als Text), mit Linie in Druckschwarz (2 px) zur Beschriftung. Gewählt: Punkt Druckschwarz, Linie 4 px. |
 
-- Regel 3 zur Anrede lesen: Passt sie zu deinen Bildungsgängen?
-- Die zwei geänderten Aufträge auf der Seite »Aufträge zum Kopieren« einmal mit deinem KI-System ausprobieren.
-- Das Plugin 0.8.0 installieren; es ersetzt die bisherige Fassung.
+## Prüfungen
 
-## Fallstricke (Vorschläge für die Skills)
+Gelaufen (Chromium, `file://`):
 
-- `website-design-workflow`: Eine Kopie von Hand aus einer Datendatei läuft auseinander, auch wenn sie ihre Quelle nennt (Kidu 4.49: Qualitätsmodell im Skill aus 4.5 – drei Kernbereiche anders, ein Materialtyp und die Rahmenfragen fehlten) → solche Kopien erzeugen lassen und im Prüfskript auf Aktualität prüfen.
-- `website-design-workflow`: Ein Block, der »wortgleich in allen Skills« sein soll, war es nicht (Kidu 4.49: Regel 7 in `ki-kompetenz-kollegium`) → Gleichheit vom Prüfskript prüfen lassen, nicht nur behaupten.
+- Projektprüfung `tools/pruefen.py`: keine Verstöße – neu `pruefe_papierkoffer` (Teile aktuell, höchstens sechs Stellen, kein Text im Bild, 21 Einträge, Hinweis an jeder Eingabe, kein »Prompt« auf der ersten Ebene) und die alte Bezeichnung der Phase.
+- Unit-Tests `node --test`: 194 von 194 (Papier-Koffer: sieben Tests, davon fünf neu für Stellen, Dopplungen, Fassung ohne Skript, Phasen und Kniffe).
+- Browser-Tests `tests/e2e.py`: alle bestanden, darunter 29 neue zum Papier-Koffer – Öffnen und Schließen per Maus, Finger und Tastatur (Enter, Pfeiltasten, Pos1, Ende, Escape, »Schließen«), Fokus, nur eine Stelle offen und nur eine im Tab-Weg, Hervorhebung, Feld daneben (iPad quer, Beamer) und darunter (iPad hoch), Telefon mit Liste, Adresse, Zurück, Teilen, `#pk-<id>`, Kopieren mit Zwischenablage und Rückfall, Freitext nicht gespeichert, das Blatt legt sich nur beim ersten Besuch (280 ms), bei »weniger Bewegung« nicht, ohne JavaScript alles sichtbar, Beamer, Beschriftungen neben dem Blatt mit 2-px-Linien, keine Konsolenfehler, nichts aus dem Netz.
+- Mindestprüfung 5a (`pruef_seiten.py` aus dem Website-Design-Workflow): 1440 · 1280 · 768 · 390 · 375 px, mit und ohne »weniger Bewegung« – 0 Probleme.
+- Gezielte Barrierefreiheit statt axe-core (1280 und 390 px, zu und offen mit allen Vertiefungen): keine doppelten IDs, alle Bezüge vorhanden, jedes Bedienelement mit Namen (»Stelle 4: Hilfe am Rand 3 Aufträge«), keine Sprünge in den Überschriften, kleinster Textkontrast 4,89 : 1 (Druckschwarz auf Ocker), keine Zielfläche unter 24 px (kleinste 44 px), keine Schrift unter 16 px.
+
+Gemessen (18.11.2026):
+
+| Größe | Feld | Unterkante von Blatt und Beschriftungen | Waagerechtes Scrollen |
+| --- | --- | --- | --- |
+| Beamer 1280 × 720 | daneben | 673 px – Überschrift, ein Satz und das ganze Blatt mit allen Beschriftungen im ersten Bildschirm; der erste Auftrag einer Stelle beginnt bei 666 px | nein |
+| iPad quer 1180 × 820 | daneben | 660 px | nein |
+| iPad quer 1080 × 810 | daneben | 570 px | nein |
+| 1024 × 768 | darunter | 717 px | nein |
+| iPad hoch 768 × 1024 und 820 × 1180 | darunter | 808 bzw. 817 px | nein |
+| Telefon 390 × 844 | darunter, Stellen als Liste | – | nein |
+| 1440 × 900 und 1920 × 1080 | daneben | 808 px | nein |
+
+Beschriftungen stehen in jeder Breite mindestens 20 px neben dem Blatt; keine überdeckt eine andere. Nach dem ersten Besuch läuft keine Animation. Zwei Tipps bis zum Auftrag (Three-Tap Rule).
+
+Kritik nach Bildschirmfotos, drei Runden: (1) das Formular schob die Aufträge unter den Beamer-Rand, die Stanzlöcher wirkten wie Flecken, der Satz brach auf drei Zeilen; (2) bei 1440 px liefen zwei Beschriftungen über den Blattrand, »KI-/System« wurde getrennt; (3) die Sätze der Stellen waren für das Feld zu lang. Punktwert nach `critique.md`, ehrlich: Gestaltung 35/40, Bedienung 25/30, Eigenständigkeit 17/20, Inhalt 9/10 – 86/100.
+
+Nicht gelaufen: axe-core (`tests/vendor/axe.min.js` fehlt, Installationen sind in dieser Umgebung gesperrt) · Taste `lint.mjs` und `inspect.mjs`, Impeccable `critique`, `audit`, `polish` (Plugins fehlen; dafür 5a und die gezielte Prüfung oben) · iPad mit Safari, VoiceOver, Moodle.
+
+## Bewusste Ausnahmen
+
+- **Honigplatte:** Der Auftrag nennt #F2B233. Es gilt das Ocker des Logos #B68235 (`--ki-platte`, seit 4.26), mit 2-px-Kante in Honig #7D5A1C.
+- **Stellen:** angepasst an den Bestand (siehe oben).
+- **Neue Farbe `--blatt` #FFFFFD:** nur für die Papierfläche des Blatts, wie im Auftrag; eine Spur heller als `--flaeche`.
+- **Ein Satz je Auftrag:** Es ist das vorhandene Feld »tun«. Bei 14 der 21 Einträge sind das zwei oder drei kurze Sätze; gekürzt wird nur, was sich wiederholt.
+- **Feld neben dem Blatt ab 1060 px:** Darunter (1024 × 768, iPad hoch, Telefon) steht es unter dem Blatt; am iPad quer mit 1080 px und mehr steht es daneben.
+- **Bauen mit Node:** `tools/bauen.py` braucht für diese Seite Node (wie die Unit-Tests).
+
+## Offen
+
+- Ob Lehrkräfte ohne Technikerfahrung die Beschriftungen als Schaltflächen erkennen: noch offen, nicht erprobt. Der Satz im Feld (»Tipp eine Stelle auf dem Blatt an …«) und die Unterstreichung beim Überfahren sollen helfen.
+- iPad mit Safari, VoiceOver und Moodle: nicht geprüft.

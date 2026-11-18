@@ -38,7 +38,7 @@ Der Bereich »Digitaler Unterricht« ist eine Fortbildung zum Selbermachen, geor
 | Unterrichten | Tablet-Phasen gut führen · Tipps und Tricks | – |
 | Nach der Stunde | Beobachtungsbogen · Mein Rückmeldebogen | Beobachtungsbogen aus `unterricht-digitalisieren`, `praxisforschung-im-kollegium` |
 
-Dazu kommen die Unterrichtsbeispiele (»analog und digital, beides mit KI erstellt«) und das KI-Training mit denselben vier Phasen: Grundlagen (mit den Trainingsaufgaben) · Unterricht mit KI vorbereiten (Schnell-Anfrage, Prompten lernen, Aufgabenkoffer auf Papier, Aufträge zum Kopieren) · Unterrichten · Nach der Stunde. Bausteine für Fortbildungen stehen nicht im Fahrplan; sie liegen geschützt bei der Fortbildungsleitung (→ `ki-kompetenz-kollegium`).
+Dazu kommen die Unterrichtsbeispiele (»analog und digital, beides mit KI erstellt«) und das KI-Training mit denselben vier Phasen: Grundlagen (mit den Trainingsaufgaben) · Analogen Unterricht mit KI vorbereiten (Schnell-Anfrage, Prompten lernen, Aufgabenkoffer auf Papier, Aufträge zum Kopieren) · Unterrichten · Nach der Stunde. Bausteine für Fortbildungen stehen nicht im Fahrplan; sie liegen geschützt bei der Fortbildungsleitung (→ `ki-kompetenz-kollegium`).
 
 ## So gehst du vor
 
@@ -61,7 +61,8 @@ Lösungen vor der eigenen Festlegung zeigen · Ranglisten, Punkte, Konfetti · I
 
 ## Versionen
 
-- **v3.4, 18.11.2026:** Ohne Dopplungen: Grundregeln als Kurzzeile oben statt einer eigenen Zusammenfassung in »So gehst du vor« (die sagte »Lernende mit ›du‹« – jetzt gilt die Anrede der vorhandenen Materialien, Entscheidung Mario, 18.11.2026). »kidu-bau« mit allen sechs Bau-Skills (neu genannt: `bewegung-als-lernmittel`, `film-regie`). »Skillkoffer« statt »Methodenkoffer«.
+- **v3.5, 18.11.2026:** Kidu 4.51, ohne Dopplungen: Grundregeln als Kurzzeile oben statt einer eigenen Zusammenfassung in »So gehst du vor« (die sagte »Lernende mit ›du‹« – jetzt gilt die Anrede der vorhandenen Materialien, Entscheidung Mario, 18.11.2026). »kidu-bau« mit allen sechs Bau-Skills (neu genannt: `bewegung-als-lernmittel`, `film-regie`). »Skillkoffer« statt »Methodenkoffer«.
+- **v3.4, 18.11.2026:** Kidu 4.49: Phase 2 des KI-Trainings heißt »Analogen Unterricht mit KI vorbereiten« (vorher »Unterricht mit KI vorbereiten«).
 - **v3.3, 17.11.2026:** Kidu 4.46: Phase 2 mit Reihenfolge (Papierfrage zuerst, Digital-Check zum Schluss), »Ideen und Kniffe« im Aufgabenkoffer, Skillkoffer statt Methodenkoffer, »Tipps und Tricks« in Phase 3; Fortbildungsbaustein, Beratungsstunde und Leitsätze nicht mehr im Fahrplan. KI-Training in vier Phasen mit Trainingsaufgaben und Aufgabenkoffer auf Papier.
 - **v3.2, 13.11.2026:** Neue Wege und Namen von Kidu 4.36/4.37: Einstieg »Digitalen Unterricht erstellen« mit »Unterricht neu planen« und »Bisherigen Unterricht digitalisieren«, bei mehreren Stunden zuerst Schritt E; »Unterrichtsbeispiele« statt »Galerie«; Digital-Check mit zwei Blöcken. Neuer Abschnitt »Kidu auf der Website: vier Phasen« (Grundlagen · Digitalen Unterricht erstellen · Unterrichten · Nach der Stunde) mit den passenden Skills.
 - **v3.1, 11.11.2026:** Die Seite »Werkzeugkiste« von Kidu heißt jetzt »Methodenkoffer«.
