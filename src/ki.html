@@ -4,19 +4,37 @@
      Phase in voller Breite (eine zur Zeit, Adresse #phase-…; assets/ki-start.js). Ohne Skript stehen alle Phasen untereinander.
      Die Phasen bleiben die vier des Fahrplans (Namen eingefroren). Karte, Hilfen und Werkzeuge: src/fahrplan-ki.json (»start«, tools/fahrplan.py).
      In Phase 2 steht der Aufgabenkoffer auf Papier in Variante C. Vorher (4.47): der Fahrplan als Liste aufklappbarer Phasen. -->
-<section class="leitband leitband-weg leitband-ki" aria-labelledby="t-leitfrage"><div class="huelle huelle-weit leitband-innen">
-  <div class="leitband-text">
-    <h1 class="leitband-bereich">KI-Training · Fortbildung zum Selbermachen</h1>
-    <h2 id="t-leitfrage" class="leitband-frage">Wobei hilft dir KI?</h2>
-    <p>Vier Phasen rund um deine Stunde. Jede Karte zeigt, was KI dort für dich tun kann. Du kannst bei jeder einsteigen.</p>
+<!-- Ab 4.53 (Auftrag Mario, 18.11.2026): Die Wunsch-Methode ist der erste Blickfang des KI-Trainings; erst danach kommen die vier Phasen.
+     Die Zeichnung ist dieselbe wie auf wunsch-methode.html (<!-- wunsch:start -->, tools/wunsch.py); jedes Feld führt dorthin.
+     Darunter drei Einstiege, einer je Kreis (<!-- wunsch:einstiege -->): drei Anliegen, keine Stufen. Vorher (4.50): Leitband »Wobei hilft dir KI?«. -->
+<section class="ki-blick" aria-labelledby="t-ki-blick"><div class="huelle huelle-weit ki-blick-innen">
+  <div class="ki-blick-text">
+    <h1 class="ki-blick-bereich">KI-Training · Fortbildung zum Selbermachen</h1>
+    <h2 id="t-ki-blick" class="ki-blick-titel">Die Wunsch-Methode</h2>
+    <p class="marker">Vier Sätze, drei Kreise</p>
+    <p class="wm-merk">Wisse, was du willst. Und sag es.</p>
+    <p class="wm-merk">Prüf, was du bekommst. Und steh für das ein, was du weitergibst.</p>
+    <p class="ki-blick-satz">Vier Sätze sagen, was du mit KI tust. Drei Kreise sagen, für wen. <span class="ki-blick-tipp">Tipp ein Feld an: Jedes hat einen ersten Schritt.</span></p>
+    <p class="ki-blick-knoepfe"><a class="knopf" href="wunsch-methode.html#wo-stehst-du">Wo stehst du?</a> <a class="knopf still" href="wunsch-methode.html">Zur Wunsch-Methode <span aria-hidden="true">→</span></a></p>
   </div>
-  <p class="leitband-beispiele"><a href="galerie.html"><b>Unterrichtsbeispiele: analog und digital</b><span>beides mit KI erstellt <span aria-hidden="true">→</span></span></a></p>
+  <figure class="blick wm-figur ki-blick-figur">
+    <!-- wunsch:start -->
+    <figcaption>Gefüllt ist die Grundausstattung: fünf Felder für den Anfang. Stand: Vorschlag, noch nicht erprobt.</figcaption>
+  </figure>
+</div></section>
+
+<section class="abschnitt ki-einstieg-abschnitt" aria-labelledby="t-ki-einstieg"><div class="huelle huelle-weit">
+  <div class="fahrplan-leiste">
+    <h2 id="t-ki-einstieg" class="fahrplan-titel">Wo steigst du ein?</h2>
+    <p class="fahrplan-bedienung">Drei Anliegen, keine Stufen. Nimm das, was gerade zu dir passt.</p>
+  </div>
+  <!-- wunsch:einstiege -->
 </div></section>
 
 <section class="abschnitt phasen-abschnitt ki-start" aria-labelledby="t-phasen"><div class="huelle huelle-weit">
   <div class="fahrplan-leiste">
-    <h2 id="t-phasen" class="fahrplan-titel">Die vier Phasen</h2>
-    <p class="fahrplan-bedienung">Tipp eine Phase an. Nach der Stunde geht es wieder bei 2 weiter.</p>
+    <h2 id="t-phasen" class="fahrplan-titel">Die vier Phasen rund um deine Stunde</h2>
+    <p class="fahrplan-bedienung">Wobei hilft dir KI? Jede Karte zeigt es. Tipp eine Phase an. Nach der Stunde geht es wieder bei 2 weiter.</p>
   </div>
   <div class="ki-wahl-huelle">
   <ul class="koffer-raster ist-vier ki-wahl" id="ki-wahl">
@@ -58,7 +76,7 @@
     </a></li>
   </ul>
   </div>
-  <p class="ki-alltag">Auch im Schulalltag hilft dir KI: bei einer <a class="textlink" href="schnell-anfrage.html#anlass=eltern">Elterninformation</a> oder bei der Vorbereitung einer <a class="textlink" href="schnell-anfrage.html#anlass=sitzung">Sitzung</a>.</p>
+  <p class="ki-alltag">Auch im Schulalltag hilft dir KI: bei einer <a class="textlink" href="schnell-anfrage.html#anlass=eltern">Elterninformation</a> oder bei der Vorbereitung einer <a class="textlink" href="schnell-anfrage.html#anlass=sitzung">Sitzung</a>. Fertige Stunden zeigen die <a class="textlink" href="galerie.html">Unterrichtsbeispiele: analog und digital</a> – beides mit KI erstellt.</p>
   <div class="ki-phasen" id="fahrplan" data-alte-marken='{"#t-erste":"erste-minuten.html","#schnell":"schnell-anfrage.html","#t-schnell":"schnell-anfrage.html","#lernen-weg":"prompten.html","#t-lernen":"prompten.html","#t-generator":"prompten.html#t-generator","#t-werkstatt":"#fahrplan","#t-bezug":"#fahrplan"}'>
     <section class="ki-phase" id="phase-grundlagen" aria-labelledby="t-phase-grundlagen">
       <div class="ki-phase-kopf">

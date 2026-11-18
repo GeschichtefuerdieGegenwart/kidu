@@ -164,9 +164,52 @@
     }).join("");
   }
   function lampe() { return '<ol class="wm-lampe-liste">' + W.lampe.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ol>"; }
-  function html() { return { bild: bild(), liste: liste(), lampe: lampe() }; }
+  /* ---------- Ab 4.53: die Zeichnung als Blickfang des KI-Trainings und als kleine Karte auf den Werkzeugseiten ---------- */
+  /* Dieselbe Zeichnung, aber jedes Feld führt auf die Seite der Wunsch-Methode. */
+  function start() {
+    return bild().replace(/href="#feld-/g, 'href="wunsch-methode.html#feld-').replace('id="wm-bild"', 'id="ki-wm-bild"')
+      .replace("Die zwölf Felder – tipp eines an", "Die zwölf Felder der Wunsch-Methode – tipp eines an");
+  }
+  /* Kleine Karte ohne Wörter: alle zwölf Felder, die genannten hervorgehoben. Nur Bild; der Text steht daneben. */
+  function mini(an) {
+    var g = geometrie(), hat = {};
+    an.forEach(function (id) { hat[id] = true; });
+    var p = W.felder.map(function (f) { return '<path' + (hat[f.id] ? ' class="ist-an"' : "") + ' d="' + g.felder[f.id].pfad + '"/>'; }).join("");
+    return '<svg class="wm-mini" viewBox="154 52 572 292" aria-hidden="true" focusable="false">' + p + "</svg>";
+  }
+  /* Drei Einstiege, einer je Kreis: wer anfängt, wer Lernende mit KI hat, wer für andere baut. Keine Stufen – drei Anliegen. */
+  function einstiege() {
+    return '<ul class="ki-einstiege">' + W.kreise.map(function (k) {
+      var ids = W.felder.filter(function (f) { return f.kreis === k.id; }).map(function (f) { return f.id; });
+      return '<li class="ki-einstieg" data-einstieg="' + k.id + '">' + mini(ids) +
+        '<div class="ki-einstieg-text"><b class="ki-einstieg-ich">' + esc(k.einstieg.ich) + "</b>" +
+        '<span class="ki-einstieg-kreis">Kreis »' + esc(k.name) + "«</span>" +
+        '<span class="ki-einstieg-wege">' + wege(k.einstieg.wege) + "</span></div></li>";
+    }).join("") + "</ul>";
+  }
+  /* Je Werkzeugseite: welche Felder sie übt (aus den Wegen der Felder). Datei → kleine Karte mit Link. */
+  function orte() {
+    var nach = {};
+    W.felder.forEach(function (f) {
+      var ziele = (f.schritt.wo ? [f.schritt.wo] : []).concat(f.uebung.wo || []);
+      ziele.forEach(function (w) {
+        var datei = w[0].split("#")[0];
+        if (!nach[datei]) nach[datei] = [];
+        if (nach[datei].indexOf(f.id) < 0) nach[datei].push(f.id);
+      });
+    });
+    var aus = {};
+    Object.keys(nach).forEach(function (datei) {
+      var ids = nach[datei];
+      var ziel = ids.length === 1 ? "wunsch-methode.html#feld-" + ids[0] : "wunsch-methode.html";
+      var wort = ids.length <= 2 ? ids.map(function (id) { return titel(feld(id)); }).join(" und ") : ids.length + " Felder der Wunsch-Methode";
+      aus[datei] = '<a class="ort-karte" href="' + ziel + '">' + mini(ids) + '<span>Auf der Karte: <b>' + esc(wort) + "</b></span></a>";
+    });
+    return aus;
+  }
+  function html() { return { bild: bild(), liste: liste(), lampe: lampe(), start: start(), einstiege: einstiege(), orte: orte() }; }
 
-  var api = { feld: feld, titel: titel, naechste: naechste, geometrie: geometrie, karteInnen: karteInnen, html: html };
+  var api = { feld: feld, titel: titel, naechste: naechste, geometrie: geometrie, karteInnen: karteInnen, html: html, orte: orte };
   if (imKnoten) module.exports = api; else wurzel.WUNSCH_SEITE = api;
   if (typeof document === "undefined") return;
 
@@ -313,6 +356,7 @@
   }
   function ohneMarke() { try { history.pushState(null, "", location.pathname + location.search); } catch (e) { location.hash = ""; } }
   function ausAdresse() {
+    if (location.hash === "#wo-stehst-du") { if (modus !== "frage") frageStart(); return; } /* ab 4.53: Sprung vom KI-Training */
     var m = /^#feld-([a-z-]+)$/.exec(location.hash || "");
     if (m && feld(m[1])) { if (m[1] !== offen || !mitBild()) oeffne(m[1]); }
     else if (offen) schliesse(false);

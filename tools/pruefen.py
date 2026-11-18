@@ -507,6 +507,8 @@ def pruefe_ki_start(fehler, fp, daten, html):
         fehler.append(f"{bereich}: Werkzeug mehrfach in den Phasen {doppelt}")
     rest = html[:a] + html[b:]
     for ziel in sorted(set(alle)):
+        if ziel == "wunsch-methode.html":  # ab 4.53 (Auftrag Mario, 18.11.2026): die Wunsch-Methode ist der Blickfang über den Phasen
+            continue
         if f'href="{ziel}"' in rest:
             fehler.append(f"{bereich}: {ziel} steht außerhalb der Phasen noch einmal (eine Struktur)")
 
@@ -717,9 +719,22 @@ def pruefe_wunsch(fehler):
         fehler.append(f"{name}: {f}")
         return
     html = (WURZEL / name).read_text(encoding="utf-8")
-    for teil, inhalt in teile.items():
-        if inhalt not in html:
+    for teil in ("bild", "liste", "lampe"):
+        if teile[teil] not in html:
             fehler.append(f"{name}: Teil »{teil}« ist veraltet – python3 tools/bauen.py")
+    # ab 4.53: der Blickfang und die drei Einstiege auf ki.html, die kleine Karte auf den Werkzeugseiten des KI-Trainings
+    ki = (WURZEL / "ki.html").read_text(encoding="utf-8")
+    for teil in ("start", "einstiege"):
+        if teile[teil] not in ki:
+            fehler.append(f"ki.html: Teil »{teil}« der Wunsch-Methode ist veraltet – python3 tools/bauen.py")
+    if ki.find('id="ki-wm-bild"') < 0 or ki.find('id="ki-wm-bild"') > ki.find('id="ki-wahl"'):
+        fehler.append("ki.html: die Zeichnung der Wunsch-Methode steht vor den vier Phasen (Auftrag Mario, 18.11.2026)")
+    if len(re.findall(r'class="ki-einstieg"', teile["einstiege"])) != 3:
+        fehler.append("ki.html: drei Einstiege, einer je Kreis")
+    for datei, karte in teile.get("orte", {}).items():
+        seite = (WURZEL / datei).read_text(encoding="utf-8")
+        if 'href="ki.html#fahrplan">Fahrplan KI-Training' in seite.split("<main", 1)[-1][:3000] and karte not in seite:
+            fehler.append(f"{datei}: die kleine Karte der Wunsch-Methode fehlt oder ist veraltet – python3 tools/bauen.py")
     if "<!-- wunsch:" in html:
         fehler.append(f"{name}: Zeichen <!-- wunsch:… --> nicht ersetzt")
     bild, liste = teile.get("bild", ""), teile.get("liste", "")
