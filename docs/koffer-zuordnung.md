@@ -132,3 +132,12 @@ Die Zuordnung ist ein Vorschlag wie die Phasen im Aufgabenkoffer und steht so au
 - **Eingaben:** an jeder Eingabe der Hinweis »Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.« (Formular und jedes Auftragsfeld, mit `aria-describedby`). Freitexte werden nicht gespeichert.
 - **Ohne JavaScript:** alle Einträge stehen gegliedert da, die Aufträge mit leeren Angaben (die KI fragt dann zuerst nach Fach, Thema und Lerngruppe). Gebaut aus denselben Daten beim Bauen (`tools/papierkoffer.py`), nicht von Hand.
 - **Farben:** Honigplatte ist seit 4.26 das Ocker des Logos, `--ki-platte` #B68235 (nicht #F2B233 aus dem Designkonzept vom 18.10.2026); Fläche `--flaeche` #F8F5EE (nicht #FFFDF9). Gestaltet wird nur über die Variablen in `hilde.css`.
+
+## 5. Umsetzung in Variante C (Branch `koffer-variante-c`)
+
+- Stellen als Daten: `KOFFER.papierStellen` (Nummer, Name, ein Satz für das Feld, Lage der Markierung auf dem Blatt, Einträge in dieser Reihenfolge).
+- Seite: `src/papierkoffer.html`, `assets/papierkoffer.js` (`stellen`, `auftrag`, `kniffAuftrag`, `html`, das gezeichnete Blatt `BLATT`), `tools/papierkoffer.py` (setzt die Fassung ohne Skript beim Bauen ein).
+- Gestaltung: `.pkc-…` in `assets/hilde.css`, Muster in `DESIGN.md`. Der Aufgabenkoffer des Digitalen Unterrichts bleibt unverändert.
+- Dopplungen: D1 und D4 stehen in »Mehr zur Idee« nur mit Namen und Verweis; D2 und D3 bleiben ausführlich, weil ihre Einträge an verschiedenen Stellen stehen. D5 und D6 entfallen durch den neuen Aufbau.
+- Die Sätze der Stellen sind für das Feld gekürzt (zum Beispiel »Hilfen neben der Aufgabe: Tippkarten, Hilfe- und Expertenkarten, ein Hilfekasten.«).
+- Prüfung und Messwerte: `docs/version-4-49.md`.

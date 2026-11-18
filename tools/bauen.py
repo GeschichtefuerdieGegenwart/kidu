@@ -187,8 +187,11 @@ def main():
     spec = importlib.util.spec_from_file_location("fahrplan", WURZEL / "tools" / "fahrplan.py")
     fp = importlib.util.module_from_spec(spec); spec.loader.exec_module(fp)
     fahrplan = fp.alle_laden()
+    # ab 4.49: Karten und Listen des Aufgabenkoffers auf Papier aus PAPIERKOFFER.html() (tools/papierkoffer.py, mit Node)
+    spec = importlib.util.spec_from_file_location("papierkoffer", WURZEL / "tools" / "papierkoffer.py")
+    pk = importlib.util.module_from_spec(spec); spec.loader.exec_module(pk)
     for datei, titel, aktiv in SEITEN:
-        inhalt = mit_schloss(fp.einsetzen((WURZEL / "src" / datei).read_text(encoding="utf-8"), datei, fahrplan), datei)
+        inhalt = mit_schloss(pk.einsetzen(fp.einsetzen((WURZEL / "src" / datei).read_text(encoding="utf-8"), datei, fahrplan), datei), datei)
         (WURZEL / datei).write_text(mit_stand(rahmen(titel, aktiv, inhalt, datei)), encoding="utf-8")
         print("gebaut:", datei)
 

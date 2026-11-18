@@ -7,7 +7,7 @@
 <meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
 <title>Aufgabenkoffer auf Papier – Kidu</title>
 <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/hilde.css?v=8848bfdf">
+<link rel="stylesheet" href="assets/hilde.css?v=ac860a30">
 <script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
 </head>
 <body>
@@ -18,36 +18,551 @@
   <a class="hefter-link" href="galerie.html#hefter" aria-label="Mein Schnellhefter"><svg viewBox="0 0 30 24" aria-hidden="true"><rect x="1" y="2" width="28" height="21" rx="2" fill="#b68235" stroke="#7d5a1c" stroke-width="2"/><rect x="1" y="2" width="6" height="21" fill="#7d5a1c"/><circle cx="4" cy="8" r="1.3" fill="#efeadf"/><circle cx="4" cy="17" r="1.3" fill="#efeadf"/></svg><span class="hefter-zahl" aria-hidden="true">0</span></a>
 </div></header>
 <main id="inhalt" tabindex="-1">
-<div class="bereich-ki">
+<div class="bereich-ki pk pkc">
 <nav class="ort-zeile" aria-label="Wo du bist"><div class="huelle huelle-weit"><ol><li class="ort-weg"><a href="ki.html#fahrplan">Fahrplan KI-Training</a></li><li><a href="ki.html#phase-vorbereiten">2 · Analogen Unterricht mit KI vorbereiten</a> <span class="ort-wann">(vor der Stunde)</span></li></ol></div></nav>
-<section class="bereichskopf kompakt"><div class="huelle huelle-weit pk-kopf">
-  <div class="stapel">
+<!-- Ab 4.49, Variante C (Auftrag Mario 17.11.2026): das Arbeitsblatt als Bild. In der Mitte ein gezeichnetes Blatt (dekorativ) mit
+     sechs Stellen von oben nach unten; Nummern und Namen stehen als HTML daneben. Blatt und Listen setzt tools/papierkoffer.py beim
+     Bauen aus PAPIERKOFFER.html() ein – ohne Skript stehen alle Stellen mit ihren Aufträgen untereinander. assets/papierkoffer.js macht
+     aus den Beschriftungen Schaltflächen (aria-expanded, Pfeiltasten) und öffnet je eine Stelle; die Adresse merkt sie (#stelle=…). -->
+<section class="bereichskopf kompakt"><div class="huelle huelle-weit werkzeugkopf pkc-kopf">
+  <div class="werkzeugkopf-text">
     <h1 class="h1-frage">Aufgabenkoffer auf Papier</h1>
-    <p class="detail-kurz">Dieselben Ideen wie im Aufgabenkoffer – hier für Papier, Tafel und Raum. Such dir eine Phase der Stunde aus. Ein KI-System bereitet dir das Material vor. Unterrichtet wird ohne Gerät.</p>
   </div>
-  <form class="pk-form" id="pk-form" novalidate aria-labelledby="pk-t-angaben">
-    <p class="pk-form-titel" id="pk-t-angaben">Für alle Aufträge auf dieser Seite</p>
-    <div class="schnell-felder">
-      <div class="eingabe"><label for="pk-fach">Fach</label><input type="text" id="pk-fach" autocomplete="off" placeholder="z. B. Pflege"></div>
-      <div class="eingabe"><label for="pk-thema">Thema</label><input type="text" id="pk-thema" autocomplete="off" placeholder="z. B. Sturzprophylaxe"></div>
-      <div class="eingabe"><label for="pk-gruppe">Lerngruppe</label><input type="text" id="pk-gruppe" autocomplete="off" placeholder="z. B. 2. Ausbildungsjahr"></div>
-    </div>
-    <p class="leise klein">Keine Namen, Noten oder anderen personenbezogenen Daten. Deine Angaben werden nicht gespeichert. Lässt du ein Feld leer, fragt die KI zuerst danach.</p>
-  </form>
+  <div class="werkzeugkopf-seite">
+    <p class="detail-kurz pkc-satz">Ein ganz normales Arbeitsblatt: Zu jeder Stelle bereitet dir ein KI-System das Material vor.</p>
+  </div>
 </div></section>
 
-<section class="abschnitt pk-stunde" aria-labelledby="t-pk-stunde"><div class="huelle huelle-weit stapel">
-  <h2 id="t-pk-stunde" class="klein-titel">Wo in der Stunde brauchst du eine Idee?</h2>
-  <!-- Die Stundenlinie: dieselben Phasen wie im Aufgabenkoffer (Namen aus taxonomien.js). assets/papierkoffer.js füllt Linie und Karten. -->
-  <nav aria-labelledby="t-pk-stunde"><ol class="pk-linie" id="pk-linie"></ol></nav>
-  <div id="pk-phasen"></div>
-  <noscript><p class="box">Der Aufgabenkoffer auf Papier braucht JavaScript. Die Ideen stehen auch im <a href="aufgabenkoffer.html">Aufgabenkoffer</a>, jeweils mit »Und ohne Gerät?«.</p></noscript>
+<section class="abschnitt pkc-abschnitt" style="padding-top:var(--a2)" aria-label="Das Arbeitsblatt und seine Aufträge"><div class="huelle huelle-weit pkc-huelle">
+  <div class="pkc-buehne" id="pkc-buehne" data-stelle=""><div class="pkc-blatt"><svg class="pkc-svg" viewBox="0 0 210 297" aria-hidden="true" focusable="false"><path class="pkc-papier" d="M1 1H209V266L177 296H1Z"/><rect class="pkc-r pkc-r-kopf" x="16" y="9" width="187" height="45" rx="2"/><rect class="pkc-r pkc-r-infotext" x="16" y="60" width="187" height="64" rx="2"/><rect class="pkc-r pkc-r-aufgaben" x="16" y="130" width="136" height="88" rx="2"/><rect class="pkc-r pkc-r-hilfe" x="156" y="130" width="47" height="88" rx="2"/><rect class="pkc-r pkc-r-loesung" x="16" y="228" width="155" height="33" rx="2"/><path class="pkc-r pkc-r-rueckseite" d="M177 266H209L177 296Z"/><circle class="pkc-loch" cx="8.5" cy="108" r="4.2"/><circle class="pkc-loch" cx="8.5" cy="189" r="4.2"/><rect class="pkc-t" x="26" y="16" width="90" height="9" rx="2"/><path class="pkc-pt" d="M26 37H118M26 46H98"/><rect class="pkc-kasten" x="140" y="15" width="56" height="33" rx="2"/><path class="pkc-pt" d="M148 37H188"/><path class="pkc-pt" d="M26 70H136M26 80H136M26 90H136M26 100H136M26 110H110"/><rect class="pkc-bild" x="146" y="67" width="50" height="45" rx="2"/><path class="pkc-pt" d="M153 89H189"/><rect class="pkc-t" x="26" y="138" width="8" height="8" rx="1"/><path class="pkc-pt" d="M41 142H144M41 152H122"/><rect class="pkc-t" x="26" y="166" width="8" height="8" rx="1"/><path class="pkc-pt" d="M41 170H144M41 180H116"/><rect class="pkc-t" x="26" y="194" width="8" height="8" rx="1"/><path class="pkc-pt" d="M41 198H144M41 208H128"/><rect class="pkc-karte" x="161" y="136" width="37" height="34" rx="2"/><path class="pkc-pt" d="M167 148H192M167 158H186"/><rect class="pkc-karte-o" x="161" y="178" width="37" height="34" rx="2"/><path class="pkc-pt" d="M167 190H192M167 200H184"/><path class="pkc-falz" d="M16 224H203"/><rect class="pkc-kasten" x="26" y="234" width="8" height="8" rx="1"/><path class="pkc-pt" d="M41 238H118"/><rect class="pkc-kasten" x="26" y="248" width="8" height="8" rx="1"/><path class="pkc-pt" d="M41 252H106"/><rect class="pkc-o" x="132" y="233" width="34" height="23" rx="2"/><path class="pkc-ecke" d="M177 266H209L177 296Z"/><path class="pkc-pt" d="M182 274H196"/><path class="pkc-umriss" d="M1 1H209V266L177 296H1Z"/></svg><span class="pkc-punkte" aria-hidden="true"><span class="pkc-punkt pkc-punkt-kopf" style="--x:0.095;--y:0.105">1</span><span class="pkc-punkt pkc-punkt-infotext" style="--x:0.095;--y:0.305">2</span><span class="pkc-punkt pkc-punkt-aufgaben" style="--x:0.095;--y:0.585">3</span><span class="pkc-punkt pkc-punkt-hilfe" style="--x:0.952;--y:0.585">4</span><span class="pkc-punkt pkc-punkt-loesung" style="--x:0.095;--y:0.815">5</span><span class="pkc-punkt pkc-punkt-rueckseite" style="--x:0.886;--y:0.929">6</span></span></div><ol class="pkc-stellen" aria-label="Stellen auf dem Arbeitsblatt"><li class="pkc-stelle pkc-links" style="--x:0.095;--y:0.105"><a class="pkc-knopf" href="#stelle-kopf" data-stelle="kopf"><span class="pkc-nr" aria-hidden="true">1</span><span class="pkc-linie" aria-hidden="true"></span><span class="pkc-text"><span class="sr-only">Stelle 1: </span><b>Kopf und Einstieg</b> <span class="pkc-zahl">4 Aufträge</span></span></a></li><li class="pkc-stelle pkc-links" style="--x:0.095;--y:0.305"><a class="pkc-knopf" href="#stelle-infotext" data-stelle="infotext"><span class="pkc-nr" aria-hidden="true">2</span><span class="pkc-linie" aria-hidden="true"></span><span class="pkc-text"><span class="sr-only">Stelle 2: </span><b>Infotext und Material</b> <span class="pkc-zahl">4 Aufträge</span></span></a></li><li class="pkc-stelle pkc-links" style="--x:0.095;--y:0.585"><a class="pkc-knopf" href="#stelle-aufgaben" data-stelle="aufgaben"><span class="pkc-nr" aria-hidden="true">3</span><span class="pkc-linie" aria-hidden="true"></span><span class="pkc-text"><span class="sr-only">Stelle 3: </span><b>Aufgaben</b> <span class="pkc-zahl">5 Aufträge</span></span></a></li><li class="pkc-stelle pkc-rechts" style="--x:0.952;--y:0.585"><a class="pkc-knopf" href="#stelle-hilfe" data-stelle="hilfe"><span class="pkc-nr" aria-hidden="true">4</span><span class="pkc-linie" aria-hidden="true"></span><span class="pkc-text"><span class="sr-only">Stelle 4: </span><b>Hilfe am Rand</b> <span class="pkc-zahl">3 Aufträge</span></span></a></li><li class="pkc-stelle pkc-links" style="--x:0.095;--y:0.815"><a class="pkc-knopf" href="#stelle-loesung" data-stelle="loesung"><span class="pkc-nr" aria-hidden="true">5</span><span class="pkc-linie" aria-hidden="true"></span><span class="pkc-text"><span class="sr-only">Stelle 5: </span><b>Lösung und Selbstkontrolle</b> <span class="pkc-zahl">2 Aufträge</span></span></a></li><li class="pkc-stelle pkc-rechts" style="--x:0.886;--y:0.929"><a class="pkc-knopf" href="#stelle-rueckseite" data-stelle="rueckseite"><span class="pkc-nr" aria-hidden="true">6</span><span class="pkc-linie" aria-hidden="true"></span><span class="pkc-text"><span class="sr-only">Stelle 6: </span><b>Rückseite</b> <span class="pkc-zahl">3 Aufträge</span></span></a></li></ol></div>
+  <div class="pkc-feld" id="pk-feld">
+    <form class="pk-form" id="pk-form" novalidate aria-labelledby="pk-t-angaben" hidden>
+      <p class="pk-form-titel" id="pk-t-angaben">Für alle Aufträge auf dieser Seite</p>
+      <div class="schnell-felder">
+        <div class="eingabe"><label for="pk-fach">Fach</label><input type="text" id="pk-fach" autocomplete="off" placeholder="z. B. Pflege" aria-describedby="pk-daten"></div>
+        <div class="eingabe"><label for="pk-thema">Thema</label><input type="text" id="pk-thema" autocomplete="off" placeholder="z. B. Sturzprophylaxe" aria-describedby="pk-daten"></div>
+        <div class="eingabe"><label for="pk-gruppe">Lerngruppe</label><input type="text" id="pk-gruppe" autocomplete="off" placeholder="z. B. 2. Ausbildungsjahr" aria-describedby="pk-daten"></div>
+      </div>
+      <p class="pk-daten" id="pk-daten">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p>
+      <p class="leise klein">Deine Angaben werden nicht gespeichert. Lässt du ein Feld leer, fragt die KI zuerst danach.</p>
+    </form>
+    <p class="pkc-anfang" id="pkc-anfang" hidden>Tipp eine Stelle auf dem Blatt an. Dann stehen hier ihre Aufträge an die KI.</p>
+    <section class="pk-anlass" id="stelle-kopf" aria-labelledby="pk-t-kopf"><div class="pk-anlass-kopf"><h2 id="pk-t-kopf" tabindex="-1"><span class="pkc-nr" aria-hidden="true">1</span><span class="sr-only">Stelle 1: </span>Kopf und Einstieg</h2><p class="pk-anlass-satz">Was vor der Arbeit oben steht: eine Frage, eine Vermutung, eine Entscheidung. <b class="pk-anlass-zahl">4 Aufträge</b></p><button type="button" class="knopf still pk-schliessen" data-schliessen hidden>Schließen</button></div><ul class="pk-eintraege"><li class="pk-eintrag" id="pk-abruf"><h3 class="pk-eintrag-titel">Erst erinnern</h3><p class="pk-eintrag-satz">Die Lernenden schreiben ohne Hilfe auf, was sie noch wissen. Erst danach vergleichen sie.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-abruf">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-abruf">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-abruf" rows="12" spellcheck="false" data-pk="pk-abruf" aria-describedby="d-pk-abruf"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Erst erinnern« vor, für die Phase »Einstieg«. Die Lernenden schreiben ohne Hilfe auf, was sie noch wissen. Erst danach vergleichen sie.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Zettel oder Heft, drei Fragen an der Tafel. Danach mit dem Merkzettel vergleichen.
+- Faustregel: Erst im Kopf oder auf dem Zettel. Dann aufdecken.
+- Gut geeignet: am Anfang der Stunde zur letzten Stunde; vor einer Klassenarbeit, mehrmals mit Abstand; wenn Grundwissen für die nächste Aufgabe gebraucht wird.
+- Wenig sinnvoll: wenn das Wissen noch gar nicht erarbeitet ist; wenn danach niemand vergleicht oder nachbessert; als Note oder Abfrage vor der Klasse. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-abruf">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Zettel oder Heft, drei Fragen an der Tafel. Danach mit dem Merkzettel vergleichen.</p><p><b>Faustregel:</b> Erst im Kopf oder auf dem Zettel. Dann aufdecken.</p><p><b>Phase der Stunde:</b> Einstieg, Sichern und üben</p><p><b>Papier oder Gerät?</b> Meist Papier. <a class="textlink" href="aufgabenkoffer.html#k-abruf">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-versuch"><h3 class="pk-eintrag-titel">Vorhersagen, versuchen, vergleichen</h3><p class="pk-eintrag-satz">Die Lernenden legen eine Vermutung fest, machen den Versuch selbst und stellen ihr Ergebnis neben eine echte Studie.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-versuch">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-versuch">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-versuch" rows="12" spellcheck="false" data-pk="pk-versuch" aria-describedby="d-pk-versuch"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Vorhersagen, versuchen, vergleichen« vor, für die Phase »Einstieg«. Die Lernenden legen eine Vermutung fest, machen den Versuch selbst und stellen ihr Ergebnis neben eine echte Studie.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Stoppuhr und Strichliste. Geht – aber die Zeit fehlt dann beim Deuten.
+- Faustregel: Das Gerät für den Versuch. Erklären, Anwenden und Sichern in der Lernmappe auf Papier.
+- Nutze den Kniff »Erst erleben, dann erklären«: Ein kurzes Spiel, ein kleiner Versuch oder eine Regeländerung ohne Vorwarnung. Dann eine Vermutung notieren und am Fachtext prüfen: ✓ bestätigt · + ergänzt · ✗ korrigiert.
+- Gut geeignet: wenn das Erlebte vor dem Fachbegriff kommt; wenn die Vermutung vor dem Versuch festgehalten wird; wenn danach im Raum gedeutet wird.
+- Wenig sinnvoll: mit mehreren Versuchen und Auflösungen hintereinander; wenn Erklärungen beim Weiterklicken verschwinden; wenn die ganze Theorie auch noch am Bildschirm stehen soll. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-versuch">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Stoppuhr und Strichliste. Geht – aber die Zeit fehlt dann beim Deuten.</p><p><b>Faustregel:</b> Das Gerät für den Versuch. Erklären, Anwenden und Sichern in der Lernmappe auf Papier.</p><p class="pk-kniff"><b>Kniff dazu: Erst erleben, dann erklären.</b> Ein kurzes Spiel, ein kleiner Versuch oder eine Regeländerung ohne Vorwarnung. Dann eine Vermutung notieren und am Fachtext prüfen: ✓ bestätigt · + ergänzt · ✗ korrigiert.</p><p><b>Phase der Stunde:</b> Einstieg, Erarbeitung</p><p><b>Papier oder Gerät?</b> Gerät lohnt sich oft. <a class="textlink" href="aufgabenkoffer.html#k-versuch">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-klassenbild"><h3 class="pk-eintrag-titel">Stimmen der Klasse sammeln</h3><p class="pk-eintrag-satz">Alle geben ohne Namen eine Stimme ab. Die Klasse sieht das Ergebnis auf einen Blick und spricht darüber.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-klassenbild">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-klassenbild">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-klassenbild" rows="12" spellcheck="false" data-pk="pk-klassenbild" aria-describedby="d-pk-klassenbild"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Stimmen der Klasse sammeln« vor, für die Phase »Einstieg«. Alle geben ohne Namen eine Stimme ab. Die Klasse sieht das Ergebnis auf einen Blick und spricht darüber.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Strichliste an der Tafel, verdeckte Zettel. Für eine Frage reicht das oft.
+- Faustregel: Ein Gerät vorne ist einfacher als viele Geräte zusammenzuführen.
+- Nutze den Kniff »Thesen, die ein Urteil verlangen«: Eine Positionslinie im Raum oder ein Duell zu zweit. Satzgerüst: »Ich stimme … zu / nicht zu, weil … Ein Beispiel ist … Dagegen spricht … Daraus folgt …«
+- Gut geeignet: vor und nach einem Gespräch, um zu sehen, was sich bewegt; bei Fragen, zu denen man sich ungern meldet; wenn das Bild danach wirklich besprochen wird.
+- Wenig sinnvoll: wenn das Ergebnis nur gezeigt und nicht gedeutet wird; wenn das Sammeln von vielen Geräten Zeit frisst; bei so kleinen Gruppen, dass man Stimmen erraten kann. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-klassenbild">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Strichliste an der Tafel, verdeckte Zettel. Für eine Frage reicht das oft.</p><p><b>Faustregel:</b> Ein Gerät vorne ist einfacher als viele Geräte zusammenzuführen.</p><p class="pk-kniff"><b>Kniff dazu: Thesen, die ein Urteil verlangen.</b> Eine Positionslinie im Raum oder ein Duell zu zweit. Satzgerüst: »Ich stimme … zu / nicht zu, weil … Ein Beispiel ist … Dagegen spricht … Daraus folgt …«</p><p><b>Phase der Stunde:</b> Einstieg, Übertragen und Ausblick</p><p><b>Papier oder Gerät?</b> Gerät lohnt sich oft. <a class="textlink" href="aufgabenkoffer.html#k-klassenbild">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-entscheiden"><h3 class="pk-eintrag-titel">Erst entscheiden, dann auflösen</h3><p class="pk-eintrag-satz">Die Lernenden entscheiden in einer offenen Lage und sagen, wie sicher sie sind. Erst dann erfahren sie, wie es weiterging.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-entscheiden">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-entscheiden">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-entscheiden" rows="12" spellcheck="false" data-pk="pk-entscheiden" aria-describedby="d-pk-entscheiden"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Erst entscheiden, dann auflösen« vor, für die Phase »Einstieg«. Die Lernenden entscheiden in einer offenen Lage und sagen, wie sicher sie sind. Erst dann erfahren sie, wie es weiterging.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Umgeknickte Karte, Umschlag. Hält nicht dicht – wer will, schaut nach.
+- Faustregel: Die Lehrkraft führt bis zur Lage. Die Entscheidung bleibt verdeckt und bei jeder einzelnen Person.
+- Nutze den Kniff »Zusatzinformation kippt das Urteil«: Eine Fallkarte, unten ist die Zusatzinformation umgeknickt. Erst urteilen, dann aufklappen, dann begründen, ob das Urteil bleibt.
+- Gut geeignet: wenn die Lage wirklich offen war; wenn die Auflösung erst auf Ansage der Lehrkraft kommt; wenn danach gefragt wird: Würdest du jetzt anders entscheiden?.
+- Wenig sinnvoll: wenn alle den Ausgang schon kennen; mit Belohnung für die »richtige« Entscheidung; wenn Lernende Täter oder Gewalt nachspielen sollen. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-entscheiden">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Umgeknickte Karte, Umschlag. Hält nicht dicht – wer will, schaut nach.</p><p><b>Faustregel:</b> Die Lehrkraft führt bis zur Lage. Die Entscheidung bleibt verdeckt und bei jeder einzelnen Person.</p><p class="pk-kniff"><b>Kniff dazu: Zusatzinformation kippt das Urteil.</b> Eine Fallkarte, unten ist die Zusatzinformation umgeknickt. Erst urteilen, dann aufklappen, dann begründen, ob das Urteil bleibt.</p><p><b>Phase der Stunde:</b> Einstieg, Erarbeitung, Übertragen und Ausblick</p><p><b>Papier oder Gerät?</b> Gerät lohnt sich oft. <a class="textlink" href="aufgabenkoffer.html#k-entscheiden">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li></ul></section><section class="pk-anlass" id="stelle-infotext" aria-labelledby="pk-t-infotext"><div class="pk-anlass-kopf"><h2 id="pk-t-infotext" tabindex="-1"><span class="pkc-nr" aria-hidden="true">2</span><span class="sr-only">Stelle 2: </span>Infotext und Material</h2><p class="pk-anlass-satz">Der Text oder das Material – und wie man es liest. <b class="pk-anlass-zahl">4 Aufträge</b></p><button type="button" class="knopf still pk-schliessen" data-schliessen hidden>Schließen</button></div><ul class="pk-eintraege"><li class="pk-eintrag" id="pk-lesen-schritte"><h3 class="pk-eintrag-titel">Lesen in drei Schritten</h3><p class="pk-eintrag-satz">Vorher: eine Frage aus Überschrift und Bild. Während: Abschnitte überschreiben, Unklares mit Fragezeichen. Nachher: ohne Text in drei Sätzen wiedergeben.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-lesen-schritte">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-lesen-schritte">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-lesen-schritte" rows="12" spellcheck="false" data-pk="pk-lesen-schritte" aria-describedby="d-pk-lesen-schritte"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Lesen in drei Schritten« vor, für die Phase »Erarbeitung«. Vorher: eine Frage aus Überschrift und Bild. Während: Abschnitte überschreiben, Unklares mit Fragezeichen. Nachher: ohne Text in drei Sätzen wiedergeben.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Lesekarte mit drei Feldern neben dem Text. In Vierergruppen: Rollenkarten für vorhersagen, fragen, klären, zusammenfassen.
+- Faustregel: Längere Sachtexte auf Papier. Jede Leseaufgabe hat ein Vorher, ein Während und ein Nachher.
+- Gut geeignet: bei Sachtexten, die länger als eine Seite sind; wenn die Lehrkraft die Schritte zuerst vormacht; wenn die Schritte über Wochen wiederkommen.
+- Wenig sinnvoll: wenn die Lernenden den Text noch nicht flüssig lesen können; einmal und nie wieder; als Abhakliste ohne eigene Frage an den Text. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-lesen-schritte">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Lesekarte mit drei Feldern neben dem Text. In Vierergruppen: Rollenkarten für vorhersagen, fragen, klären, zusammenfassen.</p><p><b>Faustregel:</b> Längere Sachtexte auf Papier. Jede Leseaufgabe hat ein Vorher, ein Während und ein Nachher.</p><p><b>Phase der Stunde:</b> Erarbeitung</p><p><b>Papier oder Gerät?</b> Meist Papier. Das Gerät trägt hier kaum etwas bei.</p></div></details></li><li class="pk-eintrag" id="pk-markieren"><h3 class="pk-eintrag-titel">Markieren mit Grund</h3><p class="pk-eintrag-satz">Die Lernenden markieren höchstens drei Stellen je Abschnitt und schreiben ein Stichwort an den Rand. Dann vergleichen sie mit der Markierung der Lehrkraft.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-markieren">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-markieren">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-markieren" rows="12" spellcheck="false" data-pk="pk-markieren" aria-describedby="d-pk-markieren"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Markieren mit Grund« vor, für die Phase »Erarbeitung«. Die Lernenden markieren höchstens drei Stellen je Abschnitt und schreiben ein Stichwort an den Rand. Dann vergleichen sie mit der Markierung der Lehrkraft.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Text mit Rand, zwei Stiftfarben. Für längere Texte der bessere Ort.
+- Faustregel: Wenig markieren. Nach dem Markieren kommt ein Stichwort oder eine Frage.
+- Nutze den Kniff »Merkmal – Beleg – Erklärung«: Eine Tabelle mit drei Spalten: Merkmal · Beleg (Zeile, Szene) · Erklärung. In der Bewertung gibt es für eine Aussage ohne Beleg höchstens die halbe Punktzahl.
+- Gut geeignet: wenn es eine Regel gibt: wenig, und wonach gesucht wird; wenn gute und schlechte Beispiele gezeigt wurden; wenn danach etwas mit den Markierungen geschieht.
+- Wenig sinnvoll: als »Markiere das Wichtige« ohne Regel; wenn am Ende die halbe Seite gelb ist; wenn die Markierungen nur noch einmal durchgesehen werden. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-markieren">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Text mit Rand, zwei Stiftfarben. Für längere Texte der bessere Ort.</p><p><b>Faustregel:</b> Wenig markieren. Nach dem Markieren kommt ein Stichwort oder eine Frage.</p><p class="pk-kniff"><b>Kniff dazu: Merkmal – Beleg – Erklärung.</b> Eine Tabelle mit drei Spalten: Merkmal · Beleg (Zeile, Szene) · Erklärung. In der Bewertung gibt es für eine Aussage ohne Beleg höchstens die halbe Punktzahl.</p><p><b>Phase der Stunde:</b> Erarbeitung</p><p><b>Papier oder Gerät?</b> Papier und Gerät. <a class="textlink" href="aufgabenkoffer.html#k-markieren">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-film"><h3 class="pk-eintrag-titel">Einen Film selbst steuern</h3><p class="pk-eintrag-satz">Die Lernenden sehen einen Ablauf Schritt für Schritt. Sie ziehen vor und zurück und beantworten dabei eine Frage.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-film">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-film">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-film" rows="12" spellcheck="false" data-pk="pk-film" aria-describedby="d-pk-film"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Einen Film selbst steuern« vor, für die Phase »Erarbeitung«. Die Lernenden sehen einen Ablauf Schritt für Schritt. Sie ziehen vor und zurück und beantworten dabei eine Frage.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Bildfolge auf einem Blatt. Zeigt Stationen, aber nicht den Übergang.
+- Faustregel: Ein Satz zur Bedienung davor. Eine Frage vor jeder Bewegung.
+- Gut geeignet: wenn Bewegung etwas zeigt, das ein Bild nicht zeigt; wenn vorher eine Frage gestellt ist; wenn die Lernenden das Tempo selbst bestimmen.
+- Wenig sinnvoll: wenn der Film von selbst läuft; wenn vorher nichts gedacht werden musste; ohne einen Satz dazu, wie man ihn bedient. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-film">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Bildfolge auf einem Blatt. Zeigt Stationen, aber nicht den Übergang.</p><p><b>Faustregel:</b> Ein Satz zur Bedienung davor. Eine Frage vor jeder Bewegung.</p><p><b>Phase der Stunde:</b> Erarbeitung</p><p><b>Papier oder Gerät?</b> Gerät lohnt sich oft. <a class="textlink" href="aufgabenkoffer.html#k-film">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-regler"><h3 class="pk-eintrag-titel">Regler und Modell</h3><p class="pk-eintrag-satz">Die Lernenden vermuten, was passiert. Dann verschieben sie einen Wert und sehen, was sich ändert – und was nicht.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-regler">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-regler">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-regler" rows="12" spellcheck="false" data-pk="pk-regler" aria-describedby="d-pk-regler"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Regler und Modell« vor, für die Phase »Erarbeitung«. Die Lernenden vermuten, was passiert. Dann verschieben sie einen Wert und sehen, was sich ändert – und was nicht.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Jede Variante wäre ein neues Blatt. Zwei oder drei Fälle als Tabelle gehen.
+- Faustregel: Erst vermuten, dann gibt der Regler frei. Jedes Modell heißt Modell.
+- Gut geeignet: wenn ein einzelner Wert eine sichtbare Folge hat; wenn vor dem Schieben vermutet wird; wenn am Ende gefragt wird: Was lässt dieses Modell weg?.
+- Wenig sinnvoll: mit vielen Reglern gleichzeitig; wenn nur gespielt wird, ohne Frage; wenn das Modell wie die Wirklichkeit aussieht. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-regler">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Jede Variante wäre ein neues Blatt. Zwei oder drei Fälle als Tabelle gehen.</p><p><b>Faustregel:</b> Erst vermuten, dann gibt der Regler frei. Jedes Modell heißt Modell.</p><p><b>Phase der Stunde:</b> Erarbeitung</p><p><b>Papier oder Gerät?</b> Gerät lohnt sich oft. <a class="textlink" href="aufgabenkoffer.html#k-regler">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li></ul></section><section class="pk-anlass" id="stelle-aufgaben" aria-labelledby="pk-t-aufgaben"><div class="pk-anlass-kopf"><h2 id="pk-t-aufgaben" tabindex="-1"><span class="pkc-nr" aria-hidden="true">3</span><span class="sr-only">Stelle 3: </span>Aufgaben</h2><p class="pk-anlass-satz">Die Aufträge in der Mitte: sortieren, legen, einordnen, urteilen. <b class="pk-anlass-zahl">5 Aufträge</b></p><button type="button" class="knopf still pk-schliessen" data-schliessen hidden>Schließen</button></div><ul class="pk-eintraege"><li class="pk-eintrag" id="pk-zuordnen"><h3 class="pk-eintrag-titel">Zuordnen und Sortieren</h3><p class="pk-eintrag-satz">Die Lernenden ordnen Beispiele einer Gruppe zu und nennen den Grund.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-zuordnen">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-zuordnen">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-zuordnen" rows="12" spellcheck="false" data-pk="pk-zuordnen" aria-describedby="d-pk-zuordnen"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Zuordnen und Sortieren« vor, für die Phase »Erarbeitung«. Die Lernenden ordnen Beispiele einer Gruppe zu und nennen den Grund.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Kärtchen und Felder auf dem Tisch, Kontrollkarte nach fünf Karten.
+- Faustregel: Ab fünf Karten: unterwegs prüfen. Falsche Karten zurücklegen können. Stand speichern.
+- Nutze den Kniff »Sortieren mit Zwischenstand«: Kartensatz mit Kontrollkarte: Nach jeder Fünfergruppe die Kontrollkarte umdrehen, Falsche zurück in den Stapel, weiter.
+- Nutze den Kniff »Merkmal – Beleg – Erklärung«: Eine Tabelle mit drei Spalten: Merkmal · Beleg (Zeile, Szene) · Erklärung. In der Bewertung gibt es für eine Aussage ohne Beleg höchstens die halbe Punktzahl.
+- Gut geeignet: wenn Beispiele mehrdeutig sein dürfen und ein Grund verlangt wird; wenn jede Zuordnung eine erklärende Rückmeldung bekommt; mit Zwischenstand, sobald es mehr als fünf Karten sind.
+- Wenig sinnvoll: wenn nur geschoben wird, bis es passt; wenn die Gruppen schon alles verraten; bei wenigen Karten – da reicht der Tisch. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-zuordnen">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Kärtchen und Felder auf dem Tisch, Kontrollkarte nach fünf Karten.</p><p><b>Faustregel:</b> Ab fünf Karten: unterwegs prüfen. Falsche Karten zurücklegen können. Stand speichern.</p><p class="pk-kniff"><b>Kniff dazu: Sortieren mit Zwischenstand.</b> Kartensatz mit Kontrollkarte: Nach jeder Fünfergruppe die Kontrollkarte umdrehen, Falsche zurück in den Stapel, weiter.</p><p class="pk-kniff"><b>Kniff dazu: Merkmal – Beleg – Erklärung.</b> Eine Tabelle mit drei Spalten: Merkmal · Beleg (Zeile, Szene) · Erklärung. In der Bewertung gibt es für eine Aussage ohne Beleg höchstens die halbe Punktzahl.</p><p><b>Phase der Stunde:</b> Erarbeitung, Sichern und üben</p><p><b>Papier oder Gerät?</b> Gerät lohnt sich oft. <a class="textlink" href="aufgabenkoffer.html#k-zuordnen">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-reihe"><h3 class="pk-eintrag-titel">Eine Reihe legen</h3><p class="pk-eintrag-satz">Die Lernenden bringen Schritte oder Ereignisse in die richtige Folge und sagen, was woraus folgt.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-reihe">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-reihe">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-reihe" rows="12" spellcheck="false" data-pk="pk-reihe" aria-describedby="d-pk-reihe"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Eine Reihe legen« vor, für die Phase »Sichern und üben«. Die Lernenden bringen Schritte oder Ereignisse in die richtige Folge und sagen, was woraus folgt.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Streifen auf dem Tisch. Geht gut, auch zu zweit.
+- Faustregel: Zwischen zwei Karten gehört ein Wort: dann, weil, führt zu.
+- Nutze den Kniff »Sortieren mit Zwischenstand«: Kartensatz mit Kontrollkarte: Nach jeder Fünfergruppe die Kontrollkarte umdrehen, Falsche zurück in den Stapel, weiter.
+- Gut geeignet: für Verfahren, Abläufe, Zeitfolgen; wenn zwischen zwei Karten ein »weil« oder »dann« gesagt werden muss; wenn ein Schritt bewusst fehlt und ergänzt wird.
+- Wenig sinnvoll: wenn die Reihenfolge nur auswendig gelernt ist; wenn die Karten nummeriert aussehen; wenn es in Wahrheit kein Nacheinander gibt. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-reihe">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Streifen auf dem Tisch. Geht gut, auch zu zweit.</p><p><b>Faustregel:</b> Zwischen zwei Karten gehört ein Wort: dann, weil, führt zu.</p><p><b>Kniff dazu: Sortieren mit Zwischenstand.</b> Er steht ausführlich bei <a class="textlink" href="#pk-zuordnen">Zuordnen und Sortieren</a></p><p><b>Phase der Stunde:</b> Sichern und üben, Erarbeitung</p><p><b>Papier oder Gerät?</b> Papier und Gerät. <a class="textlink" href="aufgabenkoffer.html#k-reihe">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-struktur"><h3 class="pk-eintrag-titel">Struktur legen</h3><p class="pk-eintrag-satz">Die Lernenden legen Begriffe zu einem Bild. An jeder Verbindung steht ein Wort. Jede Lage wird begründet.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-struktur">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-struktur">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-struktur" rows="12" spellcheck="false" data-pk="pk-struktur" aria-describedby="d-pk-struktur"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Struktur legen« vor, für die Phase »Sichern und üben«. Die Lernenden legen Begriffe zu einem Bild. An jeder Verbindung steht ein Wort. Jede Lage wird begründet.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Kartensatz, Pfeile mit Wort. Erst sortieren: kann ich erklären oder noch nicht. Dann legen.
+- Faustregel: Selbst legen. Wenige Arten von Verbindungen. Die Lösung der Lehrkraft erst danach.
+- Nutze den Kniff »Stolperkarten«: Ein Legeplan auf A3 mit 15 bis 20 Karten, drei davon Stolperkarten, und ein Feld »Gehört nicht auf den Plan, weil …«. Als Hilfe die Karten in Farben kopieren, als Herausforderung alle weiß.
+- Gut geeignet: am Ende eines Themas oder vor der Klassenarbeit; wenn selbst gelegt wird – nicht ein fertiges Bild angeschaut; wenn über mehrere Stunden weitergelegt wird.
+- Wenig sinnvoll: bevor die Begriffe einzeln geklärt sind; mit mehr als fünf Arten von Verbindungen; wenn die Lösung der Lehrkraft schon sichtbar ist. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-struktur">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Kartensatz, Pfeile mit Wort. Erst sortieren: kann ich erklären oder noch nicht. Dann legen.</p><p><b>Faustregel:</b> Selbst legen. Wenige Arten von Verbindungen. Die Lösung der Lehrkraft erst danach.</p><p class="pk-kniff"><b>Kniff dazu: Stolperkarten.</b> Ein Legeplan auf A3 mit 15 bis 20 Karten, drei davon Stolperkarten, und ein Feld »Gehört nicht auf den Plan, weil …«. Als Hilfe die Karten in Farben kopieren, als Herausforderung alle weiß.</p><p><b>Phase der Stunde:</b> Sichern und üben</p><p><b>Papier oder Gerät?</b> Papier und Gerät. <a class="textlink" href="aufgabenkoffer.html#k-struktur">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-einordnen"><h3 class="pk-eintrag-titel">Einen Fall einordnen</h3><p class="pk-eintrag-satz">Die Lernenden ordnen einen Fall mit festen Merkmalen ein, etwa auf einer Skala. Dann vergleichen sie mit einem begründeten Vorschlag.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-einordnen">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-einordnen">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-einordnen" rows="12" spellcheck="false" data-pk="pk-einordnen" aria-describedby="d-pk-einordnen"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Einen Fall einordnen« vor, für die Phase »Übertragen und Ausblick«. Die Lernenden ordnen einen Fall mit festen Merkmalen ein, etwa auf einer Skala. Dann vergleichen sie mit einem begründeten Vorschlag.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Skala auf dem Blatt, Kreuz setzen, Begründung darunter. Geht gut.
+- Faustregel: Erst selbst setzen, dann vergleichen. Der Vorschlag ist ein Vorschlag.
+- Gut geeignet: wenn die Merkmale vorher geklärt sind; wenn erst selbst eingeordnet und dann verglichen wird; wenn ein »dazwischen« erlaubt ist.
+- Wenig sinnvoll: wenn es nur eine richtige Schublade gibt – dann besser Zuordnen; wenn der Vorschlag als Lösung auftritt; ohne Begründung in einem Satz. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-einordnen">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Skala auf dem Blatt, Kreuz setzen, Begründung darunter. Geht gut.</p><p><b>Faustregel:</b> Erst selbst setzen, dann vergleichen. Der Vorschlag ist ein Vorschlag.</p><p><b>Phase der Stunde:</b> Übertragen und Ausblick, Erarbeitung</p><p><b>Papier oder Gerät?</b> Papier und Gerät. <a class="textlink" href="aufgabenkoffer.html#k-einordnen">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-urteil"><h3 class="pk-eintrag-titel">Ein Urteil schreiben</h3><p class="pk-eintrag-satz">Die Lernenden schreiben ein begründetes Urteil zu einer strittigen These und vertreten es im Gespräch.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-urteil">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-urteil">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-urteil" rows="12" spellcheck="false" data-pk="pk-urteil" aria-describedby="d-pk-urteil"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Ein Urteil schreiben« vor, für die Phase »Übertragen und Ausblick«. Die Lernenden schreiben ein begründetes Urteil zu einer strittigen These und vertreten es im Gespräch.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Heft oder Blatt, Erwartungshorizont zur Selbstkontrolle, Gespräch.
+- Faustregel: Deuten, streiten und urteilen geschieht im Raum.
+- Nutze den Kniff »Antworten vergleichen und verbessern«: Drei Antworten: Meinung statt Urteil · teilweise · alle Kriterien erfüllt. Eine Rangfolge bilden, die mittlere umschreiben, dann die eigene Antwort mit der Partnerin tauschen.
+- Gut geeignet: wenn die These ein Urteil erzwingt; wenn Kriterien für ein gutes Urteil bekannt sind; wenn das Urteil im Raum besprochen wird.
+- Wenig sinnvoll: mit automatischer Bewertung; mit einer Musterlösung zum Abschreiben; wenn ein KI-System den Text schreibt. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-urteil">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Heft oder Blatt, Erwartungshorizont zur Selbstkontrolle, Gespräch.</p><p><b>Faustregel:</b> Deuten, streiten und urteilen geschieht im Raum.</p><p class="pk-kniff"><b>Kniff dazu: Antworten vergleichen und verbessern.</b> Drei Antworten: Meinung statt Urteil · teilweise · alle Kriterien erfüllt. Eine Rangfolge bilden, die mittlere umschreiben, dann die eigene Antwort mit der Partnerin tauschen.</p><p><b>Phase der Stunde:</b> Übertragen und Ausblick, Erarbeitung</p><p><b>Papier oder Gerät?</b> Meist Papier. Das Gerät trägt hier kaum etwas bei.</p></div></details></li></ul></section><section class="pk-anlass" id="stelle-hilfe" aria-labelledby="pk-t-hilfe"><div class="pk-anlass-kopf"><h2 id="pk-t-hilfe" tabindex="-1"><span class="pkc-nr" aria-hidden="true">4</span><span class="sr-only">Stelle 4: </span>Hilfe am Rand</h2><p class="pk-anlass-satz">Hilfen neben der Aufgabe: Tippkarten, Hilfe- und Expertenkarten, ein Hilfekasten. <b class="pk-anlass-zahl">3 Aufträge</b></p><button type="button" class="knopf still pk-schliessen" data-schliessen hidden>Schließen</button></div><ul class="pk-eintraege"><li class="pk-eintrag" id="pk-stufen"><h3 class="pk-eintrag-titel">Gestufte Zugänge und Hilfen</h3><p class="pk-eintrag-satz">Die Lernenden wählen am selben Inhalt einen Zugang: Einstieg, Vertiefung oder Kontroverse. Hilfen öffnen sie selbst, wenn sie sie brauchen.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-stufen">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-stufen">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-stufen" rows="12" spellcheck="false" data-pk="pk-stufen" aria-describedby="d-pk-stufen"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Gestufte Zugänge und Hilfen« vor, für die Phase »Erarbeitung«. Die Lernenden wählen am selben Inhalt einen Zugang: Einstieg, Vertiefung oder Kontroverse. Hilfen öffnen sie selbst, wenn sie sie brauchen.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Drei Arbeitsblätter oder Tippkarten zum Abholen. Geht – aber alle sehen, wer was nimmt.
+- Faustregel: Ein Inhalt, mehrere Zugänge. Hilfen am selben Ort.
+- Nutze den Kniff »Hilfe- und Expertenkarten«: Grün: Satzanfänge, Begriffsliste, Leitfragen, ein Wortspeicher mit Artikel. Orange: ein Grenzfall, eine weitere Sicht oder eine Quelle.
+- Gut geeignet: wenn die Lerngruppe sehr verschieden ist; wenn alle Stufen zum selben Ziel führen; wenn Hilfen am selben Ort aufgehen, ohne neue Seite.
+- Wenig sinnvoll: wenn die leichte Stufe weniger Inhalt hat; wenn die Lehrkraft die Stufe zuteilt und alle es sehen; wenn Hilfe erst nach einem Fehlversuch kommt. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-stufen">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Drei Arbeitsblätter oder Tippkarten zum Abholen. Geht – aber alle sehen, wer was nimmt.</p><p><b>Faustregel:</b> Ein Inhalt, mehrere Zugänge. Hilfen am selben Ort.</p><p><b>Kniff dazu: Hilfe- und Expertenkarten.</b> Er steht in diesem Anlass als eigener Auftrag: <a class="textlink" href="#pk-hilfekarten">Hilfe- und Expertenkarten</a></p><p><b>Phase der Stunde:</b> Erarbeitung, Sichern und üben</p><p><b>Papier oder Gerät?</b> Gerät lohnt sich oft. <a class="textlink" href="aufgabenkoffer.html#k-stufen">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-hilfekarten"><h3 class="pk-eintrag-titel">Hilfe- und Expertenkarten</h3><p class="pk-eintrag-satz">Alle arbeiten an derselben Aufgabe. Grüne Karten erleichtern den Zugang, orange Karten vertiefen.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-hilfekarten">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-hilfekarten">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-hilfekarten" rows="12" spellcheck="false" data-pk="pk-hilfekarten" aria-describedby="d-pk-hilfekarten"># Ziel
+Erstelle zu der Aufgabe unten grüne Hilfekarten und orange Expertenkarten.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- Grüne Karten: Satzanfänge, eine Begriffsliste, zwei bis drei Leitfragen und einen Wortspeicher mit Artikel.
+- Die Hilfen erleichtern den Zugang, verraten aber nicht die Lösung.
+- Orange Karten: ein Grenzfall, eine weitere Sicht oder eine Quelle zum Weiterdenken.
+- Alle Karten passen zur selben Aufgabe.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zwei Listen: grüne Karten und orange Karten, je mit Überschrift und höchstens vier Zeilen Text.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Kann jemand mit einer grünen Karte die Aufgabe lösen, ohne dass die Karte die Lösung verrät?
+- Ist jede Expertenkarte fachlich richtig?
+
+# Material
+(Hier dein Material einfügen oder anhängen – ohne Namen, Noten oder andere personenbezogene Daten.)</textarea><p class="pk-daten" id="d-pk-hilfekarten">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zum Kniff</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Grün: Satzanfänge, Begriffsliste, Leitfragen, ein Wortspeicher mit Artikel. Orange: ein Grenzfall, eine weitere Sicht oder eine Quelle.</p><p><b>Warum es trägt:</b> Hilfen erleichtern den Zugang. Das Denken nehmen sie den Lernenden nicht ab.</p><p><b>Phase der Stunde:</b> In jeder Phase</p><p><a class="textlink" href="aufgabenkoffer.html#kn-hilfekarten">Derselbe Kniff am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-uebersicht"><h3 class="pk-eintrag-titel">Übersicht statt Klickstrecke</h3><p class="pk-eintrag-satz">Eine Arbeitsphase hat eine Seite: Alles, was dazugehört, liegt nebeneinander. Hilfen und Details öffnen am selben Ort, nicht auf einer neuen Seite.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-uebersicht">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-uebersicht">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-uebersicht" rows="12" spellcheck="false" data-pk="pk-uebersicht" aria-describedby="d-pk-uebersicht"># Ziel
+Baue eine Arbeitsphase nach dem Muster »Übersicht statt Klickstrecke« um.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- Die ganze Phase liegt auf einer Fläche: Auftrag, Material, Hilfen, Ergebnisfeld.
+- Hilfen und Vertiefungen öffnen am selben Ort, nicht auf einer neuen Seite.
+- Bis zur ersten eigenen Antwort brauchen die Lernenden höchstens drei Schritte.
+- Wenige Rahmen und Linien: Flächen trennen, Linien nur, wo sie etwas bedeuten.
+- Zähle am Ende, wie viele Seitenwechsel und Tipps die Phase verlangt, und nenne die Zahl.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Eine Skizze der Fläche in Worten (was liegt wo), der Auftrag im Wortlaut, die Hilfen, die Zählung der Schritte.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Liegt wirklich alles auf einer Fläche?
+- Gibt es eine Stelle, an der man ohne Nachdenken weiterklicken kann?</textarea><p class="pk-daten" id="d-pk-uebersicht">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zum Kniff</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Ein Plakat oder ein Doppelblatt je Phase: Material, Auftrag und Hilfekasten auf einer Fläche. Nichts zum Blättern, bis die Phase vorbei ist.</p><p><b>Warum es trägt:</b> Wer vieles zum ersten Mal sieht, braucht Orientierung. Jeder Seitenwechsel kostet davon etwas. Eine Übersicht lässt in Ruhe umschauen und vergleichen.</p><p><b>Phase der Stunde:</b> In jeder Phase</p><p><a class="textlink" href="aufgabenkoffer.html#kn-uebersicht">Derselbe Kniff am Gerät <span aria-hidden="true">→</span></a></p></div></details></li></ul></section><section class="pk-anlass" id="stelle-loesung" aria-labelledby="pk-t-loesung"><div class="pk-anlass-kopf"><h2 id="pk-t-loesung" tabindex="-1"><span class="pkc-nr" aria-hidden="true">5</span><span class="sr-only">Stelle 5: </span>Lösung und Selbstkontrolle</h2><p class="pk-anlass-satz">Unten zum Umknicken: Lösungen mit Erklärungen und eine Liste »Ich kann …«. <b class="pk-anlass-zahl">2 Aufträge</b></p><button type="button" class="knopf still pk-schliessen" data-schliessen hidden>Schließen</button></div><ul class="pk-eintraege"><li class="pk-eintrag" id="pk-auswahl"><h3 class="pk-eintrag-titel">Auswahlaufgabe mit Rückmeldung</h3><p class="pk-eintrag-satz">Die Lernenden wählen eine Antwort. Das Gerät erklärt sofort, warum sie passt oder nicht.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-auswahl">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-auswahl">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-auswahl" rows="12" spellcheck="false" data-pk="pk-auswahl" aria-describedby="d-pk-auswahl"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Auswahlaufgabe mit Rückmeldung« vor, für die Phase »Sichern und üben«. Die Lernenden wählen eine Antwort. Das Gerät erklärt sofort, warum sie passt oder nicht.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Lösungsblatt mit Erklärungen, Partnerkorrektur. Geht – aber später und nicht für jede gewählte Antwort.
+- Faustregel: Die Rückmeldung ist der erklärende Text. Zu jeder Antwort einer.
+- Nutze den Kniff »Fehlvorstellungen dreimal nutzen«: Ausgangsticket »Stimmt – oder stimmt nicht?«: fünf Aussagen, ein Kreuz und ein Satz Begründung. Einsammeln und für die nächste Stunde auswerten.
+- Gut geeignet: wenn es eine klare Antwort gibt; wenn jede falsche Antwort ein echter Irrtum ist, den Lernende haben; zum Üben ohne Warten auf die Lehrkraft.
+- Wenig sinnvoll: bei Fragen, die ein Urteil oder eine Begründung brauchen; wenn nur »richtig« oder »falsch« erscheint – das lädt zum Raten ein; mit Punkten, Ranglisten oder Belohnungen. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-auswahl">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Lösungsblatt mit Erklärungen, Partnerkorrektur. Geht – aber später und nicht für jede gewählte Antwort.</p><p><b>Faustregel:</b> Die Rückmeldung ist der erklärende Text. Zu jeder Antwort einer.</p><p class="pk-kniff"><b>Kniff dazu: Fehlvorstellungen dreimal nutzen.</b> Ausgangsticket »Stimmt – oder stimmt nicht?«: fünf Aussagen, ein Kreuz und ein Satz Begründung. Einsammeln und für die nächste Stunde auswerten.</p><p><b>Phase der Stunde:</b> Sichern und üben</p><p><b>Papier oder Gerät?</b> Gerät lohnt sich oft. <a class="textlink" href="aufgabenkoffer.html#k-auswahl">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-einschaetzen"><h3 class="pk-eintrag-titel">Sich selbst einschätzen</h3><p class="pk-eintrag-satz">Die Lernenden schätzen zu mehreren Zeitpunkten ein, was sie schon können, und wählen danach, was sie üben.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-einschaetzen">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-einschaetzen">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-einschaetzen" rows="12" spellcheck="false" data-pk="pk-einschaetzen" aria-describedby="d-pk-einschaetzen"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Sich selbst einschätzen« vor, für die Phase »Sichern und üben«. Die Lernenden schätzen zu mehreren Zeitpunkten ein, was sie schon können, und wählen danach, was sie üben.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Liste mit »Ich kann …«, drei Spalten für drei Zeitpunkte. Geht gut.
+- Faustregel: Lernhilfe, keine Leistungsmessung. Keine Punkte, keine Ranglisten.
+- Nutze den Kniff »Selbstdiagnose vor dem Üben«: Acht »Ich kann …«-Sätze mit je einer Prüffrage, ohne Unterlagen. Einschätzen: ✓ sicher · ~ teilweise · ? unsicher. Erst dann den Lösungsstreifen umknicken und passende Stationen wählen.
+- Gut geeignet: am Anfang, in der Mitte und am Ende einer Einheit; wenn die Einschätzung zu einer Aufgabe führt; wenn sie mit einer Probe verglichen wird.
+- Wenig sinnvoll: als Note oder Vergleich mit anderen; wenn danach nichts anders gemacht wird; nur einmal am Ende. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-einschaetzen">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Liste mit »Ich kann …«, drei Spalten für drei Zeitpunkte. Geht gut.</p><p><b>Faustregel:</b> Lernhilfe, keine Leistungsmessung. Keine Punkte, keine Ranglisten.</p><p class="pk-kniff"><b>Kniff dazu: Selbstdiagnose vor dem Üben.</b> Acht »Ich kann …«-Sätze mit je einer Prüffrage, ohne Unterlagen. Einschätzen: ✓ sicher · ~ teilweise · ? unsicher. Erst dann den Lösungsstreifen umknicken und passende Stationen wählen.</p><p><b>Phase der Stunde:</b> Sichern und üben, Übertragen und Ausblick</p><p><b>Papier oder Gerät?</b> Papier und Gerät. <a class="textlink" href="aufgabenkoffer.html#k-einschaetzen">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li></ul></section><section class="pk-anlass" id="stelle-rueckseite" aria-labelledby="pk-t-rueckseite"><div class="pk-anlass-kopf"><h2 id="pk-t-rueckseite" tabindex="-1"><span class="pkc-nr" aria-hidden="true">6</span><span class="sr-only">Stelle 6: </span>Rückseite</h2><p class="pk-anlass-satz">Was dahinter liegt: Karteikarten, ein Ausgangsticket, ein Plan zum Erklären. <b class="pk-anlass-zahl">3 Aufträge</b></p><button type="button" class="knopf still pk-schliessen" data-schliessen hidden>Schließen</button></div><ul class="pk-eintraege"><li class="pk-eintrag" id="pk-kartei"><h3 class="pk-eintrag-titel">Karteikarten</h3><p class="pk-eintrag-satz">Die Lernenden beantworten eine Karte laut oder schriftlich. Erst dann drehen sie um und sortieren: wusste ich, teilweise, noch nicht.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-kartei">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-kartei">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-kartei" rows="12" spellcheck="false" data-pk="pk-kartei" aria-describedby="d-pk-kartei"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Karteikarten« vor, für die Phase »Sichern und üben«. Die Lernenden beantworten eine Karte laut oder schriftlich. Erst dann drehen sie um und sortieren: wusste ich, teilweise, noch nicht.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Karten aus Papier und ein Kasten mit Fächern. Reicht für die meisten.
+- Faustregel: Erst antworten, dann umdrehen.
+- Gut geeignet: für Fachbegriffe, Definitionen, Formeln; wenn über mehrere Wochen wiederholt wird; wenn die Karten in eigenen Worten geschrieben sind.
+- Wenig sinnvoll: wenn nur umgedreht und gelesen wird; für alles auf einmal am Abend vorher; für Zusammenhänge – dafür besser »Struktur legen«. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-kartei">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Karten aus Papier und ein Kasten mit Fächern. Reicht für die meisten.</p><p><b>Faustregel:</b> Erst antworten, dann umdrehen.</p><p><b>Phase der Stunde:</b> Sichern und üben</p><p><b>Papier oder Gerät?</b> Papier und Gerät. <a class="textlink" href="aufgabenkoffer.html#k-kartei">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-fehlvorstellungen"><h3 class="pk-eintrag-titel">Fehlvorstellungen dreimal nutzen</h3><p class="pk-eintrag-satz">Eine typische Fehlvorstellung taucht dreimal auf: als Satz im Fall am Anfang, im Ausgangsticket am Ende und als unterste Stufe im Bewertungsraster.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-fehlvorstellungen">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-fehlvorstellungen">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-fehlvorstellungen" rows="12" spellcheck="false" data-pk="pk-fehlvorstellungen" aria-describedby="d-pk-fehlvorstellungen"># Ziel
+Sammle typische Fehlvorstellungen zu meinem Thema und mach daraus ein Ausgangsticket.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- Fünf bis acht Fehlvorstellungen als Satz, den Lernende wirklich sagen würden. Daneben je eine fachliche Klärung in einem Satz.
+- Ein Ausgangsticket »Stimmt – oder stimmt nicht?« mit fünf Aussagen, gemischt richtig und falsch, damit Raten nicht hilft.
+- Jede Aussage verlangt ein Kreuz und einen Satz Begründung.
+- Ein Vorschlag, wie eine der Fehlvorstellungen als Satz einer Figur in einem Einstiegsfall auftauchen kann.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Tabelle der Fehlvorstellungen mit Klärung, dann das Ausgangsticket zum Ausdrucken, dann der Satz für den Einstiegsfall.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Sind die Klärungen fachlich richtig?
+- Klingen die Aussagen nach Lernenden und nicht nach Lehrbuch?</textarea><p class="pk-daten" id="d-pk-fehlvorstellungen">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zum Kniff</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Ausgangsticket »Stimmt – oder stimmt nicht?«: fünf Aussagen, ein Kreuz und ein Satz Begründung. Einsammeln und für die nächste Stunde auswerten.</p><p><b>Warum es trägt:</b> So zeigt sich, ob sich das Alltagsurteil durch das Fachwissen verändert hat.</p><p><b>Phase der Stunde:</b> In jeder Phase</p><p><a class="textlink" href="aufgabenkoffer.html#kn-fehlvorstellungen">Derselbe Kniff am Gerät <span aria-hidden="true">→</span></a></p></div></details></li><li class="pk-eintrag" id="pk-video"><h3 class="pk-eintrag-titel">Ein Erklärvideo erstellen</h3><p class="pk-eintrag-satz">Die Lernenden erklären einen Inhalt in einer oder zwei Minuten für andere – erst als Plan auf Papier, dann als Aufnahme.</p><p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-pk-video">Auftrag kopieren</button><span class="pk-status" aria-live="polite"></span></p><details class="mehr pk-auftrag"><summary>Auftrag an die KI ansehen</summary><label class="pk-label" for="a-pk-video">Auftrag an die KI – du kannst ihn ändern</label><textarea id="a-pk-video" rows="12" spellcheck="false" data-pk="pk-video" aria-describedby="d-pk-video"># Ziel
+Bereite Material auf Papier für die Aufgabenform »Ein Erklärvideo erstellen« vor, für die Phase »Übertragen und Ausblick«. Die Lernenden erklären einen Inhalt in einer oder zwei Minuten für andere – erst als Plan auf Papier, dann als Aufnahme.
+
+# Kontext
+Frage mich zuerst nach: Fach, Thema, Lerngruppe. Beginne erst danach.
+
+# Anforderungen
+- So geht es auf Papier: Plakat, kurzer Vortrag, Erklären zu zweit. Das Erklären selbst braucht kein Gerät.
+- Faustregel: Erst der Plan auf Papier. Höchstens zwei Minuten. Die Aufnahme ist der kleinste Teil.
+- Gut geeignet: wenn Erklären das Lernziel ist; wenn der Plan vor der Aufnahme steht und geprüft ist; wenn die Videos danach angesehen und besprochen werden.
+- Wenig sinnvoll: wenn Schnitt und Technik die meiste Zeit brauchen; wenn der Text abgelesen wird; ohne Regeln zu Bildrechten und zu Gesichtern und Stimmen im Bild. Richte das Material danach aus.
+- Die Lernenden arbeiten zuerst allein und ohne Gerät. Sie schreiben von Hand.
+- Kurze Sätze, Arbeitsaufträge mit einem klaren Verb, Anrede »du«.
+- Das Material passt auf höchstens zwei Seiten A4 und lässt Platz zum Schreiben.
+- Gib keine erfundenen Quellen, Zahlen oder Zitate an. Wenn du etwas nicht sicher weißt, kennzeichne es.
+- Verwende keine personenbezogenen Daten.
+
+# Format
+Zuerst das Material zum Ausdrucken, mit allen Arbeitsaufträgen im Wortlaut. Darunter für mich: der Ablauf in drei bis fünf Schritten mit Minuten, eine Frage für das Gespräch im Raum und eine Lösung oder ein Erwartungshorizont.
+
+# Prüfkriterien
+Prüfe dein Ergebnis am Ende selbst und sag mir, wo ich nachsehen sollte:
+- Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?
+- Ist jeder Auftrag ohne Rückfrage verständlich?
+- Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</textarea><p class="pk-daten" id="d-pk-video">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p></details><details class="mehr pk-mehr"><summary>Mehr zur Idee</summary><div class="pk-mehr-text"><p><b>Auf Papier:</b> Plakat, kurzer Vortrag, Erklären zu zweit. Das Erklären selbst braucht kein Gerät.</p><p><b>Faustregel:</b> Erst der Plan auf Papier. Höchstens zwei Minuten. Die Aufnahme ist der kleinste Teil.</p><p><b>Phase der Stunde:</b> Übertragen und Ausblick</p><p><b>Papier oder Gerät?</b> Papier und Gerät. <a class="textlink" href="aufgabenkoffer.html#k-video">Dieselbe Idee am Gerät <span aria-hidden="true">→</span></a></p></div></details></li></ul></section><details class="mehr pk-vertiefung" id="pk-pruefen"><summary>So prüfst du das Ergebnis – und was nicht hineingehört</summary><div class="pk-mehr-text"><p>Jeder Auftrag bittet die KI, ihr Ergebnis an diesen Fragen zu prüfen. Prüf sie selbst noch einmal, bevor du kopierst:</p><ul class="pk-pruefliste"><li>Tun die Lernenden selbst, was die Aufgabenform verlangt – oder schreiben sie nur ab?</li><li>Ist jeder Auftrag ohne Rückfrage verständlich?</li><li>Stimmen die Fachinhalte? Kennzeichne, was ich nachprüfen sollte.</li></ul><p><b>Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</b> Deine Angaben werden nicht gespeichert und nirgends hingeschickt: Kidu baut nur den Text, den du kopierst.</p><p>Mehr dazu: <a class="textlink" href="sicher.html">Sicher arbeiten in fünf Regeln <span aria-hidden="true">→</span></a></p></div></details>
+  </div>
 </div></section>
 
 <section class="abschnitt band-karton" aria-labelledby="t-pk-woher"><div class="huelle stapel">
   <h2 id="t-pk-woher" class="klein-titel">Woher die Ideen kommen</h2>
   <p class="mass">Es sind dieselben Aufgabenformen und Kniffe wie im <a class="textlink" href="aufgabenkoffer.html">Aufgabenkoffer</a> des Digitalen Unterrichts. Was dort unter »Und ohne Gerät?« und »Auf Papier« steht, ist hier der Hauptweg. Die Kniffe stammen aus Stunden, die mit Kidu-Lernseiten gehalten wurden. Das sind persönliche Beobachtungen, kein Nachweis der Wirkung.</p>
-  <p class="mass">Zu jeder Idee steht, wo sie meist am besten aufgehoben ist. Das ist kein Rang: Papier ist ein vollwertiges Ergebnis. Willst du wissen, ob das Gerät an einer Stelle mehr kann, nimm die <a class="textlink" href="papierfrage.html">Papierfrage</a>.</p>
+  <p class="mass">An welche Stelle des Blatts eine Idee gehört, ist ein Vorschlag. Unter »Mehr zur Idee« steht, wo sie meist am besten aufgehoben ist. Das ist kein Rang: Papier ist ein vollwertiges Ergebnis. Willst du wissen, ob das Gerät an einer Stelle mehr kann, nimm die <a class="textlink" href="papierfrage.html">Papierfrage</a>.</p>
 </div></section>
 <nav class="fahrplan-fuss" aria-label="Fahrplan KI-Training"><div class="huelle huelle-weit fahrplan-fuss-innen">
   <div class="fahrplan-fuss-auch">
@@ -75,11 +590,11 @@
 <script src="assets/daten/taxonomien.js?v=eb73b10b"></script>
 <script src="assets/hilde.js?v=e22353fb"></script>
 <script src="assets/daten/aufgaben.js?v=87aa0280"></script>
-<script src="assets/daten/koffer-ideen.js?v=40cbae08"></script>
+<script src="assets/daten/koffer-ideen.js?v=dce44035"></script>
 <script src="assets/daten/werkstatt.js?v=66bf926c"></script>
 <script src="assets/daten/schnell.js?v=3b6b187b"></script>
 <script src="assets/schnell-anfrage.js?v=c93dfd0d"></script>
-<script src="assets/papierkoffer.js?v=067bd21f"></script>
+<script src="assets/papierkoffer.js?v=1b0cdc9f"></script>
 
 </main>
 <footer class="fuss"><div class="huelle">

@@ -1,33 +1,40 @@
-<div class="bereich-ki">
+<div class="bereich-ki pk pkc">
 <!-- kiplan:zeile weit -->
-<section class="bereichskopf kompakt"><div class="huelle huelle-weit pk-kopf">
-  <div class="stapel">
+<!-- Ab 4.49, Variante C (Auftrag Mario 17.11.2026): das Arbeitsblatt als Bild. In der Mitte ein gezeichnetes Blatt (dekorativ) mit
+     sechs Stellen von oben nach unten; Nummern und Namen stehen als HTML daneben. Blatt und Listen setzt tools/papierkoffer.py beim
+     Bauen aus PAPIERKOFFER.html() ein – ohne Skript stehen alle Stellen mit ihren Aufträgen untereinander. assets/papierkoffer.js macht
+     aus den Beschriftungen Schaltflächen (aria-expanded, Pfeiltasten) und öffnet je eine Stelle; die Adresse merkt sie (#stelle=…). -->
+<section class="bereichskopf kompakt"><div class="huelle huelle-weit werkzeugkopf pkc-kopf">
+  <div class="werkzeugkopf-text">
     <h1 class="h1-frage">Aufgabenkoffer auf Papier</h1>
-    <p class="detail-kurz">Dieselben Ideen wie im Aufgabenkoffer – hier für Papier, Tafel und Raum. Such dir eine Phase der Stunde aus. Ein KI-System bereitet dir das Material vor. Unterrichtet wird ohne Gerät.</p>
   </div>
-  <form class="pk-form" id="pk-form" novalidate aria-labelledby="pk-t-angaben">
-    <p class="pk-form-titel" id="pk-t-angaben">Für alle Aufträge auf dieser Seite</p>
-    <div class="schnell-felder">
-      <div class="eingabe"><label for="pk-fach">Fach</label><input type="text" id="pk-fach" autocomplete="off" placeholder="z. B. Pflege"></div>
-      <div class="eingabe"><label for="pk-thema">Thema</label><input type="text" id="pk-thema" autocomplete="off" placeholder="z. B. Sturzprophylaxe"></div>
-      <div class="eingabe"><label for="pk-gruppe">Lerngruppe</label><input type="text" id="pk-gruppe" autocomplete="off" placeholder="z. B. 2. Ausbildungsjahr"></div>
-    </div>
-    <p class="leise klein">Keine Namen, Noten oder anderen personenbezogenen Daten. Deine Angaben werden nicht gespeichert. Lässt du ein Feld leer, fragt die KI zuerst danach.</p>
-  </form>
+  <div class="werkzeugkopf-seite">
+    <p class="detail-kurz pkc-satz">Ein ganz normales Arbeitsblatt: Zu jeder Stelle bereitet dir ein KI-System das Material vor.</p>
+  </div>
 </div></section>
 
-<section class="abschnitt pk-stunde" aria-labelledby="t-pk-stunde"><div class="huelle huelle-weit stapel">
-  <h2 id="t-pk-stunde" class="klein-titel">Wo in der Stunde brauchst du eine Idee?</h2>
-  <!-- Die Stundenlinie: dieselben Phasen wie im Aufgabenkoffer (Namen aus taxonomien.js). assets/papierkoffer.js füllt Linie und Karten. -->
-  <nav aria-labelledby="t-pk-stunde"><ol class="pk-linie" id="pk-linie"></ol></nav>
-  <div id="pk-phasen"></div>
-  <noscript><p class="box">Der Aufgabenkoffer auf Papier braucht JavaScript. Die Ideen stehen auch im <a href="aufgabenkoffer.html">Aufgabenkoffer</a>, jeweils mit »Und ohne Gerät?«.</p></noscript>
+<section class="abschnitt pkc-abschnitt" style="padding-top:var(--a2)" aria-label="Das Arbeitsblatt und seine Aufträge"><div class="huelle huelle-weit pkc-huelle">
+  <!-- papierkoffer:blatt -->
+  <div class="pkc-feld" id="pk-feld">
+    <form class="pk-form" id="pk-form" novalidate aria-labelledby="pk-t-angaben" hidden>
+      <p class="pk-form-titel" id="pk-t-angaben">Für alle Aufträge auf dieser Seite</p>
+      <div class="schnell-felder">
+        <div class="eingabe"><label for="pk-fach">Fach</label><input type="text" id="pk-fach" autocomplete="off" placeholder="z. B. Pflege" aria-describedby="pk-daten"></div>
+        <div class="eingabe"><label for="pk-thema">Thema</label><input type="text" id="pk-thema" autocomplete="off" placeholder="z. B. Sturzprophylaxe" aria-describedby="pk-daten"></div>
+        <div class="eingabe"><label for="pk-gruppe">Lerngruppe</label><input type="text" id="pk-gruppe" autocomplete="off" placeholder="z. B. 2. Ausbildungsjahr" aria-describedby="pk-daten"></div>
+      </div>
+      <p class="pk-daten" id="pk-daten">Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.</p>
+      <p class="leise klein">Deine Angaben werden nicht gespeichert. Lässt du ein Feld leer, fragt die KI zuerst danach.</p>
+    </form>
+    <p class="pkc-anfang" id="pkc-anfang" hidden>Tipp eine Stelle auf dem Blatt an. Dann stehen hier ihre Aufträge an die KI.</p>
+    <!-- papierkoffer:listen -->
+  </div>
 </div></section>
 
 <section class="abschnitt band-karton" aria-labelledby="t-pk-woher"><div class="huelle stapel">
   <h2 id="t-pk-woher" class="klein-titel">Woher die Ideen kommen</h2>
   <p class="mass">Es sind dieselben Aufgabenformen und Kniffe wie im <a class="textlink" href="aufgabenkoffer.html">Aufgabenkoffer</a> des Digitalen Unterrichts. Was dort unter »Und ohne Gerät?« und »Auf Papier« steht, ist hier der Hauptweg. Die Kniffe stammen aus Stunden, die mit Kidu-Lernseiten gehalten wurden. Das sind persönliche Beobachtungen, kein Nachweis der Wirkung.</p>
-  <p class="mass">Zu jeder Idee steht, wo sie meist am besten aufgehoben ist. Das ist kein Rang: Papier ist ein vollwertiges Ergebnis. Willst du wissen, ob das Gerät an einer Stelle mehr kann, nimm die <a class="textlink" href="papierfrage.html">Papierfrage</a>.</p>
+  <p class="mass">An welche Stelle des Blatts eine Idee gehört, ist ein Vorschlag. Unter »Mehr zur Idee« steht, wo sie meist am besten aufgehoben ist. Das ist kein Rang: Papier ist ein vollwertiges Ergebnis. Willst du wissen, ob das Gerät an einer Stelle mehr kann, nimm die <a class="textlink" href="papierfrage.html">Papierfrage</a>.</p>
 </div></section>
 <!-- kiplan:fuss weit -->
 </div>
