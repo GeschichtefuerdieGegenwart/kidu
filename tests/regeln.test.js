@@ -642,3 +642,77 @@ test("Startpunkt: der Codeblock trägt nur Auswahlwerte, nie Texte", () => {
   assert.match(e.code, /s_pruefen=teils/);
   assert.ok(!/Quellenarbeit|MW/.test(e.code));
 });
+
+/* ---------- ab 4.48: Kurze Probe im Fortbildungsbogen und zwei Fragen nach dem Verhalten ---------- */
+const PROBE = require("../assets/daten/probe.js");
+const MODELLE_48 = /chatgpt|gpt-|openai|claude|sonnet|anthropic|gemini|copilot|mistral|llama/i;
+
+test("Probe (4.48): zwei Fehler und eine Datenschutzfalle in einem ausgedachten, von Hand geschriebenen Fall", () => {
+  const arten = PROBE.saetze.filter((s) => s.art).map((s) => s.art).sort();
+  assert.deepEqual(arten, ["daten", "quelle", "zahl"], "zwei Fehler (Zahl, Quelle) und eine Datenschutzfalle");
+  assert.ok(PROBE.saetze.filter((s) => !s.art).length >= 3, "mindestens drei Sätze, die stimmen");
+  assert.match(PROBE.fall, /Ausgedachter Fall/);
+  assert.match(PROBE.fall, /keine KI-Antwort/);
+  const ids = new Set();
+  for (const s of PROBE.saetze) {
+    assert.ok(!ids.has(s.id), s.id); ids.add(s.id);
+    assert.ok(s.warum.length > 15, s.id + ": Auflösung in Worten");
+    if (s.art) assert.ok(PROBE.arten[s.art], s.id + ": Art " + s.art);
+  }
+  assert.match(PROBE.saetze.find((s) => s.art === "quelle").warum, /erfunden/, "die erfundene Studie ist als erfunden benannt");
+  assert.match(PROBE.saetze.find((s) => s.art === "daten").warum, /erfunden/, "das Kind ist als erfunden benannt");
+  assert.doesNotMatch(JSON.stringify(PROBE), MODELLE_48, "keine Namen von KI-Anbietern");
+});
+
+test("Probe (4.48): Rückmeldung in Worten – was markiert ist, steht unter »schon«, der Rest mit Werkzeug unter »ansehen«", () => {
+  const e = R.probe(["p3", "p6"], PROBE);
+  assert.deepEqual(e.schon.map((x) => x.id), ["zahl", "daten"]);
+  assert.deepEqual(e.ansehen.map((x) => x.id), ["quelle"]);
+  assert.equal(e.ansehen[0].link, "pruef-labor.html#pl-fehler");
+  assert.equal(e.leer, ""); assert.equal(e.alles, ""); assert.equal(e.vorsicht, "");
+  assert.equal(e.code, "probe=schon:zahl,daten;ansehen:quelle");
+});
+
+test("Probe (4.48): Stärken zuerst – ohne Markierung steht trotzdem ein Satz oben; alles gefunden; Vorsicht ist kein Fehler", () => {
+  for (const m of [undefined, []]) {
+    const leer = R.probe(m, PROBE);
+    assert.equal(leer.schon.length, 0);
+    assert.ok(leer.leer.length > 20, "ein Satz statt einer leeren Liste");
+    assert.equal(leer.ansehen.length, 3);
+    assert.ok(leer.ansehen.some((x) => x.link === "pruef-labor.html#pl-hinein"), "Datenschutz führt zu »Was darf hinein?«");
+  }
+  const alle = R.probe(["p3", "p4", "p6"], PROBE);
+  assert.equal(alle.ansehen.length, 0);
+  assert.ok(alle.alles.length > 10);
+  const vorsichtig = R.probe(["p1", "p3", "p4", "p6"], PROBE);
+  assert.ok(vorsichtig.vorsicht.length > 10 && vorsichtig.alles.length > 10, "ein richtiger Satz zusätzlich markiert ändert nichts an »schon«");
+  assert.match(vorsichtig.code, /vorsicht:p1$/);
+});
+
+test("Probe (4.48): keine Punkte, Prozente oder Zählung in der Rückmeldung", () => {
+  for (const m of [[], ["p3"], ["p3", "p4", "p6"], ["p1", "p2", "p5", "p7"]]) {
+    const e = R.probe(m, PROBE);
+    const texte = [e.leer, e.alles, e.vorsicht, ...e.schon.map((x) => x.text), ...e.ansehen.map((x) => x.text)];
+    for (const t of texte) assert.doesNotMatch(t, /Punkte|Note|\d+ von \d+|\d+ ?%|richtig gelöst|falsch gelöst/, t);
+    // Zahlen nur dort, wo der Übungstext selbst zitiert wird
+    for (const t of texte.filter((x) => !/80 Prozent/.test(x))) assert.doesNotMatch(t, /\d/, t);
+  }
+});
+
+test("Fortbildungsbogen (4.48): Fragen nach dem Verhalten zählen vor der Selbsteinschätzung", () => {
+  const z = R.startpunkt({ v_pruefen: "zweite", s_pruefen: "sicher" });
+  assert.ok(z.staerken.some((t) => /zweiten Stelle/.test(t)), "Nachsehen an einer zweiten Stelle ist eine Stärke");
+  assert.ok(!z.staerken.some((t) => /fachlich sicher/.test(t)), "keine doppelte Stärke aus der Selbsteinschätzung");
+  const d = R.startpunkt({ v_daten: "entfernt", s_duerfen: "sicher" });
+  assert.ok(d.staerken.some((t) => /Namen und Persönliches/.test(t)));
+  assert.ok(!d.staerken.some((t) => t === "Du weißt, was du eingeben darfst."));
+  const so = R.startpunkt({ haeufigkeit: "woechentlich", v_daten: "so" });
+  assert.ok(so.schritte.some((s) => s.link === "sicher.html"), "wer Texte ungeändert eingibt, bekommt »Sicher arbeiten«");
+  for (const v of ["nichts", "nachgefragt"]) {
+    const k = R.startpunkt({ haeufigkeit: "woechentlich", v_pruefen: v, vorbereitung: "genau" });
+    assert.ok(k.kniffe.some((x) => /Drei Fragen/.test(x.titel)), v + ": Kniff »Drei Fragen vor dem Kopieren«");
+  }
+  const c = R.startpunkt({ v_pruefen: "gelesen", v_daten: "eigen" }).code;
+  assert.ok(c.includes("v_pruefen=gelesen") && c.includes("v_daten=eigen"), "beide Antworten stehen im Code für die Leitung");
+  assert.ok(!R.startpunkt({ v_pruefen: "noch", v_daten: "noch" }).staerken.some((t) => /zweiten Stelle|Persönliches/.test(t)), "»noch nicht« ist keine Stärke und kein Mangel");
+});

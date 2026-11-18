@@ -9,9 +9,15 @@
    (assets/druck.js, Klasse nur-ergebnis). Die Auswertung kommt aus REGELN.startpunkt (assets/regeln.js, mit Tests).
    Gespeichert werden nur Auswahlwerte und die Position (hilde.fortbildungsbogen); Textfelder bleiben im Speicher der Seite.
 
+   Seit 4.48 (Entscheidung Mario, 17.11.2026): zwei Fragen nach dem Verhalten in Schritt 1 (v_pruefen, v_daten), am Ende von
+   Schritt 3 eine kurze Probe (typ »probe«, Daten: assets/daten/probe.js, Auswertung: REGELN.probe) – freiwillig, überspringbar,
+   erst markieren, dann auflösen, Rückmeldung nur in Worten. Gespeichert werden nur die IDs der markierten Sätze. Auf dem Bogen
+   stehen zusätzlich die Landkarte »Wofür du KI schon nutzt – und wofür noch nicht« (aus `wofuer`), die beiden Antworten zum
+   Verhalten und die Rückmeldung der Probe.
+
    Eröffnung: vier Sätze, einmal je Sitzung (sessionStorage), Takt 4 s, »Überspringen« und Escape; bei »weniger Bewegung«
    stehen alle vier Sätze still. Der Inhalt ist ohne sie vollständig – sie erklärt nur, worum es geht.
-   Braucht: REGELN, HILDE. */
+   Braucht: REGELN, HILDE, PROBE. */
 (function () {
   "use strict";
   var H = HILDE, esc = H.esc, SPEICHER = "fortbildungsbogen";
@@ -20,7 +26,7 @@
   /* Fragen zum Unterricht mit Tablets entfallen, wenn jemand in keiner Tablet-Klasse unterrichtet. */
   function mitTablet(a) { return a.d_klassen !== "keine"; }
 
-  /* Felder: id · schritt · typ (einzel, mehrere, text, stunde) · frage · hilfe (ein Satz) · beispiel (steht abgesetzt) ·
+  /* Felder: id · schritt · typ (einzel, mehrere, text, stunde, probe) · frage · hilfe (ein Satz) · beispiel (steht abgesetzt) ·
      optionen · aus (Antwort, die alle anderen ausschließt) · max · wenn (Funktion: Frage nur zeigen, wenn …). */
   var FRAGEN = [
     { id: "haeufigkeit", schritt: 1, typ: "einzel", frage: "Wie oft hast du in den letzten vier Wochen ein KI-System benutzt?",
@@ -36,6 +42,13 @@
       optionen: [["kurz", "Ich tippe einen kurzen Satz"], ["ausfuehrlich", "Ich tippe ausführlich, mit Klasse und Vorgaben"], ["sprechen", "Ich spreche sie ein"], ["anhang", "Ich hänge ein Dokument oder Foto an"], ["vorlage", "Ich nutze gespeicherte Vorlagen"], ["weissnicht", "Weiß ich nicht mehr"]] },
     { id: "ergebnis", schritt: 1, typ: "einzel", frage: "Wie war das Ergebnis bisher?",
       optionen: [["brauchbar", "Meist brauchbar, wenig Nacharbeit"], ["nacharbeit", "Brauchbar nach deutlicher Nacharbeit"], ["selten", "Selten brauchbar"], ["offen", "Kann ich noch nicht sagen"]] },
+    /* ab 4.48: zwei Fragen nach dem Verhalten – was jemand zuletzt getan hat, sagt mehr als eine Selbsteinschätzung. */
+    { id: "v_pruefen", schritt: 1, typ: "einzel", frage: "Denk an das letzte KI-Ergebnis, das du für die Schule genutzt hast. Was hast du vorher damit gemacht?",
+      hilfe: "Nimm, was am ehesten zutrifft. Jede Antwort ist hier richtig.",
+      optionen: [["nichts", "Direkt übernommen"], ["gelesen", "Durchgelesen und angepasst"], ["zweite", "Zahlen, Namen oder Quellen an einer zweiten Stelle nachgesehen"], ["nachgefragt", "Die KI gefragt, ob es stimmt"], ["noch", "Ich habe noch keins genutzt"]] },
+    { id: "v_daten", schritt: 1, typ: "einzel", frage: "Denk an den letzten Text, den du für die Schule in ein KI-System gegeben hast. Was hast du vorher damit gemacht?",
+      hilfe: "Nimm, was am ehesten zutrifft.",
+      optionen: [["so", "So eingegeben, wie er war"], ["entfernt", "Namen und Noten herausgenommen"], ["umgeschrieben", "In eigene Worte gefasst, ohne Personen"], ["eigen", "Es war ein eigener Text ohne Personen"], ["noch", "Ich habe noch keinen eingegeben"]] },
     { id: "hindernis", schritt: 1, typ: "mehrere", aus: "nichts", frage: "Was hat dich bei KI bisher gestört oder abgehalten?",
       optionen: [["allgemein", "Ergebnisse zu allgemein oder zu lang"], ["fehler", "Fachliche Fehler oder erfundene Angaben"], ["datenschutz", "Ich wusste nicht, was ich eingeben darf"], ["system", "Ich weiß nicht, welches System ich nehmen soll"], ["dauer", "Es dauert länger, als es selbst zu machen"], ["zweifel", "Grundsätzliche Zweifel, ob ich das möchte"], ["zeit", "Keine Zeit, mich einzuarbeiten"], ["nichts", "Nichts davon"]] },
 
@@ -74,6 +87,10 @@
     { id: "s_bauen", schritt: 3, typ: "einzel", frage: "Wie sicher fühlst du dich, Material für Lernende am Tablet zu bauen?", optionen: SICHER },
     { id: "zeit", schritt: 3, typ: "einzel", frage: "Wie viel Zeit kannst du in den nächsten Wochen pro Woche dafür erübrigen?",
       optionen: [["wenig", "Unter 30 Minuten"], ["mittel", "30 bis 60 Minuten"], ["viel", "Mehr als eine Stunde"]] },
+
+    /* ab 4.48: Kurze Probe – freiwillig, überspringbar, etwa fünf Minuten. Vor dem Auflösen verrät die Seite nichts. */
+    { id: "probe", schritt: 3, typ: "probe", wenn: function () { return !!window.PROBE; }, frage: "Kurze Probe: Würdest du diesen Elternbrief so verschicken?",
+      hilfe: "Freiwillig, etwa fünf Minuten. Tipp jeden Satz an, den du so nicht übernehmen oder nicht eingeben würdest. Dann löst du auf. Gezählt wird nichts." },
 
     { id: "anlass", schritt: 4, typ: "mehrere", max: 3, frage: "Wobei soll dir KI in den nächsten Wochen helfen?",
       hilfe: "Dein erstes Kreuz wird der erste Vorschlag auf dem Bogen.",
@@ -129,6 +146,7 @@
   }
   function zahlText(f) { var n = (z.a[f.id] || []).length; return n ? n + " gewählt" : ""; }
   function frageHtml(f) {
+    if (f.typ === "probe") return probeHtml(f);
     var links = '<div class="mfb-fragetext"><h2 class="frage" id="mfb-frage" tabindex="-1">' + esc(f.frage) + "</h2>" +
       (f.hilfe ? '<p class="hilfe">' + esc(f.hilfe) + "</p>" : "") +
       (f.beispiel ? '<p class="mfb-beispiel"><b>Zum Beispiel</b> ' + esc(f.beispiel) + "</p>" : "") + "</div>";
@@ -143,6 +161,69 @@
       rechts += '<div class="optionen mfb-optionen' + (f.optionen === SICHER ? " mfb-skala" : f.optionen.length > 6 ? " mfb-viele" : "") + '">' + f.optionen.map(function (o) { return optionHtml(f, o); }).join("") + "</div>";
     }
     return '<fieldset class="frageblock mfb-spalten' + (f.optionen && f.optionen.length > 8 ? " mfb-breit" : "") + '" aria-labelledby="mfb-frage">' + links + '<div class="mfb-antwort">' + rechts + "</div></fieldset>";
+  }
+
+  /* ---------- Kurze Probe (ab 4.48) ----------
+     Vor dem Auflösen: der Brief, jeder Satz ein Kästchen. Kein Hinweis auf Zahl oder Art der Stellen.
+     Nach dem Auflösen: die Kästchen sind gesperrt, unter jedem Satz steht in Worten, was mit ihm ist; links die Rückmeldung
+     »Darauf achtest du schon · Das lohnt sich anzusehen« aus REGELN.probe. Gespeichert: { m: [IDs], auf: true|false }. */
+  var PR = window.PROBE;
+  function probeStand() { var p = z.a.probe; return p && typeof p === "object" ? { m: p.m || [], auf: !!p.auf } : { m: [], auf: false }; }
+  function probeRueckmeldung(pr, h) {
+    function eintrag(x, link) {
+      return "<li><b>" + esc(x.name) + ".</b> " + esc(x.text) + (link ? ' <a class="textlink" href="' + esc(x.link) + '">' + esc(x.linktext) + ' <span aria-hidden="true">→</span></a>' : "") + "</li>";
+    }
+    return '<div class="mfb-probe-rm">' +
+      '<div class="mfb-probe-schon"><' + h + ' class="mfb-probe-rm-titel">Darauf achtest du schon</' + h + '><ul class="bogen-hinweise">' +
+        (pr.schon.length ? pr.schon.map(function (x) { return eintrag(x, false); }).join("") : "<li>" + esc(pr.leer) + "</li>") +
+        (pr.vorsicht ? "<li>" + esc(pr.vorsicht) + "</li>" : "") + "</ul></div>" +
+      '<div class="mfb-probe-ansehen"><' + h + ' class="mfb-probe-rm-titel">Das lohnt sich anzusehen</' + h + '><ul class="bogen-hinweise">' +
+        (pr.ansehen.length ? pr.ansehen.map(function (x) { return eintrag(x, true); }).join("") :
+          "<li>" + esc(pr.alles) + ' <a class="textlink" href="' + "pruef-labor.html" + '">Zum Prüf-Labor <span aria-hidden="true">→</span></a></li>') + "</ul></div>" +
+      "</div>";
+  }
+  /* Auf dem fertigen Bogen (und in der PDF) die Rückmeldung kurz: die Arten in einer Zeile, je Werkzeug ein Link. */
+  function probeKurz(pr) {
+    var gruppen = [];
+    pr.ansehen.forEach(function (x) {
+      var g = gruppen.filter(function (y) { return y.link === x.link; })[0];
+      if (g) g.namen.push(x.name); else gruppen.push({ link: x.link, linktext: x.linktext, namen: [x.name] });
+    });
+    function link(href, text) { return '<a class="textlink" href="' + esc(basis + href) + '">' + esc(text) + ' <span aria-hidden="true">→</span></a>'; }
+    return '<div class="mfb-probe-kurz">' +
+      '<p class="begruendung"><b>Darauf achtest du schon:</b> ' + (pr.schon.length ? esc(pr.schon.map(function (x) { return x.name; }).join(" · ")) + "." : esc(pr.leer)) +
+        (pr.vorsicht ? " " + esc(pr.vorsicht) : "") + "</p>" +
+      '<p class="begruendung"><b>Das lohnt sich anzusehen:</b> ' + (gruppen.length ? gruppen.map(function (g) { return esc(g.namen.join(" · ")) + " – " + link(g.link, g.linktext); }).join("; ") :
+        esc(pr.alles) + " " + link("pruef-labor.html", "Zum Prüf-Labor")) + "</p></div>";
+  }
+  function probeHtml(f) {
+    var p = probeStand(), auf = p.auf, pr = auf ? REGELN.probe(p.m, PR) : null;
+    var links = '<div class="mfb-fragetext"><h2 class="frage" id="mfb-frage" tabindex="-1">' + esc(f.frage) + "</h2>" +
+      (auf ? "" : '<p class="hilfe">' + esc(f.hilfe) + "</p>") +
+      '<p class="mfb-probe-lage">' + esc(PR.lage) + "</p>" +
+      '<p class="mfb-probe-fall">' + esc(PR.fall) + "</p>" +
+      (auf ? '<div class="mfb-probe-auf" id="mfb-probe-auf" tabindex="-1">' + probeRueckmeldung(pr, "h3") + "</div>" : "") + "</div>";
+    var saetze = PR.saetze.map(function (x) {
+      var an = p.m.indexOf(x.id) > -1, art = x.art ? PR.arten[x.art].kurz : PR.ok;
+      return '<li class="mfb-probe-satz' + (auf ? (x.art ? " ist-stelle" : " ist-ok") : "") + (an ? " ist-markiert" : "") + '">' +
+        '<label class="option"><input type="checkbox" name="probe" value="' + esc(x.id) + '"' + (an ? " checked" : "") + (auf ? " disabled" : "") + '><span class="option-text">' + esc(x.text) + "</span></label>" +
+        (auf ? '<p class="mfb-probe-aufl"><b>' + esc(art) + ".</b> " + esc(x.warum) + (an ? ' <span class="mfb-probe-du">Von dir markiert.</span>' : "") + "</p>" : "") + "</li>";
+    }).join("");
+    var rechts = '<p class="mfb-art"><span>' + (auf ? "Aufgelöst. Unter jedem Satz steht, was mit ihm ist." : "Tipp an, was du ändern würdest. Mehrere Sätze sind möglich.") + "</span></p>" +
+      '<div class="mfb-probe-brief"><p class="mfb-probe-titel">' + esc(PR.titel) + '</p><ul class="mfb-probe-saetze">' + saetze + "</ul></div>";
+    return '<fieldset class="frageblock mfb-spalten mfb-probe" aria-labelledby="mfb-frage">' + links + '<div class="mfb-antwort">' + rechts + "</div></fieldset>";
+  }
+  function aufloesen() {
+    var p = probeStand();
+    z.a.probe = { m: p.m, auf: true }; sichern();
+    form.innerHTML = frageHtml(FRAGEN[z.pos]);
+    weiter.textContent = "Weiter →"; ueberspringen.hidden = true;
+    var pr = REGELN.probe(p.m, PR);
+    ansage.textContent = "Aufgelöst. Darauf achtest du schon: " + (pr.schon.map(function (x) { return x.name; }).join(", ") || pr.leer) +
+      " Das lohnt sich anzusehen: " + (pr.ansehen.map(function (x) { return x.name; }).join(", ") || pr.alles);
+    var ziel = document.getElementById("mfb-probe-auf");
+    ziel.focus({ preventScroll: true });
+    if (karteEl.getBoundingClientRect().top < 0) karteEl.scrollIntoView({ block: "start" });
   }
 
   function zeichneFortschritt() {
@@ -171,8 +252,9 @@
     form.innerHTML = frageHtml(f);
     if (!ruhig()) { form.classList.remove("mfb-vor", "mfb-rueck"); void form.offsetWidth; form.classList.add(richtung === "vor" ? "mfb-vor" : "mfb-rueck"); }
     zurueck.hidden = pos === 0;
-    weiter.textContent = pos === ANZAHL - 1 ? "Bogen fertigstellen →" : "Weiter →";
-    ueberspringen.hidden = f.typ === "stunde";
+    var offen = f.typ === "probe" && !probeStand().auf;
+    weiter.textContent = pos === ANZAHL - 1 ? "Bogen fertigstellen →" : offen ? "Auflösen" : "Weiter →";
+    ueberspringen.hidden = f.typ === "stunde" || (f.typ === "probe" && !offen);
     zeichneFortschritt();
     ansage.textContent = wo + ": " + f.frage;
     if (fokus !== false) {
@@ -197,12 +279,20 @@
       if (t.checked && f.max) { var gew = [].slice.call(form.querySelectorAll('input[name="' + f.id + '"]:checked')); while (gew.length > f.max) { var alt = gew.shift(); if (alt !== t) alt.checked = false; } }
       z.a[f.id] = [].map.call(form.querySelectorAll('input[name="' + f.id + '"]:checked'), function (x) { return x.value; }); sichern();
       document.getElementById("mfb-zahl").textContent = zahlText(f);
+    } else if (f.typ === "probe" && !probeStand().auf) {
+      z.a.probe = { m: [].map.call(form.querySelectorAll('input[name="probe"]:checked'), function (x) { return x.value; }), auf: false }; sichern();
     }
   });
   form.addEventListener("input", function (e) { var t = e.target; if (t.name in texte) texte[t.name] = t.value; });
-  form.addEventListener("submit", function (e) { e.preventDefault(); richtung = "vor"; zeige(schritt(z.pos, 1)); });
-  weiter.addEventListener("click", function () { richtung = "vor"; zeige(schritt(z.pos, 1)); });
-  ueberspringen.addEventListener("click", function () { var f = FRAGEN[z.pos]; if (f.typ === "einzel") delete z.a[f.id]; if (f.typ === "mehrere") z.a[f.id] = []; richtung = "vor"; zeige(schritt(z.pos, 1)); });
+  /* Bei der Probe löst »Auflösen« (derselbe Knopf) zuerst auf; erst danach geht es weiter. */
+  function vor() {
+    var f = FRAGEN[z.pos];
+    if (f && f.typ === "probe" && !probeStand().auf) { aufloesen(); return; }
+    richtung = "vor"; zeige(schritt(z.pos, 1));
+  }
+  form.addEventListener("submit", function (e) { e.preventDefault(); vor(); });
+  weiter.addEventListener("click", vor);
+  ueberspringen.addEventListener("click", function () { var f = FRAGEN[z.pos]; if (f.typ === "einzel" || f.typ === "probe") delete z.a[f.id]; if (f.typ === "mehrere") z.a[f.id] = []; richtung = "vor"; zeige(schritt(z.pos, 1)); });
   zurueck.addEventListener("click", function () { richtung = "rueck"; zeige(schritt(z.pos, -1)); });
   fortschritt.addEventListener("click", function (e) {
     var k = e.target.closest("[data-schritt]"); if (!k) return;
@@ -227,6 +317,24 @@
       '<line x1="' + x0 + '" y1="' + y + '" x2="' + (w - x0) + '" y2="' + y + '" class="sp-linie"/>' + teile + "</svg>";
   }
 
+  /* Landkarte (ab 4.48): Wofür du KI schon nutzt – und wofür noch nicht. Aus der Antwort auf `wofuer`, in drei Gebieten wie im
+     Fahrplan (für dich und die Schule · vor der Stunde · in der Stunde). »Noch nicht« ist kein Mangel und keine Stufe. */
+  var GEBIETE = [["Für dich und die Schule", [["privat", "Privat"], ["erklaeren", "Mir etwas erklären lassen"], ["texte", "Texte für die Schule"]]],
+                 ["Vor der Stunde", [["planen", "Stunde oder Reihe planen"], ["arbeitsblatt", "Arbeitsblatt oder Aufgaben"], ["differenzieren", "Material anpassen"],
+                                     ["erwartung", "Erwartungshorizont"], ["quiz", "Quiz oder Übung"], ["gebaut", "Etwas fürs Tablet gebaut"]]],
+                 ["In der Stunde", [["lernende", "Lernende arbeiten selbst mit KI"]]]];
+  function frageNach(id) { return FRAGEN.filter(function (x) { return x.id === id; })[0]; }
+  function label(id, wert) { var o = frageNach(id).optionen.filter(function (x) { return x[0] === wert; })[0]; return o ? o[1] : wert; }
+  function landkarte(wofuer) {
+    return '<h3 class="minis-titel">Wofür du KI schon nutzt – und wofür noch nicht</h3><div class="mfb-landkarte">' + GEBIETE.map(function (g) {
+      return '<div class="mfb-gebiet"><p class="mfb-gebiet-name">' + esc(g[0]) + "</p><ul>" + g[1].map(function (x) {
+        var schon = wofuer.indexOf(x[0]) > -1;
+        return '<li class="' + (schon ? "ist-schon" : "ist-noch") + '"><span class="mfb-zeichen" aria-hidden="true">' + (schon ? "✓" : "○") + "</span>" +
+          '<span class="mfb-gebiet-text">' + esc(x[1]) + '</span><span class="mfb-gebiet-stand">' + (schon ? "schon" : "noch nicht") + "</span></li>";
+      }).join("") + "</ul></div>";
+    }).join("") + '</div><p class="leise klein mfb-landkarte-hinweis">Aus deiner Antwort in Schritt 1. »Noch nicht« ist kein Mangel. Es zeigt nur, wo du anfangen könntest.</p>';
+  }
+
   function fertig(fokus) {
     weg.hidden = true; seite.classList.remove("mfb-laeuft");
     /* Antworten auf Fragen, die nach der Wahl »keine Tablet-Klasse« nicht mehr gezeigt werden, zählen nicht mit. */
@@ -235,6 +343,13 @@
     var r = REGELN.startpunkt(a), t = texte;
     function worte(id) { var f = FRAGEN.filter(function (x) { return x.id === id; })[0]; return (a[id] || []).filter(function (w) { return w !== f.aus; }).map(function (w) { return f.optionen.filter(function (o) { return o[0] === w; })[0][1]; }); }
     var gut = worte("d_gut"), schwer = worte("d_schwer");
+    /* ab 4.48: Landkarte, Verhalten und Probe */
+    var pr = PR && a.probe && a.probe.auf ? REGELN.probe(a.probe.m, PR) : null;
+    var verhalten = [["v_pruefen", "Bevor du ein KI-Ergebnis nutzt"], ["v_daten", "Bevor du einen Text eingibst"]].filter(function (x) { return a[x[0]]; });
+    var neu = ((a.wofuer || []).length ? landkarte(a.wofuer) : "") +
+      (verhalten.length ? '<h3 class="minis-titel">So arbeitest du bisher</h3>' + verhalten.map(function (x) {
+        return '<p class="begruendung"><b>' + esc(x[1]) + ":</b> " + esc(label(x[0], a[x[0]])) + "</p>"; }).join("") : "") +
+      (pr ? '<h3 class="minis-titel">Deine kurze Probe</h3><p class="begruendung">Ein ausgedachter Elternbrief mit Stellen zum Finden. Gezählt wird nichts.</p>' + probeKurz(pr) : "");
     var kopf = [t.kuerzel ? "Kürzel: " + t.kuerzel : "", t.fach ? "Fach: " + t.fach : "", t.klasse ? "Klasse: " + t.klasse : "", t.thema ? "Thema: " + t.thema : ""].filter(Boolean);
     ergebnis.innerHTML = '<section class="entscheidung sp-ergebnis" aria-labelledby="sp-titel">' +
       '<p class="karte-marker">Mein Fortbildungsbogen · ' + esc(new Date().toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" })) + "</p>" +
@@ -244,7 +359,7 @@
       '<h3 class="minis-titel">Dein Unterricht mit Tablets</h3><p class="begruendung"><b>' + esc(r.tablet.titel) + ".</b> " + esc(r.tablet.text) + "</p>" +
       (gut.length ? '<p class="begruendung"><b>Läuft gut:</b> ' + esc(gut.join(" · ")) + "</p>" : "") +
       (schwer.length ? '<p class="begruendung"><b>Macht zu schaffen:</b> ' + esc(schwer.join(" · ")) + "</p>" : "") +
-      '<h3 class="minis-titel">Wie sicher du dich fühlst</h3>' + karte(r.sicherheit) +
+      '<h3 class="minis-titel">Wie sicher du dich fühlst</h3>' + karte(r.sicherheit) + neu +
       '<h3 class="minis-titel">Was du schon mitbringst</h3><ul class="bogen-hinweise">' + r.staerken.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ul>" +
       '<h3 class="minis-titel">Bis zu drei nächste Schritte</h3><ul class="bogen-hinweise">' + r.schritte.map(function (s) {
         return "<li>" + esc(s.text) + ' <a class="textlink" href="' + esc(basis + s.link) + '">' + esc(s.linktext) + ' <span aria-hidden="true">→</span></a></li>';
@@ -255,7 +370,7 @@
         (t.stelle ? '<p class="begruendung"><b>Mühsame Stelle:</b> ' + esc(t.stelle) + "</p>" : "") : "") +
       '<h3 class="minis-titel">Für die Leitung der Fortbildung</h3>' +
       (kopf.length ? '<p class="begruendung">' + esc(kopf.join(" · ")) + "</p>" : "") +
-      '<p class="sp-code">' + esc(r.code) + "</p>" +
+      '<p class="sp-code">' + esc(r.code + (pr ? " · " + pr.code : "")) + "</p>" +
       '<p class="schluss">' + esc(r.satz) + "</p>" +
       '<p class="leise klein sp-quelle">Erstellt mit Kidu · Mein Fortbildungsbogen · nur für dich und die Leitung der Fortbildung</p>' +
       '<div class="ergebnis-aktionen"><button type="button" class="knopf" data-drucken="nur-ergebnis">Als PDF sichern</button>' +

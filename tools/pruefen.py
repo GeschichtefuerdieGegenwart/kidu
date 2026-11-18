@@ -34,11 +34,13 @@ SEITEN = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "ta
           # ab 4.46: Papierfrage als Seite, Skillkoffer, Tipps und Tricks, geschützter Bereich
           "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html",
           # ab 4.47: KI-Training als Fahrplan – drei Seiten aus der alten ki.html, Prüf-Labor, Mit dem Kollegium
-          "erste-minuten.html", "schnell-anfrage.html", "prompten.html", "pruef-labor.html", "kollegium.html"]
+          "erste-minuten.html", "schnell-anfrage.html", "prompten.html", "pruef-labor.html", "kollegium.html",
+          "vier-wochen.html", "bewertung.html", "ablaeufe.html"]  # ab 4.48
 # Seiten, auf denen Fachbegriffe nur in aufklappbaren Vertiefungen (<details>) stehen dürfen
 MIT_VERTIEFUNG = ["mehrwert.html", "selbstcheck.html", "digital-check.html", "ueber.html"]
 EINSTIEG = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "tablets.html", "passt.html", "beobachtung.html", "tablet-phasen.html", "ist-stand.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "fuenf-saetze.html", "sechs-hebel.html", "galerie.html", "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "lernende-ki.html", "beratung.html", "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html",
-            "erste-minuten.html", "schnell-anfrage.html", "prompten.html", "pruef-labor.html", "kollegium.html"]
+            "erste-minuten.html", "schnell-anfrage.html", "prompten.html", "pruef-labor.html", "kollegium.html",
+            "vier-wochen.html", "bewertung.html", "ablaeufe.html"]  # ab 4.48
 # Skripte, deren Texte auf Einstiegs- und Bereichsseiten erscheinen
 EINSTIEG_SKRIPTE = ["assets/start.js", "assets/check-weg.js", "assets/check-regeln.js", "assets/tablets-weg.js", "assets/einheit.js", "assets/regeln.js", "assets/daten/taxonomien.js",
                     "assets/ki-weg.js", "assets/ki-anfrage.js", "assets/daten/texte.js", "assets/passt.js", "assets/beobachtung.js", "assets/fortbildungsbogen.js", "assets/rueckmeldebogen.js",
@@ -48,7 +50,8 @@ EINSTIEG_SKRIPTE = ["assets/start.js", "assets/check-weg.js", "assets/check-rege
                     "assets/papierfrage-prompt.js", "assets/daten/prinzipien.js", "assets/daten/skillkoffer.js", "assets/werkzeugkiste.js",
                     "assets/aufgabenkoffer.js", "assets/daten/koffer-ideen.js", "assets/schloss.js",
                     "assets/papierkoffer.js", "assets/training.js", "assets/daten/training.js",  # ab 4.46
-                    "assets/pruef-labor.js", "assets/daten/pruef-labor.js"]  # ab 4.47
+                    "assets/pruef-labor.js", "assets/daten/pruef-labor.js",  # ab 4.47
+                    "assets/ki-faehig.js", "assets/vier-wochen.js", "assets/daten/bewertung.js", "assets/bewertung.js", "assets/daten/probe.js"]  # ab 4.48
 FACHBEGRIFFE = ["Adaptivität", "kognitive Aktivierung", "formative Diagnostik", "Multimodalität",
                 "Gamification", "selbstreguliert", "responsive Lernumgebung", "digitale Transformation",
                 "Anforderungsbereich", "Beutelsbacher", "Binnendifferenzierung",
@@ -381,6 +384,16 @@ def pruefe_film(fehler):
     for name in phasen:
         if name not in texte:
             fehler.append(f"Film: Phase »{name}« aus src/fahrplan.json fehlt im Film als Text (src/film/)")
+    # ab 4.48: Kapitel 2 und die Startkachel nennen die Phasen des KI-Trainings; die Zahl zählt das Prüfskript in src/fahrplan-ki.json nach
+    ki = json.loads((WURZEL / "src" / "fahrplan-ki.json").read_text(encoding="utf-8"))["phasen"]
+    kwort = {3: "drei", 4: "vier", 5: "fünf"}.get(len(ki), str(len(ki)))
+    if f"KI-Training: in {kwort} Phasen" not in d["buehne"] or f"KI-Training: in {kwort} Phasen" not in texte:
+        fehler.append(f"Film: Zahl passt nicht zu den Daten – erwartet »KI-Training: in {kwort} Phasen« (src/film/)")
+    start = (WURZEL / "src" / "index.html").read_text(encoding="utf-8")
+    for klasse, zahl in [("ki", kwort), ("lernen", zahlwort)]:
+        m = re.search(r'<a class="wahlflaeche ' + klasse + r'"[\s\S]*?<p>([^<]*)</p>', start)
+        if not m or not m.group(1).startswith(f"In {zahl} Phasen"):
+            fehler.append(f"src/index.html: Startkachel »{klasse}« nennt nicht »In {zahl} Phasen« wie der Fahrplan")
 
 
 # ab 4.42: Seiten, deren »Auf einen Blick« Wörter aus einem Skript zeigt (Schritte, Felder des Ergebnisses)
@@ -443,6 +456,27 @@ def pruefe_fahrplan(fehler):
                 if not anderer or not any(fp.seite(x["href"]) == fp.seite(w["href"]) for x in anderer["werkzeuge"]):
                     fehler.append(f"{json_quelle}: {w['href']} hat »zuhause: {w['zuhause']}«, steht dort aber nicht")
         seiten_je_plan[art] = seiten
+        if "zeiten" in daten:  # ab 4.48: Zeit und Fähigkeiten je Werkzeug (Fahrplan KI-Training), aus denselben Wörtern wie die Trainingsaufgaben
+            training = (WURZEL / "assets" / "daten" / "training.js").read_text(encoding="utf-8")
+            block = training[training.index("zeiten: ["):training.index("]", training.index("zeiten: ["))]
+            tr_zeiten = dict(re.findall(r'id: "([a-z]+)", name: "([^"]+)"', block))
+            tr_faehig = re.findall(r'\{ id: "([a-z-]+)", name: "[^"]+", frage:', training)
+            for k, v in tr_zeiten.items():
+                if daten["zeiten"].get(k) != v:
+                    fehler.append(f"{json_quelle}: Zeit »{k}« heißt dort »{daten['zeiten'].get(k)}«, in training.js »{v}«")
+            for w in daten["werkzeuge"]:
+                zeit = w.get("zeit")
+                for z in ([zeit] if isinstance(zeit, str) else (zeit or [])):
+                    if z not in daten["zeiten"]:
+                        fehler.append(f"{json_quelle}: {w['href']} hat eine unbekannte Zeit »{z}«")
+                if not zeit:
+                    fehler.append(f"{json_quelle}: {w['href']} ohne Zeit")
+                for f in w.get("faehigkeiten", []):
+                    if f not in tr_faehig:
+                        fehler.append(f"{json_quelle}: {w['href']} nennt eine unbekannte Fähigkeit »{f}«")
+            for f in tr_faehig:
+                if not any(f in w.get("faehigkeiten", []) for w in daten["werkzeuge"]):
+                    fehler.append(f"{json_quelle}: kein Werkzeug übt die Fähigkeit »{f}« (der Filter auf {bereich} fände nichts)")
     for a, b in [("fahrplan", "kiplan")]:
         for datei in sorted(seiten_je_plan[a] & seiten_je_plan[b]):
             fehler.append(f"src/{datei}: gehört zu zwei Fahrplänen – eine Seite hat ein Zuhause (»zuhause« im anderen)")

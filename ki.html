@@ -7,7 +7,7 @@
 <meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
 <title>KI-Training – Kidu</title>
 <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/hilde.css?v=844b013d">
+<link rel="stylesheet" href="assets/hilde.css?v=8848bfdf">
 <script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
 </head>
 <body>
@@ -47,15 +47,16 @@
           <span class="fahrplan-wann">zuerst</span>
           <h3 class="fahrplan-name">Grundlagen</h3>
           <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich will erst verstehen.«</b> Was KI kann, wo sie irrt und was nicht hineingehört.</span>
-          <span class="fahrplan-zahl">5 Werkzeuge</span>
+          <span class="fahrplan-zahl">6 Werkzeuge</span>
         </summary>
         <div class="fahrplan-inhalt">
           <ul class="fahrplan-werkzeuge">
-            <li><a href="erste-minuten.html"><b>Deine ersten zehn Minuten</b> <span class="fahrplan-fuer">für den Anfang</span><span class="fahrplan-text">Vier Schritte: KI-System öffnen, Prompt holen, Ergebnis prüfen, einmal nachfragen.</span></a></li>
-            <li><a href="pruef-labor.html"><b>Prüf-Labor</b><span class="fahrplan-text">Drei Übungen: Fehler finden, abgeben oder selbst machen, was darf hinein.</span><span class="fahrplan-marken">geht ohne KI · auch auf Papier</span></a></li>
-            <li><a href="sicher.html"><b>Sicher arbeiten in fünf Regeln</b><span class="fahrplan-text">Daten, Prüfen, Bildrechte, Lernseiten, Persönliches. Gilt auch für den Digitalen Unterricht.</span><span class="fahrplan-marken">geht ohne KI</span></a></li>
-            <li><a href="ki-fach.html"><b>KI für dein Fach einrichten</b><span class="fahrplan-text">Einmal aufschreiben, was in deinem Fach gilt. Danach reicht ein kurzer Auftrag.</span></a></li>
-            <li><a href="ki-aufgaben.html"><b>Trainingsaufgaben</b><span class="fahrplan-text">Zwölf Übungen mit dem KI-System deiner Schule, an deinem eigenen Material.</span></a></li>
+            <li data-faehigkeiten="beschreiben pruefen verantworten"><a href="erste-minuten.html"><b>Deine ersten zehn Minuten</b> <span class="fahrplan-fuer">für den Anfang</span><span class="fahrplan-text">Vier Schritte: KI-System öffnen, Prompt holen, Ergebnis prüfen, einmal nachfragen.</span><span class="fahrplan-marken">kurz</span></a></li>
+            <li data-faehigkeiten="abgeben beschreiben pruefen verantworten"><a href="vier-wochen.html"><b>Vier Wochen KI-Training</b> <span class="fahrplan-fuer">allein oder im Tandem</span><span class="fahrplan-text">Ein fertiger Plan: jede Woche eine kurze Übung und ein echter Anlass, zum Schluss eine Stunde mit KI.</span><span class="fahrplan-marken">mehrere Termine</span></a></li>
+            <li data-faehigkeiten="abgeben pruefen verantworten"><a href="pruef-labor.html"><b>Prüf-Labor</b><span class="fahrplan-text">Drei Übungen: Fehler finden, abgeben oder selbst machen, was darf hinein.</span><span class="fahrplan-marken">kurz · geht ohne KI · auch auf Papier</span></a></li>
+            <li data-faehigkeiten="verantworten"><a href="sicher.html"><b>Sicher arbeiten in fünf Regeln</b><span class="fahrplan-text">Daten, Prüfen, Bildrechte, Lernseiten, Persönliches. Gilt auch für den Digitalen Unterricht.</span><span class="fahrplan-marken">kurz · geht ohne KI</span></a></li>
+            <li data-faehigkeiten="beschreiben"><a href="ki-fach.html"><b>KI für dein Fach einrichten</b><span class="fahrplan-text">Einmal aufschreiben, was in deinem Fach gilt. Danach reicht ein kurzer Auftrag.</span><span class="fahrplan-marken">eine Freistunde</span></a></li>
+            <li data-faehigkeiten="abgeben beschreiben pruefen verantworten"><a href="ki-aufgaben.html"><b>Trainingsaufgaben</b><span class="fahrplan-text">Zwölf Übungen mit dem KI-System deiner Schule, an deinem eigenen Material.</span><span class="fahrplan-marken">kurz oder eine Freistunde</span></a></li>
           </ul>
         </div>
       </details>
@@ -72,25 +73,25 @@
         </summary>
         <div class="fahrplan-inhalt">
           <ul class="werkzeuge tueren">
-            <li class="werkzeug tuer">
+            <li class="werkzeug tuer" data-faehigkeiten="beschreiben">
               <a href="schnell-anfrage.html">
-                <span class="werkzeug-text"><span class="tuer-ueber">Ich brauche schnell etwas</span><b>Schnell-Anfrage</b>Anlass wählen, drei Angaben, Prompt kopieren.</span>
+                <span class="werkzeug-text"><span class="tuer-ueber">Ich brauche schnell etwas</span><b>Schnell-Anfrage</b>Anlass wählen, drei Angaben, Prompt kopieren.<span class="fahrplan-marken">kurz</span></span>
                 <span class="werkzeug-los" aria-hidden="true">→</span>
               </a>
             </li>
             <li class="tueren-oder" aria-hidden="true">oder</li>
-            <li class="werkzeug tuer">
+            <li class="werkzeug tuer" data-faehigkeiten="beschreiben pruefen">
               <a href="prompten.html">
-                <span class="werkzeug-text"><span class="tuer-ueber">Ich will es selbst können</span><b>Prompten lernen</b>In fünf Schritten zu deiner eigenen Anfrage, mit Erklärung.</span>
+                <span class="werkzeug-text"><span class="tuer-ueber">Ich will es selbst können</span><b>Prompten lernen</b>In fünf Schritten zu deiner eigenen Anfrage, mit Erklärung.<span class="fahrplan-marken">eine Freistunde</span></span>
                 <span class="werkzeug-los" aria-hidden="true">→</span>
               </a>
             </li>
           </ul>
           <p class="fahrplan-dazu">Dazu, wenn du willst:</p>
           <ul class="fahrplan-werkzeuge">
-            <li><a href="auftraege.html"><b>Aufträge zum Kopieren</b><span class="fahrplan-text">Lernmethode einführen, KI-Regeln für eine Aufgabe, KI-Antworten prüfen und mehr.</span></a></li>
-            <li><a href="papierkoffer.html"><b>Aufgabenkoffer auf Papier</b><span class="fahrplan-text">Die Ideen des Aufgabenkoffers für Papier, Tafel und Raum – je mit einem Auftrag für das Material.</span></a></li>
-            <li><a href="skillkoffer.html"><b>Skillkoffer</b> <span class="fahrplan-fuer">für Fortgeschrittene · im Digitalen Unterricht</span><span class="fahrplan-text">Die Anleitungen hinter den Werkzeugen als Skills zum Herunterladen – und was damit entsteht.</span></a></li>
+            <li data-faehigkeiten="beschreiben begleiten"><a href="auftraege.html"><b>Aufträge zum Kopieren</b><span class="fahrplan-text">Lernmethode einführen, KI-Regeln für eine Aufgabe, KI-Antworten prüfen und mehr.</span><span class="fahrplan-marken">kurz</span></a></li>
+            <li data-faehigkeiten="beschreiben"><a href="papierkoffer.html"><b>Aufgabenkoffer auf Papier</b><span class="fahrplan-text">Die Ideen des Aufgabenkoffers für Papier, Tafel und Raum – je mit einem Auftrag für das Material.</span><span class="fahrplan-marken">kurz</span></a></li>
+            <li data-faehigkeiten="beschreiben"><a href="skillkoffer.html"><b>Skillkoffer</b> <span class="fahrplan-fuer">für Fortgeschrittene · im Digitalen Unterricht</span><span class="fahrplan-text">Die Anleitungen hinter den Werkzeugen als Skills zum Herunterladen – und was damit entsteht.</span><span class="fahrplan-marken">eine Freistunde</span></a></li>
           </ul>
         </div>
       </details>
@@ -106,8 +107,8 @@
         </summary>
         <div class="fahrplan-inhalt">
           <ul class="fahrplan-werkzeuge">
-            <li><a href="lernende-ki.html"><b>Wenn deine Lernenden mit KI arbeiten</b><span class="fahrplan-text">Drei Regeln, damit die KI das Denken nicht übernimmt.</span><span class="fahrplan-marken">geht ohne KI</span></a></li>
-            <li><a href="ki-aufgaben.html#tr-begleiten"><b>Lernszenario und Dialogpartner vorher testen</b><span class="fahrplan-text">Spiel selbst durch, was deine Lernenden erleben.</span></a></li>
+            <li data-faehigkeiten="begleiten"><a href="lernende-ki.html"><b>Wenn deine Lernenden mit KI arbeiten</b><span class="fahrplan-text">Drei Regeln, damit die KI das Denken nicht übernimmt.</span><span class="fahrplan-marken">kurz · geht ohne KI</span></a></li>
+            <li data-faehigkeiten="begleiten"><a href="ki-aufgaben.html#tr-begleiten"><b>Lernszenario und Dialogpartner vorher testen</b><span class="fahrplan-text">Spiel selbst durch, was deine Lernenden erleben.</span><span class="fahrplan-marken">eine Freistunde</span></a></li>
           </ul>
         </div>
       </details>
@@ -119,20 +120,21 @@
           <span class="fahrplan-wann">nach der Stunde</span>
           <h3 class="fahrplan-name">Nach der Stunde</h3>
           <span class="fahrplan-satz"><b class="fahrplan-anliegen">»Ich will auswerten und teilen.«</b> Was hat geholfen? Mit dem Kollegium weiterlernen.</span>
-          <span class="fahrplan-zahl">3 Werkzeuge</span>
+          <span class="fahrplan-zahl">4 Werkzeuge</span>
         </summary>
         <div class="fahrplan-inhalt fahrplan-gruppen">
           <div class="fahrplan-gruppe">
             <h4>Für dich</h4>
             <ul class="fahrplan-werkzeuge">
-              <li><a href="fortbildungsbogen.html"><b>Mein Fortbildungsbogen</b> <span class="fahrplan-fuer">im Digitalen Unterricht</span><span class="fahrplan-text">Wo du mit KI und Tablets stehst. Am Ende eine PDF für deine Fortbildung und bis zu drei nächste Schritte.</span></a></li>
-              <li><a href="auftraege.html#erkunden"><b>Eine Idee im Unterricht erproben</b><span class="fahrplan-text">Eine Frage, Belege aus dem Alltag, eine ehrliche Auswertung.</span></a></li>
+              <li data-faehigkeiten="pruefen"><a href="fortbildungsbogen.html"><b>Mein Fortbildungsbogen</b> <span class="fahrplan-fuer">im Digitalen Unterricht</span><span class="fahrplan-text">Wo du mit KI und Tablets stehst. Am Ende eine PDF für deine Fortbildung und bis zu drei nächste Schritte.</span><span class="fahrplan-marken">kurz</span></a></li>
+              <li data-faehigkeiten="begleiten"><a href="auftraege.html#erkunden"><b>Eine Idee im Unterricht erproben</b><span class="fahrplan-text">Eine Frage, Belege aus dem Alltag, eine ehrliche Auswertung.</span><span class="fahrplan-marken">mehrere Termine</span></a></li>
             </ul>
           </div>
           <div class="fahrplan-gruppe">
             <h4 id="t-ki-kollegium">Im Kollegium</h4>
             <ul class="fahrplan-werkzeuge">
-              <li><a href="kollegium.html"><b>Mit dem Kollegium</b><span class="fahrplan-text">Sechs Formate, um gemeinsam weiterzulernen: vom Tandem bis zur Fachgruppe.</span><span class="fahrplan-marken">geht ohne KI</span></a></li>
+              <li data-faehigkeiten="pruefen verantworten begleiten"><a href="kollegium.html"><b>Mit dem Kollegium</b><span class="fahrplan-text">Sechs Formate, um gemeinsam weiterzulernen: vom Tandem bis zur Fachgruppe.</span><span class="fahrplan-marken">mehrere Termine · geht ohne KI</span></a></li>
+              <li data-faehigkeiten="verantworten begleiten"><a href="bewertung.html"><b>Werkstatt Bewertungskultur</b><span class="fahrplan-text">Eine eigene Aufgabe von der KI lösen lassen und so umbauen, dass der Arbeitsweg zählt.</span><span class="fahrplan-marken">eine Freistunde</span></a></li>
             </ul>
           </div>
         </div>
@@ -140,22 +142,26 @@
     </li>
   </ol>
   <p class="fahrplan-ring"><span class="fahrplan-ring-pfeil" aria-hidden="true">↑</span> Nächste Stunde: wieder bei 2</p>
+  <p class="leise klein fahrplan-geschaetzt">Die Zeiten an den Werkzeugen sind geschätzt: »kurz« passt zwischendurch, »eine Freistunde« etwa in eine Schulstunde.</p>
   <p class="bezug-lernen">KI kann Unterricht vorbereiten, der ganz analog bleibt. Wenn du Lernen mit Tablets gestalten willst: <a class="textlink" href="unterricht.html">Zum Digitalen Unterricht <span aria-hidden="true">→</span></a></p>
 </div></section>
 
 <!-- Ab 4.47: die fünf Fähigkeiten der Trainingsaufgaben (assets/daten/training.js, gruppen) – ohne Stufen, ohne Rangfolge.
-     Namen und Fragen prüft tools/pruefen.py gegen die Daten. Ohne Links: Die Werkzeuge stehen nur im Fahrplan (eine Struktur). -->
+     Namen und Fragen prüft tests/training.test.js gegen die Daten. Ohne Links: Die Werkzeuge stehen nur im Fahrplan (eine Struktur).
+     Ab 4.48 ein Filter (Entscheidung Mario, 17.11.2026): assets/ki-faehig.js macht aus jeder Fähigkeit einen Schalter, der im Fahrplan
+     die Werkzeuge hervorhebt, die sie üben (»faehigkeiten« in src/fahrplan-ki.json). Ohne Skript bleibt das Band ein ruhiger Text. -->
 <section class="abschnitt ki-faehig" aria-labelledby="t-faehig"><div class="huelle huelle-weit">
   <div class="ki-faehig-kopf">
     <h2 id="t-faehig" class="klein-titel">Was du in allen Phasen übst</h2>
     <p>Fünf Fähigkeiten. Keine Stufen: Du übst jede an deinem eigenen Material – so weit, wie es für deinen Unterricht passt.</p>
+    <p class="ki-faehig-hilfe" hidden>Tipp eine Fähigkeit an. Der Fahrplan zeigt dann, wo du sie übst. Noch einmal tippen hebt das auf.</p>
   </div>
   <ul class="ki-faehig-liste">
-    <li><b>Abgeben oder selbst machen</b><span>Welche Aufgabe gebe ich ab, welche bleibt bei mir – und warum?</span></li>
-    <li><b>Gut beschreiben</b><span>Was braucht die KI, damit sie nicht rät?</span></li>
-    <li><b>Kritisch prüfen</b><span>Stimmt das? Fehlt etwas? Woher weiß ich das?</span></li>
-    <li><b>Verantwortlich handeln</b><span>Darf ich das eingeben? Wie mache ich KI-Hilfe sichtbar?</span></li>
-    <li><b>Lernende begleiten</b><span>Wie lernen Lernende mit KI, ohne dass die KI das Denken übernimmt?</span></li>
+    <li data-faehigkeit="abgeben"><b>Abgeben oder selbst machen</b><span>Welche Aufgabe gebe ich ab, welche bleibt bei mir – und warum?</span></li>
+    <li data-faehigkeit="beschreiben"><b>Gut beschreiben</b><span>Was braucht die KI, damit sie nicht rät?</span></li>
+    <li data-faehigkeit="pruefen"><b>Kritisch prüfen</b><span>Stimmt das? Fehlt etwas? Woher weiß ich das?</span></li>
+    <li data-faehigkeit="verantworten"><b>Verantwortlich handeln</b><span>Darf ich das eingeben? Wie mache ich KI-Hilfe sichtbar?</span></li>
+    <li data-faehigkeit="begleiten"><b>Lernende begleiten</b><span>Wie lernen Lernende mit KI, ohne dass die KI das Denken übernimmt?</span></li>
   </ul>
   <details class="mehr ki-faehig-warum">
     <summary>Warum Anliegen statt Stufen?</summary>
@@ -164,8 +170,23 @@
     <p class="klein">Grundlage: Recherche vom 17.11.2026, unter anderem Lipowsky und Rzejak zu wirksamen Fortbildungen, die Übersichtsarbeit von Sims und anderen (2021) zu den Bausteinen wirksamer Fortbildung, die Handlungsempfehlung der Kultusministerkonferenz zum Umgang mit KI (2024) und eine Studie der Aalto-Universität (2025) zur Selbsteinschätzung beim Arbeiten mit KI.</p>
   </details>
 </div></section>
+
+<!-- Ab 4.48: Anschluss ans Land (Entscheidung Mario, 17.11.2026). Ohne Links: Kidu verlinkt nicht nach außen (tools/pruefen.py).
+     Geprüft am 18.11.2026: Selbstlernkurs »KI in der Schule« des ZSL (kostenfrei, interaktiv, mit Material für den Unterricht;
+     Meldung der Universität Tübingen vom 11.12.2025) und KI-Zentrum Schule in Heilbronn (ZSL mit der Dieter Schwarz Stiftung,
+     gegründet im Herbst 2024, Fortbildungen für Lehrkräfte; Pressemitteilung des Landes). Die Reflexionskarten der KMK: noch offen
+     (docs/version-4-48.md). -->
+<section class="abschnitt ki-land" aria-labelledby="t-ki-land"><div class="huelle huelle-weit">
+  <h2 id="t-ki-land" class="klein-titel">Weiterlernen beim Land Baden-Württemberg</h2>
+  <ul class="ki-land-liste">
+    <li><b>Selbstlernkurs »KI in der Schule«</b><span>Vom Zentrum für Schulqualität und Lehrerbildung (ZSL). Kostenfrei, in deinem Tempo, mit Material für den Unterricht.</span></li>
+    <li><b>KI-Zentrum Schule in Heilbronn</b><span>Getragen vom ZSL. Es bietet Fortbildungen für Lehrkräfte an.</span></li>
+  </ul>
+  <p class="leise klein">Stand: November 2026. Beides findest du auf den Seiten des ZSL.</p>
+</div></section>
 </div>
 <script src="assets/fahrplan.js?v=5f01291a"></script>
+<script src="assets/ki-faehig.js?v=daf5e7cb"></script>
 
 </main>
 <footer class="fuss"><div class="huelle">

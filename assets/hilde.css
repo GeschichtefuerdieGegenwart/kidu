@@ -3089,3 +3089,145 @@ html[data-bewegung="weniger"] .ak *,html[data-bewegung="weniger"] .ak *::before,
   .ko-format{break-inside:avoid;margin-bottom:1rem;background:none;padding:0;border-top-width:4px}
 }
 .schnell-seite{padding-top:var(--a3)} /* ab 4.47: die Schnell-Anfrage als eigene Seite – der Kopf rückt an die Zeile »Wo du bist« */
+
+/* Ab 4.48 – Fähigkeiten als Filter über dem Fahrplan (ki.html, assets/ki-faehig.js), Vier Wochen KI-Training (vw-, vier-wochen.html),
+   Werkstatt Bewertungskultur (bw-, bewertung.html), Aufgabenprobe im Fortbildungsbogen (mfb-probe-), Ablauf-Koffer (geschützt).
+   Hervorheben heißt: versetzte Ocker-Platte bzw. Ocker-Kante UND der Text »übt: …« – Farbe nie allein. */
+.ki-faehig-liste.mit-filter li{padding-top:0;border-top:0;align-content:stretch}
+.ki-faehig-knopf{display:grid;gap:.3rem;align-content:start;width:100%;height:100%;min-height:44px;margin:0;padding:var(--a1) var(--a2) var(--a2);text-align:left;font:inherit;color:var(--text);background:var(--flaeche);border:0;border-top:6px solid var(--ki-platte);border-radius:0 0 var(--rund) var(--rund);cursor:pointer}
+.ki-faehig-knopf[aria-pressed="true"]{background:var(--ki-zart);border-top-color:var(--ki-tief);box-shadow:6px 6px 0 0 var(--ki-platte)} /* taste-skill-ignore: versetzte Ocker-Platte = gewählte Fähigkeit */
+.ki-faehig-knopf[aria-pressed="true"] b::before{content:"✓ ";content:"✓ " / ""}
+@media (hover:hover) and (pointer:fine){.ki-faehig-knopf:hover b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.15em}}
+.ki-faehig-hilfe{font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.ki-filter-stand{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem var(--a2);margin:0 0 var(--a1);padding:.5rem .5rem .5rem var(--a2);background:var(--ki-zart);border-left:6px solid var(--ki-tief);border-radius:var(--rund);max-width:none;scroll-margin-top:var(--a2)}
+.ki-filter-stand:focus{outline:none}
+.ki-filter-stand:focus-visible{outline:3px solid var(--fokus);outline-offset:2px}
+.fahrplan-werkzeuge li.ist-treffer > a{margin-left:-.9rem;padding-left:calc(.9rem - 6px);border-left:6px solid var(--ki-platte)}
+.fahrplan .werkzeug.tuer.ist-treffer > a{box-shadow:6px 6px 0 0 var(--ki-platte)} /* taste-skill-ignore: versetzte Ocker-Platte = Treffer des Filters */
+.fahrplan-uebt{display:block;margin-top:.2rem;font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.fahrplan-uebt::before{content:"▸ ";content:"▸ " / ""}
+@media print{.ki-filter-stand,.ki-faehig-hilfe{display:none}}
+/* Vier Wochen KI-Training: Kopf mit Startdatum, rechts die vier Schwerpunkte als Linie (ohne Nummern), darunter die Wochen als Karten */
+.vw-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--a4);align-items:start}
+@media (max-width:1023px){.vw-kopf{grid-template-columns:1fr}}
+.vw-start{display:grid;gap:.35rem;max-width:26rem}
+.vw-start label{font-weight:700}
+.vw-start label span{display:block;font-weight:400;font-size:var(--gr-klein)}
+.vw-start input{min-height:48px;padding:.5rem .75rem;font:inherit;border:2px solid var(--stahl);border-radius:var(--rund);background:var(--flaeche);color:var(--text)}
+.vw-linie{list-style:none;margin:var(--a1) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem}
+.vw-linie li{position:relative;max-width:none}
+.vw-linie a{display:grid;gap:.2rem;align-content:start;height:100%;padding:.7rem .75rem;background:var(--flaeche);border-radius:var(--rund);border-top:10px solid var(--ki-platte);color:var(--text);text-decoration:none}
+.vw-linie b{font:600 clamp(1.0625rem,.8rem + .5vw,1.5rem)/1.12 var(--schrift-titel);letter-spacing:-.01em}
+.vw-linie span{font-size:var(--gr-klein);font-weight:700;color:var(--leise)}
+.vw-linie li + li::before{content:"→";content:"→" / "";position:absolute;left:-1.25rem;top:50%;width:1.25rem;transform:translateY(-50%);text-align:center;font-weight:700;color:var(--ki-tief)}
+/* iPad quer und kleine Laptops: Der Blick steht neben dem Text und ist schmal – dann zwei mal zwei, ohne Pfeile (gemessen: 1180 und 1024 px) */
+@media (min-width:1024px) and (max-width:1279px){.vw-linie{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.vw-linie li + li::before{content:none}}
+@media (hover:hover) and (pointer:fine){.vw-linie a:hover{background:var(--ki-zart)}}
+@media (max-width:640px){.vw-linie{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.vw-linie li + li::before{content:none}}
+.vw-wochen{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,26rem),1fr));gap:var(--a3)}
+.vw-woche{display:grid;gap:.6rem;align-content:start;max-width:none;padding:var(--a3);background:var(--flaeche);border-radius:var(--rund);border-top:8px solid var(--ki-platte);scroll-margin-top:var(--a2)}
+.vw-woche.ist-erledigt{border-top-color:var(--ki-tief)}
+.vw-wann{font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.vw-woche h2{font-size:var(--gr-h3)}
+.vw-ziel{font-weight:700}
+.vw-teile{margin:0;display:grid;gap:.5rem}
+.vw-teile div{display:grid;gap:.1rem}
+.vw-teile dt{font-size:var(--gr-klein);font-weight:700;color:var(--leise)}
+.vw-teile dd{margin:0;max-width:62ch}
+.vw-geschafft{padding:.5rem .8rem;background:var(--erfolg-zart);border-radius:var(--rund)}
+.vw-notiz{display:grid;gap:.25rem}
+.vw-notiz label{font-size:var(--gr-klein);font-weight:700}
+.vw-notiz input{min-height:44px;padding:.4rem .7rem;font:inherit;border:2px solid var(--stahl);border-radius:var(--rund);background:var(--grund);color:var(--text)}
+.vw-erledigt{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;font-weight:700;justify-self:start;cursor:pointer}
+.vw-erledigt input{width:1.25rem;height:1.25rem;margin:0;accent-color:var(--ki-tief)}
+.vw-danach{margin-top:var(--a3);max-width:68ch}
+.vw-speicher{margin-top:var(--a1)}
+.vw-warum{margin-top:var(--a3);max-width:68ch}
+@media print{ /* taste-skill-ignore: Druckfassung – zwei A4-Seiten: Kopf mit den ersten zwei Wochen, dann die letzten zwei und »Und danach?« */
+  .vw{zoom:.8}
+  body:has(.vw) .fusslinks,body:has(.vw) .fuss-marke,body:has(.vw) .fuss-unterzeile{display:none}
+  .vw-start,.vw-kopf .kopfnotiz,.vw-blick,.vw-warum,.vw-speicher,.vw-erledigt{display:none}
+  .vw-kopf{grid-template-columns:1fr}
+  .vw-wochen{grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem}
+  .vw-woche{break-inside:avoid;padding:.5rem 0 0;background:none;border-top-width:4px;gap:.3rem}
+  .vw-notiz input{border:0;border-bottom:1px solid #000;border-radius:0;background:none;min-height:0;padding:.2rem 0}
+  .vw-geschafft{padding:0;background:none}
+}
+/* Werkstatt Bewertungskultur: links der Weg, rechts »Was verbindlich bleibt« (klar getrennt), darunter Schritte, Umbauten, Aufträge */
+.bw-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,26rem);gap:var(--a4);align-items:start}
+@media (max-width:1023px){.bw-kopf{grid-template-columns:1fr}}
+.bw-verbindlich{display:grid;gap:.6rem;padding:var(--a2) var(--a3);background:var(--flaeche);border-left:8px solid var(--text);border-radius:var(--rund)}
+.bw-verbindlich ul{margin:0;padding-left:1.2rem;display:grid;gap:.35rem}
+.bw-schritte{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:var(--a3)}
+.bw-schritte li{display:grid;gap:.35rem;align-content:start;max-width:none;padding-top:var(--a1);border-top:6px solid var(--ki-platte)}
+.bw-wann{margin:0;font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.bw-schritte h3{font-size:1.25rem}
+.bw-titel{margin-top:var(--a4);margin-bottom:var(--a1)}
+.bw-umbauten{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:var(--a2)}
+.bw-umbauten li{display:grid;gap:.3rem;align-content:start;max-width:none;padding:var(--a2);background:var(--flaeche);border-radius:var(--rund)}
+.bw-umbauten span{font-size:var(--gr-klein)}
+.bw-auftraege{display:grid;grid-template-columns:minmax(0,22rem) minmax(0,1fr);gap:var(--a3);align-items:start;margin-top:var(--a4)}
+@media (max-width:1023px){.bw-auftraege{grid-template-columns:1fr}}
+.bw-form .schnell-felder{grid-template-columns:1fr}
+.bw-auftrag-liste{display:grid;gap:var(--a3)}
+.bw-auftrag{display:grid;gap:.5rem}
+.bw-auftrag h3{font-size:1.25rem}
+.bw-auftrag textarea{width:100%;font:inherit;font-size:var(--gr-klein);padding:.6rem .8rem;border:2px solid var(--stahl);border-radius:var(--rund);background:var(--flaeche);color:var(--text)}
+.bw-warum{margin-top:var(--a4);max-width:68ch}
+@media print{ /* taste-skill-ignore: Druckfassung – Schritte, Umbauten und »Was verbindlich bleibt«; die Aufträge sind zum Kopieren da (wie im Aufgabenkoffer auf Papier) */
+  .bw-kopf .knopf,.bw-auftraege{display:none}
+  .bw-kopf{grid-template-columns:1fr 1fr;gap:var(--a2)}
+  .bw-schritte,.bw-umbauten{grid-template-columns:1fr 1fr}
+  .bw-schritte li,.bw-umbauten li{break-inside:avoid}
+}
+/* Mein Fortbildungsbogen ab 4.48: Kurze Probe (Brief mit Sätzen zum Antippen, nach dem Auflösen gesperrt und erklärt) und
+   Landkarte »Wofür du KI schon nutzt«. Zustand nie nur über Farbe: Kästchen, Zeichen (✓ ○) und Wörter (»schon«, »noch nicht«,
+   »Von dir markiert«, die Art der Stelle). Farben aus dem Bereich Lernen, wie der übrige Bogen. */
+.mfb-probe-lage{margin:var(--a2) 0 0;max-width:46ch}
+.mfb-probe-fall{display:inline-block;margin:var(--a2) 0 0;padding:.2rem .6rem;border-left:4px solid var(--lernen);background:var(--lernen-zart);font-size:var(--gr-klein);font-weight:700}
+.mfb-probe-brief{padding:var(--a2);background:var(--grund);border-radius:var(--rund);border:2px solid var(--stahl)}
+.mfb-probe-titel{margin:0 0 .6rem;font-weight:700}
+.mfb-probe-saetze{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.mfb-probe-saetze li{max-width:none}
+.mfb-probe-saetze .option{min-height:48px}
+.mfb-probe-saetze .option-text{font-weight:400;line-height:1.4}
+.mfb-probe-satz .option:has(input:disabled){opacity:1;cursor:default}
+.mfb-probe-satz .option input:disabled{cursor:default}
+.mfb-probe-aufl{margin:.35rem 0 .2rem;padding-left:calc(.9rem + 22px + .75rem);font-size:var(--gr-klein);max-width:none}
+.mfb-probe-satz.ist-stelle .option{border-left:8px solid var(--lernen-tief)}
+.mfb-probe-satz.ist-stelle .mfb-probe-aufl b{color:var(--lernen-tief)}
+.mfb-probe-du{font-weight:700}
+.mfb-probe-auf{margin-top:var(--a3);outline-offset:4px}
+.mfb-probe-rm{display:grid;gap:var(--a2)}
+.mfb-probe-rm-titel{margin:0 0 .3rem;font-size:1.125rem}
+.mfb-probe-rm .bogen-hinweise{margin:0}
+.mfb-probe-schon,.mfb-probe-ansehen{padding:var(--a1) var(--a2);border-radius:var(--rund);background:var(--grund)}
+.mfb-probe-schon{border-left:6px solid var(--lernen-tief)}
+.mfb-probe-ansehen{border-left:6px dashed var(--lernen-tief)}
+.mfb-landkarte{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,5fr) minmax(0,2.5fr);gap:var(--a2);margin-top:.4rem;max-width:62rem}
+@media (max-width:900px){.mfb-landkarte{grid-template-columns:1fr}}
+@media (min-width:1100px){.mfb-gebiet:nth-child(2) ul{grid-template-columns:1fr 1fr}}
+.mfb-gebiet{padding:var(--a1) var(--a2);border-top:6px solid var(--lernen);background:var(--grund);border-radius:var(--rund)}
+.mfb-gebiet-name{margin:0 0 .4rem;font-weight:700}
+.mfb-gebiet ul{list-style:none;margin:0;padding:0;display:grid;gap:.35rem}
+.mfb-gebiet li{display:flex;flex-wrap:wrap;gap:0 .4rem;align-items:baseline;max-width:none;padding:.3rem .5rem;border-radius:var(--rund-klein);font-size:var(--gr-klein)}
+.mfb-gebiet-text{flex:1 1 8rem}
+.mfb-gebiet li.ist-schon{background:var(--lernen-zart);box-shadow:inset 0 0 0 2px var(--lernen-tief)}
+.mfb-gebiet li.ist-noch{box-shadow:inset 0 0 0 2px var(--stahl)}
+.mfb-zeichen{flex:none;width:1.1rem;font-weight:700;color:var(--lernen-tief);text-align:center}
+.mfb-gebiet-stand{margin-left:auto;font-weight:700;white-space:nowrap}
+.mfb-gebiet li.ist-noch .mfb-gebiet-stand{color:var(--leise);font-weight:400}
+.mfb-landkarte-hinweis{margin-top:.4rem}
+@media print{ /* taste-skill-ignore: Druckfassung */
+  .mfb-landkarte{grid-template-columns:minmax(0,3fr) minmax(0,5fr) minmax(0,2.5fr);gap:.4rem;max-width:none}
+  .mfb-gebiet:nth-child(2) ul{grid-template-columns:1fr 1fr}
+  .mfb-gebiet{padding:.3rem .5rem;border-top-width:4px}
+  .mfb-gebiet li{padding:.1rem .3rem;line-height:1.25}
+  .mfb-gebiet ul{gap:.15rem}
+  .mfb-probe-kurz .begruendung{margin:.15rem 0}
+}
+/* KI-Training ab 4.48: Weiterlernen beim Land – zwei ruhige Einträge ohne Links (Kidu verlinkt nicht nach außen) */
+.ki-land{padding-top:0}
+.ki-land-liste{list-style:none;margin:var(--a1) 0 .6rem;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:var(--a2);max-width:62rem}
+.ki-land-liste li{display:grid;gap:.25rem;align-content:start;max-width:none;padding:var(--a1) var(--a2);background:var(--flaeche);border-radius:var(--rund);border-left:6px solid var(--ki-platte)}
+.ki-land-liste span{font-size:var(--gr-klein)}

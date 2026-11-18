@@ -79,22 +79,26 @@
     </li>
   </ol>
   <p class="fahrplan-ring"><span class="fahrplan-ring-pfeil" aria-hidden="true">↑</span> Nächste Stunde: wieder bei 2</p>
+  <p class="leise klein fahrplan-geschaetzt">Die Zeiten an den Werkzeugen sind geschätzt: »kurz« passt zwischendurch, »eine Freistunde« etwa in eine Schulstunde.</p>
   <p class="bezug-lernen">KI kann Unterricht vorbereiten, der ganz analog bleibt. Wenn du Lernen mit Tablets gestalten willst: <a class="textlink" href="unterricht.html">Zum Digitalen Unterricht <span aria-hidden="true">→</span></a></p>
 </div></section>
 
 <!-- Ab 4.47: die fünf Fähigkeiten der Trainingsaufgaben (assets/daten/training.js, gruppen) – ohne Stufen, ohne Rangfolge.
-     Namen und Fragen prüft tools/pruefen.py gegen die Daten. Ohne Links: Die Werkzeuge stehen nur im Fahrplan (eine Struktur). -->
+     Namen und Fragen prüft tests/training.test.js gegen die Daten. Ohne Links: Die Werkzeuge stehen nur im Fahrplan (eine Struktur).
+     Ab 4.48 ein Filter (Entscheidung Mario, 17.11.2026): assets/ki-faehig.js macht aus jeder Fähigkeit einen Schalter, der im Fahrplan
+     die Werkzeuge hervorhebt, die sie üben (»faehigkeiten« in src/fahrplan-ki.json). Ohne Skript bleibt das Band ein ruhiger Text. -->
 <section class="abschnitt ki-faehig" aria-labelledby="t-faehig"><div class="huelle huelle-weit">
   <div class="ki-faehig-kopf">
     <h2 id="t-faehig" class="klein-titel">Was du in allen Phasen übst</h2>
     <p>Fünf Fähigkeiten. Keine Stufen: Du übst jede an deinem eigenen Material – so weit, wie es für deinen Unterricht passt.</p>
+    <p class="ki-faehig-hilfe" hidden>Tipp eine Fähigkeit an. Der Fahrplan zeigt dann, wo du sie übst. Noch einmal tippen hebt das auf.</p>
   </div>
   <ul class="ki-faehig-liste">
-    <li><b>Abgeben oder selbst machen</b><span>Welche Aufgabe gebe ich ab, welche bleibt bei mir – und warum?</span></li>
-    <li><b>Gut beschreiben</b><span>Was braucht die KI, damit sie nicht rät?</span></li>
-    <li><b>Kritisch prüfen</b><span>Stimmt das? Fehlt etwas? Woher weiß ich das?</span></li>
-    <li><b>Verantwortlich handeln</b><span>Darf ich das eingeben? Wie mache ich KI-Hilfe sichtbar?</span></li>
-    <li><b>Lernende begleiten</b><span>Wie lernen Lernende mit KI, ohne dass die KI das Denken übernimmt?</span></li>
+    <li data-faehigkeit="abgeben"><b>Abgeben oder selbst machen</b><span>Welche Aufgabe gebe ich ab, welche bleibt bei mir – und warum?</span></li>
+    <li data-faehigkeit="beschreiben"><b>Gut beschreiben</b><span>Was braucht die KI, damit sie nicht rät?</span></li>
+    <li data-faehigkeit="pruefen"><b>Kritisch prüfen</b><span>Stimmt das? Fehlt etwas? Woher weiß ich das?</span></li>
+    <li data-faehigkeit="verantworten"><b>Verantwortlich handeln</b><span>Darf ich das eingeben? Wie mache ich KI-Hilfe sichtbar?</span></li>
+    <li data-faehigkeit="begleiten"><b>Lernende begleiten</b><span>Wie lernen Lernende mit KI, ohne dass die KI das Denken übernimmt?</span></li>
   </ul>
   <details class="mehr ki-faehig-warum">
     <summary>Warum Anliegen statt Stufen?</summary>
@@ -103,5 +107,20 @@
     <p class="klein">Grundlage: Recherche vom 17.11.2026, unter anderem Lipowsky und Rzejak zu wirksamen Fortbildungen, die Übersichtsarbeit von Sims und anderen (2021) zu den Bausteinen wirksamer Fortbildung, die Handlungsempfehlung der Kultusministerkonferenz zum Umgang mit KI (2024) und eine Studie der Aalto-Universität (2025) zur Selbsteinschätzung beim Arbeiten mit KI.</p>
   </details>
 </div></section>
+
+<!-- Ab 4.48: Anschluss ans Land (Entscheidung Mario, 17.11.2026). Ohne Links: Kidu verlinkt nicht nach außen (tools/pruefen.py).
+     Geprüft am 18.11.2026: Selbstlernkurs »KI in der Schule« des ZSL (kostenfrei, interaktiv, mit Material für den Unterricht;
+     Meldung der Universität Tübingen vom 11.12.2025) und KI-Zentrum Schule in Heilbronn (ZSL mit der Dieter Schwarz Stiftung,
+     gegründet im Herbst 2024, Fortbildungen für Lehrkräfte; Pressemitteilung des Landes). Die Reflexionskarten der KMK: noch offen
+     (docs/version-4-48.md). -->
+<section class="abschnitt ki-land" aria-labelledby="t-ki-land"><div class="huelle huelle-weit">
+  <h2 id="t-ki-land" class="klein-titel">Weiterlernen beim Land Baden-Württemberg</h2>
+  <ul class="ki-land-liste">
+    <li><b>Selbstlernkurs »KI in der Schule«</b><span>Vom Zentrum für Schulqualität und Lehrerbildung (ZSL). Kostenfrei, in deinem Tempo, mit Material für den Unterricht.</span></li>
+    <li><b>KI-Zentrum Schule in Heilbronn</b><span>Getragen vom ZSL. Es bietet Fortbildungen für Lehrkräfte an.</span></li>
+  </ul>
+  <p class="leise klein">Stand: November 2026. Beides findest du auf den Seiten des ZSL.</p>
+</div></section>
 </div>
 <script src="assets/fahrplan.js"></script>
+<script src="assets/ki-faehig.js"></script>
