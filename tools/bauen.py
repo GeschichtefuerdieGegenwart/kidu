@@ -53,6 +53,7 @@ SEITEN = [
     ("kollegium.html", "Mit dem Kollegium – Kidu", "ki"),              # ab 4.47, sechs Formate
     ("vier-wochen.html", "Vier Wochen KI-Training – Kidu", "ki"),      # ab 4.48, Phase 1
     ("bewertung.html", "Werkstatt Bewertungskultur – Kidu", "ki"),     # ab 4.48, Phase 4 »Im Kollegium«
+    ("wunsch-methode.html", "Die Wunsch-Methode – Kidu", "ki"),        # ab 4.52, Phase 1: das Modell »Vier Sätze, drei Kreise«
     ("ablaeufe.html", "Für die Fortbildungsleitung – Kidu", ""),       # ab 4.48 geschützt (Schloss): Ablauf-Koffer
     ("galerie.html", "Unterrichtsbeispiele – Kidu", "galerie"),
     ("beispiel.html", "Beispiel – Kidu", "galerie"),
@@ -190,8 +191,11 @@ def main():
     # ab 4.49: Karten und Listen des Aufgabenkoffers auf Papier aus PAPIERKOFFER.html() (tools/papierkoffer.py, mit Node)
     spec = importlib.util.spec_from_file_location("papierkoffer", WURZEL / "tools" / "papierkoffer.py")
     pk = importlib.util.module_from_spec(spec); spec.loader.exec_module(pk)
+    # ab 4.52: Zeichnung, Liste und Lampentext der Wunsch-Methode aus WUNSCH_SEITE.html() (tools/wunsch.py, mit Node)
+    spec = importlib.util.spec_from_file_location("wunsch", WURZEL / "tools" / "wunsch.py")
+    wm = importlib.util.module_from_spec(spec); spec.loader.exec_module(wm)
     for datei, titel, aktiv in SEITEN:
-        inhalt = mit_schloss(pk.einsetzen(fp.einsetzen((WURZEL / "src" / datei).read_text(encoding="utf-8"), datei, fahrplan), datei), datei)
+        inhalt = mit_schloss(wm.einsetzen(pk.einsetzen(fp.einsetzen((WURZEL / "src" / datei).read_text(encoding="utf-8"), datei, fahrplan), datei), datei), datei)
         (WURZEL / datei).write_text(mit_stand(rahmen(titel, aktiv, inhalt, datei)), encoding="utf-8")
         print("gebaut:", datei)
 

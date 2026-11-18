@@ -29,7 +29,8 @@ from playwright.sync_api import sync_playwright
 
 W = Path(__file__).resolve().parent.parent
 SEITEN = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "digital-check.html", "tablets.html", "galerie.html", "beispiel.html#psycho-ds2", "beispiel.html#quest", "beispiel.html#anleitertreffen", "beispiel.html#kfz-fehlersuche", "beispiel.html#teacch", "passt.html", "beobachtung.html", "tablet-phasen.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "sechs-hebel.html", "sechs-hebel-film.html", "mehrwert.html", "selbstcheck.html", "ueber.html", "gestaltung.html", "papierkoffer.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "skillkoffer.html",
-          "papierfrage.html", "tipps.html", "ki-aufgaben.html", "fortbildungsleitung.html"]  # ab 4.46
+          "papierfrage.html", "tipps.html", "ki-aufgaben.html", "fortbildungsleitung.html",  # ab 4.46
+          "wunsch-methode.html"]  # ab 4.52
 PASS = os.environ.get("KIDU_PASS", "")
 
 
@@ -962,7 +963,7 @@ def main():
         # src/fahrplan-ki.json, keine Schnell-Anfrage mehr oben; die alten Teile der Seite haben eigene Seiten.
         pg.goto(url("ki.html"))
         phasen = pg.eval_on_selector_all("#fahrplan .ki-phase", "ps => ps.map(p => [p.querySelector('.fahrplan-name').textContent.trim(), p.querySelectorAll('a.ist-werkzeug, .ki-weitere a').length, p.querySelector('.fahrplan-anliegen').textContent.trim()])")
-        pruefe([x[:2] for x in phasen] == [["Grundlagen", 6], ["Analogen Unterricht mit KI vorbereiten", 5], ["Unterrichten", 2], ["Nach der Stunde", 4]] and all(x[2].startswith("»Ich") or x[2].startswith("»Meine") for x in phasen), f"KI-Training (4.47): vier Phasen, jede mit einem Anliegen {phasen}")
+        pruefe([x[:2] for x in phasen] == [["Grundlagen", 7], ["Analogen Unterricht mit KI vorbereiten", 5], ["Unterrichten", 2], ["Nach der Stunde", 4]] and all(x[2].startswith("»Ich") or x[2].startswith("»Meine") for x in phasen), f"KI-Training (4.47): vier Phasen, jede mit einem Anliegen {phasen}")
         pruefe(pg.locator("#schnell, #schnell-form, #weg, .ki-eingang").count() == 0 and all(pg.eval_on_selector_all(".ki-phase", "ps => ps.map(p => p.hidden)")), "KI-Training (4.47): beginnt mit den Phasen, nicht mit der Schnell-Anfrage; alle Phasen zu")
         k4 = pg.locator('.ki-karte[data-phase="nach"]').bounding_box()
         pruefe(k4 and k4["y"] + k4["height"] <= 720, "KI-Training (4.47, ab 4.50 als Karten): alle vier Phasen im ersten Bildschirm (1280 × 720)")
@@ -1034,7 +1035,7 @@ def main():
         knopf("abgeben").click(); pg.click("[data-filter-aus]"); pg.wait_for_timeout(200)
         pruefe(pg.locator("#fahrplan .ist-treffer").count() == 0 and pg.evaluate("document.activeElement.getAttribute('data-faehigkeit')") == "abgeben", "KI-Training (4.48): »Aufheben« hebt auf und gibt den Fokus an die Fähigkeit zurück")
         zeiten = pg.eval_on_selector_all("#fahrplan a.ist-werkzeug, #fahrplan .ki-weitere li[data-faehigkeiten] > a", "as => as.map(a => (a.querySelector('.fahrplan-marken') || {}).textContent || '')")
-        pruefe(len(zeiten) == 17 and all(re.match(r"(kurz|eine Freistunde|mehrere Termine)", z) for z in zeiten) and "kurz · geht ohne KI · auch auf Papier" in pg.text_content('#fahrplan a[href="pruef-labor.html"]'), f"KI-Training (4.48): an jedem Werkzeug die Zeit, beim Prüf-Labor auch »geht ohne KI« ({len(zeiten)})")
+        pruefe(len(zeiten) == 18 and all(re.match(r"(kurz|eine Freistunde|mehrere Termine)", z) for z in zeiten) and "kurz · geht ohne KI · auch auf Papier" in pg.text_content('#fahrplan a[href="pruef-labor.html"]'), f"KI-Training (4.48): an jedem Werkzeug die Zeit, beim Prüf-Labor auch »geht ohne KI« ({len(zeiten)})")
         pruefe("geschätzt" in pg.inner_text(".fahrplan-geschaetzt") and "ZSL" in pg.inner_text(".ki-land") and "KI-Zentrum Schule" in pg.inner_text(".ki-land") and pg.locator(".ki-land a").count() == 0, "KI-Training (4.48): Zeiten als Schätzung gekennzeichnet; Selbstlernkurs und KI-Zentrum ohne Link genannt")
         pg.goto(url("ki.html"))
         k4 = pg.locator('.ki-karte[data-phase="nach"]').bounding_box()
@@ -2024,6 +2025,225 @@ def main():
         pruefe(w.inner_text("[data-film-halt]") == "Nächstes Bild" and "Standbilder" in w.inner_text("[data-film-bedienung]"),
                "Film: »Weniger Bewegung« gilt auch, wenn der Schalter erst nach dem Laden umgelegt wurde (4.40)")
         w.context.close()
+
+        # Ab 4.52: Die Wunsch-Methode – das Modell »Vier Sätze, drei Kreise« als Zeichnung zum Antippen (wunsch-methode.html)
+        WM_MASS = """() => {
+          const bild = document.querySelector('.wm-bild'), fig = bild.getBoundingClientRect();
+          const ls = [...bild.querySelectorAll('.wm-wort,.wm-kreisname,.wm-maerchen,.wm-legende')], r = ls.map(e => e.getBoundingClientRect());
+          let stoss = 0, aufFeld = 0;
+          for (let i = 0; i < r.length; i++) {
+            for (let j = i + 1; j < r.length; j++) if (r[i].left < r[j].right && r[j].left < r[i].right && r[i].top < r[j].bottom && r[j].top < r[i].bottom) stoss++;
+            for (const [x, y] of [[r[i].left + 1, r[i].top + 3], [r[i].right - 1, r[i].top + 3], [r[i].left + 1, r[i].bottom - 3], [r[i].right - 1, r[i].bottom - 3]]) {
+              const e = document.elementFromPoint(x, y); if (e && e.closest('.wm-feld')) aufFeld++;
+            }
+          }
+          return { breite: Math.round(fig.width), woerter: ls.length,
+                   klein: ls.filter(e => parseFloat(getComputedStyle(e).fontSize) < 16).length,
+                   raus: r.filter(x => x.left < fig.left - 1 || x.right > fig.right + 1 || x.top < fig.top - 1 || x.bottom > fig.bottom + 1).length,
+                   stoss, aufFeld, ring: Math.round(fig.width / 880 * 60 * 10) / 10,
+                   quer: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+                   laeuft: document.getAnimations().filter(a => a.playState === 'running').length };
+        }"""
+        wm = neue_seite(b)
+        wm.goto(url("wunsch-methode.html")); wm.wait_for_timeout(600)
+        pruefe(wm.inner_text("h1") == "Die Wunsch-Methode" and wm.locator(".wm-feld").count() == 12 and wm.locator(".wm-feld.ist-grund").count() == 5 and wm.locator(".wm-bild svg text").count() == 0,
+               "Wunsch-Methode (4.52): zwölf Felder in der Zeichnung, fünf davon Grundausstattung, kein Text im Bild")
+        pruefe(wm.locator('.ort-zeile a[href="ki.html#fahrplan"]').count() == 1 and wm.locator('nav.fahrplan-fuss .ist-hier a[href="ki.html#phase-grundlagen"]').count() == 1,
+               "Wunsch-Methode (4.52): steht im Fahrplan KI-Training, Phase Grundlagen")
+        st = wm.locator("#wm-start").bounding_box(); bi = wm.locator("#wm-bild").bounding_box()
+        pruefe(st and st["height"] >= 48 and st["y"] + st["height"] <= 720 and bi["y"] + bi["height"] <= 720,
+               f"Wunsch-Methode (4.52): Beamer 1280 × 720 – die Zeichnung und »Wo stehst du?« stehen im ersten Bildschirm (Knopf bis {round(st['y'] + st['height'])} px, Zeichnung bis {round(bi['y'] + bi['height'])} px)")
+        m = wm.evaluate(WM_MASS)
+        pruefe(m["woerter"] == 9 and m["klein"] == 0 and m["raus"] == 0 and m["stoss"] == 0 and m["aufFeld"] == 0 and m["ring"] >= 44 and m["quer"] <= 0 and m["laeuft"] == 0,
+               f"Wunsch-Methode (4.52): Beamer – alle Wörter mindestens 16 px, im Rahmen, ohne Überschneidung, Felder mindestens 44 px dick, nichts bewegt sich nach dem Laden {m}")
+        pruefe(wm.locator("[data-zeichen]:visible").count() == 0 and wm.is_hidden("#wm-stand-legende") and wm.is_hidden("#wm-wieder") and wm.is_hidden("#wm-liste"),
+               "Wunsch-Methode (4.52): vor »Wo stehst du?« steht an keinem Feld ein Zeichen; die Liste ist neben der Zeichnung zugeklappt")
+        # Feld öffnen mit der Maus: Karte an der Stelle der Geschichte, Feld auf seiner Platte, Adresse merkt das Feld
+        wm.click('.wm-feld[data-feld="pruefen-mich"]'); wm.wait_for_timeout(400)
+        sch = wm.locator("#wm-wechsel .wm-schritt .wm-wege a").bounding_box()
+        pruefe(wm.url.endswith("#feld-pruefen-mich") and wm.inner_text("#wm-wechsel .wm-fenster-titel") == "Prüfen · Für mich" and wm.is_hidden("#wm-ruhe")
+               and wm.evaluate("[...document.querySelectorAll('.wm-feld[aria-current]')].map(a => a.dataset.feld).join()") == "pruefen-mich"
+               and wm.evaluate("[...document.querySelectorAll('.wm-platte.ist-gewaehlt')].map(a => a.dataset.platte).join()") == "pruefen-mich"
+               and wm.evaluate("document.activeElement.className") == "wm-fenster-titel",
+               "Wunsch-Methode (4.52): Antippen öffnet die Karte an der Stelle der Geschichte; das Feld steht auf seiner Platte, der Fokus auf der Überschrift")
+        pruefe(sch and sch["y"] + sch["height"] <= 720 and "geht ohne KI" in wm.inner_text("#wm-wechsel .wm-schritt") and wm.get_attribute("#wm-wechsel .wm-schritt .wm-wege a", "href") == "pruef-labor.html#pl-fehler",
+               f"Wunsch-Methode (4.52): Beamer – der erste Schritt des Feldes steht ohne Scrollen da (bis {round(sch['y'] + sch['height']) if sch else '?'} px)")
+        pruefe(wm.evaluate("[...document.querySelectorAll('.wm-wort.ist-an,.wm-kreisname.ist-an')].map(e => e.textContent).join(' | ')") == "Prüfen | Für mich",
+               "Wunsch-Methode (4.52): Satz und Kreis des offenen Feldes sind in der Zeichnung unterstrichen")
+        pruefe("wm-wachsen" in wm.get_attribute("#wm-wechsel", "class") and wm.evaluate("getComputedStyle(document.getElementById('wm-wechsel')).animationDuration") == "0.2s",
+               "Wunsch-Methode (4.52): die Karte wächst nach Maus oder Finger aus der Richtung des Feldes (200 ms)")
+        wm.click('#wm-wechsel [data-feld-link="pruefen-lernende"]'); wm.wait_for_timeout(300)
+        pruefe(wm.url.endswith("#feld-pruefen-lernende") and wm.inner_text("#wm-wechsel .wm-fenster-titel") == "Prüfen · Für meine Lernenden" and wm.locator("#wm-wechsel .wm-marke").count() == 0,
+               "Wunsch-Methode (4.52): »Derselbe Satz, ein Kreis weiter« führt nach außen; dort steht keine Marke »Grundausstattung«")
+        wm.go_back(); wm.wait_for_timeout(300)
+        erst = wm.inner_text("#wm-wechsel .wm-fenster-titel")
+        wm.go_back(); wm.wait_for_timeout(300)
+        pruefe(erst == "Prüfen · Für mich" and wm.is_hidden("#wm-wechsel") and wm.is_visible("#wm-ruhe") and wm.locator(".wm-feld[aria-current]").count() == 0,
+               "Wunsch-Methode (4.52): »Zurück« im Browser geht ein Feld zurück und dann zur Geschichte von der Lampe")
+        wm.click('.wm-feld[data-feld="sagen-andere"]'); wm.wait_for_timeout(300)
+        wm.click('.wm-feld[data-feld="sagen-andere"]'); wm.wait_for_timeout(300)
+        pruefe(wm.is_hidden("#wm-wechsel") and "#feld" not in wm.url and wm.evaluate("document.activeElement.dataset.feld") == "sagen-andere",
+               "Wunsch-Methode (4.52): noch einmal antippen schließt das Feld, der Fokus bleibt am Feld")
+        # nur mit der Tastatur
+        wm.focus('.wm-feld[data-feld="wissen-lernende"]'); wm.keyboard.press("Enter"); wm.wait_for_timeout(300)
+        ring = wm.evaluate("(() => { const a = document.querySelector('.wm-feld[data-feld=\"wissen-lernende\"]'); a.focus(); return 1; })()")
+        pruefe(wm.inner_text("#wm-wechsel .wm-fenster-titel") == "Wissen · Für meine Lernenden" and "wm-wachsen" not in wm.get_attribute("#wm-wechsel", "class") and "Grundausstattung" in wm.inner_text("#wm-wechsel .wm-unterzeile"),
+               "Wunsch-Methode (4.52): Enter öffnet das Feld ohne Bewegung; »Grundausstattung« steht als Wort an der Karte")
+        wm.keyboard.press("Escape"); wm.wait_for_timeout(200)
+        pruefe(wm.is_hidden("#wm-wechsel") and wm.evaluate("document.activeElement.dataset.feld") == "wissen-lernende",
+               "Wunsch-Methode (4.52): Escape schließt, der Fokus geht an das Feld zurück")
+        wm.keyboard.press("Tab"); wm.keyboard.press("Shift+Tab"); wm.wait_for_timeout(100)
+        fok = wm.evaluate("(() => { const a = document.activeElement, f = getComputedStyle(a.querySelector('.wm-feld-form')), r = getComputedStyle(a.querySelector('.wm-feld-ring')); return [a.dataset.feld, f.strokeWidth, r.stroke !== 'none']; })()")
+        pruefe(fok == ["wissen-lernende", "9px", True], f"Wunsch-Methode (4.52): mit der Tastatur trägt das Feld einen Doppelring entlang seiner Form {fok}")
+        reihe = wm.eval_on_selector_all(".wm-feld", "fs => fs.map(f => f.dataset.feld)")
+        pruefe(reihe[:3] == ["wissen-mich", "wissen-lernende", "wissen-andere"] and reihe[-1] == "verantworten-andere",
+               "Wunsch-Methode (4.52): die Tastatur geht Satz für Satz von innen nach außen")
+        # »Wo stehst du?«: drei Bilder, erst danach die Zeichen
+        wm.click("#wm-start"); wm.wait_for_timeout(300)
+        pruefe("Bild 1 von 3 · Für mich" in wm.inner_text(".wm-bildstand") and wm.get_attribute("#wm-bild", "data-zeigt") == "mich" and wm.locator('#wm-frage input[name="wm-aussage"]').count() == 5
+               and wm.locator("[data-zeichen]:visible").count() == 0,
+               "Wunsch-Methode (4.52): »Wo stehst du?« beginnt mit dem Kreis »Für mich« – vier Aussagen und »Nichts davon«, noch kein Zeichen in der Zeichnung")
+        wm.click('#wm-frage button[type="submit"]')
+        pruefe("Wähl mindestens eine Antwort" in wm.inner_text("#wm-hinweis") and "Bild 1 von 3" in wm.inner_text(".wm-bildstand"), "Wunsch-Methode (4.52): ohne Antwort geht es nicht weiter – mit Hinweis")
+        wm.check('#wm-frage input[value="pruefen-mich"]'); wm.check('#wm-frage input[value="sagen-mich"]')
+        wm.click('#wm-frage button[type="submit"]'); wm.wait_for_timeout(200)
+        wm.check('#wm-frage input[value="wissen-lernende"]'); wm.check('#wm-frage input[value="nichts"]')
+        nur = wm.eval_on_selector_all('#wm-frage input:checked', "is => is.map(i => i.value)")
+        wm.click('#wm-frage [data-wm="bild-zurueck"]'); wm.wait_for_timeout(200)
+        gemerkt = wm.eval_on_selector_all('#wm-frage input:checked', "is => is.map(i => i.value)")
+        wm.click('#wm-frage button[type="submit"]'); wm.wait_for_timeout(200)
+        wm.click('#wm-frage button[type="submit"]'); wm.wait_for_timeout(200)
+        pruefe(nur == ["nichts"] and gemerkt == ["sagen-mich", "pruefen-mich"] and "Bild 3 von 3 · Für andere" in wm.inner_text(".wm-bildstand") and wm.get_attribute("#wm-bild", "data-zeigt") == "andere"
+               and wm.inner_text('#wm-frage button[type="submit"]') == "Meine Karte zeigen",
+               f"Wunsch-Methode (4.52): »Nichts davon« hebt die anderen Antworten auf, »Zurück« merkt die Wahl, das dritte Bild endet mit »Meine Karte zeigen« {nur} {gemerkt}")
+        wm.check('#wm-frage input[value="nichts"]'); wm.click('#wm-frage button[type="submit"]'); wm.wait_for_timeout(400)
+        zeichen = wm.eval_on_selector_all("[data-zeichen]", "zs => zs.filter(z => !z.hidden).map(z => z.textContent).join('')")
+        erg = wm.inner_text("#wm-wechsel")
+        pruefe(wm.inner_text("#wm-wechsel .wm-fenster-titel") == "Deine Karte" and len(zeichen) == 12 and zeichen.count("✓") == 2 and zeichen.count("○") == 10 and wm.is_visible("#wm-stand-legende")
+               and wm.eval_on_selector_all(".wm-schon a", "as => as.map(a => a.textContent)") == ["Prüfen · Für mich", "Sagen · Für mich"]
+               and wm.eval_on_selector_all(".wm-lohnt a", "as => as.map(a => a.textContent)") == ["Wissen · Für mich", "Verantworten · Für mich", "Wissen · Für meine Lernenden"],
+               f"Wunsch-Methode (4.52): erst nach dem dritten Bild steht an jedem Feld ein Zeichen; »Darauf achtest du schon« und drei nächste Schritte aus der Grundausstattung ({zeichen})")
+        pruefe(not re.search(r"\d|%|Stufe|Punkte|Niveau", erg) and "»Noch nicht« ist kein Mangel" in erg
+               and wm.evaluate("localStorage.getItem('hilde.wunsch')") == '{"schon":["sagen-mich","pruefen-mich"]}'
+               and "mache ich schon" in wm.get_attribute('.wm-feld[data-feld="pruefen-mich"]', "aria-label") and "noch nicht" in wm.get_attribute('.wm-feld[data-feld="wissen-andere"]', "aria-label"),
+               "Wunsch-Methode (4.52): die Karte nennt keine Zahl und keine Stufe; gespeichert sind nur die angetippten Aussagen; der Stand steht auch im Namen jedes Feldes")
+        ob = wm.locator("#wm-buehne").bounding_box()
+        pruefe(ob and ob["y"] >= -1 and wm.locator("#wm-bild").bounding_box()["y"] >= 0, "Wunsch-Methode (4.52): nach dem dritten Bild sind Karte und Zeichnung von oben zu sehen")
+        if fotos: wm.screenshot(path=fotos / "beamer-wunsch-karte.png")
+        wm.click('.wm-lohnt [data-feld-link="wissen-mich"]'); wm.wait_for_timeout(300)
+        pruefe("○ noch nicht" in wm.inner_text("#wm-wechsel .wm-unterzeile"), "Wunsch-Methode (4.52): ein nächster Schritt öffnet sein Feld, dort steht der Stand als Zeichen und Wort")
+        wm.click('#wm-wechsel [data-wm="zu"]'); wm.wait_for_timeout(300)
+        pruefe(wm.inner_text("#wm-wechsel .wm-fenster-titel") == "Deine Karte", "Wunsch-Methode (4.52): »Schließen« führt zurück zur Karte")
+        wm.reload(); wm.wait_for_timeout(400)
+        pruefe(wm.locator("[data-zeichen]:visible").count() == 12 and wm.is_visible("#wm-wieder") and wm.inner_text("#wm-start") == "Noch einmal: Wo stehst du?" and wm.is_visible("#wm-ruhe"),
+               "Wunsch-Methode (4.52): nach dem Neuladen stehen die Zeichen wieder da; »Deine Karte ansehen« führt zurück")
+        wm.click("#wm-wieder"); wm.wait_for_timeout(300)
+        wm.click('#wm-wechsel [data-wm="loeschen"]'); wm.wait_for_timeout(300)
+        pruefe(wm.locator("[data-zeichen]:visible").count() == 0 and wm.evaluate("localStorage.getItem('hilde.wunsch')") is None and wm.is_visible("#wm-ruhe") and wm.inner_text("#wm-start") == "Wo stehst du?",
+               "Wunsch-Methode (4.52): »Eingaben löschen« nimmt Zeichen und Speicher zurück")
+        wm.evaluate("localStorage.setItem('hilde.wunsch', JSON.stringify({schon:['pruefen-mich']}))")
+        wm.goto(url("ueber.html")); wm.click("#alles-loeschen"); wm.wait_for_timeout(200)
+        pruefe(wm.evaluate("localStorage.getItem('hilde.wunsch')") is None, "Wunsch-Methode (4.52): »Eingaben löschen« auf »Über Kidu« nimmt die Antworten mit")
+        wm.goto(url("wunsch-methode.html")); wm.wait_for_timeout(300)
+        wm.click("#wm-alle"); wm.wait_for_timeout(300)
+        pruefe(wm.is_visible("#wm-liste") and wm.locator("#wm-liste details.wm-karte").count() == 12 and wm.get_attribute("#wm-alle", "aria-expanded") == "true"
+               and wm.eval_on_selector_all("#wm-liste h3", "hs => hs.map(h => h.textContent)") == ["Für mich", "Für meine Lernenden", "Für andere"],
+               "Wunsch-Methode (4.52): »Alle zwölf Felder als Liste zeigen« – die Liste nach Kreisen als ruhige Alternative zur Zeichnung")
+        wm.click("#wm-alle"); wm.wait_for_timeout(200)
+        pruefe(wm.is_hidden("#wm-liste") and wm.get_attribute("#wm-alle", "aria-expanded") == "false", "Wunsch-Methode (4.52): die Liste lässt sich wieder schließen")
+        wm.goto(url("wunsch-methode.html#feld-verantworten-andere")); wm.wait_for_timeout(400)
+        pruefe(wm.inner_text("#wm-wechsel .wm-fenster-titel") == "Verantworten · Für andere" and "wm-wachsen" not in (wm.get_attribute("#wm-wechsel", "class") or ""),
+               "Wunsch-Methode (4.52): eine Adresse mit Feld öffnet es gleich – ohne Bewegung beim Laden")
+        ziele = wm.evaluate("Array.from(new Set(WUNSCH.felder.flatMap(f => (f.schritt.wo ? [f.schritt.wo[0]] : []).concat(f.uebung.wo.map(w => w[0]))))).filter(h => /#(tr|pl|ko)-/.test(h))")
+        fehlt = []
+        for ziel in ziele:
+            wm.goto(url(ziel)); wm.wait_for_timeout(250)
+            if not wm.evaluate("!!document.getElementById(location.hash.slice(1))"): fehlt.append(ziel)
+        pruefe(len(ziele) >= 9 and not fehlt, f"Wunsch-Methode (4.52): jeder Sprung zu einer Übung trifft seine Stelle ({len(ziele)} Sprünge, ohne Ziel: {fehlt})")
+        pruefe(not wm.konsole and not wm.extern, f"Wunsch-Methode (4.52): keine Konsolenfehler, nichts aus dem Netz {wm.konsole} {wm.extern[:2]}")
+        wm.context.close()
+        ms = neue_seite(b)
+        ms.goto(url("wunsch-methode.html")); ms.wait_for_timeout(300)
+        unten = []
+        for f_ in ms.eval_on_selector_all(".wm-feld", "fs => fs.map(f => f.dataset.feld)"):
+            ms.goto(url("wunsch-methode.html#feld-" + f_)); ms.wait_for_timeout(100)
+            unten.append(round(ms.evaluate("document.querySelector('#wm-wechsel .wm-schritt').getBoundingClientRect().bottom")))
+        pruefe(len(unten) == 12 and max(unten) <= 720, f"Wunsch-Methode (4.52): Beamer – bei jedem der zwölf Felder steht der erste Schritt im ersten Bildschirm (höchstens {max(unten)} px)")
+        ms.context.close()
+        # Breiten: iPad quer nebeneinander, darunter untereinander, am Telefon die Liste
+        for name, vp, neben in [("iPad quer", {"width": 1180, "height": 820}, True), ("1440", {"width": 1440, "height": 900}, True), ("1920", {"width": 1920, "height": 1080}, True),
+                                ("iPad hochkant", {"width": 820, "height": 1180}, False), ("1024", {"width": 1024, "height": 768}, False), ("720", {"width": 720, "height": 900}, False)]:
+            q = neue_seite(b, viewport=vp)
+            q.goto(url("wunsch-methode.html")); q.wait_for_timeout(500)
+            m = q.evaluate(WM_MASS)
+            q.click('.wm-feld[data-feld="verantworten-mich"]'); q.wait_for_timeout(500)
+            lage = q.evaluate("(() => { const w = document.getElementById('wm-wechsel').getBoundingClientRect(), bd = document.getElementById('wm-bild').getBoundingClientRect(); return [w.right <= bd.left + 2, w.top >= bd.bottom - 2, w.top < innerHeight - 100, getComputedStyle(document.getElementById('wm-ruhe')).display !== 'none', document.documentElement.scrollWidth - document.documentElement.clientWidth]; })()")
+            pruefe(m["klein"] == 0 and m["raus"] == 0 and m["stoss"] == 0 and m["aufFeld"] == 0 and m["ring"] >= 44 and m["quer"] <= 0 and m["laeuft"] == 0
+                   and lage[0] == neben and lage[1] == (not neben) and lage[2] and lage[3] == (not neben) and lage[4] <= 0,
+                   f"Wunsch-Methode (4.52) {name}: Zeichnung {m['breite']} px breit, Felder {m['ring']} px dick, Wörter frei; das Fenster steht {'neben' if neben else 'unter'} der Zeichnung und ist zu sehen {m} {lage}")
+            if fotos and name in ("iPad quer", "iPad hochkant"): q.screenshot(path=fotos / f"{'ipad-quer' if neben else 'ipad'}-wunsch-feld.png")
+            q.context.close()
+        t_ = neue_seite(b, viewport={"width": 390, "height": 844})
+        t_.goto(url("wunsch-methode.html")); t_.wait_for_timeout(400)
+        pruefe(t_.is_hidden("#wm-bild") and t_.is_visible("#wm-liste") and t_.locator("#wm-liste details.wm-karte").count() == 12 and t_.is_hidden("#wm-alle") and t_.is_visible("#wm-start")
+               and t_.evaluate("document.documentElement.scrollWidth") <= 390,
+               "Wunsch-Methode (4.52): am Telefon fällt die Zeichnung weg, die Liste der zwölf Felder ist die Bedienung")
+        t_.click("#wm-start"); t_.wait_for_timeout(300)
+        for wahl_ in ("pruefen-mich", "nichts", "nichts"):
+            t_.check(f'#wm-frage input[value="{wahl_}"]'); t_.click('#wm-frage button[type="submit"]'); t_.wait_for_timeout(250)
+        pruefe("✓ mache ich schon" in t_.inner_text('#feld-pruefen-mich summary') and "○ noch nicht" in t_.inner_text('#feld-sagen-mich summary') and t_.inner_text("#wm-wechsel .wm-fenster-titel") == "Deine Karte",
+               "Wunsch-Methode (4.52): am Telefon steht der Stand als Zeichen und Wort an jedem Feld der Liste")
+        t_.click('.wm-lohnt [data-feld-link="wissen-mich"]'); t_.wait_for_timeout(400)
+        pruefe(t_.evaluate("document.getElementById('feld-wissen-mich').open") and t_.locator("#feld-wissen-mich .wm-schritt").is_visible()
+               and all(v >= 44 for v in t_.evaluate("[...document.querySelectorAll('#wm-liste summary, #wm-start, .wm-ergebnis .knopf')].map(e => Math.round(e.getBoundingClientRect().height))"))
+               and t_.evaluate("document.documentElement.scrollWidth") <= 390 and not t_.konsole,
+               f"Wunsch-Methode (4.52): am Telefon öffnet ein nächster Schritt sein Feld in der Liste; Zielflächen mindestens 44 px {t_.konsole}")
+        if fotos: t_.screenshot(path=fotos / "schmal-wunsch.png", full_page=True)
+        t_.context.close()
+        # weniger Bewegung: Systemeinstellung und Schalter im Fuß
+        rw = neue_seite(b, reduced_motion="reduce")
+        rw.goto(url("wunsch-methode.html")); rw.wait_for_timeout(300)
+        rw.click('.wm-feld[data-feld="sagen-mich"]'); rw.wait_for_timeout(50)
+        ani = rw.evaluate("(() => { const s = getComputedStyle(document.getElementById('wm-wechsel')); return [s.animationName, s.animationDuration]; })()")
+        pruefe(ani == ["wm-blenden", "0.15s"], f"Wunsch-Methode (4.52): bei weniger Bewegung blendet die Karte nur über {ani}")
+        rw.context.close()
+        sw = neue_seite(b)
+        sw.goto(url("wunsch-methode.html")); sw.wait_for_timeout(300)
+        sw.evaluate("document.documentElement.setAttribute('data-bewegung','weniger')")
+        sw.click('.wm-feld[data-feld="sagen-mich"]'); sw.wait_for_timeout(50)
+        pruefe(sw.evaluate("getComputedStyle(document.getElementById('wm-wechsel')).animationName") == "wm-blenden", "Wunsch-Methode (4.52): der Schalter »Weniger Bewegung« wirkt auch nach dem Laden")
+        sw.evaluate("document.documentElement.removeAttribute('data-bewegung'); document.documentElement.setAttribute('data-theme','beamer')")
+        kon = sw.evaluate("(() => { const lum = c => { const v = c.match(/[\\d.]+/g).slice(0, 3).map(x => { x /= 255; return x <= .03928 ? x / 12.92 : Math.pow((x + .055) / 1.055, 2.4); }); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; }; const k = (a, c) => { const x = lum(a), y = lum(c); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); }; const g = document.querySelector('.wm-feld.ist-grund .wm-feld-form'), f = document.querySelector('.wm-feld:not(.ist-grund) .wm-feld-form'), w = document.querySelector('.wm-wort'), body = getComputedStyle(document.body).backgroundColor; return [k(getComputedStyle(w).color, body), k(getComputedStyle(w).color, getComputedStyle(g).fill), k(getComputedStyle(f).stroke, body), k(getComputedStyle(g).stroke, body)].map(x => Math.round(x * 10) / 10); })()")
+        pruefe(kon[0] >= 7 and kon[1] >= 4.5 and kon[2] >= 3 and kon[3] >= 3, f"Wunsch-Methode (4.52): Beamer-Ansicht – Wörter auf Grund und auf Ocker lesbar, Kanten der Felder mindestens 3:1 {kon}")
+        sw.context.close()
+        # ohne Skript und Druck
+        oc = b.new_context(java_script_enabled=False, viewport={"width": 1280, "height": 720}); ow = oc.new_page()
+        ow.goto(url("wunsch-methode.html"))
+        pruefe(ow.locator('.wm-feld[href="#feld-wissen-mich"]').count() == 1 and ow.is_visible("#wm-liste") and ow.locator("#wm-liste details.wm-karte").count() == 12 and ow.is_hidden("#wm-start") and ow.is_hidden("#wm-alle")
+               and "Wisse, was du willst" in ow.inner_text("#wm-ruhe") and "Persönlicher Entwicklungsstand" in ow.inner_text(".fuss"),
+               "Wunsch-Methode (4.52): ohne Skript stehen Geschichte, Zeichnung und alle zwölf Felder da; die Felder der Zeichnung springen in die Liste")
+        oc.close()
+        dw = neue_seite(b)
+        dw.goto(url("wunsch-methode.html")); dw.wait_for_timeout(300)
+        dw.click('.wm-feld[data-feld="sagen-mich"]'); dw.wait_for_timeout(300)
+        seiten_pdf = len(re.findall(rb"/Type\s*/Page[^s]", dw.pdf(format="A4")))
+        dw.emulate_media(media="print")
+        pruefe(dw.is_visible("#wm-liste") and dw.is_hidden("#wm-wechsel") and dw.is_visible("#wm-ruhe") and dw.is_visible("#wm-bild") and dw.is_hidden("#wm-start") and dw.is_hidden(".ort-zeile") and 1 <= seiten_pdf <= 7,
+               f"Wunsch-Methode (4.52): zum Drucken stehen Geschichte, Zeichnung und die Liste aller Felder da, ohne Bedienelemente ({seiten_pdf} Seiten A4)")
+        dw.emulate_media(media="screen")
+        pruefe(dw.evaluate("[...document.querySelectorAll('#wm-liste details')].every(d => !d.open)"), "Wunsch-Methode (4.52): nach dem Drucken ist die Liste wieder wie vorher")
+        dw.context.close()
+        # im Fahrplan KI-Training
+        kw = neue_seite(b)
+        kw.goto(url("ki.html")); kw.wait_for_timeout(300)
+        zahl = kw.inner_text('.ki-karte[data-phase="grundlagen"] .ki-karte-zahl')
+        kw.click('.ki-karte[data-phase="grundlagen"]'); kw.wait_for_timeout(300)
+        pruefe(zahl == "6 Hilfen · 7 Werkzeuge" and kw.locator('#phase-grundlagen a[href="wunsch-methode.html"]').count() == 1 and "Den Überblick bekommen" in kw.inner_text("#phase-grundlagen")
+               and "geht ohne KI" in kw.inner_text('#phase-grundlagen a[href="wunsch-methode.html"]'),
+               f"Wunsch-Methode (4.52): steht einmal in Phase 1 des KI-Trainings, als Hilfe »Den Überblick bekommen« ({zahl})")
+        kb = kw.locator('.ki-karte[data-phase="nach"]').bounding_box()
+        pruefe(kb and kb["y"] + kb["height"] <= 720, "Wunsch-Methode (4.52): die vier Karten des KI-Trainings bleiben am Beamer im ersten Bildschirm")
+        kw.context.close()
         b.close()
     print(f"\n{'Alle Browser-Tests bestanden' if not fehler else str(len(fehler)) + ' Fehler'}")
     sys.exit(1 if fehler else 0)
