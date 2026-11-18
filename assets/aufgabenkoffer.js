@@ -8,6 +8,8 @@
      zu welchen Ideen er passt, Herkunft und der KI-Auftrag aus WERKSTATT.muster (eine Quelle, gebaut mit WERKSTATT_ANFRAGE).
    - Unter der Stundenlinie »In jeder Phase« (#jede-phase): die Kniffe, die die ganze Stunde tragen.
    - Alte Adressen von muster.html (#m-<id>) öffnen das Fenster des Kniffs.
+   Ab 4.49: Raster und Karten aus der gemeinsamen Koffer-Komponente (.koffer-raster, .koffer-karte in hilde.css), die auch
+   der Aufgabenkoffer auf Papier nutzt – Inhalt und Bedienung unverändert.
    Braucht: AUFGABEN (aufgaben.js), KOFFER (koffer-ideen.js), TAXONOMIEN (taxonomien.js);
    für die Kniffe WERKSTATT (werkstatt.js), WERKSTATT_ANFRAGE, SCHNELL, BEISPIELE – fehlen sie, bleibt der Koffer wie vorher. */
 (function () {
@@ -76,7 +78,7 @@
   }
   function kniffKarte(kid) {
     var m = KN[kid];
-    return '<li><button type="button" class="ak-karte ak-kniff-karte" data-kniff="' + kid + '"><span class="ak-bild">' + svg(KNIFF) + '</span><span class="wort"><b>' + esc(m.name) + '</b><span class="kurz">' + esc(m.tun) + '</span><span class="kann">Kniff aus der Praxis</span></span></button></li>';
+    return '<li><button type="button" class="ak-karte koffer-karte ak-kniff-karte" data-kniff="' + kid + '"><span class="ak-bild koffer-bild">' + svg(KNIFF) + '</span><span class="wort koffer-wort"><b>' + esc(m.name) + '</b><span class="kurz koffer-kurz">' + esc(m.tun) + '</span><span class="kann">Kniff aus der Praxis</span></span></button></li>';
   }
   function karten() {
     if (stand.phase === "jede") {
@@ -90,7 +92,7 @@
     $("#ideen-satz").textContent = "Tipp eine Idee an. Dann siehst du, wie sie am Gerät geht – mit einem Beispiel zum Ausprobieren und dem Kniff aus der Praxis, wo es einen gibt.";
     $("#ideen").innerHTML = l.map(function (e) {
       var a = A[e.id], k = KOFFER.ideen[e.id], kn = kann(a);
-      return '<li><button type="button" class="ak-karte' + (e.auch ? " auch" : "") + '" data-idee="' + e.id + '"><span class="ak-bild">' + svg(BILD[e.id]) + '</span><span class="wort"><b>' + esc(a.name) + '</b><span class="kurz">' + esc(k.kurz) + "</span>" +
+      return '<li><button type="button" class="ak-karte koffer-karte' + (e.auch ? " auch" : "") + '" data-idee="' + e.id + '"><span class="ak-bild koffer-bild">' + svg(BILD[e.id]) + '</span><span class="wort koffer-wort"><b>' + esc(a.name) + '</b><span class="kurz koffer-kurz">' + esc(k.kurz) + "</span>" +
         (kn.length ? '<span class="kann">Das Gerät kann hier: ' + esc(kn.join(" · ").toLowerCase()) + "</span>" : "") +
         marke(e.id) +
         (e.auch ? '<span class="auchhier">Passt auch hier. Zuerst gedacht für: ' + esc(PHN[k.phasen[0]].name) + "</span>" : "") + "</span></button></li>";

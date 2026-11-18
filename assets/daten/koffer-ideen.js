@@ -16,7 +16,14 @@
    jedePhase – Kniffe, die in jede Phase passen; sie stehen unter »In jeder Phase« (Name und Hilfe aus taxonomien.js).
    Ab 4.46 auch für den »Aufgabenkoffer auf Papier« (papierkoffer.html, assets/papierkoffer.js): dieselben Ideen, Kniffe und Phasen.
    papierPhasen – Phase der zwei Aufgabenformen ohne Gerät (ohneGeraet), die im digitalen Koffer keine Phase haben. VORSCHLAG,
-               bis Mario ihn prüft (docs/version-4-46.md). */
+               bis Mario ihn prüft (docs/version-4-46.md).
+   Ab 4.49, Variante B (Auftrag Mario 17.11.2026: der Papier-Koffer nach Anlass, im Raster des digitalen Koffers):
+   papierAnlaesse – die vier Anlässe der ersten Ebene, je mit Name, einem Satz »was du damit erhältst«, Bildzeichen
+               (Schlüssel in PAPIERKOFFER.BILD) und den Einträgen in ihrer Reihenfolge: Ids aus AUFGABEN.aufgaben oder,
+               für die drei Kniffe in jeder Phase, aus WERKSTATT.muster. Jeder der 21 Einträge steht genau einmal
+               (tests/papierkoffer.test.js). Grundlage: die sieben Zwecke in AUFGABEN.zwecke, paarweise zusammengelegt.
+               Die Zuordnung ist ein VORSCHLAG, begründet in docs/koffer-zuordnung.md. Die Sätze stammen aus den Feldern
+               »papier« der Einträge. */
 var KOFFER = {
   phasen: ["einstieg", "erarbeitung", "sicherung", "abschluss"],
   ohneGeraet: ["lesen-schritte", "urteil"],
@@ -35,6 +42,20 @@ var KOFFER = {
   },
   jedePhase: ["uebersicht", "hilfekarten", "fehlvorstellungen"],
   papierPhasen: { "lesen-schritte": ["erarbeitung"], urteil: ["abschluss", "erarbeitung"] },
+  papierAnlaesse: [
+    { id: "erschliessen", name: "Erschließen und ordnen", bild: "erschliessen",
+      satz: "Lesekarten, Texte mit Rand, Bildfolgen und Kartensätze zum Legen.",
+      eintraege: ["lesen-schritte", "markieren", "film", "zuordnen", "reihe", "struktur"] },
+    { id: "urteilen", name: "Vermuten und urteilen", bild: "urteilen",
+      satz: "Strichlisten, verdeckte Zettel, Fälle mit Skala und Aufgaben für ein begründetes Urteil.",
+      eintraege: ["versuch", "klassenbild", "regler", "entscheiden", "einordnen", "urteil"] },
+    { id: "festigen", name: "Üben und festigen", bild: "festigen",
+      satz: "Fragen zum Erinnern, Karteikarten, Lösungsblätter mit Erklärungen und ein Plan zum Erklären.",
+      eintraege: ["abruf", "kartei", "auswahl", "video"] },
+    { id: "differenzieren", name: "Differenzieren und rückmelden", bild: "differenzieren",
+      satz: "Gestufte Blätter, Hilfekarten, eine Liste »Ich kann …« und ein Ausgangsticket.",
+      eintraege: ["stufen", "hilfekarten", "uebersicht", "einschaetzen", "fehlvorstellungen"] }
+  ],
   ideen: {
     abruf: {
       phasen: ["einstieg", "sicherung"],

@@ -2669,18 +2669,10 @@ body:has(.ort-zeile > .huelle-weit) .kopf > .huelle{max-width:var(--breite-weit)
 .ak .knopf.ak-klein{min-height:44px;padding:.25rem .875rem}
 .ak /* Karten */
 .ideen-kopf{display:flex;align-items:baseline;gap:var(--a2);flex-wrap:wrap;margin:var(--a4) 0 var(--a2)}
-.ak .ideen{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16.5rem),1fr));gap:1.25rem 1.125rem;list-style:none;margin:0;padding:0 6px 6px 0}
-.ak .ak-karte{display:grid;grid-template-rows:auto 1fr;width:100%;height:100%;padding:0;text-align:left;border:0;border-radius:var(--rund);background:var(--flaeche);box-shadow:6px 6px 0 0 var(--karton);cursor:pointer;transition:transform var(--dauer-schnell) var(--ease-out),box-shadow var(--dauer-schnell) var(--ease-out)}
-.ak .ak-karte .ak-bild{display:block;background:var(--lernen-zart);border-radius:var(--rund) var(--rund) 0 0;aspect-ratio:16/9;overflow:hidden}
+/* ab 4.49: Raster, Karte, Bild und Zustände der Ideenkarten stehen in der gemeinsamen Koffer-Komponente (unten, .koffer-…) */
 .ak .ak-karte.auch .ak-bild{background:var(--karton)}
-.ak .ak-bild svg{display:block;width:100%;height:100%}
-.ak .ak-karte .wort{display:grid;gap:.375rem;align-content:start;padding:.875rem 1rem 1rem}
-.ak .ak-karte b{font:600 var(--gr-h3)/1.15 var(--schrift-titel);letter-spacing:-.01em}
-.ak .ak-karte .kurz{font-size:1rem;line-height:1.4}
 .ak .ak-karte .kann{font-size:1rem;color:var(--lernen-tief);font-weight:700;margin-top:.125rem}
 .ak .ak-karte .auchhier{font-size:1rem;color:var(--leise)}
-.ak .ak-karte:active{transform:translate(4px,4px);box-shadow:2px 2px 0 0 var(--karton)}
-@media (hover:hover) and (pointer:fine){.ak .ak-karte:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 0 var(--lernen)}}
 .ak .ak-ohne{margin-top:var(--a6);display:grid;gap:.5rem;padding:1rem 1.25rem;background:var(--flaeche);border-radius:var(--rund);border-left:10px solid var(--karton)}
 .ak .ak-ohne ul{margin:0;padding-left:1.2rem}
 
@@ -2699,6 +2691,7 @@ body:has(.ort-zeile > .huelle-weit) .kopf > .huelle{max-width:var(--breite-weit)
 @media (min-width:1024px){.ak .blatt{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 .ak .blatt-kopf{display:grid;grid-template-columns:auto 1fr;gap:var(--a2) var(--a3);align-items:center;grid-column:1/-1}
 .ak .blatt-kopf .ak-bild{width:clamp(6.5rem,12vw,10.5rem);aspect-ratio:16/9;background:var(--lernen-zart);border-radius:var(--rund);overflow:hidden}
+.ak .blatt-kopf .ak-bild svg{display:block;width:100%;height:100%}
 .ak .blatt-kopf .auch{font-size:1rem;color:var(--leise);margin-top:.25rem}
 .ak .blatt-kopf .tun{grid-column:1/-1;font-size:clamp(1.125rem,1.05rem + .4vw,1.375rem);line-height:1.4;max-width:60ch}
 .ak .spalte{display:grid;gap:var(--a3);align-content:start;min-width:0}
@@ -2798,6 +2791,90 @@ html[data-bewegung="weniger"] .ak *,html[data-bewegung="weniger"] .ak *::before,
 .ak .textknopf{background:none;border:0;padding:0;min-height:44px;font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em;cursor:pointer}
 .ak .chips li a{color:inherit;display:inline-block;min-height:24px}
 .ak .linie-kopf .knopf{margin-left:auto}
+
+/* Ab 4.49 – gemeinsame Koffer-Komponente (Auftrag Mario 17.11.2026, Variante B): Beide Aufgabenkoffer nutzen dasselbe Raster,
+   dieselbe Kartenform und dieselben Zustände – der Aufgabenkoffer (Petrol, .bereich-lernen) für seine Ideenkarten, der Aufgabenkoffer
+   auf Papier (Ocker, .bereich-ki) für seine vier Anlass-Karten. Die Bereichsfarbe kommt nur aus den Variablen des Bereichs:
+   --zart hinter dem Bildzeichen, --platte-bereich als versetzte Platte beim Überfahren und im geöffneten Zustand, --koffer-kante als
+   2-px-Kante dieser Platte (Plate Edge Rule; bei Petrol gleich der Platte und damit unsichtbar – der Aufgabenkoffer sieht aus wie bisher).
+   Raster: so viele Spalten, wie die Breite trägt (wie bis 4.48 .ak .ideen). .ist-vier für genau vier Karten: 4 · 2 · 1 Spalten
+   nach der Breite der Hülle (ab 54 rem vier, also auch am iPad quer mit 1024 px; unter 34 rem eine), nie 3 + 1. */
+.koffer{--koffer-kante:var(--platte-bereich,var(--lernen))}
+.bereich-ki.koffer,.bereich-ki .koffer{--koffer-kante:var(--ki)}
+.koffer-raster{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16.5rem),1fr));gap:1.25rem 1.125rem;list-style:none;margin:0;padding:0 6px 6px 0}
+.koffer-raster>li{max-width:none}
+.koffer-karte{display:grid;grid-template-rows:auto 1fr;width:100%;height:100%;padding:0;text-align:left;border:0;border-radius:var(--rund);background:var(--flaeche);color:var(--text);font:inherit;text-decoration:none;box-shadow:6px 6px 0 0 var(--karton);cursor:pointer;transition:transform var(--dauer-schnell) var(--ease-out),box-shadow var(--dauer-schnell) var(--ease-out)}
+.koffer-bild{display:block;background:var(--zart,var(--lernen-zart));border-radius:var(--rund) var(--rund) 0 0;aspect-ratio:16/9;overflow:hidden}
+.koffer-bild svg{display:block;width:100%;height:100%}
+.koffer-wort{display:grid;gap:.375rem;align-content:start;padding:.875rem 1rem 1rem}
+.koffer-karte b{font:600 var(--gr-h3)/1.15 var(--schrift-titel);letter-spacing:-.01em}
+.koffer-kurz{font-size:1rem;line-height:1.4}
+.koffer-zahl{font-size:1rem;font-weight:700;margin-top:.125rem}
+.koffer-bereich{justify-self:start;margin-top:.25rem;line-height:1.35}
+.koffer-karte:active{transform:translate(4px,4px);box-shadow:2px 2px 0 0 var(--karton)}
+@media (hover:hover) and (pointer:fine){.koffer-karte:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 -2px var(--platte-bereich,var(--lernen)),8px 8px 0 0 var(--koffer-kante,var(--lernen))}}
+/* geöffnet (nur der Papier-Koffer): Platte in der Bereichsfarbe mit Kante, Textfeld zart, dazu das Wort – nie nur Farbe */
+.koffer-karte[aria-expanded="true"]{box-shadow:8px 8px 0 -2px var(--platte-bereich),8px 8px 0 0 var(--koffer-kante)}
+.koffer-karte[aria-expanded="true"] .koffer-wort{background:var(--zart);border-radius:0 0 var(--rund) var(--rund)}
+.koffer-karte[aria-expanded="true"] .koffer-zahl::after{content:" · geöffnet";content:" · geöffnet" / ""}
+@media (prefers-reduced-motion:reduce){.koffer-karte:hover,.koffer-karte:active{transform:none}}
+html[data-bewegung="weniger"] .koffer-karte:hover,html[data-bewegung="weniger"] .koffer-karte:active{transform:none}
+/* Bildzeichen der Anlass-Karten (assets/papierkoffer.js): Fläche, Karton, Ocker, Druckschwarz */
+.koffer-bild .f{fill:var(--flaeche)}.koffer-bild .k{fill:var(--karton)}.koffer-bild .o{fill:var(--ki-platte)}.koffer-bild .t{fill:var(--text)}
+.koffer-bild .lt{fill:none;stroke:var(--text);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.koffer-bild .lf{fill:none;stroke:var(--flaeche);stroke-width:3;stroke-linecap:round}
+.koffer-raster.ist-vier{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pk-wahl-huelle{container:pk-wahl / inline-size}
+@container pk-wahl (max-width:62rem){.koffer-raster.ist-vier .koffer-karte b{font-size:1.3rem}} /* vier schmale Karten (iPad quer 1024 px): Namen bleiben zweizeilig (Two-Line Rule) */
+@container pk-wahl (max-width:54rem){.koffer-raster.ist-vier{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container pk-wahl (max-width:54rem){.koffer-raster.ist-vier .koffer-karte b{font-size:var(--gr-h3)}}
+@container pk-wahl (max-width:34rem){.koffer-raster.ist-vier{grid-template-columns:1fr}}
+@media print{.koffer-karte{box-shadow:none}}
+
+/* Ab 4.49 – Aufgabenkoffer auf Papier, Variante B (papierkoffer.html): vier Anlass-Karten; ein Tippen öffnet darunter, über die
+   ganze Breite, die Aufträge des Anlasses (.pk-offen auf der versetzten Ocker-Platte mit Kante). Ohne Skript stehen alle vier
+   Listen untereinander. Aufklappen: einblenden und 8 px rücken (--dauer-mittel, nur nach Maus oder Finger), bei weniger Bewegung
+   nur Überblendung (--dauer-aus). */
+.pk .werkzeugkopf{grid-template-columns:1fr}
+.pk .bereichskopf .marker{max-width:96ch}
+/* Anlass-Karten: Zahl und Bereichsetikett stehen in jeder Reihe auf gleicher Höhe, das Etikett ruhig (normales Gewicht) */
+.pk .koffer-wort{display:flex;flex-direction:column}
+.pk .koffer-zahl{margin-top:auto;padding-top:.25rem}
+.pk .koffer-bereich{align-self:flex-start;font-weight:400;text-wrap:balance}
+.pk-offen{margin-top:var(--a4);display:grid;gap:var(--a6);padding:clamp(1rem,2.4vw,2.25rem);background:var(--flaeche);border-radius:var(--rund);box-shadow:8px 8px 0 -2px var(--ki-platte),8px 8px 0 0 var(--ki)}
+.pk-offen.mit-skript{gap:var(--a3)}
+.pk-offen.pk-einblenden{animation:pk-auf var(--dauer-mittel) var(--ease-out)}
+@keyframes pk-auf{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pk-blende{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.pk-offen.pk-einblenden{animation:pk-blende var(--dauer-aus) linear}}
+html[data-bewegung="weniger"] .pk-offen.pk-einblenden{animation:pk-blende var(--dauer-aus) linear}
+.pk-anlass{display:grid;gap:var(--a3);scroll-margin-top:var(--a2)}
+.pk-anlass-kopf{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"titel knopf" "satz satz";align-items:start;gap:.375rem var(--a2)}
+.pk-anlass-kopf h2{grid-area:titel}.pk-anlass-satz{grid-area:satz}.pk-schliessen{grid-area:knopf}
+.pk-anlass-kopf h2{font-size:var(--gr-h2)}
+.pk-anlass-satz{max-width:60ch}
+.pk-anlass-zahl{white-space:nowrap}
+.pk-offen .pk-form{padding:0;background:none;border-top:0}
+.pk-offen .pk-form .schnell-felder{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pk-offen .pk-form .schnell-felder .eingabe:last-child{grid-column:auto}
+@container pk-wahl (max-width:40rem){.pk-offen .pk-form .schnell-felder{grid-template-columns:1fr;gap:.5rem}.pk-offen .pk-form .eingabe{grid-template-columns:6.75rem minmax(0,1fr);align-items:center;gap:.5rem}.pk-offen .pk-form .eingabe label{margin:0}}
+.pk-daten{font-size:1rem;font-weight:700}
+.pk-eintraege{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,26rem),1fr));gap:var(--a4);align-items:start}
+.pk-eintrag{display:grid;gap:.625rem;padding-top:var(--a2);border-top:6px solid var(--ki-platte);max-width:none;scroll-margin-top:var(--a2)}
+.pk-eintrag-titel{font-size:var(--gr-h3);line-height:1.15}
+.pk-eintrag-satz{max-width:60ch}
+.pk-kopieren{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .875rem}
+.pk-status{font-size:1rem;color:var(--leise)}
+.pk-eintrag details.mehr{background:none;padding:0}
+.pk-eintrag details.mehr[open]{padding-bottom:var(--a1)}
+.pk-vertiefung{background:var(--grund)}
+.pk-label{display:block;font-weight:700;margin-bottom:.375rem}
+.pk-auftrag textarea{display:block;width:100%;min-height:12rem;padding:.75rem;border:2px solid var(--stahl);border-radius:var(--rund);background:var(--flaeche);color:var(--text);font:1rem/1.45 var(--schrift);resize:vertical}
+.pk-auftrag .pk-daten{margin-top:.5rem}
+.pk-mehr-text{display:grid;gap:.5rem}
+.pk-mehr-text p,.pk-mehr-text li{max-width:62ch}
+.pk-pruefliste{margin:0;padding-left:1.2rem;display:grid;gap:.25rem}
+@media print{.pk-kopieren,.pk-schliessen,.pk-offen .pk-form,.pk-auftrag{display:none}.pk-offen{box-shadow:none;padding:0}}
 .ak details.mehr ul{margin:0;padding-left:1.2rem}
 .ak .knopf:disabled{background:var(--karton);border-color:var(--stahl);color:var(--leise);cursor:not-allowed}
 .ak .d-neu{color:var(--leise)}
@@ -2930,11 +3007,11 @@ html[data-bewegung="weniger"] .ak *,html[data-bewegung="weniger"] .ak *::before,
 .tp-blick{max-width:30rem}
 .fuss-schloss{font-weight:400;color:var(--leise)}
 
-/* Ab 4.46 – Trainingsaufgaben (tr-, ki-aufgaben.html), Aufgabenkoffer auf Papier (pk-, papierkoffer.html). Die vier Phasen auf ki.html
+/* Ab 4.46 – Trainingsaufgaben (tr-, ki-aufgaben.html), Aufgabenkoffer auf Papier (pk-, papierkoffer.html; ab 4.49 nach Anlass, Regeln bei der Koffer-Komponente; .pk-linie und .pk-form nutzen weiter Prüf-Labor, Trainingsaufgaben und Werkstatt Bewertungskultur). Die vier Phasen auf ki.html
    sind seit 4.47 der Fahrplan (fahrplan-, unten »Ab 4.47«); .ki-phasen ist gestrichen. Im KI-Bereich mit Ocker als Kante. */
 
-.pk-kopf,.tr-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--a4);align-items:start}
-@media (max-width:1023px){.pk-kopf,.tr-kopf{grid-template-columns:1fr}}
+.tr-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--a4);align-items:start}
+@media (max-width:1023px){.tr-kopf{grid-template-columns:1fr}}
 .pk-form{display:grid;gap:var(--a1);padding:var(--a3);background:var(--flaeche);border-radius:var(--rund);border-top:6px solid var(--ki-platte)}
 .pk-form .schnell-felder{grid-template-columns:repeat(2,minmax(0,1fr))}
 .pk-form .schnell-felder .eingabe:last-child{grid-column:1 / -1}
@@ -2947,19 +3024,16 @@ html[data-bewegung="weniger"] .ak *,html[data-bewegung="weniger"] .ak *::before,
 .pk-linie span{font-size:1rem;font-weight:700;color:var(--leise)}
 .pk-linie .pk-jede a{border-top:10px dashed var(--text)}
 @media (hover:hover) and (pointer:fine){.pk-linie a:hover{background:var(--ki-zart)}}
-.pk-phase,.tr-gruppe{display:grid;gap:var(--a2);padding-top:var(--a4);scroll-margin-top:var(--a2)}
-.pk-phase-kopf,.tr-gruppe-kopf{display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem var(--a2);padding-bottom:.4rem;border-bottom:4px solid var(--ki-platte)}
-.pk-phase-kopf h2,.tr-gruppe-kopf h2{font-size:var(--gr-h3)}
-.pk-phase-kopf p,.tr-gruppe-kopf p{color:var(--leise)}
-.pk-karten,.tr-karten{list-style:none;margin:0;padding:0 6px 6px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,20rem),1fr));gap:var(--a3)}
-.pk-karte,.tr-karte{display:flex;flex-direction:column;gap:.6rem;padding:var(--a3);background:var(--flaeche);border-radius:var(--rund);box-shadow:6px 6px 0 0 var(--karton);max-width:none;scroll-margin-top:var(--a2)}
-.pk-karte h3,.tr-karte h3{font-size:var(--gr-h3);line-height:1.15}
-.pk-karte p,.tr-karte p,.tr-karte li{max-width:none}
-.pk-ort{font-size:1rem;font-weight:700;color:var(--ki-tief)}
-.pk-ort[data-ort="geraet"]{color:var(--lernen-tief)}
+.tr-gruppe{display:grid;gap:var(--a2);padding-top:var(--a4);scroll-margin-top:var(--a2)}
+.tr-gruppe-kopf{display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem var(--a2);padding-bottom:.4rem;border-bottom:4px solid var(--ki-platte)}
+.tr-gruppe-kopf h2{font-size:var(--gr-h3)}
+.tr-gruppe-kopf p{color:var(--leise)}
+.tr-karten{list-style:none;margin:0;padding:0 6px 6px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,20rem),1fr));gap:var(--a3)}
+.tr-karte{display:flex;flex-direction:column;gap:.6rem;padding:var(--a3);background:var(--flaeche);border-radius:var(--rund);box-shadow:6px 6px 0 0 var(--karton);max-width:none;scroll-margin-top:var(--a2)}
+.tr-karte h3{font-size:var(--gr-h3);line-height:1.15}
+.tr-karte p,.tr-karte li{max-width:none}
 .pk-kniff{font-size:1rem;padding:.5rem .75rem;background:var(--ki-zart);border-left:6px solid var(--ki-platte);border-radius:var(--rund)}
-.pk-kniffkarte{border-top:6px dashed var(--ki-platte)}
-.pk-geraet,.tr-dazu{margin-top:auto}
+.tr-dazu{margin-top:auto}
 .tr-funktionen{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
 .tr-funktionen li{font-size:1rem;line-height:1.4;padding-left:.75rem;border-left:4px solid var(--ki-platte);max-width:none}
 .tr-funktionen b{display:block}
@@ -2972,7 +3046,7 @@ html[data-bewegung="weniger"] .ak *,html[data-bewegung="weniger"] .ak *::before,
 .tr-ziel{font-weight:700}
 .tr-schritte{margin:0;padding-left:1.4rem;display:grid;gap:.35rem}
 .tr-geschafft{padding:.5rem .75rem;background:var(--erfolg-zart);border-radius:var(--rund)}
-@media print{.pk-linie,.tr-linie,.pk-form,.pk-auftrag,.tr-auftrag{display:none}.pk-karte,.tr-karte{box-shadow:none;break-inside:avoid}}
+@media print{.pk-linie,.tr-linie,.pk-form,.tr-auftrag{display:none}.tr-karte{box-shadow:none;break-inside:avoid}}
 
 /* Ab 4.46 – Schloss für den Bereich »Für die Fortbildungsleitung« (assets/schloss.js). Die Tür ist ein ruhiges Formular;
    nach dem Öffnen steht der Inhalt wie jede andere Seite da, darunter »Bereich schließen«. Im Druck fallen Tür und Knopf weg. */
