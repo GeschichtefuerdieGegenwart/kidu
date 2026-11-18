@@ -39,12 +39,14 @@ SEITEN = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "ta
           "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html",
           # ab 4.47: KI-Training als Fahrplan – drei Seiten aus der alten ki.html, Prüf-Labor, Mit dem Kollegium
           "erste-minuten.html", "schnell-anfrage.html", "prompten.html", "pruef-labor.html", "kollegium.html",
-          "vier-wochen.html", "bewertung.html", "ablaeufe.html"]  # ab 4.48
+          "vier-wochen.html", "bewertung.html", "ablaeufe.html",  # ab 4.48
+          "wunsch-methode.html"]  # ab 4.52
 # Seiten, auf denen Fachbegriffe nur in aufklappbaren Vertiefungen (<details>) stehen dürfen
 MIT_VERTIEFUNG = ["mehrwert.html", "selbstcheck.html", "digital-check.html", "ueber.html"]
 EINSTIEG = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "tablets.html", "passt.html", "beobachtung.html", "tablet-phasen.html", "ist-stand.html", "fortbildungsbogen.html", "rueckmeldebogen.html", "fortbildung.html", "leitsaetze.html", "fuenf-saetze.html", "sechs-hebel.html", "galerie.html", "muster.html", "aufgabenkoffer.html", "auftraege.html", "ki-fach.html", "sicher.html", "lernende-ki.html", "beratung.html", "papierfrage.html", "skillkoffer.html", "tipps.html", "fortbildungsleitung.html", "ki-aufgaben.html", "papierkoffer.html",
             "erste-minuten.html", "schnell-anfrage.html", "prompten.html", "pruef-labor.html", "kollegium.html",
-            "vier-wochen.html", "bewertung.html", "ablaeufe.html"]  # ab 4.48
+            "vier-wochen.html", "bewertung.html", "ablaeufe.html",  # ab 4.48
+            "wunsch-methode.html"]  # ab 4.52
 # Skripte, deren Texte auf Einstiegs- und Bereichsseiten erscheinen
 EINSTIEG_SKRIPTE = ["assets/start.js", "assets/check-weg.js", "assets/check-regeln.js", "assets/tablets-weg.js", "assets/einheit.js", "assets/regeln.js", "assets/daten/taxonomien.js",
                     "assets/ki-weg.js", "assets/ki-anfrage.js", "assets/daten/texte.js", "assets/passt.js", "assets/beobachtung.js", "assets/fortbildungsbogen.js", "assets/rueckmeldebogen.js",
@@ -55,7 +57,8 @@ EINSTIEG_SKRIPTE = ["assets/start.js", "assets/check-weg.js", "assets/check-rege
                     "assets/aufgabenkoffer.js", "assets/daten/koffer-ideen.js", "assets/schloss.js",
                     "assets/papierkoffer.js", "assets/training.js", "assets/daten/training.js",  # ab 4.46
                     "assets/pruef-labor.js", "assets/daten/pruef-labor.js",  # ab 4.47
-                    "assets/ki-faehig.js", "assets/vier-wochen.js", "assets/daten/bewertung.js", "assets/bewertung.js", "assets/daten/probe.js"]  # ab 4.48
+                    "assets/ki-faehig.js", "assets/vier-wochen.js", "assets/daten/bewertung.js", "assets/bewertung.js", "assets/daten/probe.js",  # ab 4.48
+                    "assets/wunsch.js", "assets/daten/wunsch.js"]  # ab 4.52
 FACHBEGRIFFE = ["Adaptivität", "kognitive Aktivierung", "formative Diagnostik", "Multimodalität",
                 "Gamification", "selbstreguliert", "responsive Lernumgebung", "digitale Transformation",
                 "Anforderungsbereich", "Beutelsbacher", "Binnendifferenzierung",
@@ -676,8 +679,52 @@ def pruefe_papierkoffer(fehler):
             fehler.append(f"papierkoffer.html: Eingabe ohne Hinweis zu personenbezogenen Daten: {m.group(0)[:60]}")
 
 
+def pruefe_wunsch(fehler):
+    """Ab 4.52: Die Wunsch-Methode trägt genau die Teile aus WUNSCH_SEITE.html() – sonst ist die Seite veraltet
+    (python3 tools/bauen.py). Zwölf Felder in der Zeichnung und zwölf in der Liste, fünf davon Grundausstattung. Kein Text im
+    Bild: Alle Wörter stehen als HTML darüber (nie unter 16 Pixel). Keine Stufen, Punkte, Prozente oder Abzeichen
+    (Entscheidung Mario, 18.11.2026): Die Kreise ordnen keine Menschen. Die Zeitwörter sind die des Fahrplans."""
+    import importlib.util, json
+    spec = importlib.util.spec_from_file_location("wunsch", WURZEL / "tools" / "wunsch.py")
+    wm = importlib.util.module_from_spec(spec); spec.loader.exec_module(wm)
+    name = "wunsch-methode.html"
+    try:
+        teile = wm.teile()
+    except SystemExit as f:
+        fehler.append(f"{name}: {f}")
+        return
+    html = (WURZEL / name).read_text(encoding="utf-8")
+    for teil, inhalt in teile.items():
+        if inhalt not in html:
+            fehler.append(f"{name}: Teil »{teil}« ist veraltet – python3 tools/bauen.py")
+    if "<!-- wunsch:" in html:
+        fehler.append(f"{name}: Zeichen <!-- wunsch:… --> nicht ersetzt")
+    bild, liste = teile.get("bild", ""), teile.get("liste", "")
+    felder = re.findall(r'<a class="wm-feld( ist-grund)?" href="#feld-([a-z-]+)"', bild)
+    karten = re.findall(r'<details class="wm-karte" id="feld-([a-z-]+)"', liste)
+    if len(felder) != 12 or sorted(f for _, f in felder) != sorted(karten):
+        fehler.append(f"{name}: die Zeichnung hat {len(felder)} Felder, die Liste {len(karten)} – gebraucht sind dieselben zwölf")
+    if sum(1 for g, _ in felder if g) != 5:
+        fehler.append(f"{name}: die Grundausstattung hat fünf Felder, gefüllt sind {sum(1 for g, _ in felder if g)}")
+    if re.search(r"<text\b", bild):
+        fehler.append(f"{name}: Text im Bild – die Wörter stehen als HTML über der Zeichnung")
+    text = text_ohne_tags(html)
+    for wort in ("Stufe", "Niveau", "Level", "Punkte", "Prozent", "Abzeichen", "Kompetenzmodell", "Curriculum", "Framework"):
+        if re.search(r"\b" + wort, text):
+            fehler.append(f"{name}: »{wort}« – das Modell kennt keine Stufen und keine Wertung, und die Seite nennt sich nicht so")
+    daten = (WURZEL / "assets" / "daten" / "wunsch.js").read_text(encoding="utf-8")
+    zeiten = json.loads((WURZEL / "src" / "fahrplan-ki.json").read_text(encoding="utf-8"))["zeiten"]
+    for k, v in zeiten.items():
+        if f'{k}: "{v}"' not in daten:
+            fehler.append(f"assets/daten/wunsch.js: Zeit »{k}« heißt im Fahrplan »{v}«")
+    for ziel in sorted(set(re.findall(r'\["([a-z-]+\.html)(?:#[a-z0-9=-]+)?", "', daten))):
+        if not (WURZEL / "src" / ziel).exists():
+            fehler.append(f"assets/daten/wunsch.js: {ziel} gibt es nicht")
+
+
 def main():
     fehler = []
+    pruefe_wunsch(fehler)  # ab 4.52
     pruefe_papierkoffer(fehler)  # ab 4.49
     pruefe_werkzeugkiste(fehler)
     pruefe_film(fehler)

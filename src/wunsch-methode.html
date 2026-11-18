@@ -1,0 +1,72 @@
+<div class="bereich-ki wm" id="wm-seite">
+<!-- kiplan:zeile weit -->
+<!-- Ab 4.52: Die Wunsch-Methode (Auftrag Mario, 18.11.2026: das Modell »Vier Sätze, drei Kreise« als Seite, perfekt visualisiert).
+     Vier Sätze sagen, was du tust; drei Kreise sagen, für wen. Jeder Satz kreuzt jeden Kreis: zwölf Felder. Die Lampe ist der
+     Einstieg; zwischen »Sagen« und »Prüfen« endet das Märchen. Keine Stufen, kein Gesamtstand, keine Punkte: Die Kreise ordnen
+     keine Menschen. Daten nur in assets/daten/wunsch.js; tools/wunsch.py setzt beim Bauen Zeichnung, Liste und Lampentext ein
+     (Zeichen wunsch:bild, wunsch:liste, wunsch:lampe). Ohne Skript stehen die Zeichnung und alle zwölf Felder da; die Felder der
+     Zeichnung springen in die Liste. Die Geschichte von der Lampe steht vor der Zeichnung im Dokument, das Arbeitsfenster danach:
+     So stimmt die Reihenfolge auch untereinander (unter 1180 px). Unter 720 px fällt die Zeichnung weg, die Liste ist die Bedienung. -->
+<section class="bereichskopf kompakt"><div class="huelle huelle-weit wm-buehne" id="wm-buehne">
+  <div class="wm-kopf stapel">
+    <h1 class="h1-frage">Die Wunsch-Methode</h1>
+    <p class="marker">Vier Sätze, drei Kreise</p>
+    <div class="wm-ruhe" id="wm-ruhe">
+      <p>Wer dem Geist aus der Lampe nur sagt: »Ich habe Hunger«, bekommt vielleicht eine Bratwurst. Wer kein Fleisch isst, hätte das sagen müssen. Darum:</p>
+      <p class="wm-merk">Wisse, was du willst. Und sag es.</p>
+      <p>Hier endet das Märchen. Der Geist irrt nie. KI schon. Darum:</p>
+      <p class="wm-merk">Prüf, was du bekommst. Und steh für das ein, was du weitergibst.</p>
+      <p class="wm-knoepfe"><button type="button" class="knopf" id="wm-start" data-wm="start" hidden>Wo stehst du?</button> <button type="button" class="knopf still" id="wm-wieder" data-wm="wieder" hidden>Deine Karte ansehen</button></p>
+      <p class="leise klein wm-tipp">Oder such dir ein Feld aus: Jedes hat einen ersten Schritt.</p>
+    </div>
+  </div>
+  <figure class="blick wm-figur" aria-labelledby="t-wm-bild">
+    <p class="blick-titel" id="t-wm-bild">Auf einen Blick: vier Sätze, drei Kreise, zwölf Felder – tipp eines an</p>
+    <!-- wunsch:bild -->
+    <p class="wm-stand-legende" id="wm-stand-legende" hidden>✓ mache ich schon · ○ noch nicht</p>
+    <figcaption>Vier Sätze sagen, was du mit KI tust. Drei Kreise sagen, für wen. Gefüllt ist die Grundausstattung: fünf Felder für den Anfang. Stand: Vorschlag, noch nicht erprobt.</figcaption>
+  </figure>
+  <div class="wm-wechsel" id="wm-wechsel" hidden></div>
+</div></section>
+
+<section class="abschnitt wm-nach" aria-label="Mehr zum Modell"><div class="huelle huelle-weit stapel">
+  <p class="wm-alle-zeile"><button type="button" class="knopf still" id="wm-alle" data-wm="alle" aria-expanded="false" aria-controls="wm-liste" hidden>Alle zwölf Felder als Liste zeigen</button></p>
+</div></section>
+
+<section class="abschnitt wm-liste" id="wm-liste" aria-labelledby="t-wm-liste"><div class="huelle huelle-weit">
+  <h2 id="t-wm-liste" tabindex="-1">Alle zwölf Felder</h2>
+  <p class="wm-liste-satz">Die Kreise ordnen keine Menschen. Sie sagen nur, wessen Arbeit dein Tun gerade trifft. Du darfst mit jedem Feld anfangen. Alle Beispiele sind ausgedacht.</p>
+  <!-- wunsch:liste -->
+</div></section>
+
+<section class="abschnitt wm-mehr" aria-label="Hintergrund"><div class="huelle huelle-weit stapel">
+  <details class="mehr" id="wm-lampe-text">
+    <summary>Was in der Lampe wirklich steckt</summary>
+    <!-- wunsch:lampe -->
+    <p><b>Was das Märchen weglässt:</b> Es kennt keine Anbieter, keine Daten und keine Lernenden mit eigener Lampe. Dafür stehen der vierte Satz und der zweite Kreis.</p>
+    <p>Die Bratwurst ist alt. In Johann Peter Hebels Geschichte »Drei Wünsche« aus dem »Schatzkästlein des rheinischen Hausfreundes« (1811) verschwendet ein Ehepaar einen Wunsch an ein gebratenes Würstlein. Hebels Rat: Wünsch dir zuerst Verstand.</p>
+  </details>
+  <details class="mehr" id="wm-grund-text">
+    <summary>Was »Grundausstattung« heißt</summary>
+    <p>Die fünf gefüllten Felder sind ein Vorschlag für den Anfang: die vier Felder im Kreis »Für mich« und das Feld »Wissen · Für meine Lernenden«.</p>
+    <p>Das fünfte Feld gilt auch, wenn du selbst keine KI nutzt. Deine Lernenden nutzen sie vielleicht trotzdem. Dann brauchst du für eine Aufgabe eine Regel.</p>
+    <p>Die anderen sieben Felder sind kein Muss und kein Rang. Wer im inneren Kreis bleibt, macht nichts falsch.</p>
+    <p>Kidu prüft niemanden und bescheinigt nichts. Was dein Dienstherr von dir verlangt, legt nicht Kidu fest.</p>
+    <p>Für die vier inneren Felder gibt es schon einen Plan: <a class="textlink" href="vier-wochen.html">Vier Wochen KI-Training <span aria-hidden="true">→</span></a></p>
+  </details>
+  <details class="mehr" id="wm-beleg-text">
+    <summary>Worauf das Modell beruht</summary>
+    <p>Die vier Sätze folgen vier Fähigkeiten aus dem AI-Fluency-Rahmen von Dakan und Feller (2025): abgeben, beschreiben, prüfen, verantwortlich handeln. Es sind dieselben wie im Filter des Fahrplans. Die fünfte Fähigkeit dort, »Lernende begleiten«, ist hier der zweite Kreis.</p>
+    <p>Was Lehrkräfte können sollen, beschreiben der KI-Kompetenzrahmen der UNESCO (2024) und die Handlungsempfehlung der Kultusministerkonferenz (Oktober 2024). Diese Rahmen sagen, was sein soll. Sie sagen nicht, was wirkt.</p>
+    <ul class="beleg-liste">
+      <li><span><span class="belegstand">belegt</span></span><span>In einem Versuch mit fast tausend Lernenden an einer Schule übten Lernende Mathematik mit freier KI-Hilfe. Die Übungen gelangen ihnen besser. In der Prüfung ohne KI schnitten sie aber schlechter ab. Darum gehört »Wissen · Für meine Lernenden« zur Grundausstattung. (Bastani u. a. 2025)</span></li>
+      <li><span><span class="belegstand">plausibel</span></span><span>Die Folge der Kreise passt zu einer alten Beobachtung: Wer etwas Neues lernt, fragt zuerst »Was heißt das für mich?«, dann »Wie mache ich es?«, zuletzt »Was bewirkt es bei anderen?«. Für KI ist das nicht untersucht. (Fuller 1969; Hall und Hord)</span></li>
+      <li><span><span class="belegstand">plausibel</span></span><span>»Wo stehst du?« fragt nach dem, was du getan hast, nicht nach deinem Gefühl. Nach einer Studie überschätzen sich Menschen beim Arbeiten mit KI oft. Es waren zwei Versuche mit Denkaufgaben, nicht mit Lehrkräften. (Aalto-Universität, 2025)</span></li>
+      <li><span><span class="belegstand">offen</span></span><span>Ob dieses Modell Lehrkräften hilft, ist offen. Es ist ein Vorschlag und noch nicht erprobt.</span></li>
+    </ul>
+  </details>
+</div></section>
+<!-- kiplan:fuss weit -->
+</div>
+<script src="assets/daten/wunsch.js"></script>
+<script src="assets/wunsch.js"></script>
