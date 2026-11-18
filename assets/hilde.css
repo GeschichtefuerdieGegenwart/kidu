@@ -3567,3 +3567,36 @@ html[data-bewegung="weniger"] .wm-wechsel.wm-wachsen{animation:wm-blenden var(--
   .wm-mehr details.mehr{background:none;padding:0;break-inside:avoid}
   .wm-mehr details.mehr summary::before{display:none}
 }
+
+/* ---------- KI-Training: die Wunsch-Methode als Blickfang, drei Einstiege, kleine Karte auf den Werkzeugseiten (ab 4.53, Auftrag Mario 18.11.2026) ---------- */
+.ki-blick{padding-block:var(--a3) var(--a2)}
+.ki-blick-innen{display:grid;gap:var(--a2) var(--a4);align-items:start}
+.ki-blick-text{display:grid;gap:.6rem;min-width:0;align-content:start}
+.ki-blick-text p{margin:0;max-width:52ch}
+.ki-blick-bereich{font:700 var(--gr-text)/1.3 var(--schrift);letter-spacing:0;color:var(--ki-tief)}
+.ki-blick-titel{font:700 clamp(2rem,3.4vw,2.875rem)/1.05 var(--schrift-titel);letter-spacing:-.02em}
+.ki-blick-knoepfe{display:flex;flex-wrap:wrap;gap:var(--a1) var(--a2);margin-top:.25rem}
+.ki-blick-knoepfe .knopf{text-decoration:none}
+.ki-blick-figur{margin:0;min-width:0}
+@media (min-width:1180px){.ki-blick-innen{grid-template-columns:minmax(0,5fr) minmax(0,8fr)}}
+.ki-einstieg-abschnitt{padding-block:var(--a2) var(--a3)}
+.ki-einstiege{list-style:none;margin:var(--a2) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--a2)}
+.ki-einstieg{display:grid;grid-template-columns:clamp(6rem,10vw,8.5rem) minmax(0,1fr);gap:var(--a2);align-items:center;max-width:none;background:var(--flaeche);border-radius:var(--rund);padding:var(--a2);border-left:8px solid var(--ki)} /* Plate Edge: Ocker-Kante = KI-Training */
+.ki-einstieg-text{display:grid;gap:.25rem;min-width:0}
+.ki-einstieg-ich{font:600 1.25rem/1.2 var(--schrift-titel);letter-spacing:-.01em}
+.ki-einstieg-kreis{font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.ki-einstieg-wege{display:grid;gap:0}
+.ki-einstieg-wege .textlink{display:inline-flex;align-items:center;min-height:44px}
+.wm-mini{display:block;width:100%;height:auto}
+.wm-mini path{fill:var(--grund);stroke:var(--stahl);stroke-width:6}
+.wm-mini path.ist-an{fill:var(--ki-platte);stroke:var(--ki)}
+@media (max-width:1023px){.ki-einstiege{grid-template-columns:minmax(0,1fr)}}
+.ort-zeile.hat-karte > div{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 var(--a3)}
+.ort-karte{display:inline-flex;align-items:center;gap:.6rem;min-height:44px;font-size:var(--gr-klein);line-height:1.35;color:var(--text);text-decoration:none}
+.ort-karte b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em}
+.ort-karte .wm-mini{width:64px;flex:none}
+.ort-karte:focus-visible{outline:3px solid var(--fokus);outline-offset:3px}
+@media (max-width:719px){.ort-karte .wm-mini{display:none}}
+@media print{.ki-blick-knoepfe,.ort-karte{display:none}}
+@media (min-width:1180px){.ki-blick-figur{grid-area:auto}}
+@media (max-width:719px){.ki-blick-tipp{display:none}} /* am Telefon gibt es die Zeichnung nicht */

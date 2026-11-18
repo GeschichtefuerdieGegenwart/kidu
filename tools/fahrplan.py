@@ -296,8 +296,15 @@ def zeile(daten, datei, weit=False):
     if eltern:
         teile.append(f'<li><a href="{eltern["href"]}">{e(eltern["name"])}</a></li>')
     huelle = "huelle huelle-weit" if weit else "huelle"
-    return (f'<nav class="ort-zeile" aria-label="Wo du bist"><div class="{huelle}">'
-            f'<ol>{"".join(teile)}</ol></div></nav>')
+    karte = ""
+    if daten["_art"] == "kiplan":  # ab 4.53: welche Felder der Wunsch-Methode die Seite übt (tools/wunsch.py)
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("wunsch", Path(__file__).resolve().parent / "wunsch.py")
+        wm = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(wm)
+        karte = wm.ort(datei)
+    return (f'<nav class="ort-zeile{" hat-karte" if karte else ""}" aria-label="Wo du bist"><div class="{huelle}">'
+            f'<ol>{"".join(teile)}</ol>{karte}</div></nav>')
 
 
 def fuss(daten, datei, weit=False):

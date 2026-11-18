@@ -12,7 +12,7 @@ import subprocess
 from pathlib import Path
 
 WURZEL = Path(__file__).resolve().parent.parent
-ZEICHEN = ("bild", "liste", "lampe")
+ZEICHEN = ("bild", "liste", "lampe", "start", "einstiege")  # start, einstiege: ab 4.53 auf ki.html
 SKRIPT = "process.stdout.write(JSON.stringify(require('./assets/wunsch.js').html()));"
 _teile = None
 
@@ -46,6 +46,14 @@ def einsetzen(inhalt, datei):
     return inhalt
 
 
+def ort(datei):
+    """Ab 4.53: die kleine Karte für eine Werkzeugseite (welche Felder sie übt) – oder leer."""
+    return teile().get("orte", {}).get(datei, "")
+
+
 if __name__ == "__main__":
     for z, html in teile().items():
+        if z == 'orte':
+            print('orte:', ', '.join(sorted(html)))
+            continue
         print(f"{z}: {len(html)} Zeichen")

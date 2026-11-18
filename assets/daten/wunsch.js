@@ -31,9 +31,12 @@ var WUNSCH = {
   ],
 
   kreise: [
-    { id: "mich", name: "Für mich", meint: "Du nutzt KI für deine eigene Arbeit.", folge: "Ein Fehler trifft zuerst dich." },
-    { id: "lernende", name: "Für meine Lernenden", meint: "Dein Tun trifft deine Lernenden: was sie mit KI dürfen, wie sie prüfen lernen, wie du bewertest.", folge: "Ein Fehler trifft deine Lernenden." },
-    { id: "andere", name: "Für andere", meint: "Du baust etwas, mit dem andere arbeiten: eine feste Anweisung, eine Vorlage, Regeln für die Fachgruppe.", folge: "Ein Fehler vervielfacht sich." }
+    { id: "mich", name: "Für mich", meint: "Du nutzt KI für deine eigene Arbeit.", folge: "Ein Fehler trifft zuerst dich.",
+      einstieg: { ich: "»Ich fange gerade erst an.«", wege: [["erste-minuten.html", "Deine ersten zehn Minuten"], ["pruef-labor.html", "Prüf-Labor"]] } },
+    { id: "lernende", name: "Für meine Lernenden", meint: "Dein Tun trifft deine Lernenden: was sie mit KI dürfen, wie sie prüfen lernen, wie du bewertest.", folge: "Ein Fehler trifft deine Lernenden.",
+      einstieg: { ich: "»Meine Lernenden nutzen KI.«", wege: [["lernende-ki.html", "Wenn deine Lernenden mit KI arbeiten"], ["auftraege.html#ki-grenzen", "Auftrag »KI-Regeln für eine Aufgabe festlegen«"]] } },
+    { id: "andere", name: "Für andere", meint: "Du baust etwas, mit dem andere arbeiten: eine feste Anweisung, eine Vorlage, Regeln für die Fachgruppe.", folge: "Ein Fehler vervielfacht sich.",
+      einstieg: { ich: "»Ich baue etwas für andere.«", wege: [["ki-fach.html", "KI für dein Fach einrichten"], ["kollegium.html", "Mit dem Kollegium"]] } }
   ],
 
   felder: [

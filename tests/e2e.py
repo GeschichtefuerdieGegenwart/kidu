@@ -965,8 +965,10 @@ def main():
         phasen = pg.eval_on_selector_all("#fahrplan .ki-phase", "ps => ps.map(p => [p.querySelector('.fahrplan-name').textContent.trim(), p.querySelectorAll('a.ist-werkzeug, .ki-weitere a').length, p.querySelector('.fahrplan-anliegen').textContent.trim()])")
         pruefe([x[:2] for x in phasen] == [["Grundlagen", 7], ["Analogen Unterricht mit KI vorbereiten", 5], ["Unterrichten", 2], ["Nach der Stunde", 4]] and all(x[2].startswith("»Ich") or x[2].startswith("»Meine") for x in phasen), f"KI-Training (4.47): vier Phasen, jede mit einem Anliegen {phasen}")
         pruefe(pg.locator("#schnell, #schnell-form, #weg, .ki-eingang").count() == 0 and all(pg.eval_on_selector_all(".ki-phase", "ps => ps.map(p => p.hidden)")), "KI-Training (4.47): beginnt mit den Phasen, nicht mit der Schnell-Anfrage; alle Phasen zu")
-        k4 = pg.locator('.ki-karte[data-phase="nach"]').bounding_box()
-        pruefe(k4 and k4["y"] + k4["height"] <= 720, "KI-Training (4.47, ab 4.50 als Karten): alle vier Phasen im ersten Bildschirm (1280 × 720)")
+        # Ab 4.53 (Auftrag Mario, 18.11.2026): zuerst die Wunsch-Methode als Blickfang, erst danach die vier Phasen.
+        KI_BLICK = "(() => { const u = s => { const e = document.querySelector(s); return e ? Math.round(e.getBoundingClientRect().bottom) : 9999; }; return [u('.ki-blick-knoepfe .knopf'), u('#ki-wm-bild'), Math.round(document.querySelector('#t-ki-einstieg').getBoundingClientRect().top), document.querySelector('#ki-wm-bild').compareDocumentPosition(document.querySelector('#ki-wahl')) & 4]; })()"
+        bl = pg.evaluate(KI_BLICK)
+        pruefe(bl[0] <= 720 and bl[1] <= 720 and bl[2] <= 720 and bl[3] == 4 and pg.locator("#ki-wahl .ki-karte").count() == 4, f"KI-Training (ab 4.53): im ersten Bildschirm (1280 × 720) stehen die Zeichnung der Wunsch-Methode und »Wo stehst du?«, darunter beginnt »Wo steigst du ein?«; die vier Phasen folgen danach {bl}")
         farben = pg.evaluate("getComputedStyle(document.querySelector('.ki-karte-nr')).borderTopColor")
         pruefe(farben == "rgb(125, 90, 28)", f"KI-Training (4.47): Phasen in Ocker ({farben})")
         pg.click('.ki-karte[data-phase="vorbereiten"]')
@@ -1039,7 +1041,7 @@ def main():
         pruefe("geschätzt" in pg.inner_text(".fahrplan-geschaetzt") and "ZSL" in pg.inner_text(".ki-land") and "KI-Zentrum Schule" in pg.inner_text(".ki-land") and pg.locator(".ki-land a").count() == 0, "KI-Training (4.48): Zeiten als Schätzung gekennzeichnet; Selbstlernkurs und KI-Zentrum ohne Link genannt")
         pg.goto(url("ki.html"))
         k4 = pg.locator('.ki-karte[data-phase="nach"]').bounding_box()
-        pruefe(k4 and k4["y"] + k4["height"] <= 720 and pg.evaluate("document.getAnimations().filter(a => a.playState === 'running').length") == 0 and not pg.konsole, f"KI-Training (4.48): alle vier Phasen weiter im ersten Bildschirm, nichts bewegt sich, keine Konsolenfehler {pg.konsole}")
+        pruefe(k4 and pg.evaluate(KI_BLICK)[0] <= 720 and pg.evaluate("document.getAnimations().filter(a => a.playState === 'running').length") == 0 and not pg.konsole, f"KI-Training (4.48, ab 4.53 unter dem Blickfang): alle vier Phasen da, nichts bewegt sich, keine Konsolenfehler {pg.konsole}")
         roh = (W / "ki.html").read_text(encoding="utf-8")
         pruefe("ki-faehig-knopf" not in roh and roh.count('<li data-faehigkeit=') == 5 and roh.count("data-faehigkeiten=") == 16, "KI-Training (4.48): ohne Skript bleibt das Band ein Text, die Fähigkeiten stehen nur als Daten an den Werkzeugen (ab 4.50: 17 Werkzeuge in 16 Einträgen)")
         # 2g4. Version 4.50 (Auftrag Mario, 18.11.2026): Die Startseite des KI-Trainings übernimmt die grobe Orientierung von Variante B –
@@ -1658,8 +1660,8 @@ def main():
         kn = [bm.locator(s).first.bounding_box() for s in (".wahlflaeche.ki .weiter", ".wahlflaeche.lernen .weiter", ".galerie-zugang")]
         pruefe(all(k and k["y"] + k["height"] <= 720 for k in kn), "Beamer 1280 × 720 (4.39): Startseite zeigt beide Einstiege und den Weg zu den Unterrichtsbeispielen ohne Scrollen")
         bm.goto(url("ki.html"))
-        kn = [bm.locator(s).first.bounding_box() for s in ("h1", '.ki-karte[data-phase="grundlagen"]', '.ki-karte[data-phase="nach"]')]
-        pruefe(all(k and k["y"] + k["height"] <= 720 for k in kn), "Beamer 1280 × 720 (4.47): KI-Training zeigt Überschrift, die erste Phase zum Antippen und alle vier Phasen ohne Scrollen")
+        kn = [bm.locator(s).first.bounding_box() for s in ("h1", ".ki-blick-knoepfe .knopf", "#ki-wm-bild")]
+        pruefe(all(k and k["y"] + k["height"] <= 720 for k in kn), "Beamer 1280 × 720 (ab 4.53): KI-Training zeigt Überschrift, »Wo stehst du?« und die Zeichnung der Wunsch-Methode ohne Scrollen")
         for s_, sel in [("pruef-labor.html", ".pl-satz-knopf"), ("erste-minuten.html", ".erste-weiter .knopf"), ("prompten.html", '.ki-aufbau a.knopf'), ("schnell-anfrage.html", ".anlass-raster .anlass"),
                         ("vier-wochen.html", "#vw-datum"), ("bewertung.html", ".bw-kopf a.knopf")]:  # ab 4.48
             bm.goto(url(s_))
@@ -2241,8 +2243,27 @@ def main():
         pruefe(zahl == "6 Hilfen · 7 Werkzeuge" and kw.locator('#phase-grundlagen a[href="wunsch-methode.html"]').count() == 1 and "Den Überblick bekommen" in kw.inner_text("#phase-grundlagen")
                and "geht ohne KI" in kw.inner_text('#phase-grundlagen a[href="wunsch-methode.html"]'),
                f"Wunsch-Methode (4.52): steht einmal in Phase 1 des KI-Trainings, als Hilfe »Den Überblick bekommen« ({zahl})")
-        kb = kw.locator('.ki-karte[data-phase="nach"]').bounding_box()
-        pruefe(kb and kb["y"] + kb["height"] <= 720, "Wunsch-Methode (4.52): die vier Karten des KI-Trainings bleiben am Beamer im ersten Bildschirm")
+        # Ab 4.53: Blickfang, Einstiege, kleine Karte
+        kw.goto(url("ki.html")); kw.wait_for_timeout(300)
+        felder = kw.eval_on_selector_all("#ki-wm-bild .wm-feld", "as => as.map(a => a.getAttribute('href'))")
+        pruefe(len(felder) == 12 and all(h.startswith("wunsch-methode.html#feld-") for h in felder), "KI-Training (4.53): die zwölf Felder des Blickfangs führen zur Wunsch-Methode")
+        ein = kw.eval_on_selector_all(".ki-einstieg", "ls => ls.map(l => [l.dataset.einstieg, l.querySelectorAll('.wm-mini path.ist-an').length, l.querySelectorAll('a').length, Math.min(...[...l.querySelectorAll('a')].map(a => a.getBoundingClientRect().height))])")
+        pruefe([e[:3] for e in ein] == [["mich", 4, 2], ["lernende", 4, 2], ["andere", 4, 2]] and all(e[3] >= 44 for e in ein), f"KI-Training (4.53): drei Einstiege, je ein Kreis mit vier Feldern und zwei Wegen, Ziele mindestens 44 px {ein}")
+        kw.click('#ki-wm-bild .wm-feld[data-feld="pruefen-mich"]'); kw.wait_for_timeout(400)
+        pruefe(kw.url.endswith("wunsch-methode.html#feld-pruefen-mich") and kw.inner_text("#wm-wechsel .wm-fenster-titel") == "Prüfen · Für mich", "KI-Training (4.53): ein Feld im Blickfang öffnet dasselbe Feld auf der Seite der Wunsch-Methode")
+        kw.goto(url("ki.html")); kw.click('.ki-blick-knoepfe a[href$="#wo-stehst-du"]'); kw.wait_for_timeout(400)
+        pruefe(kw.locator("#wm-frage").count() == 1 and "Bild 1 von 3" in kw.inner_text("#wm-wechsel"), "KI-Training (4.53): »Wo stehst du?« führt direkt zum ersten Bild")
+        kw.goto(url("pruef-labor.html")); kw.wait_for_timeout(200)
+        ok_ = kw.evaluate("(() => { const a = document.querySelector('.ort-karte'); return a ? [a.getAttribute('href'), a.textContent.trim(), a.querySelectorAll('path.ist-an').length, Math.round(a.getBoundingClientRect().height), document.documentElement.scrollWidth - innerWidth] : null; })()")
+        pruefe(bool(ok_) and ok_[:3] == ["wunsch-methode.html", "Auf der Karte: 3 Felder der Wunsch-Methode", 3] and ok_[3] >= 44 and ok_[4] <= 0, f"KI-Training (4.53): das Prüf-Labor zeigt oben seine drei Felder auf der kleinen Karte {ok_}")
+        kw.goto(url("lernende-ki.html")); kw.wait_for_timeout(200)
+        pruefe(kw.get_attribute(".ort-karte", "href") == "wunsch-methode.html#feld-wissen-lernende" and "Wissen · Für meine Lernenden" in kw.inner_text(".ort-karte"), "KI-Training (4.53): eine Seite mit einem Feld nennt es und führt direkt dorthin")
+        tl = neue_seite(b, viewport={"width": 390, "height": 844})
+        tl.goto(url("ki.html")); tl.wait_for_timeout(300)
+        pruefe(tl.evaluate("document.documentElement.scrollWidth - innerWidth") <= 0 and tl.is_visible(".ki-blick-knoepfe .knopf") and tl.evaluate("document.querySelector('.ki-blick-knoepfe .knopf').getBoundingClientRect().bottom") <= 844 and tl.locator(".ki-einstieg").count() == 3, "KI-Training (4.53) am Telefon: kein waagerechtes Scrollen, »Wo stehst du?« im ersten Bildschirm, drei Einstiege untereinander")
+        tl.goto(url("pruef-labor.html")); tl.wait_for_timeout(200)
+        pruefe(tl.evaluate("document.documentElement.scrollWidth - innerWidth") <= 0 and tl.is_visible(".ort-karte"), "KI-Training (4.53) am Telefon: die kleine Karte steht als Text da, ohne waagerechtes Scrollen")
+        tl.context.close()
         kw.context.close()
         b.close()
     print(f"\n{'Alle Browser-Tests bestanden' if not fehler else str(len(fehler)) + ' Fehler'}")
