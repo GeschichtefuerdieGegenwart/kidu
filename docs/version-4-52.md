@@ -22,7 +22,7 @@ Das Modell ist ein Vorschlag und noch nicht erprobt. So steht es an der Zeichnun
 | Seite | `wunsch-methode.html`: links die Geschichte von der Lampe mit den zwei Merksätzen und »Wo stehst du?«, rechts die Zeichnung. Am Beamer steht beides ohne Scrollen. |
 | Zeichnung | Vier Fächer (Wissen · Sagen · Prüfen · Verantworten), drei Bögen (Für mich · Für meine Lernenden · Für andere), zwölf Felder zum Antippen. Ocker gefüllt: die Grundausstattung, fünf Felder. In der Mitte steigt der Rauch der Lampe auf: »Hier endet das Märchen« – links wünschen, rechts prüfen und verantworten. Alle Wörter sind Text, kein Bild. |
 | Ein Feld | Antippen öffnet das Arbeitsfenster: was du kannst, »Dein erster Schritt« (mit Zeit und »geht ohne KI«), ein Beispiel, »Die Übung dazu«, »Der Kniff dazu«, »Derselbe Satz, ein Kreis weiter«. Die Zeichnung bleibt sichtbar; das gewählte Feld trägt eine schwarze Kante, sein Satz und sein Kreis sind unterstrichen. »Schließen« oder Escape schließt, der Fokus geht an das Feld. Die Adresse merkt das Feld (`#feld-…`), »Zurück« im Browser funktioniert. |
-| »Wo stehst du?« | Drei Bilder, eines je Kreis, je vier Aussagen und »Nichts davon«. Danach steht an jedem Feld ✓ »mache ich schon« oder ○ »noch nicht«, dazu »Darauf achtest du schon« und bis zu drei Felder unter »Das lohnt sich anzusehen« – jedes mit seinem ersten Schritt. Keine Stufe, keine Zahl, kein Balken. Gespeichert werden nur die angetippten Aussagen, nur in diesem Browser (`hilde.wunsch`); »Meine Angaben löschen« und »Eingaben löschen« entfernen sie. |
+| »Wo stehst du?« | Drei Bilder, eines je Kreis, je vier Aussagen und »Nichts davon«. Danach steht an jedem Feld ✓ »mache ich schon« oder ○ »noch nicht«, dazu »Darauf achtest du schon« und bis zu drei Felder unter »Das lohnt sich anzusehen« – jedes mit seinem ersten Schritt. Keine Stufe, keine Zahl, kein Balken. Gespeichert werden nur die angetippten Aussagen, nur in diesem Browser (`hilde.wunsch`); »Eingaben löschen« auf der Karte entfernt sie, ebenso »Eingaben löschen« auf »Über Kidu«. |
 | Liste | Alle zwölf Felder als Liste, nach Kreisen: hinter einem Knopf, am Telefon gleich offen (dort gibt es die Zeichnung nicht), ohne Skript und im Druck immer. |
 | Hintergrund | Drei Aufklapptexte: »Was in der Lampe wirklich steckt« (fünf Sätze, was das Märchen weglässt, Hebels »Drei Wünsche«), »Was »Grundausstattung« heißt«, »Worauf das Modell beruht« (mit Belegstand). |
 | Fahrplan | Neues Werkzeug in Phase 1 (»zum Überblick«, kurz, geht ohne KI); auf der Startseite des KI-Trainings die Hilfe »Den Überblick bekommen«. Phase 1 zeigt jetzt »6 Hilfen · 7 Werkzeuge«. |
@@ -93,7 +93,7 @@ Nicht gelaufen: axe-core (`tests/vendor/axe.min.js` fehlt; Paketinstallation ist
 ## Nur du kannst das
 
 - Die Texte der zwölf Felder lesen: Stimmt jeder Satz für deine Schule und dein Kollegium? Besonders die Sätze zu Daten, Bewertung und Kennzeichnung.
-- Auf dem iPad hoch und quer und am Beamer durchtippen: Feld → erster Schritt → »Wo stehst du?« → Karte → »Meine Angaben löschen«.
+- Auf dem iPad hoch und quer und am Beamer durchtippen: Feld → erster Schritt → »Wo stehst du?« → Karte → »Eingaben löschen«.
 - Mit VoiceOver: die Felder der Zeichnung (Name, Grundausstattung, Stand), die Überschrift des Arbeitsfensters, die drei Bilder.
 - Eine Seite drucken und ansehen.
 - Erproben: Das Modell ist ein Vorschlag. Ob es Kolleg*innen hilft, zeigt erst eine Fortbildung.
