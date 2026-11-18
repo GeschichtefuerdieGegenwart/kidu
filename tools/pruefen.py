@@ -8,6 +8,8 @@ Geprüft werden
 - Kennzeichnung in der Fußzeile jeder Seite, Hauptnavigation mit genau drei Bereichen,
 - alte Namen (»Showroom«, »Mehrwert-Check«, »Hilde-Digital«, »Hilde Digital«) nur noch auf der Weiterleitung
   (»Hilde Digital« und »Papierprobe« als frühere Namen auch auf »Über Kidu«),
+- ab 4.49 die alte Bezeichnung der Phase 2 im KI-Training (»Unterricht mit KI vorbereiten« ohne »Analogen«, »klassischer Unterricht«)
+  in den Seiten und in den Skripten und Daten – sie heißt jetzt »Analogen Unterricht mit KI vorbereiten«,
 - verbotene Inhalte (Platzhalter, Logo, Kontaktadresse, »offizielles Digitalkonzept«),
 - Fachbegriffe auf Start- und Bereichsseiten und in den Texten der geführten Wege,
   auf »Mehrwert« und »Über Kidu« nur in aufklappbaren Vertiefungen,
@@ -65,6 +67,9 @@ LIZENZDATEIEN = ["LICENSE", "LICENSE-TEXTE.md", "ENTSTEHUNG.md"]
 ALTE_NAMEN = ["Showroom", "Mehrwert-Check", "Hilde-Digital", "Hilde Digital", "Papierprobe", "Über das Modul", "KI für meine Arbeit",
               "mit KI entwickelt", "Mit KI entwickelt"]  # Kategorie gestrichen (Version 4.4)
 ERLAUBTE_HOSTS = ("https://geschichtefuerdiegegenwart.github.io/",)
+# ab 4.49 (Entscheidung Mario, 17.11.2026): Phase 2 des KI-Trainings heißt »Analogen Unterricht mit KI vorbereiten«.
+ALTE_BEZEICHNUNG = re.compile(r"(?<!Analogen )Unterricht mit KI vorbereiten|klassische[nmrs]? Unterricht", re.IGNORECASE)
+NEUE_BEZEICHNUNG = "Analogen Unterricht mit KI vorbereiten"
 
 PFLICHT = ["id", "slug", "titel", "kurz", "status", "bereich", "fach"]
 
@@ -99,6 +104,8 @@ def pruefe_seiten(fehler):
         for wort in VERBOTEN:
             if wort in html:
                 fehler.append(f"{name}: verbotener Inhalt »{wort}«")
+        for m in ALTE_BEZEICHNUNG.finditer(re.sub(r"\s+", " ", text)):
+            fehler.append(f"{name}: alte Bezeichnung »{m.group(0)}« – die Phase heißt »{NEUE_BEZEICHNUNG}«")
         if name in MIT_VERTIEFUNG:
             ohne_vertiefung = text_ohne_tags(re.sub(r"<details[\s\S]*?</details>", " ", html))
             for wort in FACHBEGRIFFE:
@@ -138,6 +145,8 @@ def pruefe_skripte(fehler):
         for wort in VERBOTEN:
             if wort in inhalt:
                 fehler.append(f"{rel}: verbotener Inhalt »{wort}«")
+        for m in ALTE_BEZEICHNUNG.finditer(inhalt):
+            fehler.append(f"{rel}: alte Bezeichnung »{m.group(0)}« – die Phase heißt »{NEUE_BEZEICHNUNG}«")
         if rel in EINSTIEG_SKRIPTE:
             for wort in EINSTIEG_WOERTER:
                 if wort.lower() in inhalt.lower():

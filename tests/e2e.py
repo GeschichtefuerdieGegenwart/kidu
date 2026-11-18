@@ -884,7 +884,7 @@ def main():
         # src/fahrplan-ki.json, keine Schnell-Anfrage mehr oben; die alten Teile der Seite haben eigene Seiten.
         pg.goto(url("ki.html"))
         phasen = pg.eval_on_selector_all("#fahrplan .fahrplan-phase", "ps => ps.map(p => [p.querySelector('.fahrplan-name').textContent.trim(), p.querySelectorAll('.fahrplan-inhalt a').length, p.querySelector('.fahrplan-anliegen').textContent.trim()])")
-        pruefe([x[:2] for x in phasen] == [["Grundlagen", 6], ["Unterricht mit KI vorbereiten", 5], ["Unterrichten", 2], ["Nach der Stunde", 4]] and all(x[2].startswith("»Ich") or x[2].startswith("»Meine") for x in phasen), f"KI-Training (4.47): vier Phasen, jede mit einem Anliegen {phasen}")
+        pruefe([x[:2] for x in phasen] == [["Grundlagen", 6], ["Analogen Unterricht mit KI vorbereiten", 5], ["Unterrichten", 2], ["Nach der Stunde", 4]] and all(x[2].startswith("»Ich") or x[2].startswith("»Meine") for x in phasen), f"KI-Training (4.47): vier Phasen, jede mit einem Anliegen {phasen}")
         pruefe(pg.locator("#schnell, #schnell-form, #weg, .ki-eingang").count() == 0 and not any(pg.eval_on_selector_all("details.fahrplan-platte", "ds => ds.map(d => d.open)")), "KI-Training (4.47): beginnt mit dem Fahrplan, nicht mit der Schnell-Anfrage; alle Phasen zu")
         k4 = pg.locator("#phase-nach .fahrplan-name").bounding_box()
         pruefe(k4 and k4["y"] + k4["height"] <= 720, "KI-Training (4.47): alle vier Phasen im ersten Bildschirm (1280 × 720)")

@@ -2,7 +2,7 @@
 
 Seit 10. November 2026 heißt das Projekt **Kidu** – Künstliche Intelligenz und digitaler Unterricht. Vorher: »Hilde Digital« (bis 1. November 2026), »Papierprobe« (1.–10. November 2026). Kidu ist nicht an eine Schule gebunden. Repository und Adresse heißen `kidu`.
 
-Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen (Grundlagen · Unterricht mit KI vorbereiten · Unterrichten · Nach der Stunde), Digitaler Unterricht in vier Phasen (Grundlagen · Digitalen Unterricht erstellen · Unterrichten · Nach der Stunde) und Unterrichtsbeispiele, analog und digital – beides mit KI erstellt. Kidu ist ohne Auftrag einer Schule entstanden. Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.
+Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen (Grundlagen · Analogen Unterricht mit KI vorbereiten · Unterrichten · Nach der Stunde), Digitaler Unterricht in vier Phasen (Grundlagen · Digitalen Unterricht erstellen · Unterrichten · Nach der Stunde) und Unterrichtsbeispiele, analog und digital – beides mit KI erstellt. Kidu ist ohne Auftrag einer Schule entstanden. Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.
 
 ## Aufbau
 
