@@ -16,7 +16,13 @@
    jedePhase – Kniffe, die in jede Phase passen; sie stehen unter »In jeder Phase« (Name und Hilfe aus taxonomien.js).
    Ab 4.46 auch für den »Aufgabenkoffer auf Papier« (papierkoffer.html, assets/papierkoffer.js): dieselben Ideen, Kniffe und Phasen.
    papierPhasen – Phase der zwei Aufgabenformen ohne Gerät (ohneGeraet), die im digitalen Koffer keine Phase haben. VORSCHLAG,
-               bis Mario ihn prüft (docs/version-4-46.md). */
+               bis Mario ihn prüft (docs/version-4-46.md).
+   Ab 4.49, Variante C (Auftrag Mario 17.11.2026: der Papier-Koffer als Arbeitsblatt):
+   papierStellen – die sechs Stellen auf dem gezeichneten Arbeitsblatt, von oben nach unten, je mit Nummer, Name, einem Satz für
+               das Feld, der Lage der Markierung auf dem Blatt (x und y als Anteil von Breite und Höhe, seite: links oder rechts
+               für die Beschriftung) und den Einträgen in ihrer Reihenfolge: Ids aus AUFGABEN.aufgaben oder, für die drei Kniffe in
+               jeder Phase, aus WERKSTATT.muster. Jeder der 21 Einträge steht genau einmal (tests/papierkoffer.test.js).
+               Die Zuordnung ist ein VORSCHLAG, begründet in docs/koffer-zuordnung.md. */
 var KOFFER = {
   phasen: ["einstieg", "erarbeitung", "sicherung", "abschluss"],
   ohneGeraet: ["lesen-schritte", "urteil"],
@@ -35,6 +41,26 @@ var KOFFER = {
   },
   jedePhase: ["uebersicht", "hilfekarten", "fehlvorstellungen"],
   papierPhasen: { "lesen-schritte": ["erarbeitung"], urteil: ["abschluss", "erarbeitung"] },
+  papierStellen: [
+    { id: "kopf", nr: 1, name: "Kopf und Einstieg", seite: "links", x: 0.095, y: 0.105,
+      satz: "Was vor der Arbeit oben steht: eine Frage, eine Vermutung, eine Entscheidung.",
+      eintraege: ["abruf", "versuch", "klassenbild", "entscheiden"] },
+    { id: "infotext", nr: 2, name: "Infotext und Material", seite: "links", x: 0.095, y: 0.305,
+      satz: "Der Text oder das Material – und wie man es liest.",
+      eintraege: ["lesen-schritte", "markieren", "film", "regler"] },
+    { id: "aufgaben", nr: 3, name: "Aufgaben", seite: "links", x: 0.095, y: 0.585,
+      satz: "Die Aufträge in der Mitte: sortieren, legen, einordnen, urteilen.",
+      eintraege: ["zuordnen", "reihe", "struktur", "einordnen", "urteil"] },
+    { id: "hilfe", nr: 4, name: "Hilfe am Rand", seite: "rechts", x: 0.952, y: 0.585,
+      satz: "Hilfen neben der Aufgabe: Tippkarten, Hilfe- und Expertenkarten, ein Hilfekasten.",
+      eintraege: ["stufen", "hilfekarten", "uebersicht"] },
+    { id: "loesung", nr: 5, name: "Lösung und Selbstkontrolle", seite: "links", x: 0.095, y: 0.815,
+      satz: "Unten zum Umknicken: Lösungen mit Erklärungen und eine Liste »Ich kann …«.",
+      eintraege: ["auswahl", "einschaetzen"] },
+    { id: "rueckseite", nr: 6, name: "Rückseite", seite: "rechts", x: 0.886, y: 0.929,
+      satz: "Was dahinter liegt: Karteikarten, ein Ausgangsticket, ein Plan zum Erklären.",
+      eintraege: ["kartei", "fehlvorstellungen", "video"] }
+  ],
   ideen: {
     abruf: {
       phasen: ["einstieg", "sicherung"],
