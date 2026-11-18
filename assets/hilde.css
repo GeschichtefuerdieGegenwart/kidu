@@ -3428,3 +3428,142 @@ html[data-bewegung="weniger"] .ki-phase.ki-einblenden{animation:ki-blende var(--
 }
 @media print{.ki-phase[hidden]{display:grid!important}.ki-phase,.koffer-karte{box-shadow:none}.ki-phase-zu{display:none}}
 
+
+/* ---------- Die Wunsch-Methode (ab 4.52, wunsch-methode.html; Auftrag Mario 18.11.2026) ----------
+   Das Modell »Vier Sätze, drei Kreise« als Zeichnung zum Antippen (.wm-bild): ein Halbrund aus zwölf Feldern, unten in der
+   Mitte die Lampe, darüber der Rauch zwischen »Sagen« und »Prüfen«. Ocker gefüllt = Grundausstattung (steht als Wort darunter);
+   gewählt = versetzte Platte in Druckschwarz und schwarze Kante (Two-Inks Rule: Hervorhebung über Druckschwarz).
+   Alle Wörter stehen als HTML über dem Bild; ihre Größe folgt der Breite der Zeichnung (cqi) und fällt nie unter 16 px.
+   Ab 1180 px (iPad quer): links Überschrift und Geschichte bzw. das Arbeitsfenster (.wm-wechsel), rechts die Zeichnung (5 : 8).
+   So ist die Zeichnung immer mindestens 656 px breit: Die Wörter stoßen nicht an, und jedes Feld ist mindestens 44 px dick.
+   720–1179 px: untereinander. Unter 720 px fällt die Zeichnung weg; dann ist die Liste der zwölf Felder die Bedienung. Bewegung: nur das Fenster nach einer Handlung
+   (Grow-in-Place, --dauer-mittel; Tastatur ohne, »weniger Bewegung« nur Überblenden); nach dem Laden bewegt sich nichts. */
+.wm-buehne{display:grid;gap:var(--a2) var(--a4);align-items:start;scroll-margin-top:var(--a2)}
+.wm-kopf,.wm-figur,.wm-wechsel{min-width:0}
+.wm-figur{width:100%;max-width:56rem;justify-self:center}
+.wm-ruhe{display:grid;gap:.6rem;margin-top:var(--a2);max-width:32rem}
+.wm-ruhe p{margin:0}
+.wm-merk{font:700 clamp(1.25rem,1.1rem + .5vw,1.5rem)/1.3 var(--schrift);text-wrap:pretty}
+.wm-knoepfe{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin:.4rem 0 0}
+@media (min-width:1180px){
+  .wm-buehne{grid-template-columns:minmax(0,5fr) minmax(0,8fr);grid-template-rows:auto 1fr;grid-template-areas:"kopf bild" "fenster bild"}
+  .wm-kopf{grid-area:kopf}
+  .wm-figur{grid-area:bild;justify-self:end}
+  .wm-wechsel{grid-area:fenster}
+  .wm-buehne.hat-wechsel .wm-ruhe{display:none} /* nebeneinander tritt das Fenster an die Stelle der Geschichte */
+}
+/* Die Zeichnung */
+.wm-bild{position:relative;width:100%;aspect-ratio:880 / 448;container-type:inline-size}
+.wm-bild-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.wm-feld{cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+.wm-feld-form{fill:var(--flaeche);stroke:var(--stahl);stroke-width:2;stroke-linejoin:round;transition:transform var(--dauer-druck) var(--ease-out),opacity var(--dauer-schnell) var(--ease-out)}
+.wm-feld.ist-grund .wm-feld-form{fill:var(--ki-platte);stroke:var(--ki)} /* Plate Edge Rule: Ocker-Fläche mit 2-px-Kante */
+.wm-feld-ring{fill:none;stroke:none;pointer-events:none}
+.wm-platte{fill:var(--text);visibility:hidden} /* die versetzte Platte erscheint ohne Übergang */
+.wm-platte.ist-gewaehlt{visibility:visible}
+.wm-feld[aria-current="true"] .wm-feld-form{stroke:var(--text);stroke-width:4}
+@media (hover:hover) and (pointer:fine){.wm-feld:hover .wm-feld-form{stroke:var(--text)}}
+.wm-feld:active .wm-feld-form{transform:translate(2px,2px)} /* Andruck */
+.wm-feld:focus-visible .wm-feld-form{stroke:var(--fokus);stroke-width:9} /* Fokus-Doppelring entlang der Form: außen Druckschwarz, innen hell */
+.wm-feld:focus-visible .wm-feld-ring{stroke:var(--flaeche);stroke-width:2.5}
+.wm-bild[data-zeigt="mich"] .wm-feld:not([data-kreis="mich"]) .wm-feld-form,
+.wm-bild[data-zeigt="lernende"] .wm-feld:not([data-kreis="lernende"]) .wm-feld-form,
+.wm-bild[data-zeigt="andere"] .wm-feld:not([data-kreis="andere"]) .wm-feld-form{opacity:.3} /* »Wo stehst du?«: nur der Kreis, um den es gerade geht */
+.wm-striche path{fill:none;stroke:var(--stahl);stroke-width:2}
+.wm-rauch,.wm-rauch-platte{fill:none;stroke:var(--text);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.wm-rauch-platte{stroke:var(--ki-platte)} /* der Rauch wie die Lampe: zwei Druckgänge, leicht versetzt */
+.wm-lampe-platte{fill:var(--ki-platte)}
+.wm-lampe-linie path,.wm-lampe-linie circle{fill:var(--flaeche);stroke:var(--text);stroke-width:2;stroke-linejoin:round}
+.wm-lampe-linie .wm-henkel{fill:none;stroke-linecap:round}
+.wm-wort,.wm-kreisname,.wm-maerchen,.wm-legende,.wm-zeichen{position:absolute;white-space:nowrap;pointer-events:none;color:var(--text)}
+.wm-wort{font:700 clamp(1rem,2.7cqi,1.5rem)/1.2 var(--schrift)}
+.wm-kreisname{font:700 clamp(1rem,2.4cqi,1.25rem)/1.2 var(--schrift)}
+.wm-maerchen,.wm-legende{font:400 clamp(1rem,2.4cqi,1.25rem)/1.2 var(--schrift)}
+.wm-zeichen{font:700 clamp(1.125rem,3.2cqi,1.625rem)/1 var(--schrift);transform:translate(-50%,-50%)}
+.wm-wort.ist-an,.wm-kreisname.ist-an{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:.22em} /* Satz und Kreis des offenen Feldes */
+.wm-anker-rechts{transform:translate(-100%,-50%)}
+.wm-anker-links{transform:translate(0,-50%)}
+.wm-anker-unten{transform:translate(-50%,-100%)}
+.wm-anker-oben{transform:translate(-50%,0)}
+.wm-legende{display:inline-flex;align-items:center;gap:.5rem}
+.wm-legende i,.wm-marke::before{content:"";display:inline-block;flex:none;width:1.5rem;height:.9rem;background:var(--ki-platte);border:2px solid var(--ki)}
+.wm-marke{display:inline-flex;align-items:center;gap:.45rem}
+.wm-stand-legende{margin:0;font-weight:700}
+/* Das Arbeitsfenster: ein Blatt auf seiner Ocker-Platte */
+.wm-wechsel{scroll-margin-top:var(--a2);font-size:1.125rem;background:var(--flaeche);border-radius:var(--rund);padding:clamp(.875rem,1.6vw,1.25rem);box-shadow:8px 8px 0 -2px var(--ki-platte),8px 8px 0 0 var(--ki);margin:0 8px 8px 0} /* taste-skill-ignore: versetzte Ocker-Platte mit Kante, keine Unschärfe */
+.wm-offen,.wm-frage,.wm-ergebnis,.wm-karte-innen{display:grid;gap:.6rem;min-width:0} /* knapp gesetzt: am Beamer steht der erste Schritt jedes Feldes im ersten Bildschirm */
+.wm-offen p,.wm-frage p,.wm-ergebnis p,.wm-karte-innen p{margin:0;max-width:62ch}
+.wm-offen-kopf{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--a2)}
+.wm-fenster-titel{margin:0;font:600 var(--gr-h3)/1.15 var(--schrift-titel);letter-spacing:-.01em;text-wrap:balance}
+.wm-zu{flex:none;min-height:44px;padding:.4rem .9rem;font-size:1rem}
+.wm-nb{white-space:nowrap}
+.wm-unterzeile{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem 1.25rem}
+.wm-unterzeile .wm-marke,.wm-unterzeile .wm-stand{font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.wm-teil{display:grid;gap:.2rem;padding:.4rem var(--a2);background:var(--grund);border-left:8px solid var(--ki);border-radius:var(--rund)}
+.wm-teil-titel{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .75rem}
+.wm-zeit{font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.wm-wege{display:flex;flex-wrap:wrap;gap:0 1.25rem}
+.wm-fehlt{color:var(--leise)}
+.wm-bildstand{font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.wm-frage .hilfe{margin-top:0}
+.wm-optionen{grid-template-columns:1fr;margin-top:0}
+.wm-hinweis{font-weight:700;color:var(--fehler-tief)}
+.wm-hinweis:empty{display:none}
+.wm-schon,.wm-lohnt{display:grid;gap:.25rem;padding:var(--a1) var(--a2);background:var(--grund);border-radius:var(--rund);border-left:8px solid var(--ki-tief)}
+.wm-lohnt{border-left-style:dashed}
+.wm-schon h3,.wm-lohnt h3{margin:0;font:700 var(--gr-text)/1.3 var(--schrift)}
+.wm-schon ul,.wm-lohnt ul{margin:0;padding:0;list-style:none;display:grid;gap:.25rem}
+.wm-lohnt-schritt{display:block}
+@keyframes wm-wachsen{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@keyframes wm-blenden{from{opacity:0}to{opacity:1}}
+.wm-wechsel.wm-wachsen{animation:wm-wachsen var(--dauer-mittel) var(--ease-out)}
+.wm-wechsel.wm-blenden{animation:wm-blenden var(--dauer-aus) linear}
+@media (prefers-reduced-motion:reduce){.wm-wechsel.wm-wachsen{animation:wm-blenden var(--dauer-aus) linear}}
+html[data-bewegung="weniger"] .wm-wechsel.wm-wachsen{animation:wm-blenden var(--dauer-aus) linear}
+/* Die Liste der zwölf Felder: ohne Skript, zum Drucken und schmal die Bedienung */
+.wm-nach{padding-block:var(--a3) 0}
+.wm-alle-zeile{margin:0}
+.wm-liste{padding-block:var(--a4)}
+.wm-liste > .huelle{display:grid;gap:var(--a3)}
+.wm-liste h2{margin:0}
+.wm-liste-satz{margin:0;max-width:68ch}
+.wm-kreis{display:grid;gap:var(--a1)}
+.wm-kreis h3{margin:0;font:600 var(--gr-h3)/1.2 var(--schrift-titel);letter-spacing:-.01em}
+.wm-kreis-satz{margin:0;max-width:68ch}
+.wm-karten{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--a2);align-items:start;margin-top:var(--a1)} /* vier Felder je Kreis: zwei mal zwei */
+.wm-karte{background:var(--flaeche);border-radius:var(--rund);padding:0 var(--a2)}
+.wm-karte > summary{display:flex;flex-wrap:wrap;align-items:center;gap:.2rem 1rem;min-height:48px;padding:.6rem 0;cursor:pointer;list-style:none}
+.wm-karte > summary::-webkit-details-marker{display:none}
+.wm-karte > summary::before{content:"+";display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:var(--rund);background:var(--karton);font-weight:700}
+.wm-karte[open] > summary::before{content:"–"}
+.wm-karte-name{max-width:calc(100% - 28px - 1rem);font:600 1.25rem/1.2 var(--schrift-titel);letter-spacing:-.01em} /* bleibt neben dem Plus, auch wenn der Name umbricht */
+.wm-karte .wm-marke,.wm-karte .wm-stand{font-size:var(--gr-klein);font-weight:700;color:var(--ki-tief)}
+.wm-stand:empty{display:none}
+.wm-karte-innen{padding:0 0 var(--a2)}
+.wm-mehr{padding-block:var(--a2) var(--a6)}
+.wm-lampe-liste{margin:0 0 var(--a2);padding-left:1.4rem;display:grid;gap:.35rem;max-width:68ch}
+.wm-mehr details p{max-width:68ch}
+@media (min-width:720px){.wm-js .wm-liste:not(.ist-offen){display:none}} /* mit Skript und Zeichnung: die Liste nur auf Wunsch */
+@media (max-width:719px){.wm-figur,.wm-alle-zeile{display:none}.wm-nach{padding:0}.wm-karten{grid-template-columns:minmax(0,1fr)}}
+@media print{ /* taste-skill-ignore: Druckfassung */
+  /* Zum Drucken: Geschichte, Zeichnung, dann alle zwölf Felder offen in zwei Spalten, dann der Hintergrund. Blockfluss statt Raster,
+     damit der Umbruch stimmt (ein Raster ließ je Seite nur ein Feld zu und legte Überschriften über Text). */
+  .wm{zoom:.72}
+  .wm-liste{display:block!important;padding-block:var(--a2) 0}
+  .wm-ruhe .wm-knoepfe,.wm-tipp,.wm-wechsel,.wm-nach,.wm-stand-legende{display:none!important}
+  .wm-buehne,.wm-liste > .huelle,.wm-kreis,.wm-karte-innen{display:block}
+  .wm-buehne.hat-wechsel .wm-ruhe{display:grid}
+  .wm-figur{display:grid!important;max-width:36rem;margin:var(--a2) 0;break-inside:avoid}
+  .wm-kreis{margin-top:var(--a3)}
+  .wm-kreis h3{break-after:avoid}
+  .wm-karten{display:block;columns:2;column-gap:var(--a4);margin-top:var(--a1)}
+  .wm-karte{margin:0 0 var(--a2);padding:0;background:none} /* ein Feld darf in die nächste Spalte laufen, seine Teile nicht */
+  .wm-karte > summary{min-height:0;padding:0 0 .25rem;break-after:avoid}
+  .wm-karte-innen > p{break-inside:avoid}
+  .wm-karte > summary::before{display:none}
+  .wm-karte-innen > *{margin-bottom:.4rem}
+  .wm-teil{border:0;border-left:4pt solid #000;background:none;break-inside:avoid}
+  .wm-mehr{padding-block:var(--a2) 0}
+  .wm-mehr details.mehr{background:none;padding:0;break-inside:avoid}
+  .wm-mehr details.mehr summary::before{display:none}
+}

@@ -14,7 +14,8 @@
       {"name": "Ergebnisse prüfen", "nutzen": "Du findest erfundene Quellen, falsche Zahlen und Sätze, die sicherer klingen, als sie sind.", "wege": [{"href": "pruef-labor.html"}]},
       {"name": "Sicher arbeiten", "nutzen": "Du weißt, was nicht hineingehört: Namen, Noten und andere persönliche Daten.", "wege": [{"href": "sicher.html"}]},
       {"name": "KI für dein Fach einrichten", "nutzen": "Du schreibst einmal auf, was in deinem Fach gilt. Danach reicht ein kurzer Auftrag.", "wege": [{"href": "ki-fach.html"}]},
-      {"name": "Mit Plan üben", "nutzen": "Kurze Übungen an deinem eigenen Material – mit einem fertigen Plan oder einzeln.", "wege": [{"href": "vier-wochen.html"}, {"href": "ki-aufgaben.html"}]}
+      {"name": "Mit Plan üben", "nutzen": "Kurze Übungen an deinem eigenen Material – mit einem fertigen Plan oder einzeln.", "wege": [{"href": "vier-wochen.html"}, {"href": "ki-aufgaben.html"}]},
+      {"name": "Den Überblick bekommen", "nutzen": "Eine Zeichnung zeigt dir, was du mit KI können solltest – und wo du schon etwas tust.", "wege": [{"href": "wunsch-methode.html"}]}
     ]},
     "vorbereiten": {"karte": "KI hilft dir bei Ideen, Stundenablauf, Aufgaben, Arbeitsblättern, Niveaus, Folien und Übungen.", "einleitung": "Die KI liefert dir einen ersten Entwurf. Du prüfst ihn und passt ihn an deine Klasse an.", "hilfen": [
       {"name": "Ideen finden", "nutzen": "Mehrere Einstiege, Beispiele oder Zugänge zur Auswahl. Du nimmst, was zu deiner Klasse passt.", "wege": [{"href": "prompten.html#ziel=ideen", "text": "Ideen sammeln"}, {"href": "schnell-anfrage.html#anlass=einstieg", "text": "Einstieg mit Vermutung"}]},
@@ -45,6 +46,7 @@
     {"phase": "grundlagen", "href": "sicher.html", "name": "Sicher arbeiten in fünf Regeln", "text": "Daten, Prüfen, Bildrechte, Lernseiten, Persönliches. Gilt auch für den Digitalen Unterricht.", "marken": ["geht ohne KI"], "zeit": "kurz", "faehigkeiten": ["verantworten"]},
     {"phase": "grundlagen", "href": "ki-fach.html", "name": "KI für dein Fach einrichten", "text": "Einmal aufschreiben, was in deinem Fach gilt. Danach reicht ein kurzer Auftrag.", "zeit": "freistunde", "faehigkeiten": ["beschreiben"]},
     {"phase": "grundlagen", "href": "ki-aufgaben.html", "name": "Trainingsaufgaben", "text": "Zwölf Übungen mit dem KI-System deiner Schule, an deinem eigenen Material.", "zeit": ["kurz", "freistunde"], "faehigkeiten": ["abgeben", "beschreiben", "pruefen", "verantworten"]},
+    {"phase": "grundlagen", "href": "wunsch-methode.html", "name": "Die Wunsch-Methode", "fuer": "zum Überblick", "text": "Vier Sätze, drei Kreise: was du mit KI können solltest – mit einem ersten Schritt je Feld.", "marken": ["geht ohne KI"], "zeit": "kurz"},
     {"phase": "vorbereiten", "href": "schnell-anfrage.html", "name": "Schnell-Anfrage", "tuer": "Ich brauche schnell etwas", "text": "Anlass wählen, drei Angaben, Prompt kopieren.", "zeit": "kurz", "faehigkeiten": ["beschreiben"]},
     {"phase": "vorbereiten", "href": "prompten.html", "name": "Prompten lernen", "tuer": "Ich will es selbst können", "text": "In fünf Schritten zu deiner eigenen Anfrage, mit Erklärung.", "zeit": "freistunde", "faehigkeiten": ["beschreiben", "pruefen"]},
     {"phase": "vorbereiten", "href": "auftraege.html", "name": "Aufträge zum Kopieren", "text": "Lernmethode einführen, KI-Regeln für eine Aufgabe, KI-Antworten prüfen und mehr.", "zeit": "kurz", "faehigkeiten": ["beschreiben", "begleiten"]},
