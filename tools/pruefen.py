@@ -8,6 +8,8 @@ Geprüft werden
 - Kennzeichnung in der Fußzeile jeder Seite, Hauptnavigation mit genau drei Bereichen,
 - alte Namen (»Showroom«, »Mehrwert-Check«, »Hilde-Digital«, »Hilde Digital«) nur noch auf der Weiterleitung
   (»Hilde Digital« und »Papierprobe« als frühere Namen auch auf »Über Kidu«),
+- ab 4.49 der Aufgabenkoffer auf Papier: Teile aktuell aus PAPIERKOFFER.html(), höchstens vier Anlässe, alle 21 Einträge, an jeder Eingabe
+  der Hinweis zu personenbezogenen Daten, auf der ersten Ebene kein »Prompt«,
 - ab 4.49 die alte Bezeichnung der Phase 2 im KI-Training (»Unterricht mit KI vorbereiten« ohne »Analogen«, »klassischer Unterricht«)
   in den Seiten und in den Skripten und Daten – sie heißt jetzt »Analogen Unterricht mit KI vorbereiten«,
 - verbotene Inhalte (Platzhalter, Logo, Kontaktadresse, »offizielles Digitalkonzept«),
@@ -553,8 +555,44 @@ def pruefe_schloss(fehler):
         fehler.append(".gitignore: privat/ (Klartext des geschützten Bereichs) fehlt")
 
 
+def pruefe_papierkoffer(fehler):
+    """Ab 4.49 (Variante B): Der Aufgabenkoffer auf Papier trägt genau die Teile aus PAPIERKOFFER.html() – sonst ist die Seite
+    veraltet (python3 tools/bauen.py). Höchstens vier Anlass-Karten, alle 21 Einträge, an jeder Eingabe der Hinweis zu
+    personenbezogenen Daten, auf der ersten Ebene »Auftrag an die KI« statt »Prompt«."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("papierkoffer", WURZEL / "tools" / "papierkoffer.py")
+    pk = importlib.util.module_from_spec(spec); spec.loader.exec_module(pk)
+    try:
+        teile = pk.teile()
+    except SystemExit as f:
+        fehler.append(f"papierkoffer.html: {f}")
+        return
+    html = (WURZEL / "papierkoffer.html").read_text(encoding="utf-8")
+    for name, inhalt in teile.items():
+        if inhalt not in html:
+            fehler.append(f"papierkoffer.html: Teil »{name}« ist veraltet – python3 tools/bauen.py")
+    if "<!-- papierkoffer:" in html:
+        fehler.append("papierkoffer.html: Zeichen <!-- papierkoffer:… --> nicht ersetzt")
+    karten = teile.get("karten", "")
+    n = karten.count('class="koffer-karte"')
+    if not 1 <= n <= 4:
+        fehler.append(f"papierkoffer.html: {n} Anlass-Karten – höchstens vier")
+    if "Prompt" in text_ohne_tags(karten):
+        fehler.append("papierkoffer.html: »Prompt« auf der ersten Ebene – dort heißt es »Auftrag an die KI«")
+    listen = teile.get("listen", "")
+    eintraege = listen.count('class="pk-eintrag"')
+    if eintraege != 21:
+        fehler.append(f"papierkoffer.html: {eintraege} statt 21 Einträge")
+    hinweis = "Keine Namen, Noten oder anderen personenbezogenen Daten eingeben."
+    for m in re.finditer(r'<(?:textarea|input)\b[^>]*>', html):
+        d = re.search(r'aria-describedby="([^"]+)"', m.group(0))
+        if not d or not re.search(r'id="' + re.escape(d.group(1)) + r'">' + re.escape(hinweis), html):
+            fehler.append(f"papierkoffer.html: Eingabe ohne Hinweis zu personenbezogenen Daten: {m.group(0)[:60]}")
+
+
 def main():
     fehler = []
+    pruefe_papierkoffer(fehler)  # ab 4.49
     pruefe_werkzeugkiste(fehler)
     pruefe_film(fehler)
     pruefe_fahrplan(fehler)

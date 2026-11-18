@@ -132,3 +132,11 @@ Die Zuordnung ist ein Vorschlag wie die Phasen im Aufgabenkoffer und steht so au
 - **Eingaben:** an jeder Eingabe der Hinweis »Keine Namen, Noten oder anderen personenbezogenen Daten eingeben.« (Formular und jedes Auftragsfeld, mit `aria-describedby`). Freitexte werden nicht gespeichert.
 - **Ohne JavaScript:** alle Einträge stehen gegliedert da, die Aufträge mit leeren Angaben (die KI fragt dann zuerst nach Fach, Thema und Lerngruppe). Gebaut aus denselben Daten beim Bauen (`tools/papierkoffer.py`), nicht von Hand.
 - **Farben:** Honigplatte ist seit 4.26 das Ocker des Logos, `--ki-platte` #B68235 (nicht #F2B233 aus dem Designkonzept vom 18.10.2026); Fläche `--flaeche` #F8F5EE (nicht #FFFDF9). Gestaltet wird nur über die Variablen in `hilde.css`.
+
+## 5. Umsetzung in Variante B (Branch `koffer-variante-b`)
+
+- Anlässe als Daten: `KOFFER.papierAnlaesse` (Name, ein Satz, Bildzeichen, Einträge in dieser Reihenfolge).
+- Seite: `src/papierkoffer.html`, `assets/papierkoffer.js` (`anlaesse`, `auftrag`, `kniffAuftrag`, `html`), `tools/papierkoffer.py` (setzt die Fassung ohne Skript beim Bauen ein).
+- Gestaltung: gemeinsame Koffer-Komponente `.koffer-raster` / `.koffer-karte` in `assets/hilde.css`, die auch der Aufgabenkoffer nutzt; Muster in `DESIGN.md`.
+- Dopplungen: D1, D3 und D4 stehen in »Mehr zur Idee« nur mit Namen und Verweis; D2 bleibt ausführlich, weil »Auswahlaufgabe mit Rückmeldung« und »Fehlvorstellungen dreimal nutzen« in verschiedenen Anlässen stehen. D5 und D6 entfallen durch den neuen Aufbau.
+- Prüfung und Messwerte: `docs/version-4-49.md`.
