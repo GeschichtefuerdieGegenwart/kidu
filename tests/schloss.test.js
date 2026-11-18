@@ -38,13 +38,14 @@ test("Schloss: jede Verschlüsselung bekommt einen eigenen Startwert", async () 
 
 test("Schloss: die Dateien im Repository sind verschlüsselt, mit 600 000 Runden und gemeinsamem Salz", () => {
   const dateien = fs.readdirSync(path.join(WURZEL, "schloss")).filter((f) => f.endsWith(".enc.json"));
-  assert.deepEqual(dateien.sort(), ["beratung.enc.json", "fortbildung.enc.json", "fortbildungsleitung.enc.json", "leitsaetze.enc.json"]);
+  // ab 4.48: der Ablauf-Koffer für das KI-Training liegt ebenfalls nur verschlüsselt im Repository
+  assert.deepEqual(dateien.sort(), ["ablaeufe.enc.json", "beratung.enc.json", "fortbildung.enc.json", "fortbildungsleitung.enc.json", "leitsaetze.enc.json"]);
   const salze = new Set();
   for (const f of dateien) {
     const d = JSON.parse(fs.readFileSync(path.join(WURZEL, "schloss", f), "utf8"));
     assert.equal(d.iter, K.ITER, f);
     assert.equal(d.alg, "AES-GCM-256/PBKDF2-SHA256", f);
-    assert.ok(!/<h1|<section|Fortbildung/.test(d.ct), f + ": kein Klartext");
+    assert.ok(!/<h1|<section|Fortbildung|Folgetermin/.test(d.ct), f + ": kein Klartext");
     salze.add(d.salt);
   }
   assert.equal(salze.size, 1, "ein Salz für alle, damit ein Passwort den ganzen Bereich öffnet");
@@ -52,9 +53,14 @@ test("Schloss: die Dateien im Repository sind verschlüsselt, mit 600 000 Runden
 
 test("Schloss: der Klartext liegt nicht im Repository", () => {
   assert.match(fs.readFileSync(path.join(WURZEL, ".gitignore"), "utf8"), /^privat\/$/m);
-  for (const f of ["fortbildung.html", "beratung.html", "leitsaetze.html", "fortbildungsleitung.html"]) {
+  for (const f of ["fortbildung.html", "beratung.html", "leitsaetze.html", "fortbildungsleitung.html", "ablaeufe.html"]) {
     const src = fs.readFileSync(path.join(WURZEL, "src", f), "utf8");
     assert.match(src, /<!-- schloss:[a-z]+ -->/, f);
-    assert.doesNotMatch(src, /Noch nicht erprobt|kein Beschluss|Warum acht Wochen/, f);
+    assert.doesNotMatch(src, /Noch nicht erprobt|kein Beschluss|Warum acht Wochen|Folgetermin/, f);
   }
+  // ab 4.48: auch die gebaute Seite des Ablauf-Koffers trägt keinen Klartext – nur die verschlüsselten Daten.
+  // Geprüft wird an den Ankern der Abschnitte, damit kein Text des Koffers im öffentlichen Test steht.
+  const gebaut = fs.readFileSync(path.join(WURZEL, "ablaeufe.html"), "utf8");
+  assert.match(gebaut, /data-schloss="ablaeufe"/);
+  assert.doesNotMatch(gebaut, /id="ak-(45|90|tag)"|class="ablauf-zeit"|Folgetermin/);
 });

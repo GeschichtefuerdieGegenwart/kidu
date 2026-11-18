@@ -51,6 +51,9 @@ SEITEN = [
     ("prompten.html", "Prompten lernen – Kidu", "ki"),                 # ab 4.47 eigene Seite, mit dem Prompt-Generator
     ("pruef-labor.html", "Prüf-Labor – Kidu", "ki"),                   # ab 4.47, drei Übungen ohne KI-System
     ("kollegium.html", "Mit dem Kollegium – Kidu", "ki"),              # ab 4.47, sechs Formate
+    ("vier-wochen.html", "Vier Wochen KI-Training – Kidu", "ki"),      # ab 4.48, Phase 1
+    ("bewertung.html", "Werkstatt Bewertungskultur – Kidu", "ki"),     # ab 4.48, Phase 4 »Im Kollegium«
+    ("ablaeufe.html", "Für die Fortbildungsleitung – Kidu", ""),       # ab 4.48 geschützt (Schloss): Ablauf-Koffer
     ("galerie.html", "Unterrichtsbeispiele – Kidu", "galerie"),
     ("beispiel.html", "Beispiel – Kidu", "galerie"),
     ("showroom.html", "Unterrichtsbeispiele – Kidu", "galerie"),

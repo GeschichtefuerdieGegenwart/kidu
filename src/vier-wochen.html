@@ -1,0 +1,102 @@
+<div class="bereich-ki vw">
+<!-- kiplan:zeile weit -->
+<!-- Ab 4.48: Vier Wochen KI-Training (Entscheidung Mario, 17.11.2026). Grundlage: Recherche »KI-Training für heterogene Kollegien« –
+     wiederholte kurze Übung mit Rückmeldung und einem Plan für den Alltag wirkt eher als ein langer Kurs (Sims u. a.), und die
+     Reihenfolge »erst prüfen, dann entscheiden, dann beschreiben, dann erproben«. Nur vorhandene Werkzeuge.
+     Die Wochen tragen keine Nummern (Lehre GGK-Labor: keine zweite Zählung neben den Phasen 1–4 des Fahrplans), sondern ihren
+     Schwerpunkt; mit Startdatum stehen die Daten daran (assets/vier-wochen.js). Ohne Skript steht der ganze Plan da. -->
+<section class="bereichskopf kompakt"><div class="huelle huelle-weit vw-kopf">
+  <div class="stapel">
+    <h1 class="h1-frage">Vier Wochen KI-Training</h1>
+    <p class="marker">Allein oder im Tandem</p>
+    <p class="detail-kurz">Ein fertiger Plan für die nächsten vier Wochen. Jede Woche gibt es eine kurze Übung und einen echten Anlass aus deinem Unterricht. Zum Schluss erprobst du etwas in einer Stunde und schaust zurück.</p>
+    <form class="vw-start" id="vw-start" novalidate hidden>
+      <label for="vw-datum">Wann fängst du an? <span class="leise">Freiwillig – dann stehen die Daten am Plan.</span></label>
+      <input type="date" id="vw-datum" name="datum">
+    </form>
+    <p class="kopfnotiz"><button type="button" class="knopf" data-drucken>Plan drucken</button> <button type="button" class="linkknopf" id="vw-loeschen" hidden>Eingaben löschen</button></p>
+  </div>
+  <figure class="blick vw-blick" aria-labelledby="t-vw-blick">
+    <p class="blick-titel" id="t-vw-blick">Auf einen Blick: vier Wochen, ein Schwerpunkt je Woche</p>
+    <ol class="vw-linie">
+      <li><a href="#vw-pruefen"><b>Prüfen</b><span class="vw-linie-wann" data-woche="0">erst ohne KI</span></a></li>
+      <li><a href="#vw-entscheiden"><b>Entscheiden</b><span class="vw-linie-wann" data-woche="1">was du abgibst</span></a></li>
+      <li><a href="#vw-beschreiben"><b>Beschreiben</b><span class="vw-linie-wann" data-woche="2">der erste eigene Auftrag</span></a></li>
+      <li><a href="#vw-erproben"><b>Erproben</b><span class="vw-linie-wann" data-woche="3">in einer Stunde</span></a></li>
+    </ol>
+    <figcaption>Jede Woche: eine kurze Übung und eine Freistunde mit deinem eigenen Material. Danach geht es mit einer neuen Sache wieder bei »Beschreiben« weiter.</figcaption>
+  </figure>
+</div></section>
+
+<section class="abschnitt" style="padding-top:var(--a2)" aria-label="Der Plan"><div class="huelle huelle-weit">
+  <ol class="vw-wochen">
+    <li class="vw-woche" id="vw-pruefen">
+      <p class="vw-wann" data-woche="0">Diese Woche</p>
+      <h2>Prüfen</h2>
+      <p class="vw-ziel">Du prüfst einen Text, bevor du ihn übernimmst – noch ohne KI.</p>
+      <dl class="vw-teile">
+        <div><dt>Kurz</dt><dd>Im <a class="textlink" href="pruef-labor.html#pl-fehler">Prüf-Labor</a> die Übung »Fehler finden«. Geht ohne KI.</dd></div>
+        <div><dt>Eine Freistunde</dt><dd>Nimm einen Text, den du bald im Unterricht einsetzen willst. Prüf ihn mit den vier Schritten: Stopp · Art der Aussage bestimmen · Original finden · Unbelegtes zurückverfolgen.</dd></div>
+        <div><dt>Im Tandem</dt><dd>Prüft denselben Text erst allein. Dann vergleicht ihr, was ihr markiert habt.</dd></div>
+      </dl>
+      <p class="vw-geschafft"><b>Geschafft, wenn</b> du bei zwei Angaben weißt, woher sie stammen.</p>
+      <div class="vw-notiz"><label for="vw-anlass-pruefen">Mein Text</label><input type="text" id="vw-anlass-pruefen" class="vw-anlass" maxlength="120" autocomplete="off"></div>
+      <label class="vw-erledigt"><input type="checkbox" data-erledigt="pruefen"> Erledigt</label>
+    </li>
+    <li class="vw-woche" id="vw-entscheiden">
+      <p class="vw-wann" data-woche="1">Nächste Woche</p>
+      <h2>Entscheiden</h2>
+      <p class="vw-ziel">Du entscheidest begründet, was eine KI übernehmen darf – und was nicht hineingehört.</p>
+      <dl class="vw-teile">
+        <div><dt>Kurz</dt><dd>Im <a class="textlink" href="pruef-labor.html#pl-abgeben">Prüf-Labor</a> die Übungen »Abgeben oder selbst machen« und »Was darf hinein?«.</dd></div>
+        <div><dt>Eine Freistunde</dt><dd>Schreib fünf Aufgaben deiner nächsten Woche auf. Sortier sie: selbst machen · gemeinsam mit KI · abgeben und prüfen. Schreib zu jeder einen Grund. So steht es auch in der Trainingsaufgabe <a class="textlink" href="ki-aufgaben.html#tr-woche">»Deine Woche sortieren«</a>.</dd></div>
+        <div><dt>Im Tandem</dt><dd>Legt eure Listen nebeneinander. Fragt euch gegenseitig nach dem Grund.</dd></div>
+      </dl>
+      <p class="vw-geschafft"><b>Geschafft, wenn</b> jede Aufgabe einen Grund hat und du eine für die nächste Woche ausgewählt hast.</p>
+      <div class="vw-notiz"><label for="vw-anlass-entscheiden">Meine Aufgabe für nächste Woche</label><input type="text" id="vw-anlass-entscheiden" class="vw-anlass" maxlength="120" autocomplete="off"></div>
+      <label class="vw-erledigt"><input type="checkbox" data-erledigt="entscheiden"> Erledigt</label>
+    </li>
+    <li class="vw-woche" id="vw-beschreiben">
+      <p class="vw-wann" data-woche="2">In zwei Wochen</p>
+      <h2>Beschreiben</h2>
+      <p class="vw-ziel">Du schreibst einen Auftrag, mit dem die KI nicht raten muss – und prüfst, was zurückkommt.</p>
+      <dl class="vw-teile">
+        <div><dt>Kurz</dt><dd>Hol dir mit der <a class="textlink" href="schnell-anfrage.html">Schnell-Anfrage</a> einen Prompt für deine Aufgabe aus der letzten Woche. Füg ihn in das KI-System deiner Schule ein.</dd></div>
+        <div><dt>Eine Freistunde</dt><dd>Bau den Auftrag mit <a class="textlink" href="prompten.html">Prompten lernen</a> aus: Ziel · Kontext · Anforderungen · Format · Prüfkriterien. Prüf das Ergebnis mit deinen Prüfkriterien und frag einmal nach.</dd></div>
+        <div><dt>Im Tandem</dt><dd>Ein Zugang reicht. Eine Person schreibt den Auftrag, die andere prüft das Ergebnis. Dann tauscht ihr.</dd></div>
+      </dl>
+      <p class="vw-geschafft"><b>Geschafft, wenn</b> das Ergebnis deine Prüfkriterien erfüllt – oder du genau weißt, was fehlt.</p>
+      <div class="vw-notiz"><label for="vw-anlass-beschreiben">Mein Material</label><input type="text" id="vw-anlass-beschreiben" class="vw-anlass" maxlength="120" autocomplete="off"></div>
+      <label class="vw-erledigt"><input type="checkbox" data-erledigt="beschreiben"> Erledigt</label>
+    </li>
+    <li class="vw-woche" id="vw-erproben">
+      <p class="vw-wann" data-woche="3">In drei Wochen</p>
+      <h2>Erproben</h2>
+      <p class="vw-ziel">Du setzt dein Material in einer Stunde ein und schaust zurück. Es darf ganz auf Papier bleiben.</p>
+      <dl class="vw-teile">
+        <div><dt>Eine Freistunde</dt><dd>Plan die Stunde mit deinem Material. Leg vorher fest, woran du merkst, ob es geholfen hat.</dd></div>
+        <div><dt>Kurz, nach der Stunde</dt><dd>Drei Fragen: Was haben die Lernenden getan? Was hat die KI beigetragen? Was ändere ich? Mehr dazu: <a class="textlink" href="auftraege.html#erkunden">Eine Idee im Unterricht erproben</a> und der <a class="textlink" href="beobachtung.html">Beobachtungsbogen</a>.</dd></div>
+        <div><dt>Im Tandem</dt><dd>Wenn es geht, schaut die andere Person in der Stunde zu – auf die Lernenden, nicht auf dich.</dd></div>
+      </dl>
+      <p class="vw-geschafft"><b>Geschafft, wenn</b> du einen Satz hast: Das mache ich beim nächsten Mal anders.</p>
+      <div class="vw-notiz"><label for="vw-anlass-erproben">Meine Stunde</label><input type="text" id="vw-anlass-erproben" class="vw-anlass" maxlength="120" autocomplete="off"></div>
+      <label class="vw-erledigt"><input type="checkbox" data-erledigt="erproben"> Erledigt</label>
+    </li>
+  </ol>
+  <p class="vw-danach"><b>Und danach?</b> Behalte eine Sache bei. Nimm dir eine neue Aufgabe und fang wieder bei »Beschreiben« an. Gemeinsam weiterlernen: <a class="textlink" href="kollegium.html">Mit dem Kollegium</a>. Allein vertiefen: der Selbstlernkurs »KI in der Schule« des ZSL (Stand: November 2026).</p>
+  <p class="leise klein vw-speicher">Die Haken und das Startdatum bleiben nur in diesem Browser. Was du in die Felder schreibst, wird nicht gespeichert – druck den Plan aus, wenn du es behalten willst.</p>
+
+  <details class="mehr vw-warum">
+    <summary>Warum vier kurze Wochen?</summary>
+    <ul class="beleg-liste">
+      <li><span><span class="belegstand">belegt</span></span><span>Fortbildungen wirken eher, wenn sie Üben, Rückmeldung und einen Plan für den Alltag verbinden. Wie lange sie insgesamt dauern, ist dabei weniger wichtig als die Wiederholung. (Übersicht über 104 Studien: Sims und andere, 2021)</span></li>
+      <li><span><span class="belegstand">belegt</span></span><span>Fortbildungen wirken eher, wenn sich Input, Erproben im eigenen Unterricht und Rückblick abwechseln und Kolleg*innen zusammenarbeiten. (Lipowsky und Rzejak)</span></li>
+      <li><span><span class="belegstand">plausibel</span></span><span>Die Reihenfolge »erst prüfen, dann entscheiden, dann beschreiben, dann erproben« passt zu einer Studie, nach der sich Menschen beim Arbeiten mit KI oft überschätzen und Antworten ungeprüft übernehmen. Es war eine Laborstudie, nicht mit Lehrkräften. (Aalto-Universität, 2025)</span></li>
+      <li><span><span class="belegstand">offen</span></span><span>Ob genau dieser Plan wirkt, ist offen. Er ist ein Vorschlag und noch nicht erprobt.</span></li>
+    </ul>
+  </details>
+</div></section>
+<!-- kiplan:fuss weit -->
+</div>
+<script src="assets/vier-wochen.js"></script>
+<script src="assets/druck.js"></script>

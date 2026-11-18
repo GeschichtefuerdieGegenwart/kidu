@@ -75,8 +75,8 @@ test("Trainingsaufgaben: die Zahlen auf den Seiten stimmen mit den Daten", () =>
 test("Trainingsaufgaben: das Band der Fähigkeiten auf ki.html stimmt mit den Daten", () => {
   const ki = fs.readFileSync(path.join(__dirname, "..", "src", "ki.html"), "utf8");
   const band = ki.slice(ki.indexOf('<ul class="ki-faehig-liste">'), ki.indexOf("</ul>", ki.indexOf('<ul class="ki-faehig-liste">')));
-  const paare = [...band.matchAll(/<li><b>([^<]+)<\/b><span>([^<]+)<\/span><\/li>/g)].map((m) => [m[1], m[2]]);
-  assert.deepEqual(paare, T.gruppen.map((g) => [g.name, g.frage]));
+  const paare = [...band.matchAll(/<li data-faehigkeit="([a-z]+)"><b>([^<]+)<\/b><span>([^<]+)<\/span><\/li>/g)].map((m) => [m[1], m[2], m[3]]);
+  assert.deepEqual(paare, T.gruppen.map((g) => [g.id, g.name, g.frage]), "ab 4.48 mit dem Schlüssel für den Filter");
   assert.doesNotMatch(band, /<a /, "das Band verlinkt nicht – die Werkzeuge stehen nur im Fahrplan");
   const n = ZAHLWORT[T.gruppen.length];
   assert.ok(ki.includes(n.charAt(0).toUpperCase() + n.slice(1) + " Fähigkeiten"), "ki.html: Zahl der Fähigkeiten");

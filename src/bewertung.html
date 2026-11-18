@@ -1,0 +1,89 @@
+<div class="bereich-ki bw">
+<!-- kiplan:zeile weit -->
+<!-- Ab 4.48: Werkstatt Bewertungskultur (Entscheidung Mario, 17.11.2026). Eine Werkstatt, keine Vorlagen: eine eigene Aufgabe von der KI
+     lösen lassen und so umbauen, dass der Arbeitsweg zählt. Verbindliche Vorgaben (Prüfungsordnung, Land, Schule) stehen getrennt
+     daneben – keine Rechtsauskunft. Daten und Aufträge: assets/daten/bewertung.js. -->
+<section class="bereichskopf kompakt"><div class="huelle huelle-weit bw-kopf">
+  <div class="stapel">
+    <h1 class="h1-frage">Werkstatt Bewertungskultur</h1>
+    <p class="marker">Allein oder in der Fachgruppe · eine Freistunde</p>
+    <p class="detail-kurz">Was zählt, wenn eine KI die Hausaufgabe lösen kann? In vier Schritten baust du eine eigene Aufgabe so um, dass der Arbeitsweg der Lernenden sichtbar wird.</p>
+    <p><a class="knopf" href="#bw-schritte">Zu den vier Schritten <span aria-hidden="true">↓</span></a> <button type="button" class="knopf still" data-drucken>Werkstatt drucken</button></p>
+  </div>
+  <aside class="bw-verbindlich" aria-labelledby="t-bw-verbindlich">
+    <h2 id="t-bw-verbindlich" class="klein-titel">Was verbindlich bleibt</h2>
+    <ul>
+      <li>Was in Klassenarbeiten und Prüfungen erlaubt ist, regeln die Prüfungsordnung, die Vorgaben des Landes und deine Schule. Diese Werkstatt ändert daran nichts.</li>
+      <li>Die Bewertung bleibt bei dir. Eine KI vergibt keine Noten.</li>
+      <li>Willst du eine Aufgabe in einer Prüfung ändern, klär es vorher mit der Schulleitung.</li>
+    </ul>
+    <p class="leise klein">Das ist eine Einschätzung, keine Rechtsberatung. Stand: November 2026. Baden-Württemberg kündigt an, Prüfungsordnungen weiterzuentwickeln.</p>
+  </aside>
+</div></section>
+
+<section class="abschnitt" style="padding-top:var(--a2)" id="bw-schritte" aria-labelledby="t-bw-schritte" tabindex="-1"><div class="huelle huelle-weit">
+  <h2 id="t-bw-schritte" class="sr-only">Die vier Schritte</h2>
+  <!-- Keine Ziffern: Die Zeile oben nennt schon die Phase »4 · Nach der Stunde« (Lehre: keine zweite Zählung neben den Phasen). -->
+  <ol class="bw-schritte">
+    <li>
+      <p class="bw-wann">Zuerst</p>
+      <h3>Eine Aufgabe mitbringen</h3>
+      <p>Eine Hausaufgabe, ein Thema für eine schriftliche Ausarbeitung oder eine Aufgabe aus einer Klassenarbeit. Ohne Namen, Noten oder Lösungen von Lernenden.</p>
+    </li>
+    <li>
+      <p class="bw-wann">Dann</p>
+      <h3>Von der KI lösen lassen</h3>
+      <p>Kopier den Auftrag »Die KI die Aufgabe lösen lassen« und füg deine Aufgabe ein. Dann prüf: Was hat die KI geschafft? Was davon würde dir auffallen – und was nicht?</p>
+    </li>
+    <li>
+      <p class="bw-wann">Danach</p>
+      <h3>Umbauen</h3>
+      <p>Wähl einen oder zwei der vier Umbauten unten. Der Auftrag »Die Aufgabe umbauen« macht dir Vorschläge. Was du übernimmst, entscheidest du.</p>
+    </li>
+    <li>
+      <p class="bw-wann">Zum Schluss</p>
+      <h3>Absprechen und festhalten</h3>
+      <p>Vergleicht in der Fachgruppe. Haltet fest: die neue Aufgabe und einen Satz, was mit KI erlaubt ist. Nach dem Einsatz schaust du zurück: Hat sich der Arbeitsweg gezeigt?</p>
+    </li>
+  </ol>
+
+  <h2 class="klein-titel bw-titel">Vier Umbauten</h2>
+  <ul class="bw-umbauten">
+    <li><b>Arbeitsweg zeigen</b><span>Die Lernenden geben einen Entwurf, einen Zwischenstand oder ihre Begründung mit ab. Bewertet wird auch der Weg, nicht nur das Ergebnis.</span></li>
+    <li><b>Kurz mündlich erklären</b><span>Ein Gespräch von wenigen Minuten: Wie bist du vorgegangen? Was hast du verworfen? Wer erklären kann, hat selbst gedacht.</span></li>
+    <li><b>KI-Hilfe offenlegen</b><span>Ein Satz unter der Arbeit: Wobei hat die KI geholfen, was habe ich geprüft? Offenlegen ist erlaubt und erwünscht – Verschweigen nicht.</span></li>
+    <li><b>Absprache treffen</b><span>Vorher festlegen, welche Teile mit KI erlaubt sind und welche die Lernenden selbst machen. Hilfe dabei: <a class="textlink" href="auftraege.html#ki-grenzen">KI-Regeln für eine Aufgabe</a>.</span></li>
+  </ul>
+
+  <div class="bw-auftraege">
+    <form class="pk-form bw-form" id="bw-form" novalidate aria-labelledby="t-bw-angaben">
+      <h2 id="t-bw-angaben" class="klein-titel">Für die Aufträge (freiwillig)</h2>
+      <p class="klein">Lässt du etwas leer, fragt die KI zuerst danach. Nichts davon wird gespeichert.</p>
+      <div class="schnell-felder">
+        <div class="eingabe"><label for="bw-fach">Fach</label><input type="text" id="bw-fach" autocomplete="off"></div>
+        <div class="eingabe"><label for="bw-thema">Thema</label><input type="text" id="bw-thema" autocomplete="off"></div>
+        <div class="eingabe"><label for="bw-gruppe">Lerngruppe</label><input type="text" id="bw-gruppe" autocomplete="off"></div>
+      </div>
+    </form>
+    <div class="bw-auftrag-liste" id="bw-auftrag-liste"></div>
+    <noscript><p class="box">Die Aufträge zum Kopieren brauchen JavaScript. Die vier Schritte und Umbauten gehen auch so.</p></noscript>
+    <p class="leise klein bw-druck-hinweis">Beim Drucken bleiben die Aufträge weg. Sie sind zum Kopieren in das KI-System deiner Schule da.</p>
+  </div>
+
+  <details class="mehr bw-warum">
+    <summary>Was dazu bekannt ist</summary>
+    <ul class="beleg-liste">
+      <li><span><span class="belegstand">belegt</span></span><span>In einer großen Studie an Schulen übten Lernende Mathematik mit freier KI-Hilfe. Die Übungen gelangen ihnen besser. In der Prüfung ohne KI schnitten sie aber schlechter ab. Wenn die KI die Aufgabe löst, fehlt das Üben. (Bastani u. a. 2025)</span></li>
+      <li><span><span class="belegstand">plausibel</span></span><span>Die Kultusministerkonferenz empfiehlt, Leistungen stärker am Arbeitsweg zu bewerten und nicht nur am Ergebnis. Ein allgemeines Verbot von KI bei Hausaufgaben hält sie nicht für sinnvoll. Die Bewertung bleibt bei der Lehrkraft. (Handlungsempfehlung, 2024)</span></li>
+      <li><span><span class="belegstand">offen</span></span><span>Ob umgebaute Aufgaben das Lernen verbessern, ist offen. Diese Werkstatt ist ein Vorschlag und noch nicht erprobt.</span></li>
+    </ul>
+  </details>
+</div></section>
+<!-- kiplan:fuss weit -->
+</div>
+<script src="assets/daten/schnell.js"></script>
+<script src="assets/schnell-anfrage.js"></script>
+<script src="assets/werkstatt-anfrage.js"></script>
+<script src="assets/daten/bewertung.js"></script>
+<script src="assets/bewertung.js"></script>
+<script src="assets/druck.js"></script>

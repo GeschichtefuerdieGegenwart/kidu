@@ -570,8 +570,11 @@
     if (hat("systeme", "land")) staerken.push("Du arbeitest schon mit dem Landesangebot – dem sicheren Ort für Schulisches.");
     if (a.eingabe === "ausfuehrlich" || a.eingabe === "vorlage") staerken.push("Deine Anfragen sind schon ausführlich oder als Vorlage gespeichert. Das ist der halbe Weg.");
     if (a.eingabe === "sprechen") staerken.push("Du sprichst Anfragen ein – der schnellste Weg zu einer guten Anfrage.");
-    if (a.s_pruefen === "sicher") staerken.push("Du prüfst KI-Ergebnisse fachlich sicher. Das bleibt die wichtigste Fähigkeit.");
-    if (a.s_duerfen === "sicher") staerken.push("Du weißt, was du eingeben darfst.");
+    /* ab 4.48: Was jemand zuletzt getan hat, zählt vor der Selbsteinschätzung (zwei Fragen nach dem Verhalten in Schritt 1). */
+    if (a.v_pruefen === "zweite") staerken.push("Du siehst Zahlen, Namen und Quellen an einer zweiten Stelle nach, bevor du sie nutzt. Genau so prüft man KI-Ergebnisse.");
+    if (a.v_daten === "entfernt" || a.v_daten === "umgeschrieben") staerken.push("Du nimmst Namen und Persönliches heraus, bevor du etwas eingibst.");
+    if (a.s_pruefen === "sicher" && a.v_pruefen !== "zweite") staerken.push("Du prüfst KI-Ergebnisse fachlich sicher. Das bleibt die wichtigste Fähigkeit.");
+    if (a.s_duerfen === "sicher" && a.v_daten !== "entfernt" && a.v_daten !== "umgeschrieben") staerken.push("Du weißt, was du eingeben darfst.");
     if (tid === "phasen") staerken.push("Deine Klasse tut am Tablet schon Dinge, die auf Papier kaum gingen.");
     if (tid !== "keine" && (a.d_regeln || []).length && !hat("d_regeln", "keine")) staerken.push("Du führst Tablet-Phasen schon mit festen Absprachen.");
     if ((a.d_formen || []).filter(function (w) { return w !== "nichts"; }).length >= 2) staerken.push("Du hast schon mehrere digitale Formen im Unterricht ausprobiert.");
@@ -596,7 +599,7 @@
       else if (!papier && (tid === "ablage" || hat("d_schwer", "ideen") || a.d_wunsch === "mehrwert")) { papier = true; push({ text: "Such in deiner mitgebrachten Stunde die eine Stelle, an der das Tablet mehr kann als Papier.", link: "papierfrage.html", linktext: "Zur Papierfrage" }); }
     }
     (a.anlass || []).slice(1).forEach(function (k) { push(SP_ANLASS[k]); });
-    if (id === "anfang" || a.s_duerfen === "unsicher" || hat("hindernis", "datenschutz")) push({ text: "Lies die fünf Regeln zum sicheren Arbeiten – dann weißt du, was in die KI darf und was nicht.", link: "sicher.html", linktext: "Sicher arbeiten" });
+    if (id === "anfang" || a.s_duerfen === "unsicher" || hat("hindernis", "datenschutz") || a.v_daten === "so") push({ text: "Lies die fünf Regeln zum sicheren Arbeiten – dann weißt du, was in die KI darf und was nicht.", link: "sicher.html", linktext: "Sicher arbeiten" });
     if (id === "enttaeuscht") push({ text: "Bau deine alte Anfrage nach den fünf Teilen um: Ziel, Kontext, Vorgaben, Format, Prüfkriterien.", link: "prompten.html", linktext: "Prompten lernen" });
     if (id === "fuersich" && !papier) push({ text: "Prüf eine Stelle deiner Stunde mit der Papierfrage: Was kann das Tablet hier besser?", link: "papierfrage.html", linktext: "Zur Papierfrage" });
     if (id === "weit") push({ text: "Prüf dein bestes Material mit dem Digital-Check. Der Bericht beginnt mit den Stärken.", link: "selbstcheck.html", linktext: "Digital-Check" });
@@ -606,6 +609,9 @@
     /* Kniffe: zwei, passend zur Lage und zur Arbeitsweise. */
     var kniffe = [];
     function kniff(k) { if (kniffe.length < 2 && kniffe.indexOf(SP_KNIFFE[k]) < 0) kniffe.push(SP_KNIFFE[k]); }
+    /* ab 4.48: Wer ein KI-Ergebnis zuletzt ungeprüft genutzt oder nur die KI selbst gefragt hat, bekommt zuerst die drei Fragen
+       vor dem Kopieren – das Verhalten zählt vor der Lage. */
+    if (a.v_pruefen === "nichts" || a.v_pruefen === "nachgefragt") kniff("pruefliste");
     if (a.eingabe !== "sprechen" && (id === "anfang" || id === "enttaeuscht" || id === "offen")) kniff("sprechen");
     if (hat("material", "schulbuch") || hat("material", "blaetter") || a.vorbereitung === "fundus") kniff("foto");
     if (id === "enttaeuscht") kniff("rueckfragen");
@@ -617,7 +623,7 @@
 
     /* Codeblock für die Leitung: nur Auswahlwerte, lesbar und maschinenlesbar. */
     var code = ["fortbildungsbogen v2", "lage=" + id + (skeptisch ? "+skeptisch" : ""), "tablet=" + tid];
-    ["haeufigkeit", "eingabe", "ergebnis", "d_klassen", "d_dauer", "d_mehrwert", "d_wunsch", "vorbereitung", "zeit", "ziel", "s_bedienen", "s_pruefen", "s_duerfen", "s_bauen", "s_fuehren"].forEach(function (f) { if (a[f]) code.push(f + "=" + a[f]); });
+    ["haeufigkeit", "eingabe", "ergebnis", "v_pruefen", "v_daten", "d_klassen", "d_dauer", "d_mehrwert", "d_wunsch", "vorbereitung", "zeit", "ziel", "s_bedienen", "s_pruefen", "s_duerfen", "s_bauen", "s_fuehren"].forEach(function (f) { if (a[f]) code.push(f + "=" + a[f]); });
     ["systeme", "wofuer", "hindernis", "tablet", "d_formen", "d_gut", "d_schwer", "d_regeln", "material", "anlass", "gedanken", "lernen"].forEach(function (f) { if ((a[f] || []).length) code.push(f + "=" + a[f].join(",")); });
 
     return { lage: lage, tablet: tablet, staerken: staerken.slice(0, 3), sicherheit: sicherheit, schritte: schritte.slice(0, 3), kniffe: kniffe, code: code.join(" · "),
@@ -641,6 +647,33 @@
             Hilfe auf Kidu – dafür ist die Leitung da.
           - Ohne Kreuz bei der Weitergabe steht dort »noch offen« – nie stillschweigend »ja«.
           - Leere Felder fehlen im Bogen; die Seite füllt nichts mit allgemeinen Sätzen. */
+  /* ---------- Kurze Probe im Fortbildungsbogen (ab 4.48, Entscheidung Mario 17.11.2026) ----------
+     markiert: die angetippten Sätze (IDs), P: PROBE aus assets/daten/probe.js.
+     Rückmeldung nur in Worten, ohne Punkte und ohne Zählung:
+       »Darauf achtest du schon« – jede Art von Stelle, die markiert wurde;
+       »Das lohnt sich anzusehen« – jede Art, die nicht markiert wurde, mit dem passenden Werkzeug im Prüf-Labor.
+     Stärken zuerst: Ist keine Stelle markiert, steht oben trotzdem ein Satz (P.leer). Sätze, die stimmen und trotzdem markiert
+     wurden, sind Vorsicht, kein Fehler (P.vorsicht). Der Code für die Leitung nennt nur Arten und Satz-IDs, keine Zahl. */
+  function probe(markiert, P) {
+    markiert = markiert || [];
+    var schonIds = [], ansehenIds = [], vorsicht = [];
+    P.saetze.forEach(function (s) {
+      var m = markiert.indexOf(s.id) > -1;
+      if (s.art) { var liste = m ? schonIds : ansehenIds; if (liste.indexOf(s.art) < 0) liste.push(s.art); }
+      else if (m) vorsicht.push(s.id);
+    });
+    ansehenIds = ansehenIds.filter(function (id) { return schonIds.indexOf(id) < 0; });
+    var schon = schonIds.map(function (id) { return { id: id, name: P.arten[id].name, text: P.arten[id].schon }; });
+    var ansehen = ansehenIds.map(function (id) { var x = P.arten[id]; return { id: id, name: x.name, text: x.ansehen, link: x.link, linktext: x.linktext }; });
+    return {
+      schon: schon, ansehen: ansehen,
+      leer: schon.length ? "" : P.leer,
+      alles: ansehen.length ? "" : P.alles,
+      vorsicht: vorsicht.length ? P.vorsicht : "",
+      code: "probe=schon:" + (schonIds.join(",") || "-") + ";ansehen:" + (ansehenIds.join(",") || "-") + (vorsicht.length ? ";vorsicht:" + vorsicht.join(",") : "")
+    };
+  }
+
   var RB = {
     art: { erfahrung: "Eine Erfahrung aus meinem Unterricht", herausforderung: "Eine Herausforderung, bei der ich nicht weiterkomme", kidu: "Eine Rückmeldung zu Kidu", wunsch: "Ein Wunsch für die nächste Fortbildung" },
     womit: { planen: "Unterricht neu planen", digitalisieren: "Bisherigen Unterricht digitalisieren", koffer: "Aufgabenkoffer oder Skillkoffer", check: "Papierfrage oder Digital-Check", phasen: "Tablet-Phasen gut führen", beispiel: "Eines der Unterrichtsbeispiele", ki: "KI-Training", anderes: "Etwas anderes" },
@@ -719,7 +752,7 @@
     PASST: PASST, einstufung: einstufung, umfang: umfang, rollen: rollen, anpassung: anpassung,
     stolperstein: stolperstein, naechsterSchritt: naechsterSchritt, beispiele: beispiele,
     entscheidungskarte: entscheidungskarte, selbsteinschaetzung: selbsteinschaetzung,
-    papierprobe: papierprobe, beobachtung: beobachtung, startpunkt: startpunkt, rueckmeldebogen: rueckmeldebogen, einheit: einheit
+    papierprobe: papierprobe, beobachtung: beobachtung, startpunkt: startpunkt, probe: probe, rueckmeldebogen: rueckmeldebogen, einheit: einheit
   };
   if (typeof module !== "undefined") module.exports = REGELN;
   else wurzel.REGELN = REGELN;

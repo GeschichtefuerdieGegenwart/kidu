@@ -39,6 +39,7 @@ def laden(art="fahrplan"):
     daten.update(_art=art, _bereich=bereich, _titel=titel, _quelle=f"src/{datei}")
     for w in daten["werkzeuge"]:
         w["_bereich"] = bereich
+        w["_zeiten"] = daten.get("zeiten", {})  # ab 4.48: Wörter für »zeit«
     return daten
 
 
@@ -75,6 +76,27 @@ def anker(p):
     return f"phase-{p['id']}"
 
 
+def hinweise(w):
+    """Ab 4.47 »marken«, ab 4.48 davor »zeit« (geschätzt): eine kleine Zeile unter dem Text, z. B. »kurz · geht ohne KI«."""
+    zeiten = w.get("_zeiten", {})
+    zeit = w.get("zeit")
+    zeit = [zeit] if isinstance(zeit, str) else (zeit or [])
+    teile = []
+    if zeit:
+        teile.append(" oder ".join(zeiten.get(z, z) for z in zeit))
+    teile += w.get("marken", [])
+    if not teile:
+        return ""
+    return '<span class="fahrplan-marken">' + " · ".join(e(t) for t in teile) + "</span>"
+
+
+def faehig_attr(w, auf_bereichsseite):
+    """Ab 4.48: auf der Bereichsseite die Fähigkeiten, die das Werkzeug übt – für den Filter (assets/ki-faehig.js)."""
+    if auf_bereichsseite and w.get("faehigkeiten"):
+        return f' data-faehigkeiten="{" ".join(w["faehigkeiten"])}"'
+    return ""
+
+
 def werkzeug_eintrag(w, auf_bereichsseite):
     href = w["href"]
     text = w["text"]
@@ -84,10 +106,7 @@ def werkzeug_eintrag(w, auf_bereichsseite):
     elif not auf_bereichsseite and w.get("text_anderswo"):
         text = w["text_anderswo"]
     fuer = f' <span class="fahrplan-fuer">{e(w["fuer"])}</span>' if w.get("fuer") else ""
-    marken = ""
-    if w.get("marken"):  # ab 4.47: kurze Hinweise wie »geht ohne KI«
-        marken = '<span class="fahrplan-marken">' + " · ".join(e(m) for m in w["marken"]) + "</span>"
-    return f'<li><a href="{href}"><b>{e(w["name"])}</b>{fuer}<span class="fahrplan-text">{e(text)}</span>{marken}</a></li>'
+    return f'<li{faehig_attr(w, auf_bereichsseite)}><a href="{href}"><b>{e(w["name"])}</b>{fuer}<span class="fahrplan-text">{e(text)}</span>{hinweise(w)}</a></li>'
 
 
 def liste(eintraege, auf_bereichsseite, einzug):
@@ -115,8 +134,8 @@ def gruppiert(eintraege, auf_bereichsseite, einzug, ebene):
 def tuer_eintrag(w, einzug, klasse="werkzeug tuer"):
     ueber = f'<span class="tuer-ueber">{e(w["tuer"])}</span>' if w.get("tuer") else ""
     fuer = f' <span class="fahrplan-fuer">{e(w["fuer"])}</span>' if w.get("fuer") else ""
-    return (f'{einzug}  <li class="{klasse}">\n{einzug}    <a href="{w["href"]}">\n'
-            f'{einzug}      <span class="werkzeug-text">{ueber}<b>{e(w["name"])}</b>{fuer}{e(w["text"])}</span>\n'
+    return (f'{einzug}  <li class="{klasse}"{faehig_attr(w, True)}>\n{einzug}    <a href="{w["href"]}">\n'
+            f'{einzug}      <span class="werkzeug-text">{ueber}<b>{e(w["name"])}</b>{fuer}{e(w["text"])}{hinweise(w)}</span>\n'
             f'{einzug}      <span class="werkzeug-los" aria-hidden="true">→</span>\n{einzug}    </a>\n{einzug}  </li>')
 
 
@@ -165,9 +184,7 @@ def bereich_liste(daten, pid):
         for i, w in enumerate(tueren):
             if i:
                 t.append(f'{einzug}  <li class="tueren-oder" aria-hidden="true">oder</li>')
-            t.append(f'{einzug}  <li class="werkzeug tuer">\n{einzug}    <a href="{w["href"]}">\n'
-                     f'{einzug}      <span class="werkzeug-text"><span class="tuer-ueber">{e(w["tuer"])}</span><b>{e(w["name"])}</b>{e(w["text"])}</span>\n'
-                     f'{einzug}      <span class="werkzeug-los" aria-hidden="true">→</span>\n{einzug}    </a>\n{einzug}  </li>')
+            t.append(tuer_eintrag(w, einzug))  # ab 4.48 dieselbe Tür wie in der Kette, mit Hinweisen und Fähigkeiten
         teile.append('<ul class="werkzeuge tueren">\n' + "\n".join(t) + f"\n{einzug}</ul>")
         teile.append('<p class="fahrplan-dazu">Dazu, wenn du willst:</p>')
     teile.append(liste(rest, True, einzug))

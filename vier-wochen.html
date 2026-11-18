@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="Kidu · Künstliche Intelligenz und digitaler Unterricht: eine Fortbildungsplattform für Lehrkräfte – KI-Training, Digitaler Unterricht und Unterrichtsbeispiele, analog und digital.">
+<title>Vier Wochen KI-Training – Kidu</title>
+<link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/hilde.css?v=8848bfdf">
+<script>/* Schalter »Weniger Bewegung« und »Beamer-Ansicht« (Fuß): die gemerkten Wahlen vor dem ersten Zeichnen setzen, damit nichts flackert. */try{var b=JSON.parse(localStorage.getItem("hilde.bewegung"));if(b&&b.weniger)document.documentElement.setAttribute("data-bewegung","weniger");var t=JSON.parse(localStorage.getItem("hilde.theme"));if(t&&t.beamer)document.documentElement.setAttribute("data-theme","beamer")}catch(e){}</script>
+</head>
+<body>
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+<header class="kopf"><div class="huelle">
+  <a class="marke" href="index.html"><span class="marke-text"><span class="marke-name"><span class="sr-only">Kidu</span><img class="kidu-wortmarke" src="assets/logo/kidu-logo.svg" alt="" width="224" height="92"></span><span class="marke-zeile" aria-hidden="true"><span class="ini ki">K</span>ünstliche <span class="ini ki">I</span>ntelligenz und <span class="ini du">d</span>igitaler <span class="ini du">U</span>nterricht</span></span><span class="sr-only">, zum Start</span></a>
+  <nav class="nav" aria-label="Bereiche"><a href="ki.html" aria-current="true">KI-Training</a><a href="unterricht.html">Digitaler Unterricht</a><a href="galerie.html">Unterrichts&shy;beispiele</a></nav>
+  <a class="hefter-link" href="galerie.html#hefter" aria-label="Mein Schnellhefter"><svg viewBox="0 0 30 24" aria-hidden="true"><rect x="1" y="2" width="28" height="21" rx="2" fill="#b68235" stroke="#7d5a1c" stroke-width="2"/><rect x="1" y="2" width="6" height="21" fill="#7d5a1c"/><circle cx="4" cy="8" r="1.3" fill="#efeadf"/><circle cx="4" cy="17" r="1.3" fill="#efeadf"/></svg><span class="hefter-zahl" aria-hidden="true">0</span></a>
+</div></header>
+<main id="inhalt" tabindex="-1">
+<div class="bereich-ki vw">
+<nav class="ort-zeile" aria-label="Wo du bist"><div class="huelle huelle-weit"><ol><li class="ort-weg"><a href="ki.html#fahrplan">Fahrplan KI-Training</a></li><li><a href="ki.html#phase-grundlagen">1 · Grundlagen</a> <span class="ort-wann">(zuerst)</span></li></ol></div></nav>
+<!-- Ab 4.48: Vier Wochen KI-Training (Entscheidung Mario, 17.11.2026). Grundlage: Recherche »KI-Training für heterogene Kollegien« –
+     wiederholte kurze Übung mit Rückmeldung und einem Plan für den Alltag wirkt eher als ein langer Kurs (Sims u. a.), und die
+     Reihenfolge »erst prüfen, dann entscheiden, dann beschreiben, dann erproben«. Nur vorhandene Werkzeuge.
+     Die Wochen tragen keine Nummern (Lehre GGK-Labor: keine zweite Zählung neben den Phasen 1–4 des Fahrplans), sondern ihren
+     Schwerpunkt; mit Startdatum stehen die Daten daran (assets/vier-wochen.js). Ohne Skript steht der ganze Plan da. -->
+<section class="bereichskopf kompakt"><div class="huelle huelle-weit vw-kopf">
+  <div class="stapel">
+    <h1 class="h1-frage">Vier Wochen KI-Training</h1>
+    <p class="marker">Allein oder im Tandem</p>
+    <p class="detail-kurz">Ein fertiger Plan für die nächsten vier Wochen. Jede Woche gibt es eine kurze Übung und einen echten Anlass aus deinem Unterricht. Zum Schluss erprobst du etwas in einer Stunde und schaust zurück.</p>
+    <form class="vw-start" id="vw-start" novalidate hidden>
+      <label for="vw-datum">Wann fängst du an? <span class="leise">Freiwillig – dann stehen die Daten am Plan.</span></label>
+      <input type="date" id="vw-datum" name="datum">
+    </form>
+    <p class="kopfnotiz"><button type="button" class="knopf" data-drucken>Plan drucken</button> <button type="button" class="linkknopf" id="vw-loeschen" hidden>Eingaben löschen</button></p>
+  </div>
+  <figure class="blick vw-blick" aria-labelledby="t-vw-blick">
+    <p class="blick-titel" id="t-vw-blick">Auf einen Blick: vier Wochen, ein Schwerpunkt je Woche</p>
+    <ol class="vw-linie">
+      <li><a href="#vw-pruefen"><b>Prüfen</b><span class="vw-linie-wann" data-woche="0">erst ohne KI</span></a></li>
+      <li><a href="#vw-entscheiden"><b>Entscheiden</b><span class="vw-linie-wann" data-woche="1">was du abgibst</span></a></li>
+      <li><a href="#vw-beschreiben"><b>Beschreiben</b><span class="vw-linie-wann" data-woche="2">der erste eigene Auftrag</span></a></li>
+      <li><a href="#vw-erproben"><b>Erproben</b><span class="vw-linie-wann" data-woche="3">in einer Stunde</span></a></li>
+    </ol>
+    <figcaption>Jede Woche: eine kurze Übung und eine Freistunde mit deinem eigenen Material. Danach geht es mit einer neuen Sache wieder bei »Beschreiben« weiter.</figcaption>
+  </figure>
+</div></section>
+
+<section class="abschnitt" style="padding-top:var(--a2)" aria-label="Der Plan"><div class="huelle huelle-weit">
+  <ol class="vw-wochen">
+    <li class="vw-woche" id="vw-pruefen">
+      <p class="vw-wann" data-woche="0">Diese Woche</p>
+      <h2>Prüfen</h2>
+      <p class="vw-ziel">Du prüfst einen Text, bevor du ihn übernimmst – noch ohne KI.</p>
+      <dl class="vw-teile">
+        <div><dt>Kurz</dt><dd>Im <a class="textlink" href="pruef-labor.html#pl-fehler">Prüf-Labor</a> die Übung »Fehler finden«. Geht ohne KI.</dd></div>
+        <div><dt>Eine Freistunde</dt><dd>Nimm einen Text, den du bald im Unterricht einsetzen willst. Prüf ihn mit den vier Schritten: Stopp · Art der Aussage bestimmen · Original finden · Unbelegtes zurückverfolgen.</dd></div>
+        <div><dt>Im Tandem</dt><dd>Prüft denselben Text erst allein. Dann vergleicht ihr, was ihr markiert habt.</dd></div>
+      </dl>
+      <p class="vw-geschafft"><b>Geschafft, wenn</b> du bei zwei Angaben weißt, woher sie stammen.</p>
+      <div class="vw-notiz"><label for="vw-anlass-pruefen">Mein Text</label><input type="text" id="vw-anlass-pruefen" class="vw-anlass" maxlength="120" autocomplete="off"></div>
+      <label class="vw-erledigt"><input type="checkbox" data-erledigt="pruefen"> Erledigt</label>
+    </li>
+    <li class="vw-woche" id="vw-entscheiden">
+      <p class="vw-wann" data-woche="1">Nächste Woche</p>
+      <h2>Entscheiden</h2>
+      <p class="vw-ziel">Du entscheidest begründet, was eine KI übernehmen darf – und was nicht hineingehört.</p>
+      <dl class="vw-teile">
+        <div><dt>Kurz</dt><dd>Im <a class="textlink" href="pruef-labor.html#pl-abgeben">Prüf-Labor</a> die Übungen »Abgeben oder selbst machen« und »Was darf hinein?«.</dd></div>
+        <div><dt>Eine Freistunde</dt><dd>Schreib fünf Aufgaben deiner nächsten Woche auf. Sortier sie: selbst machen · gemeinsam mit KI · abgeben und prüfen. Schreib zu jeder einen Grund. So steht es auch in der Trainingsaufgabe <a class="textlink" href="ki-aufgaben.html#tr-woche">»Deine Woche sortieren«</a>.</dd></div>
+        <div><dt>Im Tandem</dt><dd>Legt eure Listen nebeneinander. Fragt euch gegenseitig nach dem Grund.</dd></div>
+      </dl>
+      <p class="vw-geschafft"><b>Geschafft, wenn</b> jede Aufgabe einen Grund hat und du eine für die nächste Woche ausgewählt hast.</p>
+      <div class="vw-notiz"><label for="vw-anlass-entscheiden">Meine Aufgabe für nächste Woche</label><input type="text" id="vw-anlass-entscheiden" class="vw-anlass" maxlength="120" autocomplete="off"></div>
+      <label class="vw-erledigt"><input type="checkbox" data-erledigt="entscheiden"> Erledigt</label>
+    </li>
+    <li class="vw-woche" id="vw-beschreiben">
+      <p class="vw-wann" data-woche="2">In zwei Wochen</p>
+      <h2>Beschreiben</h2>
+      <p class="vw-ziel">Du schreibst einen Auftrag, mit dem die KI nicht raten muss – und prüfst, was zurückkommt.</p>
+      <dl class="vw-teile">
+        <div><dt>Kurz</dt><dd>Hol dir mit der <a class="textlink" href="schnell-anfrage.html">Schnell-Anfrage</a> einen Prompt für deine Aufgabe aus der letzten Woche. Füg ihn in das KI-System deiner Schule ein.</dd></div>
+        <div><dt>Eine Freistunde</dt><dd>Bau den Auftrag mit <a class="textlink" href="prompten.html">Prompten lernen</a> aus: Ziel · Kontext · Anforderungen · Format · Prüfkriterien. Prüf das Ergebnis mit deinen Prüfkriterien und frag einmal nach.</dd></div>
+        <div><dt>Im Tandem</dt><dd>Ein Zugang reicht. Eine Person schreibt den Auftrag, die andere prüft das Ergebnis. Dann tauscht ihr.</dd></div>
+      </dl>
+      <p class="vw-geschafft"><b>Geschafft, wenn</b> das Ergebnis deine Prüfkriterien erfüllt – oder du genau weißt, was fehlt.</p>
+      <div class="vw-notiz"><label for="vw-anlass-beschreiben">Mein Material</label><input type="text" id="vw-anlass-beschreiben" class="vw-anlass" maxlength="120" autocomplete="off"></div>
+      <label class="vw-erledigt"><input type="checkbox" data-erledigt="beschreiben"> Erledigt</label>
+    </li>
+    <li class="vw-woche" id="vw-erproben">
+      <p class="vw-wann" data-woche="3">In drei Wochen</p>
+      <h2>Erproben</h2>
+      <p class="vw-ziel">Du setzt dein Material in einer Stunde ein und schaust zurück. Es darf ganz auf Papier bleiben.</p>
+      <dl class="vw-teile">
+        <div><dt>Eine Freistunde</dt><dd>Plan die Stunde mit deinem Material. Leg vorher fest, woran du merkst, ob es geholfen hat.</dd></div>
+        <div><dt>Kurz, nach der Stunde</dt><dd>Drei Fragen: Was haben die Lernenden getan? Was hat die KI beigetragen? Was ändere ich? Mehr dazu: <a class="textlink" href="auftraege.html#erkunden">Eine Idee im Unterricht erproben</a> und der <a class="textlink" href="beobachtung.html">Beobachtungsbogen</a>.</dd></div>
+        <div><dt>Im Tandem</dt><dd>Wenn es geht, schaut die andere Person in der Stunde zu – auf die Lernenden, nicht auf dich.</dd></div>
+      </dl>
+      <p class="vw-geschafft"><b>Geschafft, wenn</b> du einen Satz hast: Das mache ich beim nächsten Mal anders.</p>
+      <div class="vw-notiz"><label for="vw-anlass-erproben">Meine Stunde</label><input type="text" id="vw-anlass-erproben" class="vw-anlass" maxlength="120" autocomplete="off"></div>
+      <label class="vw-erledigt"><input type="checkbox" data-erledigt="erproben"> Erledigt</label>
+    </li>
+  </ol>
+  <p class="vw-danach"><b>Und danach?</b> Behalte eine Sache bei. Nimm dir eine neue Aufgabe und fang wieder bei »Beschreiben« an. Gemeinsam weiterlernen: <a class="textlink" href="kollegium.html">Mit dem Kollegium</a>. Allein vertiefen: der Selbstlernkurs »KI in der Schule« des ZSL (Stand: November 2026).</p>
+  <p class="leise klein vw-speicher">Die Haken und das Startdatum bleiben nur in diesem Browser. Was du in die Felder schreibst, wird nicht gespeichert – druck den Plan aus, wenn du es behalten willst.</p>
+
+  <details class="mehr vw-warum">
+    <summary>Warum vier kurze Wochen?</summary>
+    <ul class="beleg-liste">
+      <li><span><span class="belegstand">belegt</span></span><span>Fortbildungen wirken eher, wenn sie Üben, Rückmeldung und einen Plan für den Alltag verbinden. Wie lange sie insgesamt dauern, ist dabei weniger wichtig als die Wiederholung. (Übersicht über 104 Studien: Sims und andere, 2021)</span></li>
+      <li><span><span class="belegstand">belegt</span></span><span>Fortbildungen wirken eher, wenn sich Input, Erproben im eigenen Unterricht und Rückblick abwechseln und Kolleg*innen zusammenarbeiten. (Lipowsky und Rzejak)</span></li>
+      <li><span><span class="belegstand">plausibel</span></span><span>Die Reihenfolge »erst prüfen, dann entscheiden, dann beschreiben, dann erproben« passt zu einer Studie, nach der sich Menschen beim Arbeiten mit KI oft überschätzen und Antworten ungeprüft übernehmen. Es war eine Laborstudie, nicht mit Lehrkräften. (Aalto-Universität, 2025)</span></li>
+      <li><span><span class="belegstand">offen</span></span><span>Ob genau dieser Plan wirkt, ist offen. Er ist ein Vorschlag und noch nicht erprobt.</span></li>
+    </ul>
+  </details>
+</div></section>
+<nav class="fahrplan-fuss" aria-label="Fahrplan KI-Training"><div class="huelle huelle-weit fahrplan-fuss-innen">
+  <div class="fahrplan-fuss-auch">
+    <h2 class="fahrplan-fuss-titel">Auch bei den Grundlagen</h2>
+    <ul class="fahrplan-werkzeuge">
+      <li><a href="erste-minuten.html"><b>Deine ersten zehn Minuten</b> <span class="fahrplan-fuer">für den Anfang</span><span class="fahrplan-text">Vier Schritte: KI-System öffnen, Prompt holen, Ergebnis prüfen, einmal nachfragen.</span><span class="fahrplan-marken">kurz</span></a></li>
+      <li><a href="pruef-labor.html"><b>Prüf-Labor</b><span class="fahrplan-text">Drei Übungen: Fehler finden, abgeben oder selbst machen, was darf hinein.</span><span class="fahrplan-marken">kurz · geht ohne KI · auch auf Papier</span></a></li>
+      <li><a href="sicher.html"><b>Sicher arbeiten in fünf Regeln</b><span class="fahrplan-text">Daten, Prüfen, Bildrechte, Lernseiten, Persönliches. Gilt auch für den Digitalen Unterricht.</span><span class="fahrplan-marken">kurz · geht ohne KI</span></a></li>
+      <li><a href="ki-fach.html"><b>KI für dein Fach einrichten</b><span class="fahrplan-text">Einmal aufschreiben, was in deinem Fach gilt. Danach reicht ein kurzer Auftrag.</span><span class="fahrplan-marken">eine Freistunde</span></a></li>
+      <li><a href="ki-aufgaben.html"><b>Trainingsaufgaben</b><span class="fahrplan-text">Zwölf Übungen mit dem KI-System deiner Schule, an deinem eigenen Material.</span><span class="fahrplan-marken">kurz oder eine Freistunde</span></a></li>
+    </ul>
+  </div>
+  <div class="fahrplan-fuss-plan">
+    <h2 class="fahrplan-fuss-titel">Der Fahrplan</h2>
+    <ol class="fahrplan-klein">
+      <li class="ist-vorspann ist-hier"><a href="ki.html#phase-grundlagen" aria-current="location"><span class="fahrplan-klein-nr" aria-hidden="true">1</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">1 · </span>Grundlagen</span><b class="fahrplan-klein-hier">Du bist hier</b></span></a></li>
+      <li class="ist-zart ist-ring-start"><a href="ki.html#phase-vorbereiten"><span class="fahrplan-klein-nr" aria-hidden="true">2</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">2 · </span>Unterricht mit KI vorbereiten</span><span class="fahrplan-klein-wann">vor der Stunde</span></span></a></li>
+      <li class="ist-ring-mitte"><a href="ki.html#phase-unterrichten"><span class="fahrplan-klein-nr" aria-hidden="true">3</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">3 · </span>Unterrichten</span><span class="fahrplan-klein-wann">in der Stunde</span></span></a></li>
+      <li class="ist-zart ist-ring-ende"><a href="ki.html#phase-nach"><span class="fahrplan-klein-nr" aria-hidden="true">4</span><span class="fahrplan-klein-platte"><span class="fahrplan-klein-name"><span class="sr-only">4 · </span>Nach der Stunde</span><span class="fahrplan-klein-wann">nach der Stunde</span></span></a></li>
+    </ol>
+    <p class="fahrplan-ring"><span class="fahrplan-ring-pfeil" aria-hidden="true">↑</span> Nach der Stunde geht es mit der nächsten Stunde wieder bei 2 weiter.</p>
+    <p class="fahrplan-fuss-alle"><a class="textlink" href="ki.html#fahrplan">Alle Werkzeuge im Fahrplan <span aria-hidden="true">→</span></a></p>
+  </div>
+</div></nav>
+</div>
+<script src="assets/vier-wochen.js?v=4a9dc344"></script>
+<script src="assets/druck.js?v=474b771e"></script>
+
+</main>
+<footer class="fuss"><div class="huelle">
+  <p class="fuss-marke" aria-hidden="true"><img class="kidu-wortmarke" src="assets/logo/kidu-logo.svg" alt="" width="224" height="92"></p>
+  <p class="fuss-unterzeile"><span class="ini ki">K</span>ünstliche <span class="ini ki">I</span>ntelligenz und <span class="ini du">d</span>igitaler <span class="ini du">U</span>nterricht</p>
+  <nav class="fusslinks" aria-label="Über Kidu"><ul><li><a href="ueber.html">Über Kidu</a></li><li><a href="ueber.html#inhalte">Inhalte und Funktionen</a></li><li><a href="ueber.html#t-daten">Hinweise zu Daten und KI</a></li><li><a href="gestaltung.html">Gestaltungssystem</a></li><li><a href="skillkoffer.html">Skillkoffer</a></li><li><a href="fortbildungsbogen.html">Mein Fortbildungsbogen</a></li><li><a href="rueckmeldebogen.html">Mein Rückmeldebogen</a></li><li><a href="fortbildungsleitung.html">Für die Fortbildungsleitung <span class="fuss-schloss">· mit Passwort</span></a></li><li><a href="ueber.html#t-daten">Eingaben löschen</a></li></ul></nav>
+  <p class="fuss-einstellung"><button type="button" class="knopf still bewegung-schalter" id="bewegung-schalter" data-bewegung-schalter aria-pressed="false">Weniger Bewegung</button><span class="leise">Gilt in diesem Browser. Nichts gleitet, nichts fliegt, alles steht sofort da.</span></p>
+  <p class="fuss-einstellung"><button type="button" class="knopf still theme-schalter" id="theme-schalter" data-theme-schalter aria-pressed="false">Beamer-Ansicht</button><span class="leise">Gilt in diesem Browser. Reines Weiß, tiefes Schwarz, kräftigere Farben – für den Beamer im Klassenzimmer.</span></p>
+  <p class="kennzeichnung">Kidu · Künstliche Intelligenz und digitaler Unterricht · Persönlicher Entwicklungsstand zur Diskussion – noch kein beschlossenes Schulkonzept.</p>
+  <p class="kennzeichnung urheber leise">© 2026 Mario Walter · entwickelt mit Unterstützung eines KI-Systems · Texte CC BY-NC-SA 4.0 · Code MIT · <a href="ueber.html#t-entstehung">Entstehung und Lizenz</a></p>
+</div></footer>
+<script src="assets/motion.js?v=f6a039f2"></script>
+</body>
+</html>
