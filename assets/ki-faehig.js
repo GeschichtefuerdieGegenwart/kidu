@@ -3,6 +3,8 @@
    Ohne Skript bleibt das Band ein ruhiger Text. Mit Skript wird jede Fähigkeit ein Schalter (aria-pressed):
    - Antippen hebt im Fahrplan die Werkzeuge hervor, die sie üben (data-faehigkeiten aus src/fahrplan-ki.json). Jedes trägt
      dann »übt: …« als Text – Farbe nie allein. Die Phasen mit Treffern gehen auf, die anderen zu.
+     Ab 4.50 sind die Phasen Abschnitte unter vier Karten (assets/ki-start.js, window.KIPHASEN); hervorgehoben werden die Werkzeuge
+     und die Hilfen, die zu einem Werkzeug führen (beide tragen data-faehigkeiten).
    - Über dem Fahrplan steht, was hervorgehoben ist, mit »Aufheben«. Die Seite springt dorthin (bei »weniger Bewegung« ohne Gleiten).
    - Noch einmal antippen oder »Aufheben«: alles wie vorher, auch welche Phasen offen waren.
    Nichts wird gespeichert, nichts bewegt sich von selbst. */
@@ -10,7 +12,9 @@
   "use strict";
   var band = document.querySelector(".ki-faehig-liste"), plan = document.getElementById("fahrplan");
   if (!band || !plan) return;
-  var platten = [].slice.call(plan.querySelectorAll("details.fahrplan-platte"));
+  var PH = window.KIPHASEN;
+  if (!PH) return;
+  var abschnitte = [].slice.call(plan.querySelectorAll("section.ki-phase"));
   var leiste = document.querySelector(".fahrplan-leiste");
   var hilfe = document.querySelector(".ki-faehig-hilfe");
   var aktiv = "", vorher = null;
@@ -51,27 +55,29 @@
     [].forEach.call(plan.querySelectorAll(".fahrplan-uebt"), function (m) { m.parentNode.removeChild(m); });
     [].forEach.call(band.querySelectorAll(".ki-faehig-knopf"), function (k) { k.setAttribute("aria-pressed", k.getAttribute("data-faehigkeit") === id ? "true" : "false"); });
     if (!id) {
-      if (vorher) platten.forEach(function (d, i) { d.open = vorher[i]; });
+      if (vorher) PH.zeige(vorher);
       vorher = null; aktiv = "";
       plan.classList.remove("mit-filter");
       stand.hidden = true; stand.innerHTML = "";
       ansage.textContent = "Hervorhebung aufgehoben.";
       return;
     }
-    if (!aktiv) vorher = platten.map(function (d) { return d.open; });
+    if (!aktiv) vorher = PH.offen();
     aktiv = id;
     var treffer = [].filter.call(plan.querySelectorAll("li[data-faehigkeiten]"), function (li) { return uebt(li, id); });
     treffer.forEach(function (li) {
       li.classList.add("ist-treffer");
-      var ziel = li.querySelector(".werkzeug-text") || li.querySelector("a");
+      var ziel = li.querySelector(".werkzeug-text, .ki-hilfe-nutzen") || li.querySelector("a");
       var m = document.createElement("span");
       m.className = "fahrplan-uebt";
       m.textContent = "übt: " + name(id);
       ziel.appendChild(m);
     });
-    platten.forEach(function (d) { d.open = !!d.querySelector(".ist-treffer"); });
+    var mitTreffer = abschnitte.filter(function (s) { return !!s.querySelector(".ist-treffer"); });
+    PH.zeige(mitTreffer.map(function (s) { return s.id.replace(/^phase-/, ""); }));
     plan.classList.add("mit-filter");
-    var phasen = platten.filter(function (d) { return d.open; }).length, n = treffer.length;
+    /* gezählt werden Werkzeuge: Eine Hilfe kann zu zwei Werkzeugen führen (»Mit Plan üben«) */
+    var phasen = mitTreffer.length, n = treffer.reduce(function (s, li) { return s + Math.max(1, li.querySelectorAll("a.ist-werkzeug").length); }, 0);
     var satz = n + " Werkzeug" + (n === 1 ? "" : "e") + " in " + phasen + " Phase" + (phasen === 1 ? "" : "n") + " üben »" + name(id) + "«.";
     stand.innerHTML = '<span><b>Hervorgehoben:</b> ' + esc(satz) + '</span> <button type="button" class="knopf still ki-filter-aus" data-filter-aus>Aufheben</button>';
     stand.hidden = false;

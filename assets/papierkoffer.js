@@ -157,9 +157,10 @@
 
   /* Das Blatt mit den sechs Stellen. Ohne Skript sind die Beschriftungen Sprünge zur Liste; assets/papierkoffer.js macht daraus
      Schaltflächen mit aria-expanded und aria-controls. Lage der Markierung als --x und --y (Anteil von Breite und Höhe des Blatts). */
-  function blattHtml(liste) {
+  function blattHtml(liste, q) {
     var lage = function (st) { return ' style="--x:' + st.x + ";--y:" + st.y + '"'; };
-    return '<div class="pkc-buehne" id="pkc-buehne" data-stelle="">' +
+    var zurueck = q && q.zurueck ? ' data-zurueck="' + esc(q.zurueck) + '"' : "";
+    return '<div class="pkc-buehne" id="pkc-buehne" data-stelle=""' + zurueck + '>' +
       '<div class="pkc-blatt">' + BLATT + '<span class="pkc-punkte" aria-hidden="true">' +
       liste.map(function (st) { return '<span class="pkc-punkt pkc-punkt-' + st.id + '"' + lage(st) + ">" + st.nr + "</span>"; }).join("") + "</span></div>" +
       '<ol class="pkc-stellen" aria-label="Stellen auf dem Arbeitsblatt">' + liste.map(function (st) {
@@ -195,7 +196,7 @@
   function eintragHtml(e, d, q) {
     var id = "pk-" + e.id, t = e.art === "idee" ? e.a : e.m;
     return '<li class="pk-eintrag" id="' + id + '">' +
-      '<h3 class="pk-eintrag-titel">' + esc(t.name) + "</h3>" +
+      '<h' + (ebene(q) + 1) + ' class="pk-eintrag-titel">' + esc(t.name) + "</h" + (ebene(q) + 1) + ">" +
       '<p class="pk-eintrag-satz">' + esc(t.tun) + "</p>" +
       '<p class="pk-kopieren" hidden><button type="button" class="knopf" data-kopieren="a-' + id + '">Auftrag kopieren</button>' +
       '<span class="pk-status" aria-live="polite"></span></p>' +
@@ -210,7 +211,7 @@
 
   function listeHtml(an, d, q) {
     return '<section class="pk-anlass" id="stelle-' + an.id + '" aria-labelledby="pk-t-' + an.id + '">' +
-      '<div class="pk-anlass-kopf"><h2 id="pk-t-' + an.id + '" tabindex="-1"><span class="pkc-nr" aria-hidden="true">' + an.nr + '</span><span class="sr-only">Stelle ' + an.nr + ": </span>" + esc(an.name) + "</h2>" +
+      '<div class="pk-anlass-kopf"><h' + ebene(q) + ' id="pk-t-' + an.id + '" tabindex="-1"><span class="pkc-nr" aria-hidden="true">' + an.nr + '</span><span class="sr-only">Stelle ' + an.nr + ": </span>" + esc(an.name) + "</h" + ebene(q) + ">" +
       '<p class="pk-anlass-satz">' + esc(an.satz) + ' <b class="pk-anlass-zahl">' + zahl(an.eintraege.length) + "</b></p>" +
       '<button type="button" class="knopf still pk-schliessen" data-schliessen hidden>Schließen</button></div>' +
       '<ul class="pk-eintraege">' + an.eintraege.map(function (e) { return eintragHtml(e, d, q); }).join("") + "</ul></section>";
@@ -225,11 +226,30 @@
       '<p>Mehr dazu: <a class="textlink" href="sicher.html">Sicher arbeiten in fünf Regeln <span aria-hidden="true">→</span></a></p></div></details>';
   }
 
+  /* Überschriftenebene der Stellen (ab 4.50): 2 auf papierkoffer.html, tiefer, wenn der Koffer in einer anderen Seite steht
+     (ki.html, Phase 2). Die Aufträge stehen eine Ebene darunter. */
+  function ebene(q) { var n = q && +q.ebene; return n >= 2 && n <= 5 ? n : 2; }
+
+  /* Die Angaben für alle Aufträge (ab 4.50 ein eigener Teil, damit Seite und Einbettung dieselbe Fassung tragen). Ohne Skript
+     unsichtbar: Die Aufträge stehen dann in ihrer leeren Fassung da. */
+  function formHtml() {
+    var feld = function (id, name, bsp) {
+      return '<div class="eingabe"><label for="pk-' + id + '">' + name + '</label><input type="text" id="pk-' + id + '" autocomplete="off" placeholder="z. B. ' + bsp + '" aria-describedby="pk-daten"></div>';
+    };
+    return '<form class="pk-form" id="pk-form" novalidate aria-labelledby="pk-t-angaben" hidden>' +
+      '<p class="pk-form-titel" id="pk-t-angaben">Für alle Aufträge auf dieser Seite</p>' +
+      '<div class="schnell-felder">' + feld("fach", "Fach", "Pflege") + feld("thema", "Thema", "Sturzprophylaxe") + feld("gruppe", "Lerngruppe", "2. Ausbildungsjahr") + "</div>" +
+      '<p class="pk-daten" id="pk-daten">' + DATEN_HINWEIS + "</p>" +
+      '<p class="leise klein">Deine Angaben werden nicht gespeichert. Lässt du ein Feld leer, fragt die KI zuerst danach.</p></form>' +
+      '<p class="pkc-anfang" id="pkc-anfang" hidden>Tipp eine Stelle auf dem Blatt an. Dann stehen hier ihre Aufträge an die KI.</p>';
+  }
+
   function html(q) {
     q = q || {};
     var d = daten(q.A, q.K, q.W, q.T, q.S), liste = stellen(q);
     return {
-      blatt: blattHtml(liste),
+      blatt: blattHtml(liste, q),
+      form: formHtml(),
       listen: liste.map(function (st) { return listeHtml(st, d, q); }).join("") + vertiefung()
     };
   }
@@ -245,6 +265,7 @@
   var LISTE = stellen(), IDS = LISTE.map(function (st) { return st.id; }), HEIM = {}, EINTRAG = {};
   LISTE.forEach(function (st) { st.eintraege.forEach(function (e) { HEIM["pk-" + e.id] = st.id; EINTRAG["pk-" + e.id] = e; }); });
   var form = document.getElementById("pk-form"), anfang = document.getElementById("pkc-anfang"), offen = null;
+  var ZURUECK = buehne.getAttribute("data-zurueck") || "";  // ab 4.50: eingebettet (ki.html) bleibt beim Schließen die Phase in der Adresse
   function ruhig() { return window.matchMedia("(prefers-reduced-motion:reduce)").matches || document.documentElement.getAttribute("data-bewegung") === "weniger"; }
   function nebeneinander() { return window.matchMedia("(min-width:1060px)").matches; }
 
@@ -283,14 +304,14 @@
     if (anfang) anfang.hidden = !!offen;
     feld.classList.remove("pk-einblenden");
     if (wie.adresse) {
-      try { history[wie.ersetzen ? "replaceState" : "pushState"]({ stelle: offen }, "", offen ? "#stelle=" + offen : location.pathname + location.search); } catch (x) { /* ohne Verlauf weiter */ }
+      try { history[wie.ersetzen ? "replaceState" : "pushState"]({ stelle: offen }, "", offen ? "#stelle=" + offen : ZURUECK || location.pathname + location.search); } catch (x) { /* ohne Verlauf weiter */ }
     }
     if (!offen) { if (form && anfang) anfang.insertAdjacentElement("afterend", form); return; }
     var liste = document.getElementById("stelle-" + offen);
     if (form) liste.querySelector(".pk-anlass-kopf").insertAdjacentElement("afterend", form);
     if (wie.bewegt) { void feld.offsetWidth; feld.classList.add("pk-einblenden"); }
     var ziel = wie.eintrag ? document.getElementById(wie.eintrag) : null;
-    if (wie.fokus) liste.querySelector("h2").focus({ preventScroll: true });
+    if (wie.fokus) liste.querySelector('[id^="pk-t-"]').focus({ preventScroll: true });
     if (ziel || (wie.zeigen && !nebeneinander())) (ziel || liste).scrollIntoView({ block: "start", behavior: wie.bewegt && !ruhig() ? "smooth" : "auto" });
   }
 

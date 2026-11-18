@@ -12,33 +12,36 @@ import subprocess
 from pathlib import Path
 
 WURZEL = Path(__file__).resolve().parent.parent
-ZEICHEN = ("blatt", "listen")
-SKRIPT = "process.stdout.write(JSON.stringify(require('./assets/papierkoffer.js').html()));"
-_teile = None
+ZEICHEN = ("blatt", "form", "listen")
+# ab 4.50: der Koffer steht auch in Phase 2 von ki.html – dort tiefer gegliedert, und beim Schließen bleibt die Phase in der Adresse
+SEITEN = {"ki.html": {"ebene": 5, "zurueck": "#phase-vorbereiten"}}
+SKRIPT = "process.stdout.write(JSON.stringify(require('./assets/papierkoffer.js').html(%s)));"
+_teile = {}
 
 
-def teile():
-    """Die Teile als Wörterbuch {blatt, listen}; einmal je Bau berechnet."""
-    global _teile
-    if _teile is None:
+def teile(datei="papierkoffer.html"):
+    """Die Teile als Wörterbuch {blatt, form, listen} für eine Seite; einmal je Bau und Seite berechnet."""
+    wahl = SEITEN.get(datei, {})
+    schluessel = json.dumps(wahl, sort_keys=True)
+    if schluessel not in _teile:
         try:
-            aus = subprocess.run(["node", "-e", SKRIPT], cwd=WURZEL, capture_output=True, text=True, check=True).stdout
+            aus = subprocess.run(["node", "-e", SKRIPT % schluessel], cwd=WURZEL, capture_output=True, text=True, check=True).stdout
         except FileNotFoundError:
             raise SystemExit("papierkoffer: Node fehlt – der Aufgabenkoffer auf Papier wird beim Bauen mit Node erzeugt (node --version).")
         except subprocess.CalledProcessError as f:
             raise SystemExit("papierkoffer: PAPIERKOFFER.html() schlug fehl:\n" + f.stderr)
-        _teile = json.loads(aus)
+        _teile[schluessel] = json.loads(aus)
         for z in ZEICHEN:
-            if not _teile.get(z):
+            if not _teile[schluessel].get(z):
                 raise SystemExit(f"papierkoffer: Teil »{z}« ist leer")
-    return _teile
+    return _teile[schluessel]
 
 
 def einsetzen(inhalt, datei):
     """Ersetzt die Zeichen <!-- papierkoffer:… --> einer Seite. Seiten ohne Zeichen bleiben unverändert."""
     if "<!-- papierkoffer:" not in inhalt:
         return inhalt
-    t = teile()
+    t = teile(datei)
     for z in ZEICHEN:
         inhalt = inhalt.replace(f"<!-- papierkoffer:{z} -->", t[z])
     if "<!-- papierkoffer:" in inhalt:
