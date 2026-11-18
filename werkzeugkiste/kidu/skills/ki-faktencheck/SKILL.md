@@ -7,12 +7,12 @@ description: "Nutze diesen Skill, wenn Lernende oder Lehrkräfte üben sollen, K
 
 KI-Antworten klingen sicher und gut formuliert. Genau das macht sie schwer zu prüfen. Dieser Skill erstellt ein Prüfverfahren für KI-Texte aus einem Fach: Welche Fehlerarten sind typisch? Wie prüft man sie? Wie übt man das im Unterricht? Er passt für Lernende und für die Fortbildung von Lehrkräften.
 
+**Grundregeln** – Wortlaut in `unterricht-digitalisieren`: Anliegen vor Werkzeug · nichts erfinden · einfache Sprache (Lehrkraft »du«, Lernende wie im vorhandenen Material) · Datenschutz · Barrierefreiheit (WCAG 2.2 AA) · offline, keine Anbieternamen · Bestand vor Neubau, der Mensch entscheidet · ehrlich berichten.
+
 ## Regeln für diesen Skill
 
 1. **Nichts erfinden – auch keine Beispielbefunde.** Behaupte nie, eine Quelle sei echt oder erfunden, ohne es geprüft zu haben. Für Beispiele nutzt die Lehrkraft eine echte Antwort aus dem an ihrer Schule freigegebenen KI-System, die sie selbst erzeugt und gespeichert hat. Oder sie schreibt einen eigenen Übungstext mit eingebauten Fehlern und kennzeichnet ihn als solchen.
-2. **Keine Anbieternamen, keine Daten von Lernenden** in der KI.
-3. **Prüfen braucht Zeit.** Eine Quellenangabe zu prüfen dauert einige Minuten. Ziel ist die Gewohnheit, nicht die vollständige Prüfung jedes Satzes.
-4. **Einfache Sprache, Anrede »du«** in allen Materialien für Lernende.
+2. **Prüfen braucht Zeit.** Eine Quellenangabe zu prüfen dauert einige Minuten. Ziel ist die Gewohnheit, nicht die vollständige Prüfung jedes Satzes.
 
 ## Ablauf
 
@@ -55,7 +55,7 @@ KI-Antworten klingen sicher und gut formuliert. Genau das macht sie schwer zu pr
 
 ## Fachhinweise
 
-- **Geschichte und GGK:** Zitate immer am Original oder in einer Quellenedition prüfen. KI-Bilder historischer Szenen sind keine Quellen. Bei NS-Themen besonders genau: Täterzitate nur eingeordnet und mit Quelle.
+- **Geschichte und GGK:** Regeln im Fachbaustein GGK (`unterricht-digitalisieren/references/fachbaustein-ggk.md`, Abschnitte »KI-Risiken« und »Nationalsozialismus«): Zitate am Original oder in einer Quellenedition, KI-Bilder historischer Szenen sind keine Quellen, Täterzitate nur eingeordnet und mit Quelle.
 - **Psychologie:** Gibt es die Studie? Wer wurde untersucht, wie viele, wann? Ein Ergebnis aus einer Gruppe gilt nicht automatisch für alle.
 - **Sozialpädagogik:** Rechtliche Angaben (z. B. Paragrafen) immer im aktuellen Gesetzestext prüfen.
 
@@ -82,7 +82,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 - **Name:** Eine Übung: KI-Antworten prüfen
 - **Kurz:** Deine Lernenden lernen, eine KI-Antwort zu prüfen, statt ihr zu glauben: erfundene Quellen, Zahlen ohne Herkunft, falsche Zitate.
 - **Ziel:** Bereite eine Übung vor, in der meine Lernenden eine KI-Antwort prüfen, statt ihr zu glauben.
-- **Format:** Ein Arbeitsblatt für die Lernenden mit Anrede »du« und diesen Zeichen zum Markieren: ★ Zahl ohne Beleg · ! falsche Sicherheit · ≡ Aufzählung ohne Begründung · ? fehlende Gegenposition · ~ vage Wörter · »« Zitat oder Zuschreibung, die geprüft werden muss. Dazu der Ablauf mit Minuten.
+- **Format:** Ein Arbeitsblatt für die Lernenden in der Anrede, die sie aus meinen Materialien kennen (»du« oder »Sie«), mit diesen Zeichen zum Markieren: ★ Zahl ohne Beleg · ! falsche Sicherheit · ≡ Aufzählung ohne Begründung · ? fehlende Gegenposition · ~ vage Wörter · »« Zitat oder Zuschreibung, die geprüft werden muss. Dazu der Ablauf mit Minuten.
 
 **Anforderungen**
 
@@ -102,6 +102,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 
 ## Versionen
 
+- **v2.1, 18.11.2026:** Ohne Dopplungen: Regeln, die in den gemeinsamen Grundregeln stehen (Anbieternamen, Daten von Lernenden, einfache Sprache), durch die Kurzzeile ersetzt; der Fachhinweis GGK verweist auf den Fachbaustein. Arbeitsblatt in der Anrede, die die Lerngruppe kennt (Entscheidung Mario, 18.11.2026; ändert den Auftrag auf der Website).
 - **v2, 10.11.2026:** Name Kidu (vorher »Hilde Digital«); Abschnitt »Kurzfassung für Kidu« als einzige Quelle für den kopierbaren Auftrag auf der Website.
 - **v1.1, 31.10.2026:** Überarbeitet mit dem Plugin 0.3.0 (siehe README des Plugins).
 - **v1, 25.10.2026:** Erste Fassung (siehe »Herkunft und Lizenz«).
@@ -109,4 +110,4 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 ## Herkunft und Lizenz
 
 Übertragen und verändert nach »AI Hallucination Fact-Check Protocol« und den Markierungscodes aus »AI Output Critical Audit Designer« aus der *Education Agent Skills Library* von Gareth Manning (https://github.com/GarethManning/education-agent-skills), Lizenz CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/).
-Änderungen (25.10.2026): ins Deutsche übertragen, zwei Skills zusammengeführt, gekürzt, Fachhinweise für berufliche Schulen ergänzt, Zuordnung der Denkstandards zu Paul & Elder korrigiert, unbelegte Beispielbefunde entfernt, Regel gegen erfundene Beispiele ergänzt. Ergänzt (31.10.2026): Schritt »Wiederholen«, Beleg Wineburg et al. 2022, Hinweis auf zurückgezogene Studien. Diese Fassung steht ebenfalls unter CC BY-SA 4.0.
+Änderungen (25.10.2026): ins Deutsche übertragen, zwei Skills zusammengeführt, gekürzt, Fachhinweise für berufliche Schulen ergänzt, Zuordnung der Denkstandards zu Paul & Elder korrigiert, unbelegte Beispielbefunde entfernt, Regel gegen erfundene Beispiele ergänzt. Ergänzt (31.10.2026): Schritt »Wiederholen«, Beleg Wineburg et al. 2022, Hinweis auf zurückgezogene Studien. Geändert (18.11.2026): Regeln, die in den gemeinsamen Grundregeln stehen, durch Verweis ersetzt; Fachhinweis GGK verweist auf den Fachbaustein; Anrede wie in den Materialien der Lerngruppe. Diese Fassung steht ebenfalls unter CC BY-SA 4.0.

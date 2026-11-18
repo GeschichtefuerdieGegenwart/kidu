@@ -10,8 +10,8 @@ Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen
 | --- | --- |
 | `src/*.html` | Inhalt der Seiten (ohne Kopf- und Fußzeile) |
 | `tools/bauen.py` | setzt Kopfzeile, Inhalt und Fußzeile zu fertigen Seiten zusammen |
-| `tools/pruefen.py` | prüft Kennzeichnung, Fachbegriffe, Platzhalter, externe Dateien |
-| `tools/werkzeugkiste.py` | eine Quelle für alles (ab 4.25): überträgt die »Kurzfassung für Kidu« jedes Skills nach `assets/daten/kurzfassungen.js`, schreibt `docs/pruef-auftrag.md` und packt die Downloads des Skillkoffers (bis 4.45 »Methodenkoffer«); läuft in `tools/bauen.py` mit |
+| `tools/pruefen.py` | prüft Kennzeichnung, Fachbegriffe, Platzhalter, externe Dateien; ab 4.49 auch, dass jeder Skill dieselbe Kurzzeile »Grundregeln« trägt (Wortlaut nur in `unterricht-digitalisieren`) |
+| `tools/werkzeugkiste.py` | eine Quelle für alles (ab 4.25): überträgt die »Kurzfassung für Kidu« jedes Skills nach `assets/daten/kurzfassungen.js`, schreibt `docs/pruef-auftrag.md`, ab 4.49 das Qualitätsmodell im Skill `digital-check` (`references/qualitaetsmodell.md` aus `assets/daten/qualitaet.js`) und packt die Downloads des Skillkoffers (bis 4.45 »Methodenkoffer«); läuft in `tools/bauen.py` mit |
 | `werkzeugkiste/kidu/` | das Plugin »kidu« für das Kollegium – hier werden die Skills gepflegt |
 | `assets/hilde.css` | Gestaltungssystem (Farben, Schrift, Bausteine) |
 | `assets/daten/beispiele.js` | alle Beispiele an einem Ort |

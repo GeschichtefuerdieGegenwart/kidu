@@ -13,14 +13,16 @@ Dieser Skill führt eine Lehrkraft von einer analogen Stunde zu einer begründet
 
 ## Grundregeln (gelten in allen Skills von Kidu)
 
+Dies ist der Wortlaut. Die anderen Skills von Kidu – und die Bau-Skills in »kidu-bau« – tragen eine gleichlautende Kurzzeile mit Verweis hierher. Ändert sich eine Regel, nur hier ändern und die Kurzzeile anpassen; `tools/pruefen.py` prüft, dass sie überall gleich lautet.
+
 1. **Erst das Anliegen, dann das Werkzeug.**
 2. **Nichts erfinden.** Keine Quellen, Zitate, Zahlen, Links, Bilder, Erfahrungen oder Funktionen ohne Beleg. Unbekanntes heißt »noch offen«. Angaben aus dem eigenen Gedächtnis (Gesetze, Zitate, Daten, Literatur) stehen in einer Liste »Vor dem Kopieren prüfen«.
-3. **Einfache Sprache.** Kurze Sätze, Anrede »du«, Fachbegriffe erst in einer Vertiefung.
+3. **Einfache Sprache.** Kurze Sätze, Fachbegriffe erst in einer Vertiefung. Die Lehrkraft wird mit »du« angesprochen. Material für Lernende übernimmt die Anrede der vorhandenen Materialien (»Sie« in der Erzieher*innenausbildung); gibt es keine, »du«.
 4. **Datenschutz.** Keine Namen, Noten oder Daten von Lernenden oder Kolleg*innen. Kein Tracking, keine Anmeldung. Gespeichert wird nur im Browser, löschbar.
 5. **Barrierefreiheit.** WCAG 2.2 AA, Zielflächen 44 px, Schrift ab 16 px, Farbe nie allein, Tastatur.
 6. **Offline.** Läuft per `file://`, alles lokal, keine KI-Anbindung, keine Anbieternamen (»ein an deiner Schule freigegebenes KI-System«).
 7. **Bestand vor Neubau, der Mensch entscheidet.** Erst lesen, was vorliegt, dann nur nach Fehlendem fragen. Vorschläge zur Auswahl vorlegen, Haltepunkte markieren (»Hier halte ich an«). Gebaut wird erst nach Auswahl. Nichts wird ohne Freigabe veröffentlicht.
-8. **Ehrlich berichten.** Nur Prüfungen nennen, die wirklich gelaufen sind. Nichts als geprüft ausgeben, was nur in einer Vorschau betrachtet wurde.
+8. **Ehrlich berichten.** Nur Prüfungen nennen, die wirklich gelaufen sind. Nichts als geprüft ausgeben, was nur in einer Vorschau betrachtet wurde. Was nur der Mensch prüfen kann (echtes Gerät, Plattform, Rechte, Schulregeln), steht in einer Liste »Nur du kannst das«.
 
 ## Haltung in sieben Sätzen
 
@@ -132,8 +134,8 @@ Nur die gewählte Variante. Jeder Vorschlag hat einen didaktischen Kern: entwede
 - **Rückmeldung, die erklärt** – je Antwortoption, nie nur richtig/falsch.
 - **Hilfe zum Ausklappen** nach dem eigenen Versuch; Aufgabe für Schnelle.
 - **Zurück ins Gespräch.** Jede Tablet-Phase endet mit einem Produkt (Satz, Urteil, Einordnung), das im Plenum aufgegriffen wird. Sonst bleibt sie folgenlos.
-- **Ergebnis ohne Server bündeln** – iPads sind meist nicht vernetzt. Katalog mit Grenzen: Stimmkarte groß am Gerät, auf Zeichen hochhalten, Lehrkraft zählt (Ersatz: Handzeichen) · QR-Code mit reinen Zahlen, Lehrkraft scannt, Auswertungsseite am Beamer (nur Versuchsdaten, keine persönlichen Angaben; in kleinen Kursen ist Anonymität kaum gegeben) · Urne oder Import am Lehrkraftgerät · »Meine Ergebnisse« kopieren oder als PDF nach GoodNotes. Eine Live-Verbindung zu Abstimmungsdiensten gibt es auf statischen Seiten nicht.
-- **Ehrliche Zeitdiagnose:** Wortzahl ÷ 150 Wörter pro Minute für langsame Lesende, plus Eingaben und Wechsel zwischen Gerät und Plenum. Zwei Fassungen: straff und mit Puffer; braucht der Puffer Minuten aus anderen Phasen, Kürzungen als Optionen (K1, K2 …) vorlegen. Liegt der Wortlaut nicht vor, Schätzung als Schätzung kennzeichnen. Was 110 Minuten braucht, passt nicht in 90.
+- **Ergebnis ohne Server bündeln** – iPads sind meist nicht vernetzt. Katalog mit Grenzen (die eine Stelle dafür; `digital-check` und `lernseite-bauen` verweisen hierher): Stimmkarte groß am Gerät, auf Zeichen hochhalten, Lehrkraft zählt (Ersatz: Handzeichen) · QR-Code mit reinen Zahlen, Lehrkraft scannt, Auswertungsseite am Beamer oder Lehrkraftgerät (nur Versuchsdaten, keine persönlichen Angaben; hängt am Scan; in kleinen Kursen ist Anonymität kaum gegeben, und kleine Zahlen sind kein Befund) · Urne oder Import am Lehrkraftgerät · »Meine Ergebnisse« kopieren oder als PDF nach GoodNotes. Eine Live-Verbindung zu Abstimmungsdiensten gibt es auf statischen Seiten nicht. Ergebnisse vieler Geräte zusammenzuführen kostete in der Erprobung zu viel Zeit; oft reicht ein Gerät vorne und das Gespräch im Plenum (Psycho-Labor, 09.11.2026).
+- **Ehrliche Zeitdiagnose** (die eine Stelle dafür; `digital-check` und `lernseite-bauen` rechnen so): Wortzahl ÷ 150 Wörter pro Minute für langsame Lesende, plus Eingaben und Wechsel zwischen Gerät und Plenum. Zwei Fassungen: straff und mit Puffer; braucht der Puffer Minuten aus anderen Phasen, Kürzungen als Optionen (K1, K2 …) vorlegen. Liegt der Wortlaut nicht vor, Schätzung als Schätzung kennzeichnen. Was 110 Minuten braucht, passt nicht in 90.
 - **Funktionen von Geräten und Plattformen** (Apple Classroom, Moodle, H5P, GoodNotes) nicht aus dem Gedächtnis behaupten: Was der Vorschlag voraussetzt, steht in »Vor dem Kopieren prüfen« oder – wenn nur die Lehrkraft es am Gerät sehen kann – in »Nur du kannst das«.
 - **Gestaltung getrennt halten.** Ob die Stelle digital gut ist, entscheidet die Didaktik (Schritte 2 bis 6). Wie eine Seite aussieht und sich bedient – Klickweg, Bewegung, Linien, Kontrast, Bildschirmbreite –, ist ein eigener Prüfblock: in `digital-check` (Block »Gestaltung«) und beim Bau in `lernseite-bauen` mit den Gestaltungsregeln aus `DESIGN.md`. Eine schöne Seite rettet keine schwache Aufgabe; eine schlichte schwächt keine starke.
 
@@ -141,7 +143,7 @@ Nur die gewählte Variante. Jeder Vorschlag hat einen didaktischen Kern: entwede
 
 ### 6. Mit dem Qualitätsmodell prüfen – Stärke zuerst
 
-Zuerst die Lehrfunktion: Erfüllt jede Phase mit Gerät noch ihre Aufgabe (Prüfraster in Schritt 2)? Danach die Bereiche des Qualitätsmodells. Die 14 Bereiche und ihre Stufen stehen in `digital-check/references/qualitaetsmodell.md`; hier nur die Kernbereiche je Typ: Arbeitsblatt: Inhalt, Denken, Hilfen, Orientierung · Präsentation: Inhalt, Orientierung, Darstellung · Quiz: Lernstand, Rückmeldung · Simulation: Inhalt, Denken, Handeln · Quellenarbeit: Inhalt, Denken · Planspiel: Inhalt, Denken, Zusammenarbeit · ganze Stunde: Inhalt, Denken, Rückmeldung, Zusammenarbeit, Ablauf. Mehrere Typen: Kernbereiche vereinigen, höchstens sechs. Passt kein Typ (ein kleines »Umschlag«-Werkzeug etwa): die Bereiche nehmen, in denen das Gerät etwas verändert, plus einen, in dem es nichts verändert – damit sichtbar bleibt, was Papier weiter trägt. Einschätzungen nur in Worten; den schwächsten Punkt ehrlich nennen.
+Zuerst die Lehrfunktion: Erfüllt jede Phase mit Gerät noch ihre Aufgabe (Prüfraster in Schritt 2)? Danach die Bereiche des Qualitätsmodells. Die 14 Bereiche, ihre Stufen und die Kernbereiche je Materialtyp stehen in `digital-check/references/qualitaetsmodell.md` (dort lesen, nicht aus dem Gedächtnis); die Regeln der Einschätzung in `digital-check`. Passt kein Typ (ein kleines »Umschlag«-Werkzeug etwa): die Bereiche nehmen, in denen das Gerät etwas verändert, plus einen, in dem es nichts verändert – damit sichtbar bleibt, was Papier weiter trägt. Einschätzungen nur in Worten; den schwächsten Punkt ehrlich nennen.
 
 ### 7. Rahmen klären
 
@@ -192,6 +194,13 @@ Steht es nicht in den Unterlagen, gehört es zu den Rückfragen: Lese- und Schre
 
 Quelle und Darstellung trennen · Zuschreibungen prüfen · mehrere Perspektiven · Beutelsbacher Konsens · Sachurteil vor Werturteil · Gegenwartsbezug ohne Gleichsetzung · bei NS-Themen keine Rollenspiele von Verfolgung, keine NS-Ästhetik, Opfer nur aus Gedenk- und Archivquellen. Ausführlich mit Prüffragen und typischem Tablet-Beitrag: `references/fachbaustein-ggk.md` – lesen, sobald das Fach GGK oder Geschichte ist.
 
+## Fallstricke (alle schon passiert)
+
+Neue Lehren, die überall gelten können, kommen hierher; fachgebundene in den Fachbaustein.
+
+- Lehren aus dem Bauen als »Erprobung« ausgegeben: Was beim Bauen oder Testen einer Seite auffällt, ist noch keine Erfahrung aus dem Unterricht → bei jeder Aussage die Herkunft nennen (Erprobung · Forschung · Kidu-Konzept · noch offen); »Erprobung« nur, was in einer gehaltenen Stunde beobachtet wurde (Sichtung Kidu, 13.11.2026).
+- Ein Foto war in M17 dem Jahr 1935 zugeordnet, eine Fundstelle nennt den 27. Juli 1933 (GGK-Labor, 12.11.2026) → Datum und Ort eines Bildes an einer Fundstelle prüfen, bevor es einem Ereignis zugeordnet wird.
+
 ## Durchgespieltes Beispiel (ausgedacht, zeigt nur die Form)
 
 *Anfrage:* Arbeitsblatt Weimarer Verfassung, Berufskolleg: Schaubild, drei Artikel, vier Fragen.
@@ -241,6 +250,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 
 ## Versionen
 
+- **v4.7, 18.11.2026:** Ohne Dopplungen (Abgleich mit den älteren Einzelfassungen der Skills): Die Grundregeln sind der Wortlaut für alle Skills, die anderen tragen eine Kurzzeile; Regel 3 hält die Anrede fest (Lehrkraft »du«, Material für Lernende wie die vorhandenen Materialien – Entscheidung Mario, 18.11.2026); Regel 8 nennt »Nur du kannst das«. Ergebnisbündelung mit den Grenzen aus `lernseite-bauen` (hängt am Scan, kleine Zahlen sind kein Befund) und der Erprobung im Psycho-Labor; sie und die Zeitdiagnose sind als die eine Stelle markiert. Schritt 6 nennt die Kernbereiche nicht mehr selbst – sie stehen im Qualitätsmodell von `digital-check`, das jetzt aus `assets/daten/qualitaet.js` erzeugt wird. Neuer Abschnitt »Fallstricke« mit zwei Einträgen, die bisher nur in den Einzelfassungen standen. Fachbaustein GGK: NS-Regel als die eine Stelle für alle Skills, neuer Abschnitt »Fachgrenzen Politik (aus Erprobungen)«. Die Kurzfassung bleibt unverändert.
 - **v4.6, 17.11.2026:** Kurzfassung: neue Liste »Papierfrage« mit neun Regeln aus erprobtem Unterricht (GGK-Labor: Freigabe erst nach der Festlegung, Kriterien erst nach dem eigenen Text, hybrid mit langen Texten auf Papier; Psycho-Labor: ein Gerät vorne; Politik-Werkstatt: Ergebnisse als Datei). Daraus baut Kidu 4.46 den Prompt »Die ganze Stunde prüfen« auf der neuen Seite Papierfrage. Am Vorgehen des Skills ändert sich nichts.
 - **v4.5, 13.11.2026:** Ganze Einheit als Rahmen (Entscheidung Mario, Fassung B): Schritt E »Landkarte der Einheit« mit Haltepunkt, Umfang je Stunde (»ohne Gerät« ist ein vollwertiges Ergebnis), Einheit am Anfang des Übergabeblocks, Kurzfassung ergänzt. Zwei Wege in der Weiche: Unterricht neu planen (zuerst ein Verlaufsplan ohne Gerät) und Bisherigen Unterricht digitalisieren. Prüfraster »Lehrfunktion je Phase« in Schritt 2 mit den neuen Phasennamen (Sichern und üben · Übertragen und Ausblick · In jeder Phase); Modelle und Belegstand in `references/lehrfunktionen.md`. Gestaltung als eigener Prüfblock, getrennt von der Didaktik. Grundlage: Analysedokument »Digitaler Unterricht in Kidu – Sichtung und Didaktikanalyse« (13.11.2026).
 - **v4.4, 11.11.2026:** Lesen und Strukturlegen: Lese-Kriterium um Selbstüberschätzung am Bildschirm und Tiefenaufgabe ergänzt; neuer Punkt in Schritt 5 (hybrid als Regelfall, Vorher – Während – Nachher, Markieren mit Regel, selbst legen mit benannten Beziehungen, Lehren zum digitalen Legen); Kurzfassung um zwei Regeln ergänzt; Belege in `lernmethode-einfuehren/references/lesen-und-strukturlegen.md`.

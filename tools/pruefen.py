@@ -340,6 +340,29 @@ def pruefe_werkzeugkiste(fehler):
         for z in [k.get("ziel", ""), k.get("format", ""), k.get("kurz", "")] + k["anforderungen"] + k["pruef"]:
             if re.search(r"ChatGPT|OpenAI|Claude|Anthropic|Gemini|Copilot|Mistral|%|@", z or ""):
                 fehler.append(f"Methodenkoffer: Kurzfassung »{name}« nennt einen Anbieter, ein Prozentzeichen oder ein @")
+    # ab 4.49: Die Grundregeln stehen im Wortlaut nur in unterricht-digitalisieren. Jeder andere Skill trägt
+    # dieselbe Kurzzeile mit einem Stichwort je Regel; ändert sich eine Regel, wird nur dort geändert.
+    skills = WURZEL / "werkzeugkiste" / "kidu" / "skills"
+    wort = (skills / "unterricht-digitalisieren" / "SKILL.md").read_text(encoding="utf-8")
+    regeln = re.search(r"^## Grundregeln[^\n]*\n([\s\S]*?)(?=^## )", wort, re.M)
+    zahl = len(re.findall(r"^\d+\. \*\*", regeln.group(1), re.M)) if regeln else 0
+    if not zahl:
+        fehler.append("unterricht-digitalisieren: Abschnitt »Grundregeln« mit nummerierten Regeln fehlt")
+    kurz = {}
+    for datei in sorted(skills.glob("*/SKILL.md")):
+        if datei.parent.name == "unterricht-digitalisieren":
+            continue
+        m = re.search(r"^\*\*Grundregeln\*\* – Wortlaut in `unterricht-digitalisieren`: (.+?ehrlich berichten\.)",
+                      datei.read_text(encoding="utf-8"), re.M)
+        if not m:
+            fehler.append(f"{datei.parent.name}: Kurzzeile »Grundregeln« fehlt (Wortlaut in unterricht-digitalisieren)")
+            continue
+        kurz[datei.parent.name] = m.group(1)
+        if len(m.group(1).split(" · ")) != zahl:
+            fehler.append(f"{datei.parent.name}: Kurzzeile nennt {len(m.group(1).split(' · '))} Grundregeln, unterricht-digitalisieren hat {zahl}")
+    if len(set(kurz.values())) > 1:
+        fehler.append("Grundregeln: Die Kurzzeilen lauten nicht gleich – " + ", ".join(sorted(kurz)))
+    print(f"Grundregeln: Wortlaut in unterricht-digitalisieren ({zahl} Regeln), Kurzzeile in {len(kurz)} Skills geprüft")
 
 
 

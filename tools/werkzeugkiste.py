@@ -16,6 +16,8 @@ Ergebnis:
 - werkzeugkiste/download/kidu-gestaltung.zip  DESIGN.md mit Lizenz
 - docs/pruef-auftrag.md und werkzeugkiste/kidu/skills/digital-check/references/pruef-auftrag-weg-b.md
                                            der Prüf-Auftrag, wie assets/pruef-prompt.js ihn baut (vorher von Hand, lief auseinander)
+- werkzeugkiste/kidu/skills/digital-check/references/qualitaetsmodell.md
+                                           das Qualitätsmodell aus assets/daten/qualitaet.js (ab 4.49; vorher von Hand, lief auseinander)
 
 Die Zip-Dateien werden mit festem Zeitstempel gebaut: Gleicher Inhalt ergibt dieselben Bytes.
 Format einer Kurzfassung im Skill:
@@ -161,6 +163,53 @@ def pruef_auftrag(daten):
     return PRUEF_KOPF + aus.stdout + "\n```\n"
 
 
+def qualitaet_daten():
+    """assets/daten/qualitaet.js als Python-Daten (über node); None, wenn node fehlt."""
+    import shutil, subprocess
+    node = shutil.which("node")
+    if not node:
+        return None
+    aus = subprocess.run([node, "-e", "process.stdout.write(JSON.stringify(require(process.argv[1])))",
+                          str(WURZEL / "assets/daten/qualitaet.js")], capture_output=True, text=True, check=True)
+    return json.loads(aus.stdout)
+
+
+def qualitaetsmodell(q):
+    """ab 4.49: references/qualitaetsmodell.md im Skill digital-check aus assets/daten/qualitaet.js
+    (bis 4.48 eine Kopie von Hand aus 4.5 – die Kernbereiche waren veraltet, die Rahmenfragen fehlten)."""
+    name = {b["id"]: b["name"] for b in q["bereiche"]}
+    typ = {t["id"]: t["name"] for t in q["materialtypen"]}
+    stufen_a = " · ".join(f"{i} {s}" for i, s in enumerate(q["stufenA"]))
+    stufen_b = " · ".join(f"{i} {s}" + (" (Papier leistet dasselbe)" if i == 0 else "") for i, s in enumerate(q["stufenB"]))
+    saetze = [a["satz"] if i == 0 else a["satz"].replace("Analog wäre das ", "… ") for i, a in enumerate(q["analogvergleich"])]
+    z = [f"# Qualitätsmodell – {len(q['bereiche'])} Bereiche", "",
+         "Erzeugt aus `assets/daten/qualitaet.js` in Kidu – dieselben Daten wie der Digital-Check auf der Website. Nur zum Lesen; "
+         "`tools/werkzeugkiste.py` schreibt die Datei bei jedem Bauen neu. Stufen hier mit Ziffern zum Nachschlagen – in Antworten "
+         "**nur in Worten** nennen.", "",
+         f"**Pädagogische Qualität:** {stufen_a}.",
+         f"**Digitaler Beitrag:** {stufen_b}.",
+         "**Vergleich mit Papier, ein Satz je Bereich:** " + " · ".join(f"»{s}«" for s in saetze), ""]
+    for b in q["bereiche"]:
+        z += [f"## {b['name']} ({b['fachname']})",
+              f"Frage: {b['frage']}",
+              "Qualität: " + " | ".join(f"{i} {s}" for i, s in enumerate(b["a"])),
+              "Digitaler Beitrag: " + " | ".join(f"{i} {s}" for i, s in enumerate(b["b"], 1)),
+              f"So geht es auf Papier: {b['analog']}",
+              f"Risiko: {b['risiko']}", ""]
+    z += ["## Kernbereiche je Materialtyp", ""]
+    z += [f"- **{t['name']}** ({t['hilfe']}): " + " · ".join(name[k] for k in t["kern"]) for t in q["materialtypen"]]
+    z += ["", "Mehrere Typen: Kernbereiche vereinigen, höchstens sechs.", "",
+          "## Rahmen – wird immer geprüft, zählt aber nicht mit", ""]
+    for r in q["rahmen"]:
+        wann = ""
+        if r.get("nurDigital"):
+            wann = " – nur bei digitalem Material"
+        if r.get("nurTyp"):
+            wann = " – nur bei: " + ", ".join(typ[t] for t in r["nurTyp"])
+        z.append(f"- {r['frage']} ({' · '.join(o['name'] for o in r['optionen'])}){wann}")
+    return "\n".join(z) + "\n"
+
+
 def texte():
     d = daten_text(sammle())
     ziele = {DATEN: d.encode("utf-8")}
@@ -168,6 +217,9 @@ def texte():
     if p is not None:
         ziele[WURZEL / "docs" / "pruef-auftrag.md"] = p.encode("utf-8")
         ziele[PLUGIN / "skills" / "digital-check" / "references" / "pruef-auftrag-weg-b.md"] = p.encode("utf-8")
+    q = qualitaet_daten()
+    if q is not None:
+        ziele[PLUGIN / "skills" / "digital-check" / "references" / "qualitaetsmodell.md"] = qualitaetsmodell(q).encode("utf-8")
     return ziele
 
 
