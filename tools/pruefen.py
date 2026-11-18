@@ -411,6 +411,80 @@ def pruefe_film(fehler):
 BLICK_AUS_SKRIPT = {"passt.html": "assets/passt.js", "fortbildungsbogen.html": "assets/fortbildungsbogen.js"}
 
 
+def pruefe_ki_start(fehler, fp, daten, html):
+    """Ab 4.50 (Auftrag Mario, 18.11.2026): die Startseite des KI-Trainings. Vier Karten (höchstens vier, Logik von Variante B),
+    jede mit Name, Anliegen, Satz und Zahl wie in src/fahrplan-ki.json; darunter je Phase ein Abschnitt. Die Zahl auf der Karte
+    passt zu den Hilfen und Werkzeugen der Phase; jedes Werkzeug steht genau einmal auf der Seite (in einer Hilfe oder unter
+    »Außerdem in dieser Phase«; der eingebettete Aufgabenkoffer zählt nicht mit). Jede Hilfe hat einen Nutzen ohne Zahlen und
+    mindestens einen Weg; Sprünge mit #anlass= und #ziel= nennen einen Anlass der Schnell-Anfrage bzw. ein Ziel von Prompten lernen."""
+    bereich, quelle = daten["_bereich"], daten["_quelle"]
+    ids = [q["id"] for q in daten["phasen"]]
+    namen = [q["name"] for q in daten["phasen"]]
+    anliegen = [q.get("anliegen") for q in daten["phasen"]]
+    karten = re.findall(r'<a class="koffer-karte ki-karte" href="#phase-([a-z]+)" data-phase="([a-z]+)">', html)
+    if [k for k, _ in karten] != ids or any(k != d for k, d in karten) or len(karten) > 4:
+        fehler.append(f"{bereich}: die Karten führen nicht genau zu den Phasen aus {quelle} ({karten})")
+    if re.findall(r'<b class="ki-karte-name">([^<]+)</b>', html) != namen:
+        fehler.append(f"{bereich}: die Namen auf den Karten und {quelle} stimmen nicht überein")
+    if re.findall(r'<span class="ki-karte-anliegen">»([^«]+)«</span>', html) != anliegen:
+        fehler.append(f"{bereich}: die Anliegen auf den Karten und {quelle} stimmen nicht überein")
+    if re.findall(r'id="phase-([a-z]+)"', html) != ids:
+        fehler.append(f"{bereich}: die Phasen der Bereichsseite und von {quelle} stimmen nicht überein")
+    if re.findall(r'<h3 class="fahrplan-name"[^>]*>([^<]+)</h3>', html) != namen:
+        fehler.append(f"{bereich}: die Namen der Phasen und {quelle} stimmen nicht überein")
+    if re.findall(r'<b class="fahrplan-anliegen">»([^«]+)«</b>', html) != anliegen:
+        fehler.append(f"{bereich}: die Anliegen der Phasen und {quelle} stimmen nicht überein")
+    if '<div class="ki-phasen" id="fahrplan"' not in html or '<p class="leise klein fahrplan-geschaetzt">' not in html:
+        fehler.append(f"{bereich}: Abschnitte der Phasen nicht gefunden")
+        return
+    a, b = html.index('<div class="ki-phasen" id="fahrplan"'), html.index('<p class="leise klein fahrplan-geschaetzt">')
+    ohne_koffer = re.sub(r'<section class="ki-koffer[\s\S]*?<!-- Ende des Aufgabenkoffers auf Papier -->', " ", html[a:b])
+    starts = [m.start() for m in re.finditer(r'<section class="ki-phase"', ohne_koffer)] + [len(ohne_koffer)]
+    abschnitte = [ohne_koffer[starts[i]:starts[i + 1]] for i in range(len(starts) - 1)]
+    if len(abschnitte) != 4:
+        fehler.append(f"{bereich}: vier Abschnitte für die Phasen gebraucht, gefunden {len(abschnitte)}")
+    schnell = (WURZEL / "assets" / "daten" / "schnell.js").read_text(encoding="utf-8")
+    texte = (WURZEL / "assets" / "daten" / "texte.js").read_text(encoding="utf-8")
+    alle = []
+    for q, ab in zip(daten["phasen"], abschnitte):
+        ws = [w["href"] for w in daten["werkzeuge"] if w["phase"] == q["id"]]
+        s = fp.start_von(daten, q["id"])
+        if not s or not s.get("hilfen") or not s.get("karte") or not s.get("einleitung"):
+            fehler.append(f"{quelle}: Phase »{q['id']}« ohne Karte, Einleitung oder Hilfen (»start«)")
+            continue
+        zahl = re.search(r'href="#phase-' + q["id"] + r'"[\s\S]*?class="koffer-zahl ki-karte-zahl">(\d+) Hilfen? · (\d+) Werkzeug', html)
+        gefunden = [x for x in re.findall(r'<a (?:class="[^"]*" )?href="([^"]+)"', ab) if x in ws]
+        if not zahl or (int(zahl.group(1)), int(zahl.group(2))) != (len(s["hilfen"]), len(ws)) or sorted(gefunden) != sorted(ws):
+            fehler.append(f"{bereich}: Phase {q['nr']} – Karte {zahl.groups() if zahl else 'ohne Zahl'}, Daten {len(s['hilfen'])} Hilfen und {len(ws)} Werkzeuge, im Abschnitt {sorted(gefunden)}")
+        alle += gefunden
+        for h in s["hilfen"]:
+            if not h.get("name") or not h.get("nutzen") or not h.get("wege"):
+                fehler.append(f"{quelle}: Hilfe ohne Name, Nutzen oder Weg in Phase »{q['id']}«: {h}")
+                continue
+            if re.search(r"\d|spart|schneller|Zeitersparnis", h["nutzen"]):
+                fehler.append(f"{quelle}: Nutzen mit Zahl oder Versprechen »{h['nutzen']}« – Nutzen heißt: was du bekommst")
+            for weg in h["wege"]:
+                href = weg["href"]
+                frag = href.split("#", 1)[1] if "#" in href else ""
+                if href not in ws and not weg.get("text"):
+                    fehler.append(f"{quelle}: Sprung ohne Text bei »{h['name']}«: {href}")
+                if frag.startswith("anlass=") and f'id: "{frag[7:]}"' not in schnell:
+                    fehler.append(f"{quelle}: unbekannter Anlass der Schnell-Anfrage {href}")
+                if frag.startswith("ziel=") and f'id: "{frag[5:]}"' not in texte:
+                    fehler.append(f"{quelle}: unbekanntes Ziel von Prompten lernen {href}")
+                if href.startswith("#") and f'id="{href[1:]}"' not in html:
+                    fehler.append(f"{bereich}: Sprung ins Leere {href}")
+        if re.search(r"\d", s["karte"]):
+            fehler.append(f"{quelle}: Satz der Karte »{q['id']}« mit Zahl")
+    doppelt = sorted({x for x in alle if alle.count(x) > 1})
+    if doppelt:
+        fehler.append(f"{bereich}: Werkzeug mehrfach in den Phasen {doppelt}")
+    rest = html[:a] + html[b:]
+    for ziel in sorted(set(alle)):
+        if f'href="{ziel}"' in rest:
+            fehler.append(f"{bereich}: {ziel} steht außerhalb der Phasen noch einmal (eine Struktur)")
+
+
 def pruefe_fahrplan(fehler):
     """ab Version 4.41: Fahrplan der Bereichsseite »Digitaler Unterricht« – vier Phasen, jede ein <details>.
     Die Zahl im Kopf (»7 Werkzeuge«) muss zu den Links in der Phase passen, und jedes Werkzeug steht nur einmal
@@ -419,7 +493,8 @@ def pruefe_fahrplan(fehler):
     dazu, dass jede Werkzeugseite die Zeile oben und den Fahrplan unten trägt – und nur sie.
     Ab 4.47 dasselbe für den Fahrplan »KI-Training« (src/fahrplan-ki.json, ki.html, Zeichen <!-- kiplan:… -->). Dazu:
     Namen und Anliegen der Phasen auf der Bereichsseite wie in den Daten; ein Werkzeug mit »zuhause« steht im anderen
-    Fahrplan; keine Seite gehört zu zwei Fahrplänen."""
+    Fahrplan; keine Seite gehört zu zwei Fahrplänen.
+    Ab 4.50 hat ki.html Karten und Abschnitte statt <details> (pruefe_ki_start)."""
     import importlib.util
     spec = importlib.util.spec_from_file_location("fahrplan", WURZEL / "tools" / "fahrplan.py")
     fp = importlib.util.module_from_spec(spec); spec.loader.exec_module(fp)
@@ -428,34 +503,37 @@ def pruefe_fahrplan(fehler):
     for art, daten in plaene.items():
         bereich, json_quelle = daten["_bereich"], daten["_quelle"]
         html = fp.einsetzen((WURZEL / "src" / bereich).read_text(encoding="utf-8"), bereich, plaene)
-        phasen = re.findall(r'<details class="fahrplan-platte">([\s\S]*?)</details>', html)
-        if len(phasen) != 4:
-            fehler.append(f"{bereich}: Fahrplan braucht vier Phasen, gefunden {len(phasen)}")
-        if re.findall(r'id="phase-([a-z]+)"', html) != [q["id"] for q in daten["phasen"]]:
-            fehler.append(f"{bereich}: die Phasen der Bereichsseite und von {json_quelle} stimmen nicht überein")
-        if re.findall(r'<h3 class="fahrplan-name">([^<]+)</h3>', html) != [q["name"] for q in daten["phasen"]]:
-            fehler.append(f"{bereich}: die Namen der Phasen und {json_quelle} stimmen nicht überein")
-        if any("anliegen" in q for q in daten["phasen"]):  # ab 4.47: das Anliegen jeder Phase (KI-Training)
-            if re.findall(r'<b class="fahrplan-anliegen">»([^«]+)«</b>', html) != [q.get("anliegen") for q in daten["phasen"]]:
-                fehler.append(f"{bereich}: die Anliegen der Phasen und {json_quelle} stimmen nicht überein")
-        alle = []
-        for nr, phase in enumerate(phasen, 1):
-            zahl = re.search(r'class="fahrplan-zahl">(\d+) Werkzeug', phase)
-            links = re.findall(r'<a href="([^"]+)"', phase)
-            alle += links
-            if not zahl or int(zahl.group(1)) != len(links):
-                fehler.append(f"{bereich}: Phase {nr} nennt {zahl.group(1) if zahl else 'keine'} Werkzeuge, verlinkt sind {len(links)}")
-        doppelt = sorted({x for x in alle if alle.count(x) > 1})
-        if doppelt:
-            fehler.append(f"{bereich}: Werkzeug mehrfach im Fahrplan {doppelt}")
-        # die Übersicht ohne den Fahrplan. Ab 4.46 steht die Papierfrage auf einer eigenen Seite, und Phase 2 enthält ein eigenes
-        # <ol> (die Kette) – deshalb bis zum letzten </ol> vor der Ringzeile, nicht bis zum ersten.
-        rest = re.sub(r'<ol class="fahrplan"[\s\S]*</ol>\s*<p class="fahrplan-ring">', " ", html)
-        for ziel in alle:
-            if ziel.startswith("#"):
-                continue
-            if f'href="{ziel}"' in rest:
-                fehler.append(f"{bereich}: {ziel} steht außerhalb des Fahrplans noch einmal (eine Struktur)")
+        if daten.get("start"):  # ab 4.50: die Startseite des KI-Trainings – Karten und Abschnitte statt <details>
+            pruefe_ki_start(fehler, fp, daten, html)
+        else:
+            phasen = re.findall(r'<details class="fahrplan-platte">([\s\S]*?)</details>', html)
+            if len(phasen) != 4:
+                fehler.append(f"{bereich}: Fahrplan braucht vier Phasen, gefunden {len(phasen)}")
+            if re.findall(r'id="phase-([a-z]+)"', html) != [q["id"] for q in daten["phasen"]]:
+                fehler.append(f"{bereich}: die Phasen der Bereichsseite und von {json_quelle} stimmen nicht überein")
+            if re.findall(r'<h3 class="fahrplan-name">([^<]+)</h3>', html) != [q["name"] for q in daten["phasen"]]:
+                fehler.append(f"{bereich}: die Namen der Phasen und {json_quelle} stimmen nicht überein")
+            if any("anliegen" in q for q in daten["phasen"]):  # ab 4.47: das Anliegen jeder Phase (KI-Training)
+                if re.findall(r'<b class="fahrplan-anliegen">»([^«]+)«</b>', html) != [q.get("anliegen") for q in daten["phasen"]]:
+                    fehler.append(f"{bereich}: die Anliegen der Phasen und {json_quelle} stimmen nicht überein")
+            alle = []
+            for nr, phase in enumerate(phasen, 1):
+                zahl = re.search(r'class="fahrplan-zahl">(\d+) Werkzeug', phase)
+                links = re.findall(r'<a href="([^"]+)"', phase)
+                alle += links
+                if not zahl or int(zahl.group(1)) != len(links):
+                    fehler.append(f"{bereich}: Phase {nr} nennt {zahl.group(1) if zahl else 'keine'} Werkzeuge, verlinkt sind {len(links)}")
+            doppelt = sorted({x for x in alle if alle.count(x) > 1})
+            if doppelt:
+                fehler.append(f"{bereich}: Werkzeug mehrfach im Fahrplan {doppelt}")
+            # die Übersicht ohne den Fahrplan. Ab 4.46 steht die Papierfrage auf einer eigenen Seite, und Phase 2 enthält ein eigenes
+            # <ol> (die Kette) – deshalb bis zum letzten </ol> vor der Ringzeile, nicht bis zum ersten.
+            rest = re.sub(r'<ol class="fahrplan"[\s\S]*</ol>\s*<p class="fahrplan-ring">', " ", html)
+            for ziel in alle:
+                if ziel.startswith("#"):
+                    continue
+                if f'href="{ziel}"' in rest:
+                    fehler.append(f"{bereich}: {ziel} steht außerhalb des Fahrplans noch einmal (eine Struktur)")
         # ab 4.42: Zeile und Fahrplan auf jeder Werkzeugseite (Weg B der Recherche »Werkzeugseiten: Wo bin ich?«)
         seiten = {fp.seite(w["href"]) for w in daten["werkzeuge"] if "#" not in w["href"] and not w.get("zuhause")}
         seiten |= {u for w in daten["werkzeuge"] for u in w.get("unterseiten", [])}
@@ -571,6 +649,11 @@ def pruefe_papierkoffer(fehler):
     for name, inhalt in teile.items():
         if inhalt not in html:
             fehler.append(f"papierkoffer.html: Teil »{name}« ist veraltet – python3 tools/bauen.py")
+    for datei in pk.SEITEN:  # ab 4.50: derselbe Koffer eingebettet (ki.html, Phase 2) – aus derselben Quelle, nur tiefer gegliedert
+        anders = (WURZEL / datei).read_text(encoding="utf-8")
+        for name, inhalt in pk.teile(datei).items():
+            if inhalt not in anders:
+                fehler.append(f"{datei}: Teil »{name}« des Aufgabenkoffers auf Papier ist veraltet – python3 tools/bauen.py")
     if "<!-- papierkoffer:" in html:
         fehler.append("papierkoffer.html: Zeichen <!-- papierkoffer:… --> nicht ersetzt")
     blatt = teile.get("blatt", "")

@@ -15,6 +15,10 @@ Alles steht fertig im HTML – ohne Skript im Browser. tools/pruefen.py prüft, 
 Ab 4.47 (Entscheidung Mario, 17.11.2026: das KI-Training so übersichtlich wie den Digitalen Unterricht) gibt es einen zweiten
 Fahrplan: src/fahrplan-ki.json mit der Bereichsseite ki.html. Seine Zeichen heißen gleich, nur mit »kiplan« statt »fahrplan«
 (<!-- kiplan:zeile -->, <!-- kiplan:fuss -->, <!-- kiplan:liste:ID -->, <!-- kiplan:zahl:ID -->).
+Ab 4.50 hat der Fahrplan »KI-Training« eine Startseite mit Karten (Logik von Variante B): <!-- kiplan:karte:ID --> setzt den Satz der
+Karte ein (wobei KI hilft), <!-- kiplan:hilfen:ID --> die Hilfen der Phase mit Nutzen und Wegen (Daten: »start« in src/fahrplan-ki.json).
+Führt ein Weg genau zur Adresse eines Werkzeugs der Phase, steht das Werkzeug dort (mit Zeit und Fähigkeiten); <!-- kiplan:liste:ID -->
+zeigt dann nur noch die übrigen Werkzeuge (»Außerdem in dieser Phase«). So steht jedes Werkzeug einmal auf der Seite.
 Ein Werkzeug mit »zuhause« gehört zum anderen Fahrplan: Es steht in der Liste, seine Seite trägt aber die Zeichen des anderen.
 »marken« sind kurze Hinweise unter dem Text (»geht ohne KI«, »auch auf Papier«).
 """
@@ -172,6 +176,8 @@ def kette(daten, ws, einzug):
 def bereich_liste(daten, pid):
     ws = [w for w in daten["werkzeuge"] if w["phase"] == pid]
     einzug = "          "
+    if start_von(daten, pid):  # ab 4.50 (Startseite KI-Training): nur die Werkzeuge, zu denen keine Hilfe führt
+        return start_weitere(daten, pid, ws)
     if any(w.get("gruppe") for w in ws):
         return gruppiert(ws, True, einzug, "h4").lstrip()
     if any(w.get("schritt") for w in ws):
@@ -193,7 +199,87 @@ def bereich_liste(daten, pid):
 
 def bereich_zahl(daten, pid):
     n = sum(1 for w in daten["werkzeuge"] if w["phase"] == pid)
+    s = start_von(daten, pid)
+    if s:  # ab 4.50: auf der Karte zuerst die Hilfen, dann die Werkzeuge
+        nh = len(s["hilfen"])
+        return f'<span class="koffer-zahl ki-karte-zahl">{nh} Hilfe{"" if nh == 1 else "n"} · {n} Werkzeug{"" if n == 1 else "e"}</span>'
     return f'<span class="fahrplan-zahl">{n} Werkzeug{"" if n == 1 else "e"}</span>'
+
+
+# ---------------------------------------------------------------- Startseite KI-Training (ab 4.50)
+
+def start_von(daten, pid):
+    """Karte, Einleitung und Hilfen einer Phase (»start« in src/fahrplan-ki.json) – oder None (Digitaler Unterricht)."""
+    return (daten.get("start") or {}).get(pid)
+
+
+def abgedeckt(daten, pid):
+    """Adressen der Werkzeuge dieser Phase, zu denen eine Hilfe direkt führt: Der Weg hat genau ihre Adresse."""
+    s = start_von(daten, pid)
+    eigene = {w["href"] for w in daten["werkzeuge"] if w["phase"] == pid}
+    return {weg["href"] for h in (s or {}).get("hilfen", []) for weg in h["wege"] if weg["href"] in eigene}
+
+
+def werkzeug_name(daten, href):
+    """Name des Werkzeugs, auf dessen Seite ein Sprung führt (»Schnell-Anfrage«); leer bei einem Sprung auf derselben Seite."""
+    s = seite(href)
+    passend = [w for w in daten["werkzeuge"] if s and seite(w["href"]) == s]
+    passend.sort(key=lambda w: "#" in w["href"])  # das Werkzeug der ganzen Seite vor einem Werkzeug an einer Stelle
+    return passend[0]["name"] if passend else ""
+
+
+def hilfe_eintrag(daten, pid, h, einzug):
+    eigene = {w["href"]: w for w in daten["werkzeuge"] if w["phase"] == pid}
+    faehig, wege = [], []
+    for weg in h["wege"]:
+        w = eigene.get(weg["href"])
+        if w:  # der Weg ist ein Werkzeug der Phase: mit Zeit und Fähigkeiten, wie in der Liste
+            faehig += [f for f in w.get("faehigkeiten", []) if f not in faehig]
+            wege.append(f'<a class="ki-weg ist-werkzeug" href="{w["href"]}"><b>{e(w["name"])}</b>{hinweise(w)}</a>')
+        else:  # ein Sprung an eine Stelle (#anlass=…, #ziel=…, Aufträge) oder auf dieser Seite
+            wo = werkzeug_name(daten, weg["href"])
+            vorn = f'<span class="ki-weg-wo">{e(wo)}:</span> ' if wo else ""
+            wege.append(f'<a class="ki-weg" href="{weg["href"]}">{vorn}<b>{e(weg["text"])}</b></a>')
+    attr = f' data-faehigkeiten="{" ".join(faehig)}"' if faehig else ""
+    oder = ' <span class="ki-hilfe-oder">oder</span> '
+    return (f'{einzug}<li class="ki-hilfe"{attr}>\n{einzug}  <b class="ki-hilfe-name">{e(h["name"])}</b>\n'
+            f'{einzug}  <p class="ki-hilfe-nutzen">{e(h["nutzen"])}</p>\n'
+            f'{einzug}  <p class="ki-hilfe-wege"><span class="ki-hilfe-so">So fängst du an:</span> {oder.join(wege)}</p>\n{einzug}</li>')
+
+
+def start_karte(daten, pid):
+    return f'<span class="koffer-kurz ki-karte-hilft">{e(start_von(daten, pid)["karte"])}</span>'
+
+
+def start_hilfen(daten, pid):
+    s = start_von(daten, pid)
+    einzug = "        "
+    zeilen = "\n".join(hilfe_eintrag(daten, pid, h, einzug + "  ") for h in s["hilfen"])
+    return f'<p class="ki-phase-einleitung">{e(s["einleitung"])}</p>\n{einzug}<ul class="ki-hilfen">\n{zeilen}\n{einzug}</ul>'
+
+
+def start_weitere(daten, pid, ws):
+    weg = abgedeckt(daten, pid)
+    rest = [w for w in ws if w["href"] not in weg]
+    if not rest:
+        return ""
+    einzug = "        "
+    titel = "Außerdem in dieser Phase" if weg else "Die Werkzeuge dieser Phase"
+    if any(w.get("gruppe") for w in rest):
+        inhalt = gruppiert(rest, True, einzug + "  ", "h5").lstrip()
+    elif any(w.get("tuer") for w in rest):
+        t = []
+        tueren = [w for w in rest if w.get("tuer")]
+        for i, w in enumerate(tueren):
+            if i:
+                t.append(f'{einzug}    <li class="tueren-oder" aria-hidden="true">oder</li>')
+            t.append(tuer_eintrag(w, einzug + "  "))
+        inhalt = ('<ul class="werkzeuge tueren">\n' + "\n".join(t) + f"\n{einzug}  </ul>\n{einzug}  "
+                  '<p class="fahrplan-dazu">Dazu, wenn du willst:</p>\n' + f"{einzug}  " + liste([w for w in rest if not w.get("tuer")], True, einzug + "  "))
+    else:
+        inhalt = liste(rest, True, einzug + "  ")
+    return (f'<div class="fahrplan-inhalt ki-weitere">\n{einzug}  <h4 class="ki-weitere-titel">{titel}</h4>\n'
+            f'{einzug}  {inhalt}\n{einzug}</div>')
 
 
 # ---------------------------------------------------------------- Werkzeugseiten
@@ -265,7 +351,7 @@ def fuss(daten, datei, weit=False):
             f'  </div>\n</div></nav>')
 
 
-ZEICHEN = re.compile(r"<!-- (fahrplan|kiplan):(zeile|fuss|liste|zahl)(?::([a-z]+))?( weit)? -->")
+ZEICHEN = re.compile(r"<!-- (fahrplan|kiplan):(zeile|fuss|liste|zahl|karte|hilfen)(?::([a-z]+))?( weit)? -->")
 
 
 def einsetzen(inhalt, datei, daten=None):
@@ -290,6 +376,10 @@ def einsetzen(inhalt, datei, daten=None):
             return fuss(d, datei, weit)
         if art == "liste":
             return bereich_liste(d, pid)
+        if art == "karte":  # ab 4.50
+            return start_karte(d, pid)
+        if art == "hilfen":  # ab 4.50
+            return start_hilfen(d, pid)
         return bereich_zahl(d, pid)
 
     neu = ZEICHEN.sub(ersetze, inhalt)
