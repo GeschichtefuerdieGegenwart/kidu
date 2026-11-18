@@ -7,13 +7,13 @@ description: "Eine Lernmethode oder Lernstrategie für Lernende auswählen und a
 
 Ziel: Für eine konkrete Stelle im Unterricht die passende Lernmethode wählen und sie so einführen, dass Lernende sie selbst anwenden – mit ehrlicher Angabe, wie gut sie belegt ist. Grundlage sind die Lernbuddy-Handouts der Zukunftswerkstatt (52 Methodenkarten). **Liegen sie im Projekt, sind sie die einzige Quelle für Wirksamkeit und Vorgehen. Liegen sie nicht vor, heißt die Wirksamkeit »noch offen« – nichts aus dem Gedächtnis ergänzen.** Für **Lesen und Strukturlegen** gilt zusätzlich `references/lesen-und-strukturlegen.md` (recherchiert am 11.11.2026, mit Quellen und Belegstand) – lies sie, sobald es um Texte erschließen, Markieren, Lesestrategien oder Begriffsnetze geht.
 
-Grundregeln wie in `unterricht-digitalisieren`: nichts erfinden, einfache Sprache mit »du«, Datenschutz, keine Anbieternamen.
+**Grundregeln** – Wortlaut in `unterricht-digitalisieren`: Anliegen vor Werkzeug · nichts erfinden · einfache Sprache (Lehrkraft »du«, Lernende wie im vorhandenen Material) · Datenschutz · Barrierefreiheit (WCAG 2.2 AA) · offline, keine Anbieternamen · Bestand vor Neubau, der Mensch entscheidet · ehrlich berichten.
 
 ## Haltung
 
 - Erst verstehen, dann abrufen. Merkhilfen (Loci, Akronyme, Schlüsselwort) nur zusammen mit Abrufen.
-- Hilfe ist noch kein Lernen: Die Methode muss die Lernenden selbst abrufen, erklären, ordnen oder begründen lassen.
-- Viele Methoden sind auf Papier gleich gut. Ein Tablet-Beitrag ist nur dann einer, wenn er etwas kann, was Papier nicht kann: Abstände planen (Karteikarten-App), die eigene Erklärung aufnehmen und anhören, ein geteiltes Board, sofortige Rückmeldung mit Erklärung.
+- Hilfe ist noch kein Lernen (Haltung in `unterricht-digitalisieren`): Die Methode muss die Lernenden selbst abrufen, erklären, ordnen oder begründen lassen.
+- Viele Methoden sind auf Papier gleich gut (Papierprobe, `unterricht-digitalisieren` Schritt 2). Ein Tablet-Beitrag ist nur dann einer, wenn er etwas kann, was Papier nicht kann: Abstände planen (Karteikarten-App), die eigene Erklärung aufnehmen und anhören, ein geteiltes Board, sofortige Rückmeldung mit Erklärung.
 - Sinneskanäle sind keine Lerntypen. Jede Methode hat ein »Weniger geeignet« – das wird genannt.
 - Wirksamkeit in drei Stufen, nur aus der Quelle: **gut belegt** · teilweise belegt · *wenig erforscht*.
 - **Lesen:** Erst klären, ob die Lernenden den Text überhaupt flüssig lesen können – sonst helfen Strategien wenig. Strategien gebündelt üben (vorher – während – nachher), von der Lehrkraft vorgemacht. Markieren nur mit Regel und Übung, und danach folgt eine Tat (Stichwort, Frage, Struktur). Längere Sachtexte auf Papier.
@@ -71,7 +71,7 @@ Genau diese Teile, in dieser Reihenfolge:
 4. **So geht's** – fünf Schritte
 5. **Beispiel** aus dem Fach der Lerngruppe mit einem typischen Fehler
 6. **Mit Tablet** – nur, wenn es etwas kann, was Papier nicht kann; sonst »auf Papier gleich gut«
-7. **KI-Unterstützung** – ein Prompt in [Klammern] für Platzhalter, dazu **Grenzen** (»Gib mir die Lösung erst, wenn ich darum bitte.«; erst selbst, dann KI; Selbsttest ohne KI); nur der schulisch freigegebene Zugang
+7. **KI-Unterstützung** – ein Prompt mit Platzhaltern in [Klammern], dazu die **Grenzen** aus `unterricht-digitalisieren` (»Nur wenn Lernende mit KI arbeiten«): mindestens »Gib mir die Lösung erst, wenn ich darum bitte.«, erst selbst, dann KI, Selbsttest ohne KI; nur der schulisch freigegebene Zugang
 8. **Datenschutz** – keine Namen, nichts Persönliches eingeben
 9. **Quelle** mit Datum
 
@@ -80,6 +80,10 @@ Kurz, Alltagssprache, Fachbegriffe nur mit Erklärung. Zielgröße: passt gedruc
 ## Nur wenn: Kartei-App mit Methodenkarten
 
 Soll aus den Handouts eine Lernseite werden, übergib an `lernseite-bauen` (Zusatz-Plugin »kidu-bau«; ohne es diese Vorgaben als Bauauftrag liefern): Jede Methode ein Datensatz mit festem Schema (als JS für `file://`): Name, Art, Bereich, Dauer, Sozialform, Wirksamkeit nur aus Quelle, Definition, gut/weniger geeignet, Vorgehen, Beispiel mit Fach, KI-Unterstützung, Prompts, Grenzen, Quelle. Finden nach Situation (»Ich schiebe auf«), Kategorien nur als Zusatzfilter. Prompt-Kopierfeld mit hervorgehobenen Platzhaltern, Rückfall »markieren und Strg + C«, Grenzen direkt darunter, keine KI-Anbindung. Druck: eine Karte je Seite A4. Inhaltsprüfung als Test über die Datendatei: Pflichtfelder oder »noch offen«; jede Karte hat »Weniger geeignet«, Grenzen, Altersgrenze und Datenschutz; Seitenzahl = Kartenzahl.
+
+## Fallstricke (alle schon passiert)
+
+- Effektstärken aus zweiter Hand: Stammt eine Effektstärke nur aus einer Sekundärquelle, steht die Sekundärquelle dabei; was nicht im Original gelesen wurde, heißt »nicht im Original gelesen« (Kidu, Vorhaben Aufgabenmethodik, 11.11.2026).
 
 ## Kurzfassung für Kidu
 
@@ -110,6 +114,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 
 ## Versionen
 
+- **v1.4, 18.11.2026:** Ohne Dopplungen (Abgleich mit den älteren Einzelfassungen der Skills): Grundregeln als Kurzzeile; Haltung, Papierprobe und KI-Grenzen verweisen auf `unterricht-digitalisieren`. Neuer Abschnitt »Fallstricke« mit einem Eintrag, der bisher nur in den Einzelfassungen stand. Kurzfassung unverändert.
 - **v1.3, 13.11.2026:** Neuer Abschnitt »Sichern und üben – mit Methode« zur neuen Phase von Kidu (Konsolidierung): drei Teile – festhalten, üben, später wieder abrufen – mit passenden Methoden; Abrufstart als wiederkehrender Baustein einer Einheit; bei Urteilsaufgaben das Begründen üben; Tablet nur, wo es mehr kann als Papier. Tabellenzeile »festigen, üben« umbenannt; Kurzfassung um eine Regel ergänzt.
 - **v1.2, 11.11.2026:** Lesen und Strukturlegen: neue Referenz `references/lesen-und-strukturlegen.md` (Lesekompetenz in drei Ebenen, Strategietrainings, Markieren, Papier oder Bildschirm, Begriffsnetze und Struktur-Lege-Technik, Faustregeln, was das Gerät wirklich besser kann – mit Quellen und Belegstand); Tabelle »Texte erschließen« und »Verständnis aufbauen« erweitert; Haltung und Kurzfassung um Regeln zu Lesen und Strukturlegen ergänzt.
 - **v1.1, 10.11.2026:** Name Kidu (vorher »Hilde Digital«); Abschnitt »Kurzfassung für Kidu« als einzige Quelle für den kopierbaren Auftrag auf der Website.

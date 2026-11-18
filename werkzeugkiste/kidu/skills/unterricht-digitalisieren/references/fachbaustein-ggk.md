@@ -1,6 +1,6 @@
 # Fachbaustein Geschichte und Gemeinschaftskunde
 
-Gilt für jeden Vorschlag, jede Prüfung und jede Lernseite im Fach GGK oder Geschichte. Quellen der Regeln: Bausteine »Geschichtsdidaktik« und »Politische Bildung« im Tresor, Erfahrungen aus M18 bis M20, Politik-Werkstatt und Nation im Kopf.
+Gilt für jeden Vorschlag, jede Prüfung und jede Lernseite im Fach GGK oder Geschichte. Fachgebundene Lehren aus Erprobungen kommen hierher, nicht in die Skills. Quellen der Regeln: Bausteine »Geschichtsdidaktik« und »Politische Bildung« im Tresor, Erfahrungen aus M18 bis M20, Politik-Werkstatt und Nation im Kopf.
 
 ## Grundregeln
 
@@ -26,8 +26,13 @@ Gilt für jeden Vorschlag, jede Prüfung und jede Lernseite im Fach GGK oder Ges
 
 - Propaganda und Täterzitate nur zur Analyse, eingeordnet, mit Quelle. Täterbegriffe in Anführungszeichen. Bei belastenden Inhalten kurzer Hinweis vorab.
 - Würde der Opfer: keine Rollenspiele von Verfolgung oder Täter*innen, keine Simulation von Gewalt. Perspektiven werden untersucht, nicht gespielt.
-- Keine NS-Symbole, -Farben (Rot-Schwarz-Weiß), -Schriften (Fraktur) oder Kriegsästhetik als Gestaltung; keine Belohnungs-Animationen bei Inhalten über Verfolgung und Tod. Die Bildwelt kommt aus der Arbeit der Historiker*innen (Archiv, Quellenarbeit, Zeitleiste), nie aus der Ästhetik der Täter*innen.
+- Keine NS-Symbole, -Flaggen, -Farben (Rot-Schwarz-Weiß), -Schriften (Fraktur), keine Propaganda als Schmuck und keine Kriegsästhetik als Gestaltung; keine Belohnungs-Animationen und keine Geräusche bei Inhalten über Verfolgung, Krieg und Mord. Die Bildwelt kommt aus der Arbeit der Historiker*innen (Archiv, Quellenarbeit, Zeitleiste), nie aus der Ästhetik der Täter*innen. Diese Regel ist die eine Stelle dafür; `signatur-design`, `schaubild-design` und `film-regie` im Zusatz-Plugin »kidu-bau« verweisen hierher.
 - Namen und Bilder von Opfern nur aus Gedenk- und Archivquellen, mit Angabe. KI-Bilder historischer Szenen sind keine Quellen und werden nie als Fotos ausgegeben.
+
+## Fachgrenzen Politik (aus Erprobungen)
+
+- In kleinen Gruppen springt eine Hürde (5 %) schon bei einer Stimme – kleine Optionen nicht pauschal zu »Sonstige« zusammenfassen, und die Seite erklärt selbst, wohin eine Stimme gegangen ist (Politik-Werkstatt, Klassenwahl, 08.11.2026).
+- Positionen nicht als Beleg für Einfluss darstellen – belegt ist, wer was forderte, nicht wer es durchsetzte (GK-Labor v12, Verbände und Lobbyismus, 10.11.2026).
 
 ## Typischer Tablet-Beitrag in GGK
 
@@ -37,7 +42,7 @@ Was auf Papier besser bleibt: lange Quellen lesen und markieren, Deutungsgesprä
 
 ## KI-Risiken in GGK
 
-KI erfindet Zitate, Belege, Wirkungszahlen und Bildadressen – jedes Zitat am Original prüfen, jede Zahl mit Herkunft. KI glättet Kontroversen. KI-Reste im Material suchen (»+1«, »Sag Bescheid«, alleinstehende Fußnotenziffern, »Stand meiner letzten Aktualisierung«).
+KI erfindet Zitate, Belege, Wirkungszahlen und Bildadressen – jedes Zitat am Original oder in einer Quellenedition prüfen, jede Zahl mit Herkunft. KI glättet Kontroversen. KI-Reste im Material suchen (»+1«, »Sag Bescheid«, alleinstehende Fußnotenziffern, »Stand meiner letzten Aktualisierung«).
 
 ## Prüffragen
 

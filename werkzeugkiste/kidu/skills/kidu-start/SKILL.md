@@ -7,6 +7,8 @@ description: "Einstieg in Kidu · Künstliche Intelligenz und digitaler Unterric
 
 Kidu steht für **Künstliche Intelligenz und digitaler Unterricht**. Dieses Plugin ist das Werkzeug für lernwirksamen Unterricht mit KI und Tablet – nicht an eine Schule gebunden. Es nimmt Lehrkräften Vorbereitung ab, nicht das Urteil: Jeder Weg beginnt mit der Frage, ob das Tablet hier etwas kann, was Papier nicht kann.
 
+**Grundregeln** – Wortlaut in `unterricht-digitalisieren`: Anliegen vor Werkzeug · nichts erfinden · einfache Sprache (Lehrkraft »du«, Lernende wie im vorhandenen Material) · Datenschutz · Barrierefreiheit (WCAG 2.2 AA) · offline, keine Anbieternamen · Bestand vor Neubau, der Mensch entscheidet · ehrlich berichten.
+
 ## Zwei Einstiege und ein Zusatz
 
 | Die Lehrkraft will … | Weg | Skill |
@@ -16,14 +18,14 @@ Kidu steht für **Künstliche Intelligenz und digitaler Unterricht**. Dieses Plu
 
 Weitere Wege auf Zuruf: Lernstrategie als Handout (`lernmethode-einfuehren`), KI-Grenzen einer Aufgabe festlegen (`ki-grenzen-einer-aufgabe`), KI-Antworten prüfen üben (`ki-faktencheck`), KI-Fortbildung im Kollegium (`ki-kompetenz-kollegium`), eine Idee planvoll erproben (`praxisforschung-im-kollegium`).
 
-**Zusatz: Lernseite bauen.** Eine Lernseite, ein Labor, einen Lernpfad, ein Quiz mit Rückmeldung oder ein Moodle-Paket bauen, dazu Schaubilder und Erscheinungsbild – das liegt im Zusatz-Plugin **»kidu-bau«** (`lernseite-bauen`, `signatur-design`, `website-design-workflow`, `schaubild-design`).
+**Zusatz: Lernseite bauen.** Eine Lernseite, ein Labor, einen Lernpfad, ein Quiz mit Rückmeldung oder ein Moodle-Paket bauen, dazu Schaubilder, Erscheinungsbild, Bewegung als Lernmittel und Filme – das liegt im Zusatz-Plugin **»kidu-bau«** (`lernseite-bauen`, `signatur-design`, `website-design-workflow`, `schaubild-design`, `bewegung-als-lernmittel`, `film-regie`).
 - Ist es installiert: Die Entscheidung trifft trotzdem zuerst `unterricht-digitalisieren`; den Bau übernimmt dann `lernseite-bauen`.
 - Ist es nicht installiert: `unterricht-digitalisieren` bis zum **Übergabeblock** gehen und ihn als fertigen Bauauftrag liefern – für später oder für eine Kollegin mit dem Bau-Plugin. Sag das in einem Satz, ohne zu bauen. Oft ist eine Moodle-Aktivität, H5P oder Papier ohnehin die passendere Form.
 - Ohne Plugin, in jedem freigegebenen KI-System: Auf der Website Kidu baut »Bisherigen Unterricht digitalisieren« mit der Ausgabe »Lernseite als eine HTML-Datei« einen Auftrag mit den Regeln für Lernseiten und Gestaltung.
 
 ## Kidu ohne Plugin
 
-Jeder Skill dieses Plugins hat einen Abschnitt **»Kurzfassung für Kidu«**. Daraus entstehen die kopierbaren Aufträge auf der Website Kidu (»Bisherigen Unterricht digitalisieren«, »Digital-Check«, »Aufträge zum Kopieren«). Wer kein Plugin installieren kann, nutzt diese Aufträge – das Ergebnis folgt denselben Regeln, nur kürzer. Fragt eine Lehrkraft danach, verweise auf die Seite »Methodenkoffer« von Kidu.
+Jeder Skill dieses Plugins hat einen Abschnitt **»Kurzfassung für Kidu«**. Daraus entstehen die kopierbaren Aufträge auf der Website Kidu (»Bisherigen Unterricht digitalisieren«, »Digital-Check«, »Aufträge zum Kopieren«). Wer kein Plugin installieren kann, nutzt diese Aufträge – das Ergebnis folgt denselben Regeln, nur kürzer. Fragt eine Lehrkraft danach, verweise auf die Seite »Skillkoffer« von Kidu.
 
 ## Kidu auf der Website: vier Phasen
 
@@ -42,7 +44,7 @@ Dazu kommen die Unterrichtsbeispiele (»analog und digital, beides mit KI erstel
 
 1. **Zuordnen.** Lies die Anfrage und wähle den Weg aus der Tabelle. Bei vagen Anfragen (»mach das mal digital«) → `unterricht-digitalisieren`. Bei angehängtem fertigem Material ohne Bauauftrag → `digital-check`. Bei beidem unklar: eine Rückfrage, nicht mehr.
 2. **Ankündigen.** Ein Satz: »Ich gehe den Weg ›Digitalen Unterricht erstellen‹ – zuerst prüfe ich, ob das Tablet hier etwas kann, was Papier nicht kann.«
-3. **Übergeben.** Lade den Skill und folge ihm. Die Grundregeln gelten überall: nichts erfinden, Lernende mit »du«, Datenschutz (keine Namen, nichts an Server senden), Bestand vor Neubau, die Lehrkraft entscheidet, ehrlich berichten – auch, was nicht geprüft werden konnte (»Nur du kannst das«).
+3. **Übergeben.** Lade den Skill und folge ihm. Die Grundregeln oben gelten überall – auch »Nur du kannst das« für alles, was nicht geprüft werden konnte.
 
 ## Ohne Repository, Tresor oder Prüf-Plugins
 
@@ -59,6 +61,7 @@ Lösungen vor der eigenen Festlegung zeigen · Ranglisten, Punkte, Konfetti · I
 
 ## Versionen
 
+- **v3.5, 18.11.2026:** Kidu 4.51, ohne Dopplungen: Grundregeln als Kurzzeile oben statt einer eigenen Zusammenfassung in »So gehst du vor« (die sagte »Lernende mit ›du‹« – jetzt gilt die Anrede der vorhandenen Materialien, Entscheidung Mario, 18.11.2026). »kidu-bau« mit allen sechs Bau-Skills (neu genannt: `bewegung-als-lernmittel`, `film-regie`). »Skillkoffer« statt »Methodenkoffer«.
 - **v3.4, 18.11.2026:** Kidu 4.49: Phase 2 des KI-Trainings heißt »Analogen Unterricht mit KI vorbereiten« (vorher »Unterricht mit KI vorbereiten«).
 - **v3.3, 17.11.2026:** Kidu 4.46: Phase 2 mit Reihenfolge (Papierfrage zuerst, Digital-Check zum Schluss), »Ideen und Kniffe« im Aufgabenkoffer, Skillkoffer statt Methodenkoffer, »Tipps und Tricks« in Phase 3; Fortbildungsbaustein, Beratungsstunde und Leitsätze nicht mehr im Fahrplan. KI-Training in vier Phasen mit Trainingsaufgaben und Aufgabenkoffer auf Papier.
 - **v3.2, 13.11.2026:** Neue Wege und Namen von Kidu 4.36/4.37: Einstieg »Digitalen Unterricht erstellen« mit »Unterricht neu planen« und »Bisherigen Unterricht digitalisieren«, bei mehreren Stunden zuerst Schritt E; »Unterrichtsbeispiele« statt »Galerie«; Digital-Check mit zwei Blöcken. Neuer Abschnitt »Kidu auf der Website: vier Phasen« (Grundlagen · Digitalen Unterricht erstellen · Unterrichten · Nach der Stunde) mit den passenden Skills.

@@ -5,7 +5,7 @@
 var KURZFASSUNGEN = {
   "plugin": {
     "name": "kidu",
-    "version": "0.7.1"
+    "version": "0.8.1"
   },
   "skills": {
     "digital-check": {
@@ -50,8 +50,8 @@ var KURZFASSUNGEN = {
         "Lehrkraftbereich: Wenn es einen gibt – ist er von Anfang an verschlüsselt und in die Seite eingebettet, nicht nur hinter einem Codewort?"
       ],
       "wo": "Digital-Check · Weg »Mit KI prüfen«, Abschnitte »Typische Schwächen« und »Gestaltung«",
-      "fassung": "v1.5",
-      "datum": "17.11.2026",
+      "fassung": "v1.6",
+      "datum": "18.11.2026",
       "lizenz": false,
       "herunterladen": true
     },
@@ -73,10 +73,10 @@ var KURZFASSUNGEN = {
       "name": "Eine Übung: KI-Antworten prüfen",
       "kurz": "Deine Lernenden lernen, eine KI-Antwort zu prüfen, statt ihr zu glauben: erfundene Quellen, Zahlen ohne Herkunft, falsche Zitate.",
       "ziel": "Bereite eine Übung vor, in der meine Lernenden eine KI-Antwort prüfen, statt ihr zu glauben.",
-      "format": "Ein Arbeitsblatt für die Lernenden mit Anrede »du« und diesen Zeichen zum Markieren: ★ Zahl ohne Beleg · ! falsche Sicherheit · ≡ Aufzählung ohne Begründung · ? fehlende Gegenposition · ~ vage Wörter · »« Zitat oder Zuschreibung, die geprüft werden muss. Dazu der Ablauf mit Minuten.",
+      "format": "Ein Arbeitsblatt für die Lernenden in der Anrede, die sie aus meinen Materialien kennen (»du« oder »Sie«), mit diesen Zeichen zum Markieren: ★ Zahl ohne Beleg · ! falsche Sicherheit · ≡ Aufzählung ohne Begründung · ? fehlende Gegenposition · ~ vage Wörter · »« Zitat oder Zuschreibung, die geprüft werden muss. Dazu der Ablauf mit Minuten.",
       "wo": "Aufträge zum Kopieren · »Eine Übung: KI-Antworten prüfen«",
-      "fassung": "v2",
-      "datum": "10.11.2026",
+      "fassung": "v2.1",
+      "datum": "18.11.2026",
       "lizenz": true,
       "herunterladen": true
     },
@@ -100,10 +100,10 @@ var KURZFASSUNGEN = {
       "name": "KI-Regeln für eine Aufgabe festlegen",
       "kurz": "Statt »KI erlaubt« oder »KI verboten«: Für jeden Teil einer Aufgabe steht, ob KI hilft, egal ist oder das Lernen ersetzt – mit einem Regeltext für die Lernenden.",
       "ziel": "Leg für die Aufgabe unten fest, welche Teile die Lernenden mit KI bearbeiten dürfen und welche sie selbst tun – statt pauschal »KI erlaubt« oder »KI verboten«.",
-      "format": "Eine Tabelle der Teile mit Einstufung, Begründung und Regel. Dann ein Regeltext für die Lernenden mit Anrede »du«, je Teil ein Satz mit Grund. Dann drei bis fünf kleine Vorschläge, die Aufgabe nachzuschärfen. Zum Schluss die Grenzen deiner Einschätzung.",
+      "format": "Eine Tabelle der Teile mit Einstufung, Begründung und Regel. Dann ein Regeltext für die Lernenden in der Anrede, die sie aus meinen Materialien kennen (»du« oder »Sie«), je Teil ein Satz mit Grund. Dann drei bis fünf kleine Vorschläge, die Aufgabe nachzuschärfen. Zum Schluss die Grenzen deiner Einschätzung.",
       "wo": "Aufträge zum Kopieren · »KI-Regeln für eine Aufgabe festlegen«",
-      "fassung": "v2",
-      "datum": "10.11.2026",
+      "fassung": "v2.1",
+      "datum": "18.11.2026",
       "lizenz": true,
       "herunterladen": true
     },
@@ -130,8 +130,8 @@ var KURZFASSUNGEN = {
       "ziel": "Plane mit mir eine KI-Fortbildung für mein Kollegium. Sie geht von echten Aufgaben im Schulalltag aus, nicht von einzelnen Werkzeugen.",
       "format": "Ein Ablaufplan mit Minuten je Baustein, die Übung am eigenen Material, eine Materialliste und ein Entwurf für die Regel-Seite. Dann: was nach der Fortbildung passiert – Erprobung und ein Termin für die Auswertung.",
       "wo": "Aufträge zum Kopieren · »Eine KI-Fortbildung im Kollegium planen«",
-      "fassung": "v2.3",
-      "datum": "17.11.2026",
+      "fassung": "v2.4",
+      "datum": "18.11.2026",
       "lizenz": false,
       "herunterladen": true
     },
@@ -157,8 +157,8 @@ var KURZFASSUNGEN = {
       "ziel": "Wähle für die Stelle im Unterricht, die ich unten beschreibe, eine passende Lernmethode und schreib ein Handout für die Lernenden auf einer Seite.",
       "format": "Ein Handout mit diesen Teilen: Kopf (Name, Dauer, Sozialform, wie gut belegt) · Was das ist (drei Sätze) · Gut geeignet / weniger geeignet · So geht's (fünf Schritte) · Beispiel aus meinem Fach mit einem typischen Fehler · Mit Tablet (nur, wenn es etwas kann, was Papier nicht kann; sonst »auf Papier gleich gut«) · KI-Unterstützung (ein Auftrag mit [Platzhaltern] und Grenzen: erst selbst, dann KI; die Lösung erst auf Bitte; Selbsttest ohne KI) · Datenschutz · Quelle mit Datum. Danach ein Minutenplan für die erste Anwendung im Unterricht.",
       "wo": "Aufträge zum Kopieren · »Eine Lernmethode einführen«",
-      "fassung": "v1.3",
-      "datum": "13.11.2026",
+      "fassung": "v1.4",
+      "datum": "18.11.2026",
       "lizenz": false,
       "herunterladen": true
     },
@@ -184,8 +184,8 @@ var KURZFASSUNGEN = {
       "ziel": "Plane mit mir eine kleine Erkundung: Ich will eine Unterrichtsidee ausprobieren und ehrlich auswerten, ob sie den Lernenden hilft. Die Idee beschreibe ich bei »Thema«.",
       "format": "Ein Plan mit: Frage · Ausgangslage · Veränderung · Belege (Tabelle mit Aufwand) · Leitfragen für die Auswertung · Entscheidung · wie ich es im Kollegium teile. Dauer sechs bis zehn Wochen, wenn ich nichts anderes sage.",
       "wo": "Aufträge zum Kopieren · »Eine Idee im Unterricht erproben«",
-      "fassung": "v2",
-      "datum": "10.11.2026",
+      "fassung": "v2.1",
+      "datum": "18.11.2026",
       "lizenz": true,
       "herunterladen": true
     },
@@ -220,8 +220,8 @@ var KURZFASSUNGEN = {
         "Kein Rang: Eine Stunde ganz auf Papier ist ein gutes Ergebnis. Punktuell, phasenweise und durchgängig sind gleichwertig."
       ],
       "wo": "Bisherigen Unterricht digitalisieren · Abschnitt »Vorgehen« im Prompt",
-      "fassung": "v4.6",
-      "datum": "17.11.2026",
+      "fassung": "v4.7",
+      "datum": "18.11.2026",
       "lizenz": false,
       "herunterladen": true
     },

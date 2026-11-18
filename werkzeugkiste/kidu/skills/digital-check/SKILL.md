@@ -1,13 +1,15 @@
 ---
 name: "digital-check"
-description: "Fertiges Unterrichtsmaterial auf pädagogische Qualität und digitalen Beitrag prüfen – Arbeitsblatt, Präsentation, Quiz, H5P, Moodle-Kurs, HTML-Lernseite, Simulation, Video, Lernangebot mit KI oder eine ganze Stunde. Nutze diesen Skill immer, wenn eine Lehrkraft fragt »Taugt das?«, »Lohnt sich das Tablet hier?«, »Was kann das besser als Papier?«, Material zur Rückmeldung anhängt, eine Lernseite auf Fehler und Schwächen durchsehen lässt, einen Eintrag für die Unterrichtsbeispiele von Kidu (früher »Galerie«) braucht oder den kopierbaren Prüf-Auftrag für ein KI-System will. Auch wenn die Lehrkraft nur »schau mal drüber« sagt."
+description: "Fertiges Unterrichtsmaterial auf pädagogische Qualität und digitalen Beitrag prüfen – Arbeitsblatt, Präsentation, Quiz, H5P, Moodle-Kurs, HTML-Lernseite, Simulation, Video, Lernangebot mit KI oder eine ganze Stunde. Nutze diesen Skill immer, wenn eine Lehrkraft zu fertigem Material fragt »Taugt das?«, »Lohnt sich das Tablet hier?«, »Was kann das besser als Papier?«, Material zur Rückmeldung anhängt, eine Lernseite auf Fehler und Schwächen durchsehen lässt, einen Eintrag für die Unterrichtsbeispiele von Kidu (früher »Galerie«) braucht oder den kopierbaren Prüf-Auftrag für ein KI-System will. Auch wenn die Lehrkraft nur »schau mal drüber« sagt. Nicht für das Weiterentwickeln (→ unterricht-digitalisieren) oder Bauen (→ lernseite-bauen im Zusatz-Plugin kidu-bau)."
 ---
 
 # Digital-Check: Material prüfen
 
 Eine kollegiale, begründete Rückmeldung zu vorhandenem Material – keine Note. Leitfrage: **Was kann das Material hier besser als Papier – und was nicht?** Die Weiterentwicklung ist nicht Teil der Prüfung; sie kommt als Ideen zur Auswahl am Ende und läuft dann über `unterricht-digitalisieren` oder – mit dem Zusatz-Plugin »kidu-bau« – über `lernseite-bauen`.
 
-Grundregeln wie in `unterricht-digitalisieren`: nichts erfinden, einfache Sprache mit »du«, keine Noten oder Prozentwerte, Datenschutz, ehrlich berichten.
+**Grundregeln** – Wortlaut in `unterricht-digitalisieren`: Anliegen vor Werkzeug · nichts erfinden · einfache Sprache (Lehrkraft »du«, Lernende wie im vorhandenen Material) · Datenschutz · Barrierefreiheit (WCAG 2.2 AA) · offline, keine Anbieternamen · Bestand vor Neubau, der Mensch entscheidet · ehrlich berichten.
+
+Dieser Skill ist der eine Ort für das Qualitätsmodell (14 Bereiche, Stufen, Kernbereiche je Materialtyp, Rahmenfragen), die Regeln der Einschätzung und die Liste typischer Schwächen.
 
 **Zwei Prüfblöcke, getrennt eingeschätzt:** Block 1 **Didaktik** – was die Lernenden tun und was das Gerät dazu beiträgt. Block 2 **Gestaltung** – wie die Seite aussieht und sich bedient. Die Gestaltung ändert keine Stufe der Didaktik: Eine schöne Seite rettet keine schwache Aufgabe, eine schlichte schwächt keine starke.
 
@@ -21,8 +23,8 @@ Lies das ganze Material und alles, was dazugehört: Verlaufsplan, README, Lösun
 2. **Je Bereich zwei Achsen**, nur in Worten: pädagogische Qualität (nicht erkennbar · ansatzweise · solide angelegt · deutlich ausgeprägt · besonders überzeugend) und digitaler Beitrag (kein erkennbarer · geringer · klarer · besonderer digitaler Mehrwert). Stufenbeschreibungen in der Referenz – lies sie für die Kernbereiche.
 3. **Vergleich mit Papier** je Bereich, ein Satz: gleich gut · nur mit mehr Aufwand · nur eingeschränkt · kaum möglich.
 4. **Fundstelle** zu jeder Aussage (Zitat oder genaue Stelle). Ohne Fundstelle: »im Material nicht erkennbar«.
-5. **Papierprobe je Phase** – auch rückwärts: Welche Phase wäre auf Papier besser (Lesen, Schreiben von Hand, Gespräch, Ruhe)?
-6. **Zeitdiagnose** bei Stunden und Lernseiten: Wortzahl ÷ 150 Wörter pro Minute, plus Eingaben und Wechsel. Passt es in die Stunde?
+5. **Papierprobe je Phase** nach `unterricht-digitalisieren`, Schritt 2 – auch rückwärts: Welche Phase wäre auf Papier besser (Lesen, Schreiben von Hand, Gespräch, Ruhe)?
+6. **Zeitdiagnose** bei Stunden und Lernseiten nach `unterricht-digitalisieren`, Schritt 5 (Wortzahl ÷ 150 Wörter pro Minute, plus Eingaben und Wechsel). Passt es in die Stunde?
 7. **Aus Sicht einer Schülerin ohne Vorkenntnisse:** Ist jeder Auftrag verständlich? Sind die nötigen Inhalte an der richtigen Stelle? Lassen sich die Aufgaben mit dem bereitgestellten Material lösen? Werden Inhalte und eigene Ergebnisse gesichert? Ist jede Quelle, jedes Bild, jede Zahl belegt oder als Modell oder ausgedachter Fall gekennzeichnet?
 8. **Lehrfunktion je Phase** (Prüfraster aus `unterricht-digitalisieren`, Schritt 2) – je Phase, die das Material abdeckt:
    - *Einstieg:* Legt sich jede Person fest, bevor erklärt wird? Wird die Frage der Stunde klar?
@@ -50,6 +52,9 @@ Nur bei digitalem Material. Je Regel nur nennen, was auffällt, mit Fundstelle; 
 
 ## Regeln der Einschätzung
 
+Sie setzen die Haltung aus `unterricht-digitalisieren` für die Prüfung um. Weg B enthält sie in eigener Fassung (erzeugt aus `assets/pruef-prompt.js` in Kidu) – ändert sich hier eine Regel, dort mitprüfen.
+
+- Keine Noten, Punkte oder Prozentwerte; Stufen nur in Worten.
 - Technik rettet keine schwache Aufgabe: Qualität höchstens »ansatzweise« → Beitrag höchstens »gering«.
 - Motivation allein ist kein Lernmehrwert; Spielelemente zählen nur, wenn sie das Lernen stützen.
 - »Analog oder hybrid passt besser« ist ein vollwertiges Ergebnis. Punktuell ist keine Vorstufe – bewerte das Material für seinen Zweck.
@@ -73,7 +78,7 @@ Aus der Analyse von 26 Lernseiten eines Kollegiums – sie kommen immer wieder:
 - **Kein Übertragen:** Die Stunde endet mit Festhalten; ein neuer Fall, an dem das Gelernte gilt oder nicht gilt, fehlt. In den Unterrichtsbeispielen von Kidu ist diese Phase die seltenste (Stand 13.11.2026).
 - **Mehrere Stunden ohne Rahmen:** Module ohne gemeinsame Leitfrage und Landkarte bleiben Inseln; eine Stunde bekommt ein Gerät, nur weil die Nachbarstunde eins hat.
 - **Ohne Weg und Ende:** Es fehlt, wohin die Reise geht; eine Station hat kein Fertig-Kriterium; der Fortschritt zählt Klicks statt Können.
-- **Ergebnisse vieler Geräte bündeln:** Lernende sollen Ergebnisse über QR-Code oder Import zusammenführen. In der Erprobung kostete das zu viel Zeit; einfacher ist ein Gerät vorne und das Gespräch im Plenum (Psycho-Labor, 09.11.2026).
+- **Ergebnisse vieler Geräte bündeln:** Lernende sollen Ergebnisse über QR-Code oder Import zusammenführen – in der Erprobung zu zeitaufwendig; einfacher ist ein Gerät vorne und das Gespräch im Plenum (Beleg und Katalog mit Grenzen: `unterricht-digitalisieren`, Schritt 5).
 - **Lange Sachtexte am Gerät,** besonders unter Zeitdruck oder vor einer Prüfung: Papierfassung vorschlagen (Lesen am Bildschirm im Mittel leicht im Nachteil).
 - **Leseaufgabe ohne Weg:** nur »Lies den Text« oder »Markiere das Wichtige« – ohne Frage, mit der man liest, ohne Regel fürs Markieren, ohne etwas, das danach mit den Markierungen geschieht. Markieren ohne Regel und Übung bringt wenig (Ponce, Mayer & Méndez 2022).
 - **Legeaufgabe ohne Beziehungen:** Karten werden nur in Gruppen geschoben, ohne benannte Beziehung und ohne Begründung; die fertige Struktur der Lehrkraft ist vorher sichtbar; bei vielen Karten gibt es keinen Zwischenstand und kein Zurücklegen einzelner Karten.
@@ -111,6 +116,10 @@ Liegt `assets/daten/beispiele.js` vor: Status nur aus der erlaubten Liste (Idee 
 ## Nur wenn: Obsidian-Tresor verbunden
 
 Biete an, die Prüfung mit »Vorlage – Digital-Check« als Notiz abzulegen (Felder: materialtyp, fach, lerngruppe, einschaetzung; Tabelle Bereich · Qualität · Beitrag · Papier · Fundstelle; höchstens drei Schritte).
+
+## Fallstricke (alle schon passiert)
+
+- Bevor eine Prüfung festhält, etwas »steht nirgends«, auch die Rahmenfragen des Digital-Checks durchsuchen – Abschnitt »Rahmen« in `references/qualitaetsmodell.md`; seit Kidu 4.18 stehen dort vier Fragen nur für digitales Material (Sichtung Kidu, 13.11.2026).
 
 ## Kurzfassung für Kidu
 
@@ -160,6 +169,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 
 ## Versionen
 
+- **v1.6, 18.11.2026:** Ohne Dopplungen (Abgleich mit den älteren Einzelfassungen der Skills): Grundregeln als Kurzzeile; »keine Noten, Punkte oder Prozentwerte« steht jetzt bei den Regeln der Einschätzung. Papierprobe, Zeitdiagnose und Ergebnisbündelung verweisen auf `unterricht-digitalisieren`. Beschreibung grenzt »Lohnt sich das Tablet hier?« auf fertiges Material ein (die Frage steht auch bei `unterricht-digitalisieren`). `references/qualitaetsmodell.md` wird aus `assets/daten/qualitaet.js` erzeugt: Kernbereiche wieder wie auf der Website (die Kopie von 4.5 war veraltet; neu: HTML-Lernumgebung), dazu die Rahmenfragen. Neuer Abschnitt »Fallstricke« mit einem Eintrag, der bisher nur in den Einzelfassungen stand. Kurzfassung und Weg B unverändert.
 - **v1.5, 17.11.2026:** Nach den Erprobungen im Psycho-Labor, GGK-Labor und in der Politik-Werkstatt (persönliche Beobachtungen, November 2026): sechs typische Schwächen ergänzt – Aufdecken vor dem Festlegen, Kriterien vor dem eigenen Text, ohne Kernentscheidung, ohne Denkwerkzeug des Fachs, Sicherung ohne Maß, Rechte und Würde. Kurzfassung: sieben Prüfpunkte in »Anforderungen« (dazu »Ergebnisse vieler Geräte« aus v1.4), in »Gestaltung« Orientierung wie auf einem Arbeitsblatt, Schrift- und Zielgröße, Bilder nach Kartenbreite. Block 2 hat dafür eine elfte Prüffrage.
 - **v1.4, 13.11.2026:** Zwei Prüfblöcke, getrennt eingeschätzt: Block 1 Didaktik (bisheriges Vorgehen, neu: Lehrfunktion je Phase mit Prüffragen; bei mehreren Stunden »Hat jede Stunde ihren eigenen, begründeten Umfang?«), Block 2 Gestaltung (zehn Prüffragen zu den elf Gestaltungsregeln, benannte Regeln in `DESIGN.md` von Kidu). Form der Antwort mit eigenem Teil »Gestaltung«. Typische Schwächen aus der Sichtung vom 13.11.2026: Rückmeldung vor der Festlegung lesbar, Übersicht nimmt die Antwort vorweg, Sichern ohne Üben, kein Übertragen, mehrere Stunden ohne Rahmen, ohne Weg und Ende, Ergebnisse vieler Geräte bündeln. Unterrichtsbeispiele (früher Galerie): Status »in der Praxis erprobt«, Bereich »Außerhalb des Unterrichts«, Einheit als eigener Eintrag. Kurzfassung: neue Liste »Gestaltung« (Block 2).
 - **v1.3, 11.11.2026:** Zwei typische Schwächen ergänzt: Leseaufgabe ohne Weg, Legeaufgabe ohne Beziehungen (nach der Recherche zu Lesen und Strukturlegen, `lernmethode-einfuehren/references/lesen-und-strukturlegen.md`).

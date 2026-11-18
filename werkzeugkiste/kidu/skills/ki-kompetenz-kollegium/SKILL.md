@@ -21,23 +21,13 @@ Kidu ist eine Fortbildungsplattform für Lehrkräfte – zum Selbermachen und f�
 
 Kidu ist ohne Auftrag einer Schule entstanden und kein beschlossenes Schulkonzept; eine Fortbildung nutzt die Werkzeuge, ohne sie als Schulregel auszugeben.
 
-## Gemeinsame Grundregeln (wortgleich in allen Skills von Kidu)
-
-1. **Erst das Anliegen, dann das Werkzeug.**
-2. **Nichts erfinden.** Keine Quellen, Zitate, Zahlen, Links, Bilder oder Funktionen ohne Beleg. Unbekanntes heißt »noch offen«.
-3. **Einfache Sprache.** Kurze Sätze, Anrede »du«, Fachbegriffe erst in einer Vertiefung.
-4. **Datenschutz.** Keine Namen, Noten oder Daten von Lernenden oder Kolleg*innen. Kein Tracking, keine Anmeldung. Gespeichert wird nur im Browser, löschbar.
-5. **Barrierefreiheit.** WCAG 2.2 AA, Zielflächen 44 px, Schrift ab 16 px, Farbe nie allein, Tastatur.
-6. **Offline.** Läuft per `file://`, alles lokal, keine KI-Anbindung.
-7. **Bestand vor Neubau, der Mensch entscheidet.** Erst vorhandene Dateien lesen, dann nur nach Fehlendem fragen. Vorschläge zur Auswahl vorlegen. Branch und Pull Request; zusammenführen nur nach ausdrücklicher Freigabe.
-8. **Ehrlich berichten.** Nur Prüfungen nennen, die wirklich gelaufen sind.
+**Grundregeln** – Wortlaut in `unterricht-digitalisieren`: Anliegen vor Werkzeug · nichts erfinden · einfache Sprache (Lehrkraft »du«, Lernende wie im vorhandenen Material) · Datenschutz · Barrierefreiheit (WCAG 2.2 AA) · offline, keine Anbieternamen · Bestand vor Neubau, der Mensch entscheidet · ehrlich berichten.
 
 ## Zusätzlich für diesen Skill
 
-- **Nur das an der Schule freigegebene KI-System.** Keine Anbieternamen. Welche Systeme freigegeben sind, klärt die Schule. Ist es unbekannt: »noch offen«.
+- **Nur das an der Schule freigegebene KI-System.** Welche Systeme freigegeben sind, klärt die Schule. Ist es unbekannt: »noch offen«.
 - **Freiwillig und ohne Bewertung.** Keine Rangfolge, keine Einstufung von Personen, keine Liste, wer was kann. Kompetenzstufen beschreiben Angebote, nicht Menschen.
 - **KI kann Unterricht vorbereiten. Digitalität kann Lernen gestalten.** Beides kann zusammenkommen, muss es aber nicht. Ein mit KI vorbereitetes Arbeitsblatt darf auf Papier bleiben.
-- **Die Bewertung von Leistungen bleibt bei der Lehrkraft.** So sieht es auch die Kultusministerkonferenz vor.
 - **Rechtliches prüfen lassen.** Datenschutz, Urheberrecht und Pflichten der Schule klären Schulleitung, Datenschutzbeauftragte und Schulträger. Der Skill gibt Hinweise, keine Rechtsberatung.
 
 ## Grundlagen
@@ -97,9 +87,9 @@ Für KI-Fortbildung selbst gibt es bis Oktober 2026 keine kontrollierte Studie m
 | --- | --- | --- | --- |
 | **Abgeben oder selbst machen** (Delegation) | Welche Aufgabe gebe ich ab, welche bleibt bei mir – und warum? | Drei Aufgaben der eigenen Woche sortieren: abgeben · gemeinsam · selbst. Für eine Lernaufgabe die KI-Grenzen festlegen. | Skill `ki-grenzen-einer-aufgabe` |
 | **Gut beschreiben** (Description) | Was braucht die KI, damit sie nicht rät? | Eine schwache Anfrage nach den fünf Teilen umbauen: Ziel · Kontext · Anforderungen · Format · Prüfkriterien. Ergebnisse vergleichen. | Kidu: Prompten lernen, Schnell-Anfrage |
-| **Kritisch prüfen** (Discernment) | Stimmt das? Fehlt etwas? Woher weiß ich das? | Eine selbst erzeugte KI-Antwort aus dem eigenen Fach mit Markierungen prüfen, zwei Angaben am Original kontrollieren. | Skill `ki-faktencheck`; Kidu: Prüfliste im KI-Training |
-| **Verantwortlich handeln** (Diligence) | Darf ich das eingeben? Wie mache ich KI-Hilfe sichtbar? Wer trägt die Verantwortung? | Fälle sortieren: »darf rein« · »nur anonymisiert« · »nie«. Einen Satz zur Kennzeichnung für eigenes Material formulieren. | Regeln der Schule, Datenschutzhinweise in Kidu |
-| **Lernende begleiten** (UNESCO: KI-Pädagogik) | Wie lernen Lernende *mit* KI, ohne dass die KI das Denken übernimmt? | Einen Lern-Prompt mit Grenze schreiben (»Gib mir die Lösung erst, wenn ich darum bitte«). Für eine eigene Aufgabe festlegen: erst selbst, dann KI; wo zeigen die Lernenden, was sie ohne KI können? | Skill `unterricht-digitalisieren`, Abschnitt KI als Lernbegleitung |
+| **Kritisch prüfen** (Discernment) | Stimmt das? Fehlt etwas? Woher weiß ich das? | Eine selbst erzeugte KI-Antwort aus dem eigenen Fach mit Markierungen prüfen, zwei Angaben am Original kontrollieren. | Skill `ki-faktencheck`; Kidu: Prüf-Labor, Prüfliste in »Prompten lernen« |
+| **Verantwortlich handeln** (Diligence) | Darf ich das eingeben? Wie mache ich KI-Hilfe sichtbar? Wer trägt die Verantwortung? | Fälle sortieren: »darf rein« · »nur anonymisiert« · »nie«. Einen Satz zur Kennzeichnung für eigenes Material formulieren. | Regeln der Schule; Kidu: Sicher arbeiten in fünf Regeln |
+| **Lernende begleiten** (UNESCO: KI-Pädagogik) | Wie lernen Lernende *mit* KI, ohne dass die KI das Denken übernimmt? | Einen Lern-Prompt mit Grenze schreiben (»Gib mir die Lösung erst, wenn ich darum bitte«). Für eine eigene Aufgabe festlegen: erst selbst, dann KI; wo zeigen die Lernenden, was sie ohne KI können? | Skill `unterricht-digitalisieren`, Abschnitt »Nur wenn Lernende mit KI arbeiten« |
 | **Haltung und Ethik** (UNESCO) | Wofür wollen wir KI an unserer Schule – und wofür nicht? | Leitsätze der Schule lesen – oder drei eigene Sätze aufschreiben –, einen Satz ergänzen oder streichen, begründen. | Leitsätze der Schule, falls vorhanden |
 
 **Ausprägungen ohne Rangfolge:** Jeder Baustein hat eine Fassung zum *Aneignen* (erstes Ausprobieren mit Vorlage), zum *Vertiefen* (eigenes Material, eigene Regeln) und zum *Gestalten* (anderen etwas zeigen, eigene Vorlagen bauen). Wer welche Fassung wählt, entscheidet jede Person selbst.
@@ -158,6 +148,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 
 ## Versionen
 
+- **v2.4, 18.11.2026:** Ohne Dopplungen: Der Block »Gemeinsame Grundregeln (wortgleich in allen Skills von Kidu)« war nicht wortgleich (Regel 7 nannte Branch und Pull Request) – ersetzt durch die Kurzzeile mit Verweis auf den Wortlaut in `unterricht-digitalisieren`. Die Regel zur Leistungsbewertung steht nur noch in der Grundlagen-Tabelle (Handlungsempfehlung der Kultusministerkonferenz). Werkzeuge in den Bausteinen auf den Stand von Kidu 4.48: Prüf-Labor, Sicher arbeiten in fünf Regeln; Verweis auf den Abschnitt »Nur wenn Lernende mit KI arbeiten« richtiggestellt.
 - **v2.3, 17.11.2026:** Kidu 4.46: Tabelle »Kidu als Fortbildungsplattform« auf den neuen Stand (Trainingsaufgaben, Papierfrage, Aufgabenkoffer auf Papier, Skillkoffer, Tipps und Tricks). Fortbildungsbaustein, Beratungsstunde und Leitsätze stehen in Kidu nicht mehr öffentlich; der Skill verweist dafür auf seine eigenen Bausteine und auf Leitsätze der Schule.
 - **v2.2, 13.11.2026:** Neuer Abschnitt »Kidu als Fortbildungsplattform«: die vier Phasen von Kidu als Weg einer Fortbildung, »Mein Fortbildungsbogen« vorher (enthält »Mein Ist-Stand«), »Mein Rückmeldebogen« danach; Ablauf Schritte 2 und 7 angepasst; Kurzfassung um eine Regel ergänzt (Bogen vorher, Rückmeldebogen danach).
 - **v2.1, 10.11.2026:** Name Kidu (vorher »Hilde Digital«); Abschnitt »Kurzfassung für Kidu« als einzige Quelle für den kopierbaren Auftrag auf der Website.

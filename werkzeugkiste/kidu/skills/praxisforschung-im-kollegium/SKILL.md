@@ -5,16 +5,17 @@ description: "Nutze diesen Skill, wenn eine Lehrkraft oder ein Team eine neue Un
 
 # Praxisforschung: Unterricht erproben und auswerten
 
-Eine neue Idee ausprobieren ist leicht. Herausfinden, ob sie den Lernenden hilft, ist schwerer. Dieser Skill plant eine kleine, machbare Erkundung im eigenen Unterricht: eine klare Frage, eine Ausgangslage, Belege aus dem Alltag und eine ehrliche Auswertung. Er passt zum Beobachtungsbogen und zum Fortbildungsbaustein von Kidu.
+Eine neue Idee ausprobieren ist leicht. Herausfinden, ob sie den Lernenden hilft, ist schwerer. Dieser Skill plant eine kleine, machbare Erkundung im eigenen Unterricht: eine klare Frage, eine Ausgangslage, Belege aus dem Alltag und eine ehrliche Auswertung. Er passt zum Beobachtungsbogen (`unterricht-digitalisieren`) und zum Fortbildungsbaustein von Kidu.
+
+**Grundregeln** – Wortlaut in `unterricht-digitalisieren`: Anliegen vor Werkzeug · nichts erfinden · einfache Sprache (Lehrkraft »du«, Lernende wie im vorhandenen Material) · Datenschutz · Barrierefreiheit (WCAG 2.2 AA) · offline, keine Anbieternamen · Bestand vor Neubau, der Mensch entscheidet · ehrlich berichten.
 
 ## Regeln für diesen Skill
 
 1. **Machbar vor perfekt.** Die Erkundung nutzt, was im Unterricht ohnehin entsteht. Sie darf den Unterricht nicht verschlechtern.
 2. **Beobachtung, kein Wirksamkeitsnachweis.** Ergebnisse gelten für diese Klasse in dieser Zeit. Sie sind wertvolles Wissen vor Ort, aber keine allgemeine Wahrheit.
 3. **Keine Noten, Punkte oder Prozentwerte als Ergebnis.** Beschreibe Muster in Worten. Einfache Zählungen sind erlaubt (»in 7 von 20 Heften«).
-4. **Datenschutz.** Keine Namen von Lernenden in Notizen, Auswertungen oder einer KI. Arbeiten von Lernenden bleiben in der Schule. Wird etwas gezeigt, dann nur anonymisiert und mit Einverständnis.
+4. **Arbeiten von Lernenden bleiben in der Schule.** Keine Namen in Notizen, Auswertungen oder einer KI (Grundregel Datenschutz). Wird etwas gezeigt, dann nur anonymisiert und mit Einverständnis.
 5. **Ehrlich auswerten.** Auch »hat nicht geholfen« oder »zurück zu Papier« ist ein gutes Ergebnis.
-6. **Die Lehrkraft entscheidet**, was sie erprobt und was sie daraus macht.
 
 ## Ablauf
 
@@ -40,7 +41,7 @@ Eine neue Idee ausprobieren ist leicht. Herausfinden, ob sie den Lernenden hilft
    - Welche andere Erklärung gäbe es für die Veränderung (Thema, Zeitpunkt, Klasse)?
    Gemischte Ergebnisse sind normal. Halte sie fest, statt sie zu glätten.
 6. **Entscheiden.** So lassen · nachschärfen (was?) · zurück zu Papier. Danach die nächste Frage.
-7. **Teilen.** Kurz und praktisch, nicht als Vortrag: im Fachteam, in einer Konferenz-Viertelstunde oder als Beispiel in der Galerie von Kidu (dort als persönliche Beobachtung, nie als Wirkungsnachweis). Form: »Was ich probiert habe · was passiert ist · was ich gelernt habe · was offen bleibt.«
+7. **Teilen.** Kurz und praktisch, nicht als Vortrag: im Fachteam, in einer Konferenz-Viertelstunde oder als Beispiel in den Unterrichtsbeispielen von Kidu (früher Galerie; dort als persönliche Beobachtung, nie als Wirkungsnachweis). Form: »Was ich probiert habe · was passiert ist · was ich gelernt habe · was offen bleibt.«
 
 **Dauer:** Ohne andere Angabe sechs bis zehn Wochen, also etwa ein halbes Schulhalbjahr.
 
@@ -113,6 +114,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 
 ## Versionen
 
+- **v2.1, 18.11.2026:** Ohne Dopplungen: Grundregeln als Kurzzeile; Regel »Die Lehrkraft entscheidet« steht dort (Grundregel 7); Regel 4 nennt nur noch, was über die Grundregel Datenschutz hinausgeht. »Unterrichtsbeispiele« statt »Galerie« (Name seit 13.11.2026).
 - **v2, 10.11.2026:** Name Kidu (vorher »Hilde Digital«); Abschnitt »Kurzfassung für Kidu« als einzige Quelle für den kopierbaren Auftrag auf der Website.
 - **v1.1, 31.10.2026:** Überarbeitet mit dem Plugin 0.3.0 (siehe README des Plugins).
 - **v1, 25.10.2026:** Erste Fassung (siehe »Herkunft und Lizenz«).
@@ -120,4 +122,4 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 ## Herkunft und Lizenz
 
 Übertragen und verändert nach »Teacher Inquiry Cycle Designer« aus der *Education Agent Skills Library* von Gareth Manning (https://github.com/GarethManning/education-agent-skills), Lizenz CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/).
-Änderungen (25.10.2026): ins Deutsche übertragen, gekürzt, Auswertung in Worten statt Kennzahlen, Datenschutzregeln ergänzt, Anschluss an Beobachtungsbogen und Galerie von Hilde Digital, deutschsprachige Aktionsforschung ergänzt. Ergänzt (31.10.2026): Fokus und Rückmeldung bei Besuchen, Bausteine nach Sims, Beleg ohne KI, Zufriedenheit ≠ Wirkung. Diese Fassung steht ebenfalls unter CC BY-SA 4.0.
+Änderungen (25.10.2026): ins Deutsche übertragen, gekürzt, Auswertung in Worten statt Kennzahlen, Datenschutzregeln ergänzt, Anschluss an Beobachtungsbogen und Galerie von Hilde Digital, deutschsprachige Aktionsforschung ergänzt. Ergänzt (31.10.2026): Fokus und Rückmeldung bei Besuchen, Bausteine nach Sims, Beleg ohne KI, Zufriedenheit ≠ Wirkung. Geändert (18.11.2026): Regeln, die in den gemeinsamen Grundregeln stehen, durch Verweis ersetzt; »Unterrichtsbeispiele« statt »Galerie«. Diese Fassung steht ebenfalls unter CC BY-SA 4.0.

@@ -7,16 +7,15 @@ description: "Nutze diesen Skill, wenn eine Lehrkraft für eine Aufgabe begründ
 
 Viele Schulen haben nur zwei Regeln: »KI erlaubt« oder »KI verboten«. Beides passt selten. Eine Aufgabe besteht aus mehreren Teilen. Bei manchen hilft KI, bei manchen ist sie egal, bei manchen nimmt sie den Lernenden genau das ab, was sie lernen sollen. Dieser Skill zerlegt eine Aufgabe in ihre Teile und legt für jeden Teil eine begründete Regel fest. Am Ende steht ein Regeltext für die Lernenden in einfacher Sprache.
 
+**Grundregeln** – Wortlaut in `unterricht-digitalisieren`: Anliegen vor Werkzeug · nichts erfinden · einfache Sprache (Lehrkraft »du«, Lernende wie im vorhandenen Material) · Datenschutz · Barrierefreiheit (WCAG 2.2 AA) · offline, keine Anbieternamen · Bestand vor Neubau, der Mensch entscheidet · ehrlich berichten. Dazu gehört hier: keine Studien, Zahlen oder Funktionen von KI-Systemen ohne Beleg; nur das an der Schule freigegebene KI-System; keine Daten von Lernenden in die KI.
+
 ## Regeln für diesen Skill
 
 1. **Erst das Lernziel, dann die Regel.** Die Grenze ergibt sich aus dem, was gelernt werden soll – nicht aus der Technik.
-2. **Nichts erfinden.** Keine Studien, Zahlen oder Funktionen von KI-Systemen ohne Beleg. Unbekanntes heißt »noch offen«.
-3. **Nur das an der Schule freigegebene KI-System.** Keine Anbieternamen. Keine Daten von Lernenden in die KI.
-4. **Papier ist vollwertig.** Ein handschriftlicher Entwurf im Unterricht oder eine mündliche Erklärung sind oft die beste Lösung.
-5. **Die Lehrkraft entscheidet.** Der Skill macht einen Vorschlag. Die Bewertung von Leistungen bleibt bei der Lehrkraft.
-6. **Keine Regel, die von KI-Erkennung abhängt.** Werkzeuge zur Erkennung von KI-Texten sind unzuverlässig. Regeln müssen so gebaut sein, dass KI-Nutzung harmlos oder im Unterricht sichtbar ist.
-7. **Einfache Sprache, Anrede »du«** im Regeltext für Lernende.
-8. **Leistung mit KI ist kein Lernnachweis.** Mit KI wird das Ergebnis oft besser, das Können danach nicht. Wer ungeführt mit KI übt, kann ohne KI sogar schlechter abschneiden. Plane deshalb immer mit, wann die Lernenden zeigen, was sie **ohne** KI können.
+2. **Papier ist vollwertig.** Ein handschriftlicher Entwurf im Unterricht oder eine mündliche Erklärung sind oft die beste Lösung.
+3. **Die Lehrkraft entscheidet.** Der Skill macht einen Vorschlag. Die Bewertung von Leistungen bleibt bei der Lehrkraft.
+4. **Keine Regel, die von KI-Erkennung abhängt.** Werkzeuge zur Erkennung von KI-Texten sind unzuverlässig. Regeln müssen so gebaut sein, dass KI-Nutzung harmlos oder im Unterricht sichtbar ist.
+5. **Leistung mit KI ist kein Lernnachweis.** Mit KI wird das Ergebnis oft besser, das Können danach nicht. Wer ungeführt mit KI übt, kann ohne KI sogar schlechter abschneiden. Plane deshalb immer mit, wann die Lernenden zeigen, was sie **ohne** KI können.
 
 ## Ablauf
 
@@ -30,7 +29,7 @@ Viele Schulen haben nur zwei Regeln: »KI erlaubt« oder »KI verboten«. Beides
    - Begründung: Welche Denkarbeit würde die KI abnehmen oder erleichtern?
    - Regel: Was ist bei diesem Teil erlaubt, was nicht?
 4. **Werkzeug für die Informationssuche festlegen.** Ein KI-System fasst zusammen, nennt aber oft keine prüfbare Herkunft und kann Quellen erfinden. Schulbuch, Bibliothek, Archive und Suchmaschinen führen zu Quellen, die man prüfen kann. Lege je Rechercheschritt fest, welches Werkzeug passt, und warum. Bei Quellenarbeit in Geschichte gilt: Quellen nur aus dem Material oder aus seriösen Archiven, nie aus einer KI-Antwort.
-5. **Regeltext für die Lernenden schreiben.** Kurz, in »du«, je Teil ein Satz mit Begründung. Beispielform: »Bei der Gliederung darfst du die KI um Rückfragen bitten. Dein Urteil schreibst du selbst, denn genau das übst du hier.«
+5. **Regeltext für die Lernenden schreiben.** Kurz, in der Anrede der Lerngruppe (Grundregel 3), je Teil ein Satz mit Begründung. Beispielform: »Bei der Gliederung darfst du die KI um Rückfragen bitten. Dein Urteil schreibst du selbst, denn genau das übst du hier.«
 6. **Aufgabe nachschärfen** (3 bis 5 Vorschläge, kleine Änderungen statt Neubau), zum Beispiel:
    - den Kern der Denkarbeit in den Unterricht holen: Entwurf von Hand in der Stunde, Gliederung mündlich vorstellen;
    - einen Arbeitsprozess sichtbar machen: Notizen, Zwischenstand, kurze Begründung je Schritt;
@@ -88,7 +87,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 - **Name:** KI-Regeln für eine Aufgabe festlegen
 - **Kurz:** Statt »KI erlaubt« oder »KI verboten«: Für jeden Teil einer Aufgabe steht, ob KI hilft, egal ist oder das Lernen ersetzt – mit einem Regeltext für die Lernenden.
 - **Ziel:** Leg für die Aufgabe unten fest, welche Teile die Lernenden mit KI bearbeiten dürfen und welche sie selbst tun – statt pauschal »KI erlaubt« oder »KI verboten«.
-- **Format:** Eine Tabelle der Teile mit Einstufung, Begründung und Regel. Dann ein Regeltext für die Lernenden mit Anrede »du«, je Teil ein Satz mit Grund. Dann drei bis fünf kleine Vorschläge, die Aufgabe nachzuschärfen. Zum Schluss die Grenzen deiner Einschätzung.
+- **Format:** Eine Tabelle der Teile mit Einstufung, Begründung und Regel. Dann ein Regeltext für die Lernenden in der Anrede, die sie aus meinen Materialien kennen (»du« oder »Sie«), je Teil ein Satz mit Grund. Dann drei bis fünf kleine Vorschläge, die Aufgabe nachzuschärfen. Zum Schluss die Grenzen deiner Einschätzung.
 
 **Anforderungen**
 
@@ -110,6 +109,7 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 
 ## Versionen
 
+- **v2.1, 18.11.2026:** Ohne Dopplungen: Regeln, die in den gemeinsamen Grundregeln stehen (nichts erfinden, freigegebenes System, Daten, einfache Sprache), stehen in der Kurzzeile; die eigenen Regeln sind neu gezählt (»Leistung mit KI ist kein Lernnachweis« ist jetzt Regel 5). Regeltext in der Anrede, die die Lerngruppe kennt (Entscheidung Mario, 18.11.2026; ändert den Auftrag auf der Website).
 - **v2, 10.11.2026:** Name Kidu (vorher »Hilde Digital«); Abschnitt »Kurzfassung für Kidu« als einzige Quelle für den kopierbaren Auftrag auf der Website.
 - **v1.1, 31.10.2026:** Überarbeitet mit dem Plugin 0.3.0 (siehe README des Plugins).
 - **v1, 25.10.2026:** Erste Fassung (siehe »Herkunft und Lizenz«).
@@ -117,4 +117,4 @@ Aus diesem Abschnitt baut `tools/werkzeugkiste.py` im Repository `kidu` den kopi
 ## Herkunft und Lizenz
 
 Übertragen und verändert nach »AI Learning Boundary Mapper« aus der *Education Agent Skills Library* von Gareth Manning (https://github.com/GarethManning/education-agent-skills), Lizenz CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/).
-Änderungen (25.10.2026): ins Deutsche übertragen, gekürzt, an berufliche Schulen und die Regeln von Hilde Digital angepasst, Satz zur KI-Erkennung gestrichen, ein falsch wiedergegebener Studienbeleg entfernt, KMK-Bezug ergänzt. Ergänzt (31.10.2026): Regel 8, Reihenfolge »erst selbst, dann KI«, Lern-Auftrag und Abruf ohne KI, Rechtslage Baden-Württemberg, Belege Bastani, Fan, Boolzen. Diese Fassung steht ebenfalls unter CC BY-SA 4.0.
+Änderungen (25.10.2026): ins Deutsche übertragen, gekürzt, an berufliche Schulen und die Regeln von Hilde Digital angepasst, Satz zur KI-Erkennung gestrichen, ein falsch wiedergegebener Studienbeleg entfernt, KMK-Bezug ergänzt. Ergänzt (31.10.2026): Regel 8, Reihenfolge »erst selbst, dann KI«, Lern-Auftrag und Abruf ohne KI, Rechtslage Baden-Württemberg, Belege Bastani, Fan, Boolzen. Geändert (18.11.2026): Regeln, die in den gemeinsamen Grundregeln stehen, durch Verweis ersetzt; Regeltext in der Anrede der Lerngruppe. Diese Fassung steht ebenfalls unter CC BY-SA 4.0.

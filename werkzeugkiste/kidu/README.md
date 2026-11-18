@@ -25,7 +25,7 @@ Wer nicht weiß, wo anfangen: »Kidu, was kannst du?« → `kidu-start`.
 
 ## Lernseiten bauen: Zusatz-Plugin »kidu-bau«
 
-Lernseite, Labor, Lernpfad, Quiz mit Rückmeldung, Erscheinungsbild, Prüfkette und Schaubilder liegen im Zusatz-Plugin. Ohne es geht `unterricht-digitalisieren` bis zum **Übergabeblock** und liefert ihn als fertigen Bauauftrag – für später oder für eine Kollegin mit dem Bau-Plugin.
+Lernseite, Labor, Lernpfad, Quiz mit Rückmeldung, Erscheinungsbild, Prüfkette, Schaubilder, Bewegung als Lernmittel und Filme liegen im Zusatz-Plugin (sechs Skills: `lernseite-bauen`, `website-design-workflow`, `signatur-design`, `schaubild-design`, `bewegung-als-lernmittel`, `film-regie`). Ohne es geht `unterricht-digitalisieren` bis zum **Übergabeblock** und liefert ihn als fertigen Bauauftrag – für später oder für eine Kollegin mit dem Bau-Plugin.
 
 ## Ohne Plugin: eine Quelle für alles
 
@@ -56,8 +56,23 @@ Gepflegt wird nur im Skill. Die Website zeigt bei jedem Auftrag, aus welcher Fas
 
 Eine Quelle: Die Skills werden im Plugin gepflegt und versioniert (Abschnitt »Versionen« je Skill). Änderungen zuerst im Pilot, dann neue Plugin-Version (`plugin.json`, Version hochzählen). Beide Plugins gemeinsam pflegen: Ändert sich ein Skill-Name, die Verweise im anderen Plugin nachziehen.
 
+**Eine Regel, ein Ort** (ab 0.8.0). Jede gemeinsame Regel hat einen Besitzer; dort steht sie ausführlich, die anderen Skills verweisen. Wer eine Regel ändert, ändert sie dort.
+
+| Regel oder Thema | Besitzer |
+| --- | --- |
+| Grundregeln im Wortlaut, Haltung, Anrede | `unterricht-digitalisieren` – alle anderen Skills tragen dieselbe Kurzzeile; `tools/pruefen.py` prüft sie |
+| Papierprobe, Umfang, keine Mischform, Dramaturgie der Stunde | `unterricht-digitalisieren`, Schritte 2 und 4 |
+| Ergebnis ohne Server bündeln, Zeitdiagnose, Beobachtungsbogen, KI als Lernbegleitung | `unterricht-digitalisieren`, Schritte 5 und 8, Abschnitt »Nur wenn Lernende mit KI arbeiten« |
+| Fachregeln GGK, NS-Sorgfalt, Fachgrenzen Politik | `unterricht-digitalisieren/references/fachbaustein-ggk.md` |
+| Qualitätsmodell (14 Bereiche, Stufen, Kernbereiche je Materialtyp, Rahmenfragen), Regeln der Einschätzung, typische Schwächen | `digital-check` – das Qualitätsmodell erzeugt `tools/werkzeugkiste.py` aus `assets/daten/qualitaet.js` |
+
+Die Bau-Skills in »kidu-bau« verweisen auf diese Orte. Umgekehrt hängt »kidu« nie an etwas, das nur in »kidu-bau« steht: Ohne das Zusatz-Plugin bleibt jede Regel lesbar.
+
+**Bewusst doppelt:** Die »Kurzfassung für Kidu« in jedem Skill und der Prüf-Auftrag Weg B sind Fassungen für andere KI-Systeme und müssen für sich stehen. Ändert sich eine Regel im Skill, prüf, ob die Kurzfassung noch stimmt.
+
 ## Versionen
 
+- **0.8.1, 18.11.2026:** Kidu 4.51, ohne Dopplungen – Abgleich mit den älteren Einzelfassungen der Skills; aus denselben Dateien entstehen »kidu« und »kidu-bau«: Grundregeln im Wortlaut nur noch in `unterricht-digitalisieren` (v4.7), in allen anderen Skills eine gleichlautende Kurzzeile, geprüft von `tools/pruefen.py`; Anrede: Lehrkraft »du«, Material für Lernende wie die vorhandenen Materialien. `digital-check` v1.6 (Qualitätsmodell aus `assets/daten/qualitaet.js` erzeugt, mit Rahmenfragen und HTML-Lernumgebung), `lernmethode-einfuehren` v1.4, `ki-faktencheck` v2.1, `ki-grenzen-einer-aufgabe` v2.1, `praxisforschung-im-kollegium` v2.1, `ki-kompetenz-kollegium` v2.4, `kidu-start` v3.5. Vier Fallstricke, die bisher nur in den Einzelfassungen standen, sind übernommen; der Fachbaustein GGK hat einen Abschnitt »Fachgrenzen Politik«. Neu im README: »Eine Regel, ein Ort«. Baut auf 0.7.1 auf; eine Fassung 0.8.0 ohne 0.7.1 gab es nur vor dem Zusammenführen.
 - **0.7.1, 18.11.2026:** Kidu 4.49: `kidu-start` v3.4 (Phase 2 des KI-Trainings heißt »Analogen Unterricht mit KI vorbereiten«).
 - **0.7.0, 17.11.2026:** Kidu 4.46: `unterricht-digitalisieren` v4.6 (neue Liste »Papierfrage« in der Kurzfassung: Regeln für den Auftrag »Die ganze Stunde prüfen«) · `digital-check` v1.5 (Erkenntnisse aus Psycho-Labor, GGK-Labor und Politik-Werkstatt: erst festlegen, dann aufdecken; Schreiben und Kriterien danach; eine Kernentscheidung; Denkwerkzeug des Fachs; Sicherung mit Maß; Rechte und Würde; Orientierung wie auf einem Arbeitsblatt) · `kidu-start` v3.3 und `ki-kompetenz-kollegium` v2.3 (neue Ordnung der Website: Papierfrage zuerst, Skillkoffer, Tipps und Tricks, KI-Training in vier Phasen mit Trainingsaufgaben und Aufgabenkoffer auf Papier; Fortbildungsbausteine nicht mehr öffentlich).
 - **0.6.0, 13.11.2026:** Nach der Sichtung und Didaktikanalyse vom 13.11.2026 (Kidu 4.36–4.38): `unterricht-digitalisieren` v4.5 (ganze Einheit mit Schritt E »Landkarte der Einheit«, zwei Wege »Unterricht neu planen« und »Bisherigen Unterricht digitalisieren«, Prüfraster »Lehrfunktion je Phase« mit neuer Referenz `references/lehrfunktionen.md`, Gestaltung getrennt) · `digital-check` v1.4 (zwei Prüfblöcke Didaktik und Gestaltung, Prüffragen je Lehrfunktion, typische Schwächen aus der Sichtung; Kurzfassung mit Liste »Gestaltung«) · `kidu-start` v3.2 (neue Wege und Namen, die vier Phasen der Website) · `lernmethode-einfuehren` v1.3 (Sichern und üben mit Methode) · `ki-kompetenz-kollegium` v2.2 (Kidu als Fortbildungsplattform, Fortbildungsbogen und Rückmeldebogen).
