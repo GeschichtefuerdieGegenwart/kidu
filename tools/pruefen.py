@@ -23,7 +23,9 @@ Geprüft werden
   Qualitätscheck nur mit Datum, höchstens drei Stärken ohne Zahl, Sicherheit mindestens »mittel«,
   »Zum Anfangen« (Feld auswahl): genau sechs Einträge, zwei je Umfang, alle »im Unterricht erprobt«, mit Grund-Satz,
 - die Galerie: jedes Bild vorhanden, eigener Alternativtext, Bildtext, Bilder nur für bekannte Beispiele,
-  keine Galeriebilder für Konzeptbeispiele.
+  keine Galeriebilder für Konzeptbeispiele,
+- ab 4.54 das Moodle-Paket (tools/moodle_paket.py): jeder Verweis in Seiten, Stil und Skripten zeigt auf eine Datei im Paket,
+  keiner beginnt mit »/«, nichts wird von einem fremden Server geladen, kein Skript lädt nach.
 """
 import json
 import re
@@ -760,8 +762,24 @@ def pruefe_wunsch(fehler):
             fehler.append(f"assets/daten/wunsch.js: {ziel} gibt es nicht")
 
 
+def pruefe_moodle_paket(fehler):
+    """ab Version 4.54: Kidu geht als ZIP in einen Moodle-Kurs (tools/moodle_paket.py). Jeder Verweis in Seiten, Stil und Skripten
+    zeigt auf eine Datei im Paket, keiner beginnt mit »/«, nichts wird von einem fremden Server geladen, kein Skript lädt nach."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("moodle_paket", WURZEL / "tools" / "moodle_paket.py")
+    mp = importlib.util.module_from_spec(spec); spec.loader.exec_module(mp)
+    dateien = mp.sammle()
+    gefunden, bericht = mp.pruefe(dateien=dateien)
+    fehler.extend("Moodle-Paket: " + zeile for zeile in gefunden)
+    fehlt = [s for s in SEITEN if s not in dateien]
+    if fehlt:
+        fehler.append("Moodle-Paket: nicht im Paket – " + ", ".join(fehlt))
+    print(f"Moodle-Paket: {len(dateien)} Dateien geprüft, {bericht['ausprobieren']} Links »Ausprobieren« führen hinaus")
+
+
 def main():
     fehler = []
+    pruefe_moodle_paket(fehler)  # ab 4.54
     pruefe_wunsch(fehler)  # ab 4.52
     pruefe_papierkoffer(fehler)  # ab 4.49
     pruefe_werkzeugkiste(fehler)

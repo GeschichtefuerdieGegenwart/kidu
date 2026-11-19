@@ -5,6 +5,7 @@
 - Der Schnellhefter merkt sich nur die IDs der gemerkten Beispiele (`hilde.merkliste`), ebenfalls nur in diesem Browser.
 - »Eingaben löschen« entfernt alle diese Schlüssel. Ist der Speicher gesperrt (z. B. privates Fenster), läuft alles ohne Erinnerung weiter.
 - Verlinkte Lernanwendungen liegen auf `geschichtefuerdiegegenwart.github.io` und öffnen sich in einem neuen Tab. Erst dann entsteht eine Verbindung ins Internet.
+- Als Moodle-Paket (ab 4.54) ändert sich an Kidu selbst nichts: Es lädt nichts von fremden Servern und speichert nur im Browser. Moodle hält aber fest, wer den Kurs und die Aktivität öffnet; das regelt die Schule, nicht Kidu. Der Text »Deine Daten« auf »Über Kidu« beschreibt bisher nur die offene Seite – eine Fassung für Moodle ist noch offen.
 - Es gibt keine KI-Anbindung. Kidu sagt nie, ein KI-Ergebnis sei korrekt oder rechtssicher.
 - Der Digital-Check, Weg A »Selbst prüfen« speichert nur Materialtyp, gewählte Bereiche, Einschätzungen und Rahmenangaben (`hilde.selbstcheck`). Name des Materials und Lernziel werden nicht gespeichert. Der Bericht ist ein privater Entwurf und wird nirgends hin gesendet.
 - Die optionale Anfrage für ein KI-System wird nur angezeigt und kann kopiert werden. Kidu sendet sie nicht.
