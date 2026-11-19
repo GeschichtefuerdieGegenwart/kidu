@@ -2,3 +2,4 @@ tests/vendor/
 __pycache__/
 .taste-skill/inspect/
 privat/
+dist/

@@ -20,10 +20,22 @@ Leporello, Abspielen »Vom Blatt zum Tablet« und Zeichnen der Stundenlinie gest
 (Startseite, KI-Training, Digitaler Unterricht und Unterrichtsbeispiele nutzen bei 1920 px die Breite, der Kopf folgt).
 Ab Version 4.41: Fahrplan der Bereichsseite »Digitaler Unterricht« – vier aufklappbare Phasen, Flächen im Wechsel, Ringlinie
 von 4 zurück zu 2, »Alle Werkzeuge zeigen«, Sprungmarken, Druck, ohne Skript, Beamer, iPad quer, Telefon, zwei Tipps zu jedem Werkzeug.
+Ab Version 4.54: Kidu als Moodle-Paket (tools/moodle_paket.py) – das ZIP wird gebaut, entpackt und über einen kleinen Server auf
+diesem Rechner unter einem Pfad geöffnet, wie Moodle ihn vergibt (…/pluginfile.php/<Nr>/mod_resource/content/<Nr>/index.html):
+jede Seite lädt ohne fehlende Datei, ohne Konsolenfehler und ohne Anfrage nach außen; dazu die Paketprüfung an vier gebauten Fehlern.
 """
+import contextlib
+import functools
+import hashlib
+import http.server
+import importlib.util
+import io
 import re
 import os
 import sys
+import tempfile
+import threading
+import zipfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -2265,6 +2277,79 @@ def main():
         pruefe(tl.evaluate("document.documentElement.scrollWidth - innerWidth") <= 0 and tl.is_visible(".ort-karte"), "KI-Training (4.53) am Telefon: die kleine Karte steht als Text da, ohne waagerechtes Scrollen")
         tl.context.close()
         kw.context.close()
+
+        # Ab 4.54: Kidu als Moodle-Paket. In Moodle selbst prüft das nur ein Mensch (Upload, Anzeige »Öffnen«, App, iPad);
+        # hier wird geprüft, was sich ohne Moodle prüfen lässt: das Paket ist vollständig und läuft unter einem tiefen Pfad.
+        spec = importlib.util.spec_from_file_location("moodle_paket", W / "tools" / "moodle_paket.py")
+        mp = importlib.util.module_from_spec(spec); spec.loader.exec_module(mp)
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            aus = io.StringIO()
+            with contextlib.redirect_stdout(aus):
+                rc1 = mp.main(["--ziel", str(tmp / "a")]); rc2 = mp.main(["--ziel", str(tmp / "b")])
+            zips = sorted((tmp / "a").glob("kidu-*-moodle.zip"))
+            pruefe(rc1 == 0 and rc2 == 0 and len(zips) == 1 and (tmp / "a" / zips[0].name.replace(".zip", "-bericht.txt")).exists() and "keine Verstöße" in aus.getvalue(), "Moodle-Paket (4.54): der Bau prüft, schreibt ZIP und Bericht und meldet keine Verstöße")
+            gleich = len(zips) == 1 and hashlib.sha256(zips[0].read_bytes()).hexdigest() == hashlib.sha256((tmp / "b" / zips[0].name).read_bytes()).hexdigest()
+            pruefe(gleich, "Moodle-Paket (4.54): zweimal gebaut ergibt dasselbe ZIP (gleicher Prüfwert)")
+            with zipfile.ZipFile(zips[0]) as z:
+                namen = z.namelist()
+                lies = z.read("LIESMICH-MOODLE.txt").decode("utf-8") if "LIESMICH-MOODLE.txt" in namen else ""
+                ort = tmp / "moodle" / "pluginfile.php" / "4711" / "mod_resource" / "content" / "7"
+                ort.mkdir(parents=True); z.extractall(ort)
+            innen = ("src/", "tools/", "tests/", "docs/", "privat/", "schloss/", "dist/")
+            pruefe("index.html" in namen and not any(n.startswith(innen) or n.startswith(".") or "/." in n for n in namen) and all(s in namen for s in ("LICENSE", "LICENSE-TEXTE.md", "assets/hilde.css", "assets/film/kidu-pitch.mp4")) and sum(1 for n in namen if n.endswith(".woff2")) == 4,
+                   f"Moodle-Paket (4.54): index.html liegt oben; Stil, vier Schriften, Film und Lizenzen sind dabei; nichts aus src/, tools/, tests/, docs/, privat/, schloss/ ({len(namen)} Dateien)")
+            version = re.search(r"\(Version (\d+\.\d+)\)", (W / "src" / "ueber.html").read_text(encoding="utf-8")).group(1)
+            pruefe(zips[0].name == f"kidu-{version}-moodle.zip" and f"Version {version}" in lies and "Hauptdatei setzen" in lies and "»Öffnen«" in lies and "noch nicht erprobt" in lies and "Ausprobieren" in lies,
+                   f"Moodle-Paket (4.54): Name und LIESMICH tragen die Version von »Über Kidu« ({version}); LIESMICH nennt Hauptdatei, Anzeige »Öffnen«, »noch nicht erprobt« und die Links nach außen")
+
+            class Still(http.server.SimpleHTTPRequestHandler):
+                def log_message(self, *a):
+                    pass
+            srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(Still, directory=str(tmp / "moodle")))
+            threading.Thread(target=srv.serve_forever, daemon=True).start()
+            herkunft = f"http://127.0.0.1:{srv.server_address[1]}/"
+            basis = herkunft + "pluginfile.php/4711/mod_resource/content/7/"
+            ctx = b.new_context(viewport={"width": 1280, "height": 720})
+            fremd, kaputt, konsole, schriften = [], [], [], []
+            ctx.route("**/*", lambda r: r.continue_() if r.request.url.startswith(herkunft) else (fremd.append(r.request.url), r.abort()))
+            mo = ctx.new_page()
+            mo.on("response", lambda a: (a.status >= 400 and kaputt.append(f"{a.status} {a.url[len(herkunft):]}"), a.url.split("?")[0].endswith(".woff2") and a.status == 200 and schriften.append(a.url)))
+            mo.on("console", lambda m: m.type == "error" and "ViewTransition" not in m.text and konsole.append(m.text))
+            mo.on("pageerror", lambda e: "ViewTransition" not in str(e) and konsole.append(str(e)))
+            seiten = sorted(n for n in namen if n.endswith(".html"))
+            draussen = []
+            for s in seiten:
+                mo.goto(basis + s, wait_until="load"); mo.wait_for_timeout(60)
+                if not mo.url.startswith(basis):
+                    draussen.append(f"{s} → {mo.url}")
+            pruefe(len(seiten) >= 45 and not kaputt and not konsole and not fremd and not draussen, f"Moodle-Paket (4.54): alle {len(seiten)} Seiten laden unter dem Moodle-Pfad – keine fehlende Datei, kein Konsolenfehler, keine Anfrage nach außen, keine Weiterleitung aus dem Paket {kaputt[:3]} {konsole[:2]} {fremd[:2]} {draussen[:2]}")
+            mo.goto(basis + "index.html", wait_until="load"); mo.evaluate("document.fonts.ready")
+            geladen = mo.evaluate("[...document.fonts].filter(f => f.status === 'loaded').length")
+            pruefe(geladen >= 2 and schriften and all(u.startswith(basis + "assets/fonts/") for u in schriften), f"Moodle-Paket (4.54): die Schriften kommen aus dem Paket und sind geladen ({geladen} Schnitte)")
+            mo.click('a.wahlflaeche[href="ki.html"]'); mo.wait_for_url("**/ki.html")
+            in_ki = mo.url == basis + "ki.html"
+            mo.click(".ki-blick a[href^='wunsch-methode.html#feld-']"); mo.wait_for_url("**/wunsch-methode.html#feld-*")
+            pruefe(in_ki and mo.url.startswith(basis + "wunsch-methode.html#feld-"), "Moodle-Paket (4.54): Klicks bleiben im Paket – Start → KI-Training → ein Feld der Wunsch-Methode")
+            mo.goto(basis + "ueber.html", wait_until="load"); mo.click("#theme-schalter"); mo.reload(wait_until="load")
+            pruefe(mo.evaluate("document.documentElement.getAttribute('data-theme')") == "beamer" and mo.get_attribute("#theme-schalter", "aria-pressed") == "true", "Moodle-Paket (4.54): eine gemerkte Wahl (Beamer-Ansicht) bleibt nach dem Neuladen – der Speicher des Browsers trägt unter dem Moodle-Pfad")
+            if fotos:
+                mo.goto(basis + "index.html", wait_until="load"); mo.wait_for_timeout(400); mo.screenshot(path=str(fotos / "moodle-paket-start-beamer.png"))
+            ctx.close(); srv.shutdown(); srv.server_close()
+
+            # Die Paketprüfung an vier gebauten Fehlern: Pfad mit »/«, Datei von fremdem Server, fehlende Seite, falsche Schreibweise.
+            falsch = tmp / "falsch"; (falsch / "assets").mkdir(parents=True)
+            (falsch / "assets" / "stil.css").write_text("body{background:url(bild.webp)}", encoding="utf-8")
+            (falsch / "index.html").write_text('<link rel="stylesheet" href="assets/Stil.css"><img src="/bild.png" alt=""><script src="https://fremd.example/x.js"></script><a href="fehlt.html">weiter</a><a href="#oben">oben</a>', encoding="utf-8")
+            gefunden, _ = mp.pruefe(wurzel=falsch, dateien={"index.html": falsch / "index.html", "assets/stil.css": falsch / "assets" / "stil.css"})
+            treffer = [any(w in g for g in gefunden) for w in ("Groß- und Kleinschreibung", "beginnt mit »/«", "fremden Server", "fehlt.html", "assets/bild.webp")]
+            pruefe(all(treffer) and len(gefunden) == 5, f"Moodle-Paket (4.54): die Prüfung findet falsche Schreibweise, Pfad mit »/«, fremden Server, fehlende Seite und fehlendes Bild im Stil {treffer} {len(gefunden)}")
+            sauber = tmp / "sauber"; (sauber / "assets").mkdir(parents=True)
+            (sauber / "assets" / "b.webp").write_bytes(b"x"); (sauber / "zwei.html").write_text("<p id='x'>zwei</p>", encoding="utf-8")
+            (sauber / "assets" / "stil.css").write_text("body{background:url(b.webp);filter:url(\"data:image/svg+xml,%3Csvg filter='url(%23w)'/%3E\")}", encoding="utf-8")
+            (sauber / "index.html").write_text('<link rel="stylesheet" href="assets/stil.css?v=1"><img src="assets/b.webp" alt=""><a href="zwei.html#x">zwei</a><a href="https://fremd.example/">hinaus</a><script>/* "kommentar.html" */ var z = "zwei.html#x";</script>', encoding="utf-8")
+            gut, bericht = mp.pruefe(wurzel=sauber, dateien={n: sauber / n for n in ("index.html", "zwei.html", "assets/b.webp", "assets/stil.css")})
+            pruefe(gut == [] and bericht["hinaus"] == ["fremd.example"], f"Moodle-Paket (4.54): ein sauberes Paket bleibt ohne Befund – Prüfwert an der Adresse, Sprungmarke, eingebettetes Bild und Kommentar sind kein Fehler; der Link nach außen steht im Bericht {gut} {bericht}")
         b.close()
     print(f"\n{'Alle Browser-Tests bestanden' if not fehler else str(len(fehler)) + ' Fehler'}")
     sys.exit(1 if fehler else 0)

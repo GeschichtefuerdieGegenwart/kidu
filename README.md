@@ -47,6 +47,7 @@ Kidu ist eine Fortbildungsplattform für Lehrkräfte: KI-Training in vier Phasen
 | `assets/sechs-hebel-proben.js` | Seite »Wann funktioniert digitaler Unterricht?«: Proben S bis X zu den sechs Prinzipien – erst festlegen, dann ein Zustandswechsel (ab 4.20) |
 | `assets/sechs-hebel.js` | Seite »Wann funktioniert digitaler Unterricht?«: Muster R1 – gewählte Prinzipien wandern über die Plenumsstelle an die Tafel (ab 4.19) |
 | `assets/pruef-prompt.js`, `assets/digital-check.js` | Digital-Check Weg B: Prüf-Auftrag aus dem Qualitätsmodell zum Kopieren in ein freigegebenes KI-System (keine Anbindung); ab 4.38 mit eigenem Block »Gestaltung« aus dem Skill `digital-check` |
+| `tools/moodle_paket.py` | Kidu als Moodle-Paket (ab 4.54): packt die gebauten Seiten, `assets/`, `werkzeugkiste/download/` und die Lizenzdateien als `dist/kidu-<Version>-moodle.zip` (`dist/` steht in `.gitignore`) und prüft vorher, dass jeder Verweis auf eine Datei im Paket zeigt, keiner mit »/« beginnt und nichts von fremden Servern geladen wird. Die Schritte für Moodle stehen in `LIESMICH-MOODLE.txt` im Paket (Text nur im Werkzeug). `tools/pruefen.py` ruft die Prüfung bei jedem Lauf mit auf |
 | `tests/` | Unit-Tests (`node --test`) und Browser-Tests (`tests/e2e.py`) |
 | `docs/` | Versionen 1 bis 4 im Überblick, Herkunft der Galeriebilder, Annahmen, Datenschutz, Datenlücken zur Prüfung |
 | `assets/fonts/` | Bricolage Grotesque (Überschriften) und Atkinson Hyperlegible Next (Text), beide SIL Open Font License (OFL-*.txt) |
@@ -80,6 +81,15 @@ python3 tools/schloss_buendel.py packen               # privat/kidu-geschuetzt-b
 ```
 
 Fehlt `privat/` (etwa in einer neuen Arbeitsumgebung): `KIDU_PASS='…' node tools/schloss.mjs --auspacken` schreibt den Klartext aus den verschlüsselten Dateien zurück. Neues Passwort: `KIDU_PASS='…' node tools/schloss.mjs --neu` verschlüsselt alles neu. Mit `KIDU_PASS` prüfen die Browser-Tests auch die Inhalte hinter dem Schloss; ohne die Variable nur die Tür. Ältere Fassungen der drei Seiten bleiben in der Geschichte des Repositorys lesbar.
+
+**Kidu als Moodle-Paket (ab 4.54).** Ein Befehl baut, prüft und packt:
+
+```
+python3 tools/moodle_paket.py                # schreibt dist/kidu-<Version>-moodle.zip und den Bericht daneben
+python3 tools/moodle_paket.py --nur-pruefen  # nur prüfen, kein ZIP
+```
+
+In Moodle: Aktivität »Datei« anlegen, das ZIP hochladen und entpacken, `index.html` als Hauptdatei setzen, Anzeige »Öffnen« (nicht »Automatisch« oder »Einbetten«). So läuft Kidu als eigene Seite hinter der Anmeldung des Kurses. Das ist ein Vorschlag: In einem Moodle ist das Paket noch nicht erprobt. Version und Datum des Pakets kommen aus der Zeile »Stand: … (Version x.y)« in `src/ueber.html`. Dasselbe ZIP entsteht bei jedem Lauf neu mit demselben Prüfwert. Die Knöpfe »Ausprobieren« der Unterrichtsbeispiele führen weiter zu Seiten außerhalb des Pakets; der Bericht zählt sie.
 
 Nach Änderungen an den Beispielen: `python3 tools/datenluecken.py` aktualisiert `docs/datenluecken.md`.
 

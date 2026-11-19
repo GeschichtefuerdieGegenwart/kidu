@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Statisches HTML, CSS und schlankes JavaScript ohne Framework und ohne Laufzeitabhängigkeiten. Quellen in `src/`, Bau mit `tools/bauen.py`, Prüfung mit `tools/pruefen.py`, Unit-Tests mit `node --test`, Browser-Tests mit `tests/e2e.py` (Python Playwright). Keine fremden Schriften, CDNs, Tracker oder Analysedienste; Schriften lokal als woff2. Die Seiten müssen per `file://` und ohne Internet funktionieren. Veröffentlichung später über GitHub Pages, aus Moodle verlinkt (nicht eingebettet). Entwicklungswerkzeuge wie Playwright, axe-core und der Taste-Prüfer sind als Entwicklungsabhängigkeit erlaubt.
+Statisches HTML, CSS und schlankes JavaScript ohne Framework und ohne Laufzeitabhängigkeiten. Quellen in `src/`, Bau mit `tools/bauen.py`, Prüfung mit `tools/pruefen.py`, Unit-Tests mit `node --test`, Browser-Tests mit `tests/e2e.py` (Python Playwright). Keine fremden Schriften, CDNs, Tracker oder Analysedienste; Schriften lokal als woff2. Die Seiten müssen per `file://` und ohne Internet funktionieren. Veröffentlichung über GitHub Pages, aus Moodle verlinkt (nicht eingebettet); ab 4.54 zusätzlich als Moodle-Paket für die Aktivität »Datei« mit `index.html` als Hauptdatei und der Anzeige »Öffnen« (`tools/moodle_paket.py`, in Moodle noch nicht erprobt). Entwicklungswerkzeuge wie Playwright, axe-core und der Taste-Prüfer sind als Entwicklungsabhängigkeit erlaubt.
 
 ## Users
 
