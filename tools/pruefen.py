@@ -21,7 +21,8 @@ Geprüft werden
 - die Beispieldaten: Pflichtfelder, erlaubte Werte, eindeutige IDs und Slugs,
   Links nur auf die freigegebenen Seiten, Konzeptbeispiele ohne Link, Vorschläge nur für vorhandene Felder,
   Qualitätscheck nur mit Datum, höchstens drei Stärken ohne Zahl, Sicherheit mindestens »mittel«,
-  »Zum Anfangen« (Feld auswahl): genau sechs Einträge, zwei je Umfang, alle »im Unterricht erprobt«, mit Grund-Satz,
+  ab 4.57 statt »Zum Anfangen«: die Unterrichtsbeispiele nach Fächern (assets/daten/labore.js) – je Fach zwei bis drei
+  Beispiele, die es gibt, mit Bild aus ihren Ansichten, gültigem Umfang und gültigen Prinzipien, Links nur auf die freigegebenen Seiten,
 - die Galerie: jedes Bild vorhanden, eigener Alternativtext, Bildtext, Bilder nur für bekannte Beispiele,
   keine Galeriebilder für Konzeptbeispiele,
 - ab 4.54 das Moodle-Paket (tools/moodle_paket.py): jeder Verweis in Seiten, Stil und Skripten zeigt auf eine Datei im Paket,
@@ -52,7 +53,7 @@ EINSTIEG = ["index.html", "ki.html", "unterricht.html", "digitalisieren.html", "
 # Skripte, deren Texte auf Einstiegs- und Bereichsseiten erscheinen
 EINSTIEG_SKRIPTE = ["assets/start.js", "assets/check-weg.js", "assets/check-regeln.js", "assets/tablets-weg.js", "assets/einheit.js", "assets/regeln.js", "assets/daten/taxonomien.js",
                     "assets/ki-weg.js", "assets/ki-anfrage.js", "assets/daten/texte.js", "assets/passt.js", "assets/beobachtung.js", "assets/fortbildungsbogen.js", "assets/rueckmeldebogen.js",
-                    "assets/probe.js", "assets/digital-check.js", "assets/ki-schnell.js", "assets/schnell-anfrage.js", "assets/daten/schnell.js", "assets/digitalisieren.js", "assets/daten/digitalisieren.js", "assets/galerie-buehne.js", "assets/daten/galerie.js", "assets/anfangen.js", "assets/werkstatt.js", "assets/werkstatt-anfrage.js", "assets/daten/werkstatt.js", "assets/sechs-hebel.js", "assets/sechs-hebel-proben.js", "assets/sechs-hebel-rad.js", "assets/phasen-bild.js",
+                    "assets/probe.js", "assets/digital-check.js", "assets/ki-schnell.js", "assets/schnell-anfrage.js", "assets/daten/schnell.js", "assets/digitalisieren.js", "assets/daten/digitalisieren.js", "assets/daten/galerie.js", "assets/labore.js", "assets/daten/labore.js", "assets/werkstatt.js", "assets/werkstatt-anfrage.js", "assets/daten/werkstatt.js", "assets/sechs-hebel.js", "assets/sechs-hebel-proben.js", "assets/sechs-hebel-rad.js", "assets/phasen-bild.js",
                     "assets/film-buehne.js", "assets/film.js",  # ab 4.40: der Film auf der Startseite
                     "assets/fahrplan.js",  # ab 4.41: Fahrplan der Bereichsseite »Digitaler Unterricht«
                     "assets/papierfrage-prompt.js", "assets/daten/prinzipien.js", "assets/daten/skillkoffer.js", "assets/werkzeugkiste.js",
@@ -253,7 +254,7 @@ def pruefe_daten(fehler):
             if feld not in b:
                 fehler.append(f"Beispiel {wer}: Vorschlag für unbekanntes Feld »{feld}«")
     pruefe_einheiten(fehler, beispiele, tax)
-    pruefe_auswahl(fehler, beispiele)
+    pruefe_labore(fehler, beispiele, galerie, tax)  # ab 4.57, löst »Zum Anfangen« ab
     pruefe_galerie(fehler, beispiele, galerie)
     print(f"Daten: {len(beispiele)} Beispiele geprüft")
 
@@ -286,26 +287,78 @@ def pruefe_einheiten(fehler, beispiele, tax):
     print(f"Einheiten: {sum(1 for b in beispiele if b.get('art') == 'einheit')} geprüft")
 
 
-def pruefe_auswahl(fehler, beispiele):
-    """»Zum Anfangen« in der Galerie: genau sechs Beispiele, zwei je Umfang, alle erprobt, jedes mit einem Grund-Satz.
-    Keine Rangfolge – deshalb gibt es auch kein Feld für eine Reihenfolge."""
-    auswahl = [b for b in beispiele if b.get("auswahl")]
-    if len(auswahl) != 6:
-        fehler.append(f"Auswahl »Zum Anfangen«: genau sechs Beispiele erwartet, {len(auswahl)} gefunden")
-    je_umfang = {}
-    for b in auswahl:
-        wer = b["id"]
-        je_umfang[b.get("umfang")] = je_umfang.get(b.get("umfang"), 0) + 1
-        if b["status"] != "im Unterricht erprobt":
-            fehler.append(f"Auswahl {wer}: nur erprobte Beispiele (Status »{b['status']}«)")
-        if not (b["auswahl"].get("grund") or "").strip():
-            fehler.append(f"Auswahl {wer}: Grund-Satz fehlt")
-        if "reihenfolge" in b["auswahl"] or "rang" in b["auswahl"]:
-            fehler.append(f"Auswahl {wer}: keine Rangfolge in der Auswahl")
-    for umfang in ("punktuell", "phasenweise", "durchgaengig"):
-        if je_umfang.get(umfang, 0) != 2:
-            fehler.append(f"Auswahl »Zum Anfangen«: je Umfang genau zwei Beispiele, »{umfang}« hat {je_umfang.get(umfang, 0)}")
-    print(f"Auswahl »Zum Anfangen«: {len(auswahl)} Beispiele geprüft")
+def pruefe_labore(fehler, beispiele, galerie, tax):
+    """ab 4.57: Die Unterrichtsbeispiele nach Fächern (assets/daten/labore.js, Darstellung assets/labore.js).
+    Je Fach zwei bis drei Beispiele, die es in beispiele.js gibt; ihr Bild ist eine ihrer Ansichten in galerie.js;
+    ein »teil« hat Ort, Titel, gültigen Umfang (oder »einheit«), gültige Prinzipien und einen Satz, was das Gerät kann;
+    jeder Link führt nur auf die freigegebenen Seiten; das Rahmenbild gibt es, mit Alternativtext und Maßen;
+    die vier Wege stehen für alle vier Umfänge da. Kein Beispiel steht zweimal mit derselben Ansicht."""
+    try:
+        aus = subprocess.run(["node", "-e", "process.stdout.write(JSON.stringify({l:require('./assets/daten/labore.js'),"
+                              "p:require('./assets/daten/prinzipien.js').map(x=>x.id)}))"], cwd=WURZEL, capture_output=True, text=True, check=True)
+    except subprocess.CalledProcessError as e:
+        fehler.append(f"Labore: Daten lassen sich nicht laden ({e.stderr.strip()[:200]})")
+        return
+    d = json.loads(aus.stdout)
+    nach_id = {b["id"]: b for b in beispiele}
+    prinz = set(d["p"])
+    umf = {u["id"] for u in tax["umfang"]} | {"einheit"}
+    gesehen = set()
+    for l in d["l"]:
+        wer = l.get("id", "?")
+        for feld in ("name", "fach", "gruppe", "frage", "satz", "fachregel"):
+            if not (l.get(feld) or "").strip():
+                fehler.append(f"Labor {wer}: Feld »{feld}« fehlt")
+        if not 2 <= len(l.get("quintessenz") or []) <= 3:
+            fehler.append(f"Labor {wer}: Quintessenz braucht zwei oder drei Sätze")
+        if not 2 <= len(l.get("beispiele") or []) <= 3:
+            fehler.append(f"Labor {wer}: zwei bis drei Beispiele")
+        if sorted((l.get("wege") or {}).keys()) != sorted(umf):
+            fehler.append(f"Labor {wer}: die vier Wege brauchen genau {', '.join(sorted(umf))}")
+        r = l.get("rahmen") or {}
+        if not r.get("bild") or not (WURZEL / r["bild"]).exists():
+            fehler.append(f"Labor {wer}: Rahmenbild fehlt ({r.get('bild')})")
+        if len(r.get("alt") or "") < 20 or not r.get("breite") or not r.get("hoehe"):
+            fehler.append(f"Labor {wer}: Rahmenbild braucht Alternativtext und Maße")
+        if r.get("link") and not r["link"].startswith(ERLAUBTE_HOSTS):
+            fehler.append(f"Labor {wer}: Link außerhalb der freigegebenen Seiten")
+        if r.get("einheit") and (r["einheit"] not in nach_id or nach_id[r["einheit"]].get("art") != "einheit"):
+            fehler.append(f"Labor {wer}: »{r['einheit']}« ist keine Einheit in beispiele.js")
+        if not r.get("leiste") or not all(x.get("kurz") and x.get("name") for x in r["leiste"]):
+            fehler.append(f"Labor {wer}: die Leiste des Ganzen braucht Kürzel und Namen")
+        for x in l.get("beispiele") or []:
+            bid = x.get("beispiel")
+            b = nach_id.get(bid)
+            if not b:
+                fehler.append(f"Labor {wer}: Beispiel »{bid}« gibt es nicht")
+                continue
+            if b.get("bereich") != "lernen" or b.get("vorschauArt") == "konzept":
+                fehler.append(f"Labor {wer}: »{bid}« ist kein Unterrichtsbeispiel")
+            if not any(a.get("bild") == x.get("bild") for a in galerie.get(bid, [])):
+                fehler.append(f"Labor {wer}: Bild von »{bid}« ist keine seiner Ansichten in galerie.js ({x.get('bild')})")
+            if (bid, x.get("bild")) in gesehen:
+                fehler.append(f"Labor {wer}: »{bid}« mit derselben Ansicht doppelt")
+            gesehen.add((bid, x.get("bild")))
+            for feld in ("was", "warum"):
+                if not (x.get(feld) or "").strip():
+                    fehler.append(f"Labor {wer}: »{bid}« ohne »{feld}«")
+            t = x.get("teil")
+            quelle = t if t else b
+            if t:
+                for feld in ("ort", "titel", "geraet"):
+                    if not (t.get(feld) or "").strip():
+                        fehler.append(f"Labor {wer}: Teil von »{bid}« ohne »{feld}«")
+                if t.get("link") and not t["link"].startswith(ERLAUBTE_HOSTS):
+                    fehler.append(f"Labor {wer}: Link außerhalb der freigegebenen Seiten ({t['link']})")
+            elif not (x.get("ort") or "").strip():
+                fehler.append(f"Labor {wer}: »{bid}« ohne »ort«")
+            if quelle.get("umfang") not in umf:
+                fehler.append(f"Labor {wer}: »{bid}« mit Umfang »{quelle.get('umfang')}«")
+            if not quelle.get("prinzipien") or any(p not in prinz for p in quelle["prinzipien"]):
+                fehler.append(f"Labor {wer}: »{bid}« braucht gültige Prinzipien")
+            if not (quelle.get("geraet") or "").strip():
+                fehler.append(f"Labor {wer}: »{bid}« ohne Satz, was das Gerät kann")
+    print(f"Unterrichtsbeispiele nach Fächern: {len(d['l'])} Fächer, {sum(len(l['beispiele']) for l in d['l'])} Beispiele geprüft")
 
 
 def pruefe_galerie(fehler, beispiele, galerie):

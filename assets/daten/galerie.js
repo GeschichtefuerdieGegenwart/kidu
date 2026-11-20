@@ -159,7 +159,12 @@ var GALERIE = {
     { bild: "assets/galerie/politik-werkstatt-1.webp", text: "Der Sitzrechner zeigt den Bundestag als Halbrund – mit Mehrheitslinie und den Parteien ohne Sitz.",
       alt: "Sitzrechner der Politik-Werkstatt: Halbrund mit 630 Sitzen nach dem Bundesergebnis 2025, Legende mit Sitzzahlen je Partei und Hinweis, welche Parteien keinen Sitz bekommen" },
     { bild: "assets/galerie/politik-werkstatt-2.webp", text: "Zweitstimmen eintragen oder ein echtes Ergebnis laden, dann die 5-%-Hürde an- und ausschalten.",
-      alt: "Abschnitt »Der Sitzrechner« mit Knöpfen für Bundesergebnis 2025, Wahlkreis 260 und Klassenergebnis, Prozentfeldern je Partei und zwei Schaltern für 5-%-Hürde und Grundmandatsklausel" }
+      alt: "Abschnitt »Der Sitzrechner« mit Knöpfen für Bundesergebnis 2025, Wahlkreis 260 und Klassenergebnis, Prozentfeldern je Partei und zwei Schaltern für 5-%-Hürde und Grundmandatsklausel" },
+    /* ab 4.57: aus dem GK-Labor, Hefter und Blätter Fassung 3 (19.11.2026), aufgenommen am 20.11.2026 */
+    { bild: "assets/galerie/gk-m12-1.webp", text: "Ab fünf gelegten Karten prüft das Gerät einen Zwischenstand – mit Grund für jede Karte.",
+      alt: "GK-Labor, Blatt M1.2 »Funktionen erkennen«: vier Felder zu den Aufgaben der Politik, grün gelegte Karten mit »Passt.« und Grund, eine rot markierte Karte mit »Passt nicht. Lies das Beispiel noch einmal«" },
+    { bild: "assets/galerie/gk-m15-1.webp", text: "Erst schätzen, dann aufdecken: die amtliche Wahlstatistik neben dem eigenen Tipp.",
+      alt: "GK-Labor, Blatt M1.5, Auftrag »Vermuten: Die 18- bis 24-Jährigen«: Eingabefelder je Partei und darunter die Tabelle der Wahlstatistik 2025 nach Altersgruppen mit der Spalte »Dein Tipp«" }
   ],
   "psycho-ds3-6": [
     { bild: "assets/galerie/psycho-ds3-6-1.webp", text: "Welche Linie ist gleich lang? Ein Teil des Kurses sieht vorher, was fünf andere gewählt haben.",
@@ -178,6 +183,16 @@ var GALERIE = {
       alt: "Abschnitt »Kipp-Punkte«: fünf Schalter zu Zugehörigkeit, Verhältnis zu anderen Nationen, Vielfalt, Kritik und Grundrechten, rechts ein Zeiger im roten Bereich mit der Einordnung »Demokratiegefährdend« und der Voreinstellung Kaiserreich" },
     { bild: "assets/galerie/nationalismus-demokratie-2.webp", text: "Zum Einstieg ordnen die Lernenden Aussagen den Begriffen zu und bekommen eine kurze Erklärung.",
       alt: "Abschnitt »Ordne die Aussagen zu«: Aussage zur Fußball-WM mit den Knöpfen Patriotismus, Verfassungspatriotismus, Nationalismus, Chauvinismus; eine Antwort ist grün, eine rot markiert, darunter die Erklärung" }
+  ],
+  /* ab 4.57: aufgenommen am 20.11.2026 aus den aktuellen Fassungen (Repository psycho-labor, Stand 17.11.2026;
+     Repository demokratiebildung-fruehe-kindheit, Version 5.0 vom 18.11.2026). Eingaben im Bild sind Beispielwerte. */
+  "psycho-einheit": [
+    { bild: "assets/galerie/psycho-motivation-1.webp", text: "Die Einheitsseite Motivation: sechs Stunden als Landkarte, darunter der Motivationskreis, der über die Stunden wächst.",
+      alt: "Psycho-Labor, Einheit Motivation: Landkarte mit Klassenarbeit 1, Stunde 1 bis 6 und Klassenarbeit 2, darunter »Dein Motivationskreis« mit Ich, Umgebung, Erwartung mal Wert und Motivation und Handeln" }
+  ],
+  "demokratie-e3": [
+    { bild: "assets/galerie/demokratie-e3-1.webp", text: "Rundgang durch die Ausstellung: Prüfstein wählen, in einem Satz begründen, dann die Rückmeldung.",
+      alt: "Wahlfach Demokratiebildung, Etappe 3, Auftrag 5: Plakat »Ich werde gefragt und gehört« festgelegt auf Beteiligung, eine ausgedachte Kita-Szene, drei Prüfsteine, die eigene Begründung und die Rückmeldung »Ihre Wahl – zentral«" }
   ]
 };
 

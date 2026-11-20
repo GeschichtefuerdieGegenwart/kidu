@@ -62,6 +62,18 @@ def main():
             farbig = Image.merge("RGB", (bild, bild, bild)).point(lut)
             farbig.save(ZIEL / quelle.name, "WEBP", quality=72, method=6)
             n += 1
+    # ab 4.57: auch die Rahmenbilder der Unterrichtsbeispiele nach Fächern (assets/daten/labore.js) – sie sind
+    # Bilder der Kacheln »Fach wählen«, wenn rahmen.kachel gesetzt ist. Alle vier gehören zum Unterricht (Petrol).
+    rahmen = json.loads(subprocess.check_output(
+        ["node", "-e", "process.stdout.write(JSON.stringify(require('./assets/daten/labore.js').map(l=>l.rahmen.bild)))"], cwd=WURZEL))
+    tab = verlauf(FARBEN["lernen"])
+    lut = [c[0] for c in tab] + [c[1] for c in tab] + [c[2] for c in tab]
+    for pfad in rahmen:
+        quelle = WURZEL / pfad
+        bild = ImageOps.autocontrast(Image.open(quelle).convert("L"), cutoff=1)
+        bild = bild.resize((640, round(640 * bild.height / bild.width)), Image.LANCZOS)
+        Image.merge("RGB", (bild, bild, bild)).point(lut).save(ZIEL / quelle.name, "WEBP", quality=72, method=6)
+        n += 1
     print(f"Duplex-Vorschauen: {n} Bilder in {ZIEL.relative_to(WURZEL)}")
 
 

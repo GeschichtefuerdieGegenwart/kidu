@@ -300,6 +300,25 @@ Die folgenden Bilder wurden am 26. Oktober 2026 auf dieselbe Weise aufgenommen (
 | `nationalismus-demokratie-1.webp` | Fünf Regler stellen Kipp-Punkte ein. Ein Zeiger zeigt, wann das Wir zur Gefahr wird. | Einblend-Effekt der Seite abgeschaltet; Abschnitt »Kipp-Punkte«; Klick auf die Voreinstellung »Kaiserreich (wilhelminisch)«; Seite bei 4080 px |
 | `nationalismus-demokratie-2.webp` | Zum Einstieg ordnen die Lernenden Aussagen den Begriffen zu und bekommen eine kurze Erklärung. | Einblend-Effekt der Seite abgeschaltet; Abschnitt »Begriffe«; Klick auf »Verfassungspatriotismus« bei der ersten Aussage; Seite bei 1635 px |
 
+## Unterrichtsbeispiele nach Fächern (Version 4.57, 20. November 2026)
+
+Aufgenommen am 20. November 2026 aus lokalen Kopien der öffentlichen Repositories (Chromium, 1280 × 800 Pixel, verkleinert auf 1040 Pixel Breite, WebP). Stand der Kopien: `GGK-Einheit-Nationalsozialismus` 4172559 (18.11.2026), `Gemeinschaftskunde` 1bc7391 (19.11.2026), `psycho-labor` 7b37c7c (17.11.2026), `demokratiebildung-fruehe-kindheit` 46c50c5 (18.11.2026). Nur Bedienschritte der Anwendung, Inhalte nicht verändert. Die Bilder für »Das Ganze« sind Ausschnitte der Startseite; sie haben deshalb kein Format 16:10.
+
+Bewusst nur eigene Oberflächen: Die Titelbilder der Hefter im GK-Labor (Material für Lehrkräfte und Lernende, Fassung 3 vom 19.11.2026) und die Bilder im Moodle-Paket des GGK-Labors (20.11.2026) sind nicht übernommen. Ihre Herkunft ist dort nicht für eine öffentliche Seite geklärt.
+
+| Bild | Was zu sehen ist | Woher |
+|---|---|---|
+| `labor-ggk-1.webp` | Startseite des GGK-Labors, Kapitel Weimarer Republik: Zeitstrahl mit den Modulen und den Merkdaten (1040 × 337). | `GGK-Einheit-Nationalsozialismus/index.html`, Ausschnitt der Startseite (Zeitstrahl) |
+| `labor-gk-1.webp` | Kopf des Hefters: die Leitfrage, »Los geht’s« und »Dein Stand« mit acht Kreisen von G bis B (1040 × 153). | `Gemeinschaftskunde/index.html`, Ausschnitt oben (Kopf des Hefters) |
+| `labor-psy-1.webp` | Startseite des Psycho-Labors: die Frage und sechs Kacheln von Wahrnehmung bis Intelligenz (1040 × 358). | `psycho-labor/index.html`, Ausschnitt oben |
+| `labor-demo-1.webp` | Jahreskompass des Wahlfachs: acht Etappen im Kreis, die Nadel auf Etappe 1, daneben die Karte der Etappe. | `demokratiebildung-fruehe-kindheit/index.html`, Kompass nach dem Laden; die Anwendung ist nicht verlinkt (Adresse noch offen) |
+| `gk-m12-1.webp` | Blatt M1.2: gelegte Karten mit »Passt.« und Grund, eine Karte mit »Passt nicht.« | `Gemeinschaftskunde/m1-2-erkennen.html`; Karten gelegt, Zwischenstand geprüft |
+| `gk-m15-1.webp` | Blatt M1.5: eigene Schätzung je Partei, darunter die Wahlstatistik 2025 nach Altersgruppen mit »Dein Tipp«. | `Gemeinschaftskunde/m1-5-warum-so.html`; Auftrag »Vermuten: Die 18- bis 24-Jährigen«, Schätzung eingetragen und aufgedeckt |
+| `psycho-motivation-1.webp` | Einheitsseite Motivation: Landkarte der Stunden und »Dein Motivationskreis«. | `psycho-labor/motivation.html`, nach dem Laden |
+| `demokratie-e3-1.webp` | Etappe 3, Auftrag 5: Plakat festgelegt, ausgedachte Kita-Szene, drei Prüfsteine, eigene Begründung und die Rückmeldung »Ihre Wahl – zentral«. | `demokratiebildung-fruehe-kindheit/index.html`; Etappe 3, Auftrag 5: Prüfstein gewählt, Begründung eingetragen, Rückmeldung geöffnet |
+
+Zu jedem Bild gibt es eine Duplex-Vorschau (`tools/duplex.py`, ab 4.57 auch für die Bilder des Ganzen).
+
 ## Duplex-Vorschauen und Auswahl für die Startseite (Version 4.2)
 
 - `assets/galerie/duplex/` enthält zu jedem Bild eine Duplex-Vorschau in den Druckfarben des Bereichs (`tools/duplex.py`): Graustufen, 640 px breit, auf Petrol tief → Fläche (Digitaler Unterricht), Druckschwarz → Honigplatte → Fläche (KI-Training) oder Petrol tief → Honigplatte → Fläche (mit KI entwickelt). Inhalt und Ausschnitt bleiben unverändert.
