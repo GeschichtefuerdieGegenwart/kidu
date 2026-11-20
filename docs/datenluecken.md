@@ -405,6 +405,10 @@ Noch offen: Lernmehrwert in eigenen Worten, Nötige Anpassungen, Stolpersteine, 
 ### Nationalismus und Demokratie (`nationalismus-demokratie`)
 
 Vorschläge zum Prüfen:
+- [ ] prinzipien: variieren
+  - Begründung: Ab 4.57 (Unterrichtsbeispiele nach Fächern): Abschnitt »Experiment«: »Stelle die fünf Regler ein und beobachte, wie sich das Gesamtbild verändert« – ein Wert wird verschoben, die Folge erscheint.
+- [ ] geraet: Das Gerät lässt fünf Kipp-Punkte einstellen und zeigt, wie sich das Gesamtbild verändert.
+  - Begründung: Satz aus dem Abschnitt »Experiment« des Moduls, in Kidu-Sprache.
 - [ ] lernaktivitaeten: Aussagen den Begriffen Patriotismus, Nationalismus und Chauvinismus zuordnen, Nationalismus als Motor und als Gefahr der Demokratie an Beispielen vergleichen, mit fünf Reglern Kipp-Punkte einstellen und historische Fälle testen, vier Artikel des Grundgesetzes und das NPD-Urteil als Maßstab lesen, Forderungen im Demokratie-Prüfraster drei Stufen zuordnen, Zahlen der Mitte-Studie mit Fragen der Quellenkritik prüfen, eine von drei Positionen zur Kontroverse wählen und begründen, im Urteilsbaukasten ein eigenes Abschlussurteil formulieren
   - Begründung: Abschnitte des Moduls: »Begriffe klären«, »Ambivalenz«, »Kipp-Punkte«, »Was sagt das Grundgesetz?«, »Demokratie-Prüfraster«, »Wer spricht für das Volk?«, »Quellenkritik«, »Kontroverse«, »Urteilsbaukasten«.
 - [ ] technik: Browser, keine Daten werden gespeichert oder gesendet, Zusammenfassung als PDF
@@ -423,6 +427,32 @@ Vorschläge zum Prüfen:
   - Begründung: Alle Aufträge stehen in der Du-Form; eine Partner- oder Gruppenphase nennt das Modul nicht.
 
 Noch offen: Lernmehrwert in eigenen Worten, Nötige Anpassungen, Stolpersteine, Vorbereitungsaufwand.
+
+### Kinder haben Rechte (`demokratie-e3`)
+
+Vorschläge zum Prüfen:
+- [ ] prinzipien: verdecken, rueckmelden, stufen
+  - Begründung: README, Tabelle »Arbeitsblatt Etappe 3«, Spalte »Was das Gerät tut (Kidu)«: Verdecken (Auftrag 1, 2, 8), Rückmelden (Auftrag 3, 5), Stufen (Auftrag 4, zwei Lesestufen).
+- [ ] geraet: Das Gerät hält die erste Position fest, bis die Lernenden am Ende zu ihr zurückkehren. Im Rundgang begründet es jede Wahl eines Prüfsteins.
+  - Begründung: README: Auftrag 2 »die Festlegung bleibt stehen«, Auftrag 8 »Rückkehr zur ersten Festlegung«, Auftrag 5 »je Szene ein Prüfstein mit Begründung«.
+- [ ] lernaktivitaeten: ohne Unterlagen drei Fragen zur vorigen Etappe beantworten, sich zu dem Satz »Wer Kinder liebt, braucht keine Kinderrechte.« festlegen, lesen, wie Korczak sich selbst anzeigt, und vermuten, was das Gesetz verlangt, im Rundgang durch die Ausstellung zu sechs Szenen den passenden Prüfstein wählen und begründen, ein Plakat für die Kita schreiben und mit den Kriterien vergleichen, acht Karten legen: Worüber dürfen Kinder bei Ihnen bestimmen?, zur ersten Position zurückkehren und einen Satz in die Lernspur schreiben
+  - Begründung: README, Tabelle »Arbeitsblatt Etappe 3«, Aufträge 1 bis 8.
+- [ ] technik: iPad, Eingaben bleiben im Browser, Smartboard für die gemeinsame Führung, Stand als Datei sichern und laden, Zusammenfassung auf zwei Seiten A4
+  - Begründung: README, Abschnitte »Blatt-Standard« und »Entscheidungen«: Speichern im Browser, Sichern und Laden als Datei, Zusammenfassung zwei Seiten A4, gemeinsam geführt am Smartboard.
+- [ ] anliegen: Verstehen & vertiefen, Reflektieren & übertragen
+  - Begründung: Leitfrage »Geben wir Kindern Rechte – oder haben sie welche?«; Rückblick mit Rückkehr zur Position.
+- [ ] phasen: Einstieg, Erarbeitung, Sichern und üben
+  - Begründung: Auftrag 1 und 2 als Einstieg, 3 bis 7 als Erarbeitung, 8 und die Zusammenfassung als Sicherung.
+- [ ] umfang: Durchgängig
+  - Begründung: README, Entscheidungen: »Die Arbeitsblätter tragen eine ganze Doppelstunde, gemeinsam geführt am Smartboard.«
+- [ ] rollen: Anleiten, Moderieren
+  - Begründung: Freigaben »auf Ansage«, Rundgang im Plenum.
+- [ ] mehrwerte: schneller Rückmeldung erhalten, unterschiedliche Zugänge und Niveaus anbieten
+  - Begründung: Rückmeldung je Prüfstein mit Begründung; zwei Lesestufen in Auftrag 4.
+- [ ] sozialformen: Einzelarbeit, Plenum
+  - Begründung: Positionslinie und Rundgang im Raum, die übrigen Aufträge allein am Gerät.
+
+Noch offen: Lernmehrwert in eigenen Worten, Nötige Anpassungen, Stolpersteine, Vorbereitungsaufwand, Link.
 
 ### Fehlersuche an der Bremsanlage (`kfz-fehlersuche`)
 

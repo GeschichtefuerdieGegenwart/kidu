@@ -194,8 +194,11 @@ def main():
     # ab 4.52: Zeichnung, Liste und Lampentext der Wunsch-Methode aus WUNSCH_SEITE.html() (tools/wunsch.py, mit Node)
     spec = importlib.util.spec_from_file_location("wunsch", WURZEL / "tools" / "wunsch.py")
     wm = importlib.util.module_from_spec(spec); spec.loader.exec_module(wm)
+    # ab 4.57: die Unterrichtsbeispiele nach Fächern aus LABORE_SEITE.html() (tools/labore.py, mit Node)
+    spec = importlib.util.spec_from_file_location("labore", WURZEL / "tools" / "labore.py")
+    lb = importlib.util.module_from_spec(spec); spec.loader.exec_module(lb)
     for datei, titel, aktiv in SEITEN:
-        inhalt = mit_schloss(wm.einsetzen(pk.einsetzen(fp.einsetzen((WURZEL / "src" / datei).read_text(encoding="utf-8"), datei, fahrplan), datei), datei), datei)
+        inhalt = mit_schloss(lb.einsetzen(wm.einsetzen(pk.einsetzen(fp.einsetzen((WURZEL / "src" / datei).read_text(encoding="utf-8"), datei, fahrplan), datei), datei), datei), datei)
         (WURZEL / datei).write_text(mit_stand(rahmen(titel, aktiv, inhalt, datei)), encoding="utf-8")
         print("gebaut:", datei)
 

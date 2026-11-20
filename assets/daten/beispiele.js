@@ -15,9 +15,10 @@
    qualitaetscheck: erst eintragen, wenn ein Check nach »So arbeitet der Digital-Check« geprüft UND freigegeben ist.
      Form: { datum: "2026-11-20", sicherheit: "mittel", staerken: ["anschauliche Darstellung"] }
      Höchstens drei Stärken, ohne Zahl. Ohne Eintrag zeigt die Detailseite »Qualitätscheck: noch offen«.
-   auswahl: »Zum Anfangen« in der Galerie (Entscheidung der Lehrkraft vom 26.10.2026). Genau sechs Einträge,
+   auswahl: bis 4.56 »Zum Anfangen« in der Galerie (Entscheidung der Lehrkraft vom 26.10.2026). Genau sechs Einträge,
      zwei je Umfang, alle »im Unterricht erprobt«. Form: { grund: "ein Satz, warum das Beispiel ausgewählt ist" }.
-     Keine Rangfolge: Die sechs sind ein Anfang, keine Bestenliste. tools/pruefen.py prüft die Regel.
+     Seit 4.57 ordnet assets/daten/labore.js die Unterrichtsbeispiele nach Fächern; das Feld bleibt als Entscheidung
+     stehen, die Seite zeigt es nicht mehr. Keine Rangfolge.
    nachgeschaerft (ab 4.18): { datum, punkte[] } – was nach einer Erprobung am Material geändert wurde. Nur Änderungen,
      keine Aussagen von Lernenden. Die Detailseite zeigt es als »Nach der Erprobung nachgeschärft«.
    beobachtung (ab 4.10): Datum eines ausgefüllten Beobachtungsbogens nach der Stunde (»2026-11-20«), nur bei
@@ -565,6 +566,8 @@ var BEISPIELE = [
     faecher: ["Gemeinschaftskunde", "Demokratiebildung"], bereich: "lernen", kiEinsatz: "entwicklung-anwendung",
     kurz: "Wann wird das Wir zur Gefahr? Begriffe klären, mit fünf Reglern Kipp-Punkte testen, das Grundgesetz als Maßstab anlegen und ein eigenes Urteil bauen.",
     status: "im Unterricht erprobt", bild: "assets/galerie/nationalismus-demokratie-1.webp", link: GH + "nation-im-kopf-gene/nationalismus-demokratie.html",
+    prinzipien: ["variieren"],
+    geraet: "Das Gerät lässt fünf Kipp-Punkte einstellen und zeigt, wie sich das Gesamtbild verändert.",
     lernaktivitaeten: ["Aussagen den Begriffen Patriotismus, Nationalismus und Chauvinismus zuordnen",
       "Nationalismus als Motor und als Gefahr der Demokratie an Beispielen vergleichen",
       "mit fünf Reglern Kipp-Punkte einstellen und historische Fälle testen",
@@ -582,6 +585,8 @@ var BEISPIELE = [
     verwandt: ["nation", "gene", "erfundene-traditionen"],
     suchbegriffe: ["Nationalismus", "Patriotismus", "Populismus", "Grundgesetz", "Beutelsbacher Konsens", "Urteilsbildung", "J1"],
     vorschlag: {
+      prinzipien: "Ab 4.57 (Unterrichtsbeispiele nach Fächern): Abschnitt »Experiment«: »Stelle die fünf Regler ein und beobachte, wie sich das Gesamtbild verändert« – ein Wert wird verschoben, die Folge erscheint.",
+      geraet: "Satz aus dem Abschnitt »Experiment« des Moduls, in Kidu-Sprache.",
       lernaktivitaeten: "Abschnitte des Moduls: »Begriffe klären«, »Ambivalenz«, »Kipp-Punkte«, »Was sagt das Grundgesetz?«, »Demokratie-Prüfraster«, »Wer spricht für das Volk?«, »Quellenkritik«, »Kontroverse«, »Urteilsbaukasten«.",
       technik: "README: »Die Seiten speichern keine Daten. Alle Eingaben bleiben im Browser der Nutzenden«; PDF-Zusammenfassung im Ordner pdf/.",
       anliegen: "Einleitung: »du untersuchst, an welchen Punkten nationale Zugehörigkeit mit Demokratie in Konflikt gerät. Und du entwickelst dazu ein eigenes, begründetes Urteil.«",
@@ -590,6 +595,43 @@ var BEISPIELE = [
       rollen: "Aufträge in der Du-Form; die Spielregel zum Beutelsbacher Konsens und die Kontroverse mit drei Positionen legen eine moderierte Besprechung nahe.",
       mehrwerte: "Abschnitt »Experiment«: »Stelle die fünf Regler ein und beobachte, wie sich das Gesamtbild verändert. Teste auch historische Fälle«; Lösungen und Einordnungen zum Aufklappen.",
       sozialformen: "Alle Aufträge stehen in der Du-Form; eine Partner- oder Gruppenphase nennt das Modul nicht." } },
+
+  /* Ab 4.57 (Auftrag Mario 20.11.2026): eine Etappe aus dem Jahreskompass des Wahlfachs Demokratiebildung.
+     Quelle: Repository demokratiebildung-fruehe-kindheit, Version 5.0 vom 18.11.2026 (README, Tabelle »Arbeitsblatt Etappe 3«).
+     Status laut README: »Entwurf, noch nicht im Unterricht erprobt«. Kein Link: Ob die Seite über GitHub Pages läuft, ist noch offen. */
+  { id: "demokratie-e3", aufgenommen: "2026-11", titel: "Kinder haben Rechte", fach: "Sozialpädagogik · Demokratiebildung",
+    faecher: ["Sozialpädagogik", "Demokratiebildung"], bereich: "lernen", kiEinsatz: "entwicklung-anwendung",
+    kurz: "Geben wir Kindern Rechte – oder haben sie welche? Die Lernenden prüfen Szenen aus dem Kita-Alltag an drei Prüfsteinen und gestalten ein Plakat für die Kita.",
+    status: "in Entwicklung", bild: "assets/galerie/demokratie-e3-1.webp", link: null,
+    prinzipien: ["verdecken", "rueckmelden", "stufen"],
+    geraet: "Das Gerät hält die erste Position fest, bis die Lernenden am Ende zu ihr zurückkehren. Im Rundgang begründet es jede Wahl eines Prüfsteins.",
+    lernaktivitaeten: ["ohne Unterlagen drei Fragen zur vorigen Etappe beantworten",
+      "sich zu dem Satz »Wer Kinder liebt, braucht keine Kinderrechte.« festlegen",
+      "lesen, wie Korczak sich selbst anzeigt, und vermuten, was das Gesetz verlangt",
+      "im Rundgang durch die Ausstellung zu sechs Szenen den passenden Prüfstein wählen und begründen",
+      "ein Plakat für die Kita schreiben und mit den Kriterien vergleichen",
+      "acht Karten legen: Worüber dürfen Kinder bei Ihnen bestimmen?",
+      "zur ersten Position zurückkehren und einen Satz in die Lernspur schreiben"],
+    technik: ["iPad, Eingaben bleiben im Browser", "Smartboard für die gemeinsame Führung", "Stand als Datei sichern und laden",
+      "Zusammenfassung auf zwei Seiten A4"],
+    anliegen: ["verstehen", "reflektieren"],
+    phasen: ["einstieg", "erarbeitung", "sicherung"], umfang: "durchgaengig", rollen: ["anleiten", "moderieren"],
+    mehrwerte: ["rueckmeldung", "zugaenge"],
+    dauer: "90 Minuten",
+    sozialformen: ["Einzelarbeit", "Plenum"],
+    verwandt: ["gene", "nationalismus-demokratie"],
+    suchbegriffe: ["Kinderrechte", "Korczak", "Kita", "Beteiligung", "Demokratiebildung", "Prüfstein"],
+    vorschlag: {
+      prinzipien: "README, Tabelle »Arbeitsblatt Etappe 3«, Spalte »Was das Gerät tut (Kidu)«: Verdecken (Auftrag 1, 2, 8), Rückmelden (Auftrag 3, 5), Stufen (Auftrag 4, zwei Lesestufen).",
+      geraet: "README: Auftrag 2 »die Festlegung bleibt stehen«, Auftrag 8 »Rückkehr zur ersten Festlegung«, Auftrag 5 »je Szene ein Prüfstein mit Begründung«.",
+      lernaktivitaeten: "README, Tabelle »Arbeitsblatt Etappe 3«, Aufträge 1 bis 8.",
+      technik: "README, Abschnitte »Blatt-Standard« und »Entscheidungen«: Speichern im Browser, Sichern und Laden als Datei, Zusammenfassung zwei Seiten A4, gemeinsam geführt am Smartboard.",
+      anliegen: "Leitfrage »Geben wir Kindern Rechte – oder haben sie welche?«; Rückblick mit Rückkehr zur Position.",
+      phasen: "Auftrag 1 und 2 als Einstieg, 3 bis 7 als Erarbeitung, 8 und die Zusammenfassung als Sicherung.",
+      umfang: "README, Entscheidungen: »Die Arbeitsblätter tragen eine ganze Doppelstunde, gemeinsam geführt am Smartboard.«",
+      rollen: "Freigaben »auf Ansage«, Rundgang im Plenum.",
+      mehrwerte: "Rückmeldung je Prüfstein mit Begründung; zwei Lesestufen in Auftrag 4.",
+      sozialformen: "Positionslinie und Rundgang im Raum, die übrigen Aufträge allein am Gerät." } },
 
   /* ---------- Konzeptbeispiele: Ideen für Lücken im Bestand. Nicht erprobt, kein Link, kein Vorschaubild. ---------- */
   { id: "kfz-fehlersuche", titel: "Fehlersuche an der Bremsanlage", fach: "Kfz-Technik",

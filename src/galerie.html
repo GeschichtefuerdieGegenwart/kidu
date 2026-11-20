@@ -1,92 +1,46 @@
-<section class="galerie-kopf" aria-labelledby="t-galerie"><div class="huelle huelle-weit"><div class="plattenband" id="plattenband" data-wahl="alle" aria-hidden="true"><span class="pl pl-ki"></span><span class="pl pl-le"></span></div></div><div class="huelle huelle-weit galerie-kopf-raster">
+
+<section class="galerie-kopf ub-kopf" aria-labelledby="t-galerie"><div class="huelle huelle-weit"><div class="plattenband" id="plattenband" data-wahl="alle" aria-hidden="true"><span class="pl pl-ki"></span><span class="pl pl-le"></span></div></div><div class="huelle huelle-weit ub-kopf-raster">
   <div class="galerie-titel">
     <h1 id="t-galerie" class="passer" data-passer="Unterrichts&shy;beispiele: analog und digital">Unterrichts&shy;beispiele: analog und digital</h1>
     <p class="galerie-unterzeile">beides mit KI erstellt</p>
   </div>
   <div class="galerie-kopf-text">
-    <p class="detail-kurz">Echte Ansichten aus Lernanwendungen, die im Unterricht eingesetzt wurden. Sieh dir an, was Lernende dort tun – und probier es selbst aus.</p>
+    <p class="detail-kurz">Vier Fächer, vier Lernumgebungen aus dem Unterricht. Wähl ein Fach. Du siehst das Ganze, die Beispiele und was das Gerät dort kann – und wie du die Idee klein oder groß nutzt.</p>
     <p class="klein galerie-hinweis">Persönliche Erprobungen, keine Musterlösungen. Alle Bilder sind Bildschirmfotos aus den Anwendungen selbst. Bisher stammen alle Beispiele aus dem Unterricht des Urhebers von Kidu und aus seiner Arbeit außerhalb des Unterrichts. Analoge Beispiele: noch offen.</p>
   </div>
-
-  <form class="filter galerie-suche" id="filter" role="search" aria-label="Beispiele suchen und filtern">
-    <div class="suchzeile">
-      <label for="suche">Beispiele suchen</label>
-      <input type="search" id="suche" name="suche" autocomplete="off" placeholder="z. B. Rückmeldung, Geschichte, Labor" aria-describedby="suche-hilfe">
-      <p class="sr-only" id="suche-hilfe">Die Treffer erscheinen direkt unter der Suche, schon beim Tippen.</p>
-    </div>
-    <div class="filterzeile" id="bereich" role="group" aria-label="Bereich">
-      <button type="button" class="chip" data-bereich="alle" aria-pressed="true">alle</button>
-      <button type="button" class="chip" data-bereich="lernen" aria-pressed="false">Unterricht</button>
-      <button type="button" class="chip" data-bereich="ki" aria-pressed="false">Außerhalb des Unterrichts</button>
-    </div>
-    <div class="filterzeile umfangzeile" id="umfang" role="group" aria-labelledby="umfang-wort"></div>
-    <details class="mehr mehr-filter" id="mehr-filter">
-      <summary>Mehr Filter</summary>
-      <div class="filterraster" id="auswahlfilter"></div>
-      <div class="filterraster" id="weitere"></div>
-    </details>
-  </form>
+  <nav class="ub-wahl" aria-label="Fach wählen">
+<!-- labore:wahl -->
+  </nav>
 </div></section>
 
-<section class="ergebnisse" id="ergebnisse" aria-labelledby="t-ergebnisse" hidden><div class="huelle huelle-weit">
-  <div class="ergebniskopf">
-    <div class="ergebnis-oben">
-      <h2 id="t-ergebnisse" class="ergebnisse-titel">Treffer</h2>
-      <p class="ergebniszeile" id="ergebniszeile" aria-live="polite"></p>
-      <div class="ansicht" id="ansicht" role="group" aria-label="Ansicht der Beispiele">
-        <span aria-hidden="true">Ansicht</span>
-        <button type="button" class="chip" data-ansicht="raster" aria-pressed="true">Raster</button>
-        <button type="button" class="chip" data-ansicht="buehne" aria-pressed="false">Bühne</button>
-      </div>
-    </div>
-    <ul class="aktive" id="aktive" aria-label="Aktive Filter"></ul>
-  </div>
-  <p class="lockerung" id="lockerung" hidden></p>
-  <div class="karten" id="karten"></div>
-  <div class="buehne-steuerung" id="buehne-steuerung" hidden>
-    <button type="button" class="knopf still" id="buehne-zurueck"><span aria-hidden="true">←</span> Vorherige</button>
-    <p id="buehne-stand" class="leise" aria-live="polite"></p>
-    <button type="button" class="knopf still" id="buehne-vor">Nächste <span aria-hidden="true">→</span></button>
-  </div>
-  <div class="mehrknopf"><button type="button" class="knopf still" id="mehr">Mehr Beispiele</button></div>
-  <p class="ergebnis-zurueck"><button type="button" class="knopf still" data-zuruecksetzen>Zurück zum Stöbern</button></p>
-  <p class="leise klein speicherhinweis">Deine Filter bleiben nur in diesem Browser. Suchwörter stehen nur in der Adresse, damit du Treffer teilen kannst. <button type="button" class="linkknopf" id="loeschen">Eingaben löschen</button> <span id="geloescht" aria-live="polite"></span></p>
+<section class="band ub-schluessel" id="schluessel" aria-labelledby="t-schluessel"><div class="huelle huelle-weit">
+  <h2 id="t-schluessel">So liest du die Beispiele</h2>
+  <p class="mass">Jedes Beispiel trägt zwei Angaben: wie viel Gerät es braucht und was das Gerät dabei kann. Beides gilt in jedem Fach.</p>
+<!-- labore:schluessel -->
+  <details class="mehr ub-forschung">
+    <summary>Für Fachleute: Was die Forschung zu den Prinzipien sagt</summary>
+    <p>Herkunft: Die sechs Prinzipien sind eine Setzung von Kidu. Sie fassen zusammen, was das Gerät in allen erprobten Lernseiten dieser Seite tut. Die Hinweise aus der Forschung stützen einzelne Prinzipien; sie beweisen nicht, dass ein Beispiel wirkt.</p>
+    <ul>
+      <li><b>Verdecken:</b> Wer vor der Auflösung eine Vorhersage abgibt, lernt das Ergebnis besser – besonders, wenn die Vorhersage falsch war (Brod, Hasselhorn und Bunge 2018, Learning and Instruction 55). Als Grund vermuten die Forschenden die Überraschung über den eigenen Irrtum.</li>
+      <li><b>Rückmelden:</b> Rückmeldung mit Erklärung wirkt in digitalen Lernumgebungen deutlich stärker als die bloße Angabe »richtig« oder »falsch« (van der Kleij, Feskens und Eggen 2015, Metaanalyse, Review of Educational Research 85). In derselben Metaanalyse waren die Effekte in Mathematik größer als in den Sozialwissenschaften.</li>
+      <li><b>Messen:</b> eigene Setzung aus dem Psycho-Labor – Daten erzeugen statt behaupten. Ein eigener Forschungsbefund zu diesem Prinzip ist noch offen.</li>
+      <li><b>Variieren:</b> Bewegte Darstellungen helfen vor allem dann, wenn die Veränderung selbst der Lerngegenstand ist (Höffler und Leutner 2007, Metaanalyse, Learning and Instruction 17).</li>
+      <li><b>Stufen:</b> Hilfen, die Anfängerinnen und Anfängern nützen, können Fortgeschrittene bremsen (Expertise-Umkehr-Effekt, Kalyuga 2007, Educational Psychology Review 19). Darum mehrere Zugänge zum selben Inhalt.</li>
+      <li><b>Bündeln:</b> Abstimmungssysteme im Unterricht zeigen kleine, aber messbare Effekte auf das Lernen (Hunsu, Adesope und Bayly 2016, Metaanalyse, Computers &amp; Education 94).</li>
+    </ul>
+    <p class="klein leise">Grenze: Viele Befunde stammen aus Mathematik, Naturwissenschaften und Hochschule. Für Gesellschaftsfächer an einer beruflichen Schule ist die Übertragung plausibel, aber nicht eigens geprüft. Quellen als Text ohne Link. Gelesen wurden Zusammenfassungen der Studien, nicht die Volltexte.</p>
+  </details>
 </div></section>
 
-<div class="stoebern" id="stoebern">
-<section class="prinzip-buehne" id="prinzip-buehne" aria-labelledby="t-prinzip"><div class="huelle huelle-weit stapel">
-  <div class="prinzip-kopf">
-    <h2 id="t-prinzip">Was das Gerät hier kann</h2>
-    <p class="mass">Sechs Dinge kann das Gerät besser als Papier. Wähl eines aus und sieh, in welchen Beispielen es steckt.</p>
-  </div>
-  <div class="muster-filter" id="prinzip-filter" role="group" aria-label="Nach Prinzip wählen"></div>
-  <p class="leise" id="prinzip-stand" aria-live="polite"></p>
-  <div class="prinzip-karten" id="prinzip-karten"></div>
-  <p class="leise klein">Die Zuordnung ist ein Vorschlag. Sie stammt aus der Seite <a href="sechs-hebel.html">Wann funktioniert digitaler Unterricht?</a> und aus Notizen zum Unterricht. Beispiele ohne Zuordnung stehen weiter unten.</p>
-</div></section>
-<section class="anfangen" id="anfangen" aria-labelledby="t-anfangen"><div class="huelle">
-  <div class="anfangen-kopf">
-    <h2 id="t-anfangen">Zum Anfangen</h2>
-    <p>Sechs Beispiele, zwei je Umfang. Alle sind im Unterricht erprobt. Dazu ganze Einheiten über mehrere Stunden.</p>
-    <p class="anfangen-satz">Punktuell ist nicht weniger als durchgängig. Die sechs sind ein Anfang, keine Bestenliste.</p>
-    <p class="klein leise">So wurden sie ausgewählt: erprobt · zeigen etwas, das Papier nicht kann · aus unterschiedlichen Fächern · zu dritt decken sie die drei Umfänge ab.</p>
-  </div>
-  <div class="anfangen-gruppen" id="anfangen-gruppen"></div>
-</div></section>
-<section class="galerie-buehne" aria-labelledby="t-einblicke"><div class="huelle">
-  <h2 id="t-einblicke" class="galerie-zwischen galerie-zwischen-erst" tabindex="-1">Einblicke</h2>
-  <p class="mass galerie-einblicke-satz">Große Bilder aus den Anwendungen: Was tun die Lernenden dort?</p>
-  <div class="einblicke" id="einblicke"></div>
-  <div class="einblicke-klein" id="einblicke-klein"></div>
-  <noscript><p class="box">Die Unterrichtsbeispiele zeigen ihre Bilder mit JavaScript. Ohne JavaScript findest du die Projekte über die Beispielseiten.</p></noscript>
-</div></section>
-
-<section class="band band-karton alle-band" id="alle" aria-labelledby="t-alle"><div class="huelle alle-band-raster">
-  <h2 id="t-alle">Alle Beispiele auf einen Blick</h2>
-  <p>Alle Projekte als Karten, mit Phase, Anliegen und Status. Du kannst sie oben jederzeit durchsuchen und filtern.</p>
-  <p><button type="button" class="knopf" id="alle-zeigen">Alle Beispiele zeigen</button></p>
-</div></section>
+<div class="ub-faecher" id="ub-faecher">
+  <div class="huelle huelle-weit ub-umschalter"><button type="button" class="knopf still" id="ub-alle" aria-pressed="false" aria-controls="ub-faecher" hidden>Alle vier untereinander</button></div>
+<!-- labore:labore -->
 </div>
+
+<section class="band ub-weitere-band" aria-labelledby="t-weitere"><div class="huelle">
+  <h2 id="t-weitere" class="sr-only">Weitere Beispiele</h2>
+<!-- labore:weitere -->
+</div></section>
 
 <section class="band hefter-band" id="hefter" aria-labelledby="t-hefter"><div class="huelle hefter-bereich">
   <h2 id="t-hefter">Mein Schnellhefter</h2>
@@ -97,9 +51,7 @@
 <script src="assets/daten/taxonomien.js"></script>
 <script src="assets/daten/beispiele.js"></script>
 <script src="assets/daten/galerie.js"></script>
+<script src="assets/daten/prinzipien.js"></script>
+<script src="assets/daten/labore.js"></script>
 <script src="assets/hilde.js"></script>
-<script src="assets/suche.js"></script>
-<script src="assets/showroom.js"></script>
-<script src="assets/anfangen.js"></script>
-<script src="assets/galerie-buehne.js"></script>
-<script src="assets/galerie-prinzipien.js"></script>
+<script src="assets/labore.js"></script>

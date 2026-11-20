@@ -3600,3 +3600,140 @@ html[data-bewegung="weniger"] .wm-wechsel.wm-wachsen{animation:wm-blenden var(--
 @media print{.ki-blick-knoepfe,.ort-karte{display:none}}
 @media (min-width:1180px){.ki-blick-figur{grid-area:auto}}
 @media (max-width:719px){.ki-blick-tipp{display:none}} /* am Telefon gibt es die Zeichnung nicht */
+
+/* ---------- Unterrichtsbeispiele nach Fächern (ab 4.57, Auftrag Mario 20.11.2026) ----------
+   galerie.html: oben vier Kacheln »Fach wählen«, darunter die zwei Angaben jedes Beispiels (vier Umfänge, sechs
+   Prinzipien), dann ein Fach (mit Skript) oder alle vier untereinander (ohne Skript, im Druck, »Alle vier untereinander«).
+   Inhalt: assets/daten/labore.js, Darstellung: assets/labore.js. Keine Rangfolge: Kacheln, Umfänge und Prinzipien
+   stehen gleich groß nebeneinander. Bewegung: keine beim Laden; Kacheln und Bilder nur Abheben/Andruck wie Karten. */
+.ub-kopf .detail-kurz{max-width:58ch}
+.ub-kopf-raster{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--a2) var(--a4);align-items:start}
+.ub-kopf-raster .galerie-kopf-text{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--a1) var(--a4);align-items:start}
+.ub-kopf-raster .galerie-kopf-text .detail-kurz{margin-top:0}
+.ub-kopf-raster .galerie-hinweis{margin:0;max-width:52ch}
+.ub-wahl{grid-column:1/-1;margin-top:var(--a1)}
+.ub-wahl-liste{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--a3)}
+.ub-kachel{--platte-farbe:var(--karton);display:flex;flex-direction:column;height:100%;background:var(--flaeche);border-radius:var(--rund);color:var(--text);text-decoration:none;box-shadow:var(--platte);transition:transform var(--dauer-schnell) var(--ease-out),box-shadow var(--dauer-schnell) var(--ease-out)}
+.ub-kachel-bild{display:block;margin:.5rem .5rem 0;aspect-ratio:2/1;overflow:hidden;border-radius:2px;background:var(--karton)}
+.ub-kachel-bild img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.ub-kachel-text{display:grid;gap:.2rem;padding:var(--a2) var(--a2) var(--a2)}
+.ub-kachel-fach{font-size:var(--gr-klein);font-weight:700;color:var(--lernen-tief)}
+.ub-kachel-name{font:700 var(--gr-h3)/1.1 var(--schrift-titel);letter-spacing:-.01em}
+.ub-kachel-satz{font-size:var(--gr-klein);line-height:1.4}
+.ub-kachel-zahl{font-size:var(--gr-klein);font-weight:700;margin-top:.2rem}
+.ub-kachel[aria-current="true"]{--platte-farbe:var(--lernen);outline:2px solid var(--lernen);outline-offset:-2px}
+@media (hover:hover) and (pointer:fine){.ub-kachel:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 0 var(--platte-farbe)}}
+.ub-kachel:active{transform:translate(4px,4px);box-shadow:2px 2px 0 0 var(--platte-farbe)}
+.ub-kachel:focus-visible{outline:3px solid var(--fokus);outline-offset:3px}
+@media (max-width:1100px){.ub-wahl-liste{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){.ub-kopf-raster .galerie-kopf-text{grid-template-columns:1fr}}
+@media (max-width:560px){.ub-wahl-liste{grid-template-columns:1fr}.ub-kachel{flex-direction:row}.ub-kachel-bild{flex:0 0 38%;margin:.5rem 0 .5rem .5rem;aspect-ratio:1/1}}
+
+/* Die zwei Angaben jedes Beispiels */
+.band.ub-schluessel{padding-block:var(--a6);background:var(--flaeche)}
+.ub-schluessel h2{margin-bottom:var(--a1)}
+.ub-schluessel-teil{margin-top:var(--a4)}
+.ub-schluessel-teil h3{margin-bottom:var(--a2)}
+.ub-umfang-liste{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--a3)}
+.ub-umfang{display:grid;gap:.3rem;align-content:start;border-top:2px solid var(--stahl);padding-top:var(--a2)}
+.ub-umfang .stundenlinie.klein{margin-top:0;max-width:12rem}
+.ub-umfang p{margin:0}
+.ub-umfang-name{font-weight:700;font-size:1.25rem}
+.ub-einheit-gross{display:flex;gap:.35rem;height:32px;align-items:center}
+.ub-einheit-gross .stundenlinie.zeile{width:2.6rem}
+.ub-merksatz{margin-top:var(--a2);font-weight:700;max-width:64ch}
+.ub-prinzip-liste{list-style:none;margin:var(--a2) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--a3)}
+.ub-prinzip{background:var(--grund);border-radius:var(--rund);border-top:6px solid var(--lernen);padding:var(--a2) var(--a3) var(--a3);display:grid;gap:.45rem;align-content:start;scroll-margin-top:var(--a3)}
+.ub-prinzip p{margin:0}
+.ub-prinzip-name{font:700 1.375rem/1.15 var(--schrift);margin:0}
+.ub-kann{font-weight:700}
+.ub-papier,.ub-hier{font-size:var(--gr-klein);color:var(--leise)}
+.ub-papier b,.ub-hier b{color:var(--text)}
+.ub-hier a{color:var(--lernen-tief);font-weight:700}
+.ub-forschung{margin-top:var(--a4);max-width:68ch}
+.ub-forschung ul{display:grid;gap:.6rem;padding-left:1.2rem}
+@media (max-width:1023px){.ub-umfang-liste{grid-template-columns:repeat(2,minmax(0,1fr))}.ub-prinzip-liste{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.ub-umfang-liste,.ub-prinzip-liste{grid-template-columns:1fr}}
+
+/* Ein Fach */
+.ub-umschalter{display:flex;justify-content:flex-end;padding-top:var(--a3)}
+.ub-labor{padding-block:var(--a6) var(--a8);scroll-margin-top:var(--a2)}
+.ub-labor-flaeche{background:var(--flaeche)}
+.ub-faecher.ub-ein-fach .ub-labor-flaeche{background:transparent} /* ein Fach allein: keine Wechselfläche */
+.ub-labor-kopf{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:var(--a4) var(--a6);align-items:start}
+.ub-labor-text{display:grid;gap:var(--a2);align-content:start}
+.ub-labor-text h2{font-size:var(--gr-h1);font-weight:700;letter-spacing:-.02em}
+.ub-labor-text h2:focus{outline:none}
+.ub-kicker{margin:0;font-weight:700;color:var(--lernen-tief)}
+.ub-frage{margin:0;font:600 var(--gr-h3)/1.25 var(--schrift-titel);color:var(--lernen-tief);max-width:30ch}
+.ub-quintessenz{border-left:6px solid var(--lernen);padding-left:var(--a2);display:grid;gap:.4rem;max-width:60ch}
+.ub-quintessenz p{margin:0;font-size:clamp(1.15rem,1.05rem + .35vw,1.35rem);line-height:1.45}
+.ub-quintessenz p:first-child{font-weight:700}
+.ub-fachregel{margin:0;background:var(--karton);border-radius:var(--rund);padding:var(--a2) var(--a3);max-width:60ch}
+.ub-profil{display:grid;gap:.4rem}
+.ub-profil p{margin:0;font-weight:700}
+.ub-rahmen{--platte-farbe:var(--karton);margin:0;background:var(--grund);border-radius:var(--rund);padding:var(--a3);box-shadow:var(--platte);display:grid;gap:var(--a2);border-top:6px solid var(--text)}
+.ub-labor-flaeche .ub-rahmen{background:var(--grund)}
+.ub-rahmen-kopf{margin:0}
+.ub-rahmen-titel{font-size:var(--gr-h3)}
+.ub-einheit-linien .stundenlinie.zeile{width:2.4rem}
+.ub-bildknopf{display:block;width:100%;padding:0;border:0;background:var(--karton);border-radius:2px;cursor:zoom-in;transition:transform var(--dauer-schnell) var(--ease-out)}
+.ub-bildknopf img{display:block;width:100%;height:auto}
+.ub-bildknopf:focus-visible{outline:3px solid var(--fokus);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){.ub-bildknopf:hover{transform:translate(-2px,-2px)}}
+.ub-leiste{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+.ub-leiste li{display:grid;grid-template-columns:auto 1fr;column-gap:.5rem;align-items:baseline;border:2px solid var(--stahl);border-radius:var(--rund);padding:.35rem .6rem;background:var(--flaeche);min-width:0}
+.ub-leiste li.geplant{border-style:dashed;background:transparent} /* taste-skill-ignore: gestrichelt = geplant, wie im Hefter des GK-Labors */
+.ub-leiste b{grid-row:span 2;font:700 1.25rem/1 var(--schrift-titel)}
+.ub-leiste span{font-size:var(--gr-klein);font-weight:700}
+.ub-leiste i{font-style:normal;font-size:var(--gr-klein);color:var(--leise)}
+.ub-rahmen figcaption{display:grid;gap:var(--a2)}
+.ub-rahmen-saetze{margin:0;padding-left:1.2rem;display:grid;gap:.35rem;max-width:60ch}
+.ub-rahmen .status,.ub-rahmen-wege{margin:0}
+.ub-rahmen-wege{display:flex;flex-wrap:wrap;gap:.5rem}
+.ub-zwischen{margin-top:var(--a6);margin-bottom:var(--a3)}
+.ub-beispiele{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:var(--a4) var(--a3);align-items:stretch}
+.ub-karte{--platte-farbe:var(--karton);background:var(--flaeche);border-radius:var(--rund);display:flex;flex-direction:column;box-shadow:var(--platte);scroll-margin-top:var(--a3)}
+.ub-labor-flaeche .ub-karte{background:var(--grund)}
+.ub-karte:focus{outline:none}
+.ub-karte:focus-visible,.ub-karte:target{outline:3px solid var(--lernen);outline-offset:3px}
+.ub-karte-bild{margin:.6rem .6rem 0;width:auto;aspect-ratio:16/10;overflow:hidden}
+.ub-karte-bild img{width:100%;height:100%;object-fit:cover;object-position:top}
+.ub-karte-koerper{padding:var(--a3);display:grid;gap:.6rem;align-content:start;flex:1}
+.ub-karte-koerper>p{margin:0}
+.ub-ort{font-size:var(--gr-klein);font-weight:700;color:var(--lernen-tief)}
+.ub-karte-titel{font:700 1.375rem/1.2 var(--schrift);margin:0}
+.ub-aus{font-size:var(--gr-klein);color:var(--leise)}
+.ub-drei{margin:.2rem 0 0;display:grid;gap:.7rem}
+.ub-drei div{display:grid;gap:.15rem}
+.ub-drei dt{font-size:var(--gr-klein);font-weight:700;color:var(--lernen-tief)}
+.ub-drei dd{margin:0}
+.ub-stimme{background:var(--karton);border-radius:var(--rund);padding:.6rem .8rem;font-size:var(--gr-klein)}
+.ub-karte .fussleiste{padding:0 var(--a3) var(--a3);display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+.ub-wege{margin-top:var(--a6);border-top:2px solid var(--text);padding-top:var(--a3)}
+.ub-wege h3{margin-bottom:var(--a3)}
+.ub-wege-liste{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--a3)}
+.ub-wege-liste li{display:grid;gap:.4rem;align-content:start}
+.ub-wege-liste p{margin:0}
+.ub-weg-kopf{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.ub-weg-kopf b{font-size:1.125rem}
+@media (max-width:1023px){.ub-labor-kopf{grid-template-columns:1fr}.ub-wege-liste{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.ub-wege-liste{grid-template-columns:1fr}}
+
+/* Weitere Beispiele */
+.band.ub-weitere-band{padding-block:var(--a4) var(--a2)}
+.ub-weitere .klein{margin-top:0}
+.ub-weitere-gruppe{margin-top:var(--a3)}
+.ub-weitere-gruppe h3{font-size:1.25rem;margin-bottom:var(--a1)}
+.ub-weitere-liste{list-style:none;margin:0;padding:0;columns:2 22rem;column-gap:var(--a4)}
+.ub-weitere-liste li{break-inside:avoid;display:grid;gap:.1rem;padding:.45rem 0;border-bottom:1px solid var(--linie)}
+.ub-weitere-liste a{font-weight:700;color:var(--text)}
+.ub-weitere-meta{font-size:var(--gr-klein);color:var(--leise)}
+
+@media print{ /* taste-skill-ignore: Druckfassung */
+  .ub-labor[hidden]{display:block!important}
+  .ub-wahl,.ub-umschalter,.ub-karte .fussleiste .knopf,.ub-rahmen-wege{display:none}
+  .ub-kachel,.ub-karte,.ub-rahmen{box-shadow:none;border:1px solid #bbb}
+}
+@media (max-width:600px){.ub-kopf-raster{grid-template-columns:minmax(0,1fr);gap:var(--a2)}}
+@media (max-width:560px){.ub-kachel-bild{flex:0 0 30%}.ub-kachel-name{font-size:1.25rem;hyphens:auto;overflow-wrap:anywhere}.ub-kachel-text{min-width:0}}
