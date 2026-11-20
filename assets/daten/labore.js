@@ -190,7 +190,7 @@ var LABORE = [
       { beispiel: "psycho-ds3-6", bild: "assets/galerie/psycho-ds3-6-1.webp",
         teil: { ort: "DS 5", titel: "Wie sehr beeinflussen mich andere?", umfang: "durchgaengig", prinzipien: ["messen", "buendeln", "rueckmelden"],
                 link: "https://geschichtefuerdiegegenwart.github.io/psycho-labor/ds05-andere.html",
-                geraet: "Das Gerät teilt den Kurs verdeckt in zwei Hälften: Die eine sieht erfundene Antworten anderer, die andere nicht. Die Ergebnisse kommen ohne Namen ins Kursbild." },
+                geraet: "Zwei Fassungen, verteilt über zwei QR-Codes: Die eine Kurshälfte sieht erfundene Antworten anderer, die andere nicht. Wer was sieht, bleibt bis zur Auflösung verdeckt. Die Ergebnisse kommen ohne Namen ins Kursbild." },
         was: "Die Lernenden schätzen Punkte und vergleichen Linien. Ein Teil sieht dabei die Antworten anderer im Gruppenchat. Danach wird die Täuschung aufgelöst und mit Aschs Studie verglichen.",
         warum: "Den Einfluss der Gruppe sieht der Kurs an den eigenen Daten. Die Täuschung ist am Anfang angekündigt und wird vollständig aufgelöst." },
       { beispiel: "psycho-einheit", bild: "assets/galerie/psycho-motivation-1.webp",
@@ -210,7 +210,7 @@ var LABORE = [
       quintessenz: "Repository psycho-labor, index.html: »Jeder Versuch beginnt mit deiner Vermutung«; Kidu, Messen: »erst vermuten, dann der Selbstversuch, dann das eigene Ergebnis neben der Originalstudie«.",
       fachregel: "Kidu, »Wann funktioniert digitaler Unterricht?«, Vertiefung »Geschichte, Politik, Psychologie, Sozialpädagogik« (wörtlich).",
       rahmen: "Repository psycho-labor (17.11.2026), index.html: Wahrnehmung (Block 1 · abgeschlossen), Klassenarbeit 1, Motivation (Block 2 · Doppelstunde 6–11 · läuft), Gedächtnis, Denken, Intelligenz (in Planung); Kidu psycho-einheit.",
-      beispiele: "docs/ds05-fassung2.md: Fassung 2 »trägt die ganze Doppelstunde«, »verdeckte Bedingungen für zwei Kurshälften, Kursdaten ohne Namen und eine eigene Rückmeldung zu jeder Antwortoption«, »Ankündigung der Täuschung«; docs/motivation-einheit.md: Motivationskreis mit 22 Begriffen, Rückmeldung gestuft, Schreiben mit drei Zugängen; motivation.html: »Sechs Doppelstunden, ein Weg …«.",
+      beispiele: "docs/ds05-fassung2.md: Fassung 2 »trägt die ganze Doppelstunde«, »verdeckte Bedingungen für zwei Kurshälften, Kursdaten ohne Namen und eine eigene Rückmeldung zu jeder Antwortoption«, »Ankündigung der Täuschung«; ds05-andere.html, Auflösung: »Es gab zwei Fassungen, verteilt über die zwei QR-Codes«; docs/motivation-einheit.md: Motivationskreis mit 22 Begriffen, Rückmeldung gestuft, Schreiben mit drei Zugängen; motivation.html: »Sechs Doppelstunden, ein Weg …«.",
       wege: "PRODUCT.md des Psycho-Labors: »Ein kurzer Selbstversuch zu Beginn einer Doppelstunde … Erklären, Anwenden und Sichern geschehen danach analog.«; DS 5 Fassung 2 (Stationen, Kriterienraster nach dem eigenen Text); Einheit Motivation."
     },
     vorschlag: { wege: true, quintessenz: true, teile: "DS 5: Umfang aus docs/ds05-fassung2.md (Variante B, durchgängig). Motivation: eine Einheit über sechs Doppelstunden; Status der Stunden noch offen (auf der Startseite: »läuft«)." }
